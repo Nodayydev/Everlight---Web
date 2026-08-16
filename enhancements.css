@@ -1,0 +1,2705 @@
+/* =========================================================
+   EVERLIGHT — ENHANCEMENTS.CSS
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL POLISH
+   ========================================================= */
+
+::selection {
+  background: rgba(103, 231, 221, 0.22);
+  color: var(--cream);
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline:
+    2px solid
+    rgba(103, 231, 221, 0.65);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   DESKTOP HEADER — FLAT / NO DEPTH
+   ========================================================= */
+
+@media (min-width: 661px) {
+
+  .topbar {
+    box-shadow: none !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .topbar::after {
+    display: none !important;
+  }
+
+  .hub-nav {
+    align-self: center;
+  }
+
+  .hub-nav-item {
+    border-radius: 4px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP HEADER ALIGNMENT
+   ========================================================= */
+
+@media (min-width: 961px) {
+
+  .topbar {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto
+      minmax(0, 1fr);
+  }
+
+  .domain {
+    min-width: 0;
+  }
+
+  .hub-nav {
+    justify-self: end;
+
+    margin-left: auto;
+  }
+
+  .header-logo {
+    margin: 0 auto;
+  }
+}
+
+
+/* =========================================================
+   DOMAIN TEXT
+   ========================================================= */
+
+.domain {
+  min-width: 0;
+}
+
+.domain a {
+  overflow: visible;
+
+  text-overflow: clip;
+
+  white-space: nowrap;
+}
+
+.domain span {
+  flex-shrink: 0;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   HUB BUTTONS
+   ========================================================= */
+
+.hub-nav-item {
+  min-width: 78px;
+
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.hub-nav-item.active {
+  box-shadow:
+    inset 0 -1px 0
+    rgba(103, 231, 221, 0.25);
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTON FIX
+   ========================================================= */
+
+.account-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  font:
+    500 9px
+    "DM Mono";
+
+  line-height: 1;
+
+  vertical-align: middle;
+}
+
+.account-button strong {
+  display: block;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   ACCOUNT MENU
+   ========================================================= */
+
+.account-menu {
+  transform-origin:
+    top right;
+}
+
+.account-menu.open {
+  animation:
+    accountOpen
+    0.18s
+    ease-out;
+}
+
+@keyframes accountOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-5px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   PROFILE COLORS
+   ========================================================= */
+
+.profile-view-avatar {
+  overflow: hidden;
+}
+
+.profile-view-avatar img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   FEED IMAGE
+   ========================================================= */
+
+.post-image {
+  border-radius: 2px;
+
+  cursor: zoom-in;
+
+  transition:
+    opacity 0.2s ease;
+}
+
+.post-image:hover {
+  opacity: 0.94;
+}
+
+
+/* =========================================================
+   COMPOSER
+   ========================================================= */
+
+.composer {
+  border-radius: 2px;
+}
+
+.composer-tools select {
+  border-radius: 3px;
+}
+
+.image-upload {
+  user-select: none;
+}
+
+.anonymous-toggle {
+  user-select: none;
+}
+
+
+/* =========================================================
+   FULLSCREEN VIEWS
+   ========================================================= */
+
+.messages-view,
+.profile-view {
+  overscroll-behavior: contain;
+}
+
+.messages-view-inner,
+.profile-view-inner {
+  min-height: 100dvh;
+}
+
+
+/* =========================================================
+   MESSAGE VIEW SCROLLBARS
+   ========================================================= */
+
+.message-contacts-list {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #344547
+    transparent;
+}
+
+.dm-list {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #344547
+    transparent;
+}
+
+.message-contacts {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #344547
+    transparent;
+}
+
+
+/* =========================================================
+   MESSAGE EMPTY STATE
+   ========================================================= */
+
+.message-chat:has(.dm-list:empty)::after {
+  content: "";
+
+  display: block;
+}
+
+
+/* =========================================================
+   PROFILE VIEW
+   ========================================================= */
+
+.profile-view-content {
+  animation:
+    viewFade
+    0.22s
+    ease-out;
+}
+
+.messages-view.open
+.messages-view-inner {
+  animation:
+    viewFade
+    0.2s
+    ease-out;
+}
+
+@keyframes viewFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   MOBILE — APP SHELL
+   ========================================================= */
+
+@media (max-width: 660px) {
+
+  html {
+    background: #101719;
+
+    min-height: 100%;
+
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+
+    min-height: 100dvh;
+
+    /*
+     * Helyet hagyunk a lebegő alsó docknak.
+     */
+    padding-bottom:
+      calc(
+        104px +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+
+  /* =======================================================
+     MOBILE HEADER
+     
+     BAL:
+       everlight.nodayy.hu // nodayy.hu
+
+     JOBB:
+       logo
+     ======================================================= */
+
+  .topbar {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    display: flex !important;
+
+    flex-wrap: nowrap !important;
+
+    align-items: center !important;
+
+    justify-content: space-between !important;
+
+    width: 100%;
+
+    min-height: 68px;
+
+    height: 68px;
+
+    padding:
+      10px
+      14px !important;
+
+    gap: 8px;
+
+    overflow: hidden;
+
+    box-shadow: none !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .topbar::after {
+    display: none !important;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE DOMAIN
+     ------------------------------------------------------- */
+
+  .domain {
+    order: 1;
+
+    display: flex !important;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    width: auto;
+
+    gap: 5px;
+
+    overflow: visible;
+
+    white-space: nowrap;
+
+    color: #546360;
+
+    font:
+      400 9px
+      "DM Mono";
+
+    line-height: 1;
+  }
+
+  .domain a {
+    display: inline-block;
+
+    flex: 0 0 auto;
+
+    width: auto;
+
+    max-width: none;
+
+    overflow: visible;
+
+    text-overflow: clip;
+
+    white-space: nowrap;
+
+    font:
+      400 9px
+      "DM Mono";
+  }
+
+  .domain a:first-child {
+    color: var(--aqua);
+  }
+
+  .domain a:last-child {
+    color: #7b8784;
+  }
+
+  .domain span {
+    display: inline-block;
+
+    flex: 0 0 auto;
+
+    color: #415450;
+
+    white-space: nowrap;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE LOGO
+     ------------------------------------------------------- */
+
+  .header-logo {
+    order: 2;
+
+    display: flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 0 0 34px;
+
+    width: 34px;
+
+    height: 34px;
+
+    margin: 0 !important;
+
+    padding: 0;
+  }
+
+  .header-logo img {
+    display: block;
+
+    width: 30px;
+
+    height: 30px;
+
+    object-fit: contain;
+  }
+
+
+  /* -------------------------------------------------------
+     HIDE DESKTOP HEADER NAV ON PHONE
+     ------------------------------------------------------- */
+
+  .hub-nav {
+    display: none !important;
+  }
+
+
+  /* =======================================================
+     MOBILE MAIN
+     ======================================================= */
+
+  .layout {
+    min-height: auto;
+  }
+
+
+  /* =======================================================
+     MOBILE FLOATING DOCK
+     
+     iPhone / Samsung jellegű lebegő navigáció.
+     ======================================================= */
+
+  .mobile-dock {
+    position: fixed !important;
+
+    left: 50% !important;
+
+    /*
+     * Nem a képernyő legaljára tapad.
+     * Az iPhone safe-area fölött marad.
+     */
+    bottom:
+      calc(
+        12px +
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    transform:
+      translateX(-50%) !important;
+
+    width:
+      calc(
+        100% - 28px
+      ) !important;
+
+    max-width: 520px;
+
+    min-height: 78px;
+
+    padding: 6px !important;
+
+    display: flex !important;
+
+    align-items: stretch;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    z-index: 9999 !important;
+
+    isolation: isolate;
+
+    overflow: visible;
+
+    border:
+      1px solid
+      rgba(103, 231, 221, 0.16);
+
+    border-radius: 25px;
+
+    background:
+      rgba(17, 30, 32, 0.96);
+
+    box-shadow:
+      0 12px 30px
+      rgba(0, 0, 0, 0.38),
+      0 2px 8px
+      rgba(0, 0, 0, 0.20);
+
+    backdrop-filter:
+      blur(18px)
+      saturate(135%);
+
+    -webkit-backdrop-filter:
+      blur(18px)
+      saturate(135%);
+
+    transform-origin:
+      center bottom;
+  }
+
+  .mobile-dock::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 5px;
+
+    width: 48px;
+
+    height: 2px;
+
+    transform:
+      translateX(-50%);
+
+    border-radius: 99px;
+
+    background:
+      rgba(255, 255, 255, 0.07);
+
+    pointer-events: none;
+  }
+
+
+  /* -------------------------------------------------------
+     DOCK ITEMS
+     ------------------------------------------------------- */
+
+  .mobile-dock-item {
+    position: relative;
+
+    z-index: 1;
+
+    flex:
+      1 1 0;
+
+    min-width: 0;
+
+    min-height: 64px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    margin: 0;
+
+    padding:
+      7px
+      5px;
+
+    border: 0;
+
+    border-radius: 19px;
+
+    background: transparent;
+
+    color: #8f9e9a;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    font:
+      400 10px
+      "DM Mono";
+  }
+
+  .mobile-dock-item.active {
+    background:
+      rgba(103, 231, 221, 0.10);
+
+    color: var(--aqua);
+  }
+
+  .mobile-dock-item:active {
+    transform:
+      scale(0.97);
+  }
+
+  .mobile-dock-icon {
+    display: block;
+
+    line-height: 1;
+
+    font-size: 20px;
+
+    transition:
+      transform 0.18s ease;
+  }
+
+  .mobile-dock-item.active
+  .mobile-dock-icon {
+    transform:
+      translateY(-1px);
+  }
+
+
+  /* =======================================================
+     MOBILE ACCOUNT MENU / PROFILE EDITOR
+     ======================================================= */
+
+  .account-menu {
+    position: fixed !important;
+
+    z-index: 10000 !important;
+
+    top:
+      calc(
+        8px +
+        env(safe-area-inset-top)
+      ) !important;
+
+    left: 12px !important;
+
+    right: 12px !important;
+
+    width: auto !important;
+
+    max-width: none !important;
+
+    max-height:
+      calc(
+        100dvh -
+        24px -
+        env(safe-area-inset-top) -
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    border-radius: 22px;
+
+    box-shadow:
+      0 22px 55px
+      rgba(0, 0, 0, 0.55);
+
+    backdrop-filter:
+      blur(16px);
+
+    -webkit-backdrop-filter:
+      blur(16px);
+  }
+
+  .account-menu.logged-in {
+    max-height:
+      calc(
+        100dvh -
+        24px -
+        env(safe-area-inset-top) -
+        env(safe-area-inset-bottom)
+      ) !important;
+  }
+
+  body.profile-editor-open {
+    overflow: hidden;
+  }
+
+
+  /* =======================================================
+     MOBILE PROFILE SETTINGS
+     ======================================================= */
+
+  .profile-settings {
+    width: 100%;
+  }
+
+  .profile-cover-preview {
+    max-height: 190px;
+  }
+
+
+  /* =======================================================
+     MOBILE FULLSCREEN MESSAGES
+     ======================================================= */
+
+  .messages-view {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9000;
+
+    background:
+      #0b1416;
+
+    overflow: auto;
+
+    overscroll-behavior: contain;
+  }
+
+  .messages-view-header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 5;
+
+    background:
+      rgba(16, 26, 28, 0.96);
+
+    backdrop-filter:
+      blur(15px);
+
+    -webkit-backdrop-filter:
+      blur(15px);
+  }
+
+  .messages-view-inner {
+    min-height: 100dvh;
+  }
+
+  .messages-layout {
+    min-height:
+      calc(
+        100dvh -
+        70px
+      );
+  }
+
+  .message-chat {
+    min-height:
+      calc(
+        100dvh -
+        70px
+      );
+
+    display: flex;
+
+    flex-direction: column;
+  }
+
+  .dm-list {
+    flex: 1 1 auto;
+
+    overflow-y: auto;
+
+    padding-bottom: 10px;
+  }
+
+  .message-compose {
+    position: sticky;
+
+    bottom: 0;
+
+    z-index: 5;
+
+    margin-bottom:
+      env(safe-area-inset-bottom);
+
+    background:
+      rgba(16, 26, 28, 0.96);
+
+    backdrop-filter:
+      blur(15px);
+
+    -webkit-backdrop-filter:
+      blur(15px);
+  }
+
+
+  /* =======================================================
+     MOBILE PROFILE VIEW
+     ======================================================= */
+
+  .profile-view {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9000;
+
+    background:
+      #0b1416;
+
+    overflow: auto;
+
+    overscroll-behavior: contain;
+  }
+
+  .profile-view-inner {
+    min-height: 100dvh;
+  }
+
+  .profile-view-header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 5;
+
+    background:
+      rgba(16, 26, 28, 0.96);
+
+    backdrop-filter:
+      blur(15px);
+
+    -webkit-backdrop-filter:
+      blur(15px);
+  }
+
+  .profile-view-cover {
+    border-radius:
+      16px
+      16px
+      0
+      0;
+  }
+
+  .profile-view-card {
+    border-radius:
+      0
+      0
+      18px
+      18px;
+  }
+
+
+  /* =======================================================
+     MOBILE TOAST
+     ======================================================= */
+
+  .toast {
+    z-index: 11000 !important;
+
+    max-width:
+      calc(
+        100vw - 30px
+      );
+
+    border-radius: 14px;
+
+    box-shadow:
+      0 10px 30px
+      rgba(0, 0, 0, 0.35);
+  }
+
+
+  /* =======================================================
+     MOBILE FOOTER
+     ======================================================= */
+
+  .site-footer {
+    padding-bottom:
+      calc(
+        12px +
+        env(safe-area-inset-bottom)
+      );
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .topbar {
+    padding-left: 10px !important;
+
+    padding-right: 10px !important;
+
+    gap: 5px;
+  }
+
+  .domain {
+    gap: 3px;
+
+    font-size: 8px;
+  }
+
+  .domain a {
+    font-size: 8px;
+  }
+
+  .header-logo {
+    flex-basis: 30px;
+
+    width: 30px;
+
+    height: 30px;
+  }
+
+  .header-logo img {
+    width: 27px;
+
+    height: 27px;
+  }
+
+  .mobile-dock {
+    width:
+      calc(
+        100% - 20px
+      ) !important;
+
+    min-height: 74px;
+
+    bottom:
+      calc(
+        10px +
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    border-radius: 22px;
+  }
+
+  .mobile-dock-item {
+    min-height: 60px;
+
+    border-radius: 17px;
+
+    font-size: 9px;
+  }
+
+  .mobile-dock-icon {
+    font-size: 18px;
+  }
+
+  body {
+    padding-bottom:
+      calc(
+        98px +
+        env(safe-area-inset-bottom)
+      );
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+}
+/* =========================================================
+   2. LÉPÉS — MOBILE FLOATING DOCK FIX
+   ========================================================= */
+
+@media (max-width: 660px) {
+
+  body {
+    /*
+     * Helyet hagyunk az alsó lebegő navigációnak,
+     * hogy a tartalom ne fusson alá.
+     */
+    padding-bottom:
+      calc(
+        118px +
+        env(safe-area-inset-bottom)
+      ) !important;
+  }
+
+  .mobile-dock {
+    position: fixed !important;
+
+    left: 50% !important;
+
+    /*
+     * A rendszer alsó sávja fölé emeljük.
+     */
+    bottom:
+      calc(
+        18px +
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    transform:
+      translateX(-50%) !important;
+
+    width:
+      calc(
+        100% - 32px
+      ) !important;
+
+    max-width: 520px;
+
+    height: 82px;
+
+    min-height: 82px;
+
+    padding: 6px !important;
+
+    box-sizing: border-box;
+
+    display: flex !important;
+
+    align-items: stretch;
+
+    justify-content: space-between;
+
+    z-index: 9999 !important;
+
+    border:
+      1px solid
+      rgba(103, 231, 221, 0.20);
+
+    border-radius: 26px;
+
+    background:
+      rgba(17, 30, 32, 0.97);
+
+    box-shadow:
+      0 14px 38px
+      rgba(0, 0, 0, 0.42),
+      0 3px 12px
+      rgba(0, 0, 0, 0.22);
+
+    backdrop-filter:
+      blur(20px)
+      saturate(140%);
+
+    -webkit-backdrop-filter:
+      blur(20px)
+      saturate(140%);
+  }
+
+
+  /* -----------------------------------------------
+     Kis felső "fogantyú"
+     ----------------------------------------------- */
+
+  .mobile-dock::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 5px;
+
+    width: 44px;
+
+    height: 2px;
+
+    transform:
+      translateX(-50%);
+
+    border-radius: 999px;
+
+    background:
+      rgba(255, 255, 255, 0.09);
+
+    pointer-events: none;
+  }
+
+
+  /* -----------------------------------------------
+     Dock gombok
+     ----------------------------------------------- */
+
+  .mobile-dock-item {
+    position: relative;
+
+    z-index: 2;
+
+    flex:
+      1 1 0;
+
+    min-width: 0;
+
+    min-height: 68px;
+
+    margin: 0;
+
+    padding:
+      7px
+      4px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    border: 0;
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: #8f9e9a;
+
+    font:
+      400 10px
+      "DM Mono";
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    -webkit-appearance: none;
+
+    appearance: none;
+  }
+
+
+  /* -----------------------------------------------
+     Aktív gomb
+     ----------------------------------------------- */
+
+  .mobile-dock-item.active {
+    background:
+      rgba(103, 231, 221, 0.11);
+
+    color:
+      var(--aqua);
+
+    box-shadow:
+      inset 0 0 0 1px
+      rgba(103, 231, 221, 0.08);
+  }
+
+
+  /* -----------------------------------------------
+     Ikon
+     ----------------------------------------------- */
+
+  .mobile-dock-icon {
+    display: block;
+
+    width: 22px;
+
+    height: 22px;
+
+    line-height: 22px;
+
+    text-align: center;
+
+    font-size: 19px;
+
+    transition:
+      transform 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .mobile-dock-item.active
+  .mobile-dock-icon {
+    transform:
+      translateY(-1px);
+  }
+
+
+  /* -----------------------------------------------
+     Nyomás animáció
+     ----------------------------------------------- */
+
+  .mobile-dock-item:active {
+    transform:
+      scale(0.96);
+  }
+
+
+  /* -----------------------------------------------
+     Chat / profil fullscreen nézet
+     ne takarja el a dock
+     ----------------------------------------------- */
+
+  .messages-view,
+  .profile-view {
+    padding-bottom:
+      env(safe-area-inset-bottom);
+  }
+
+  .message-compose {
+    padding-bottom:
+      calc(
+        8px +
+        env(safe-area-inset-bottom)
+      );
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  body {
+    padding-bottom:
+      calc(
+        112px +
+        env(safe-area-inset-bottom)
+      ) !important;
+  }
+
+  .mobile-dock {
+    width:
+      calc(
+        100% - 22px
+      ) !important;
+
+    height: 78px;
+
+    min-height: 78px;
+
+    bottom:
+      calc(
+        16px +
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    border-radius: 23px;
+  }
+
+  .mobile-dock-item {
+    min-height: 64px;
+
+    border-radius: 18px;
+
+    font-size: 9px;
+  }
+
+  .mobile-dock-icon {
+    font-size: 18px;
+  }
+}
+
+/* =========================================================
+   DISCORD-STYLE PROFILE CUSTOMIZER
+   ========================================================= */
+
+body.profile-customizer-open {
+  overflow: hidden !important;
+}
+
+
+.profile-customizer {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483640;
+
+  display: none;
+
+  font-family:
+    "DM Sans",
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+  color: #d9e2e0;
+}
+
+
+.profile-customizer.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.profile-customizer-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background:
+    rgba(5, 10, 11, 0.82);
+
+  backdrop-filter:
+    blur(9px);
+
+  -webkit-backdrop-filter:
+    blur(9px);
+}
+
+
+.profile-customizer-dialog {
+  position: relative;
+
+  width:
+    min(
+      1180px,
+      calc(100vw - 48px)
+    );
+
+  height:
+    min(
+      820px,
+      calc(100vh - 48px)
+    );
+
+  display: grid;
+
+  grid-template-rows:
+    auto
+    minmax(0, 1fr)
+    auto;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(103, 231, 221, 0.14);
+
+  border-radius: 18px;
+
+  background:
+    #101819;
+
+  box-shadow:
+    0 30px 90px
+    rgba(0,0,0,.60),
+    0 4px 18px
+    rgba(0,0,0,.35);
+}
+
+
+.profile-customizer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding:
+    26px
+    30px
+    22px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.07);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.025),
+      rgba(255,255,255,0)
+    );
+}
+
+
+.profile-customizer-kicker,
+.profile-customizer-preview-label {
+  font:
+    500 9px
+    "DM Mono",
+    monospace;
+
+  letter-spacing:
+    .16em;
+
+  color:
+    #70817e;
+}
+
+
+.profile-customizer-header h2 {
+  margin:
+    6px
+    0
+    4px;
+
+  font-family:
+    "DM Serif Display",
+    Georgia,
+    serif;
+
+  font-size:
+    28px;
+
+  font-weight:
+    400;
+
+  color:
+    #e8f3f1;
+}
+
+
+.profile-customizer-header p {
+  margin:
+    0;
+
+  font-size:
+    12px;
+
+  color:
+    #849390;
+}
+
+
+.profile-customizer-close {
+  width:
+    38px;
+
+  height:
+    38px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  color:
+    #9aa9a6;
+
+  font-size:
+    24px;
+
+  cursor:
+    pointer;
+}
+
+
+.profile-customizer-close:hover {
+  color:
+    #e8f3f1;
+
+  background:
+    rgba(255,255,255,.07);
+}
+
+
+.profile-customizer-body {
+  min-height:
+    0;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    170px
+    minmax(0, 1fr)
+    300px;
+}
+
+
+.profile-customizer-sidebar {
+  padding:
+    22px
+    12px;
+
+  border-right:
+    1px solid
+    rgba(255,255,255,.06);
+
+  background:
+    #0d1415;
+}
+
+
+.profile-customizer-nav {
+  width:
+    100%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    4px;
+
+  padding:
+    11px
+    12px;
+
+  border:
+    0;
+
+  border-radius:
+    8px;
+
+  background:
+    transparent;
+
+  color:
+    #82908e;
+
+  font:
+    500 12px
+    "DM Sans",
+    sans-serif;
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+}
+
+
+.profile-customizer-nav span {
+  width:
+    18px;
+
+  color:
+    #657572;
+
+  text-align:
+    center;
+}
+
+
+.profile-customizer-nav:hover {
+  background:
+    rgba(255,255,255,.045);
+
+  color:
+    #d8e5e2;
+}
+
+
+.profile-customizer-nav.active {
+  background:
+    rgba(103,231,221,.10);
+
+  color:
+    #67e7dd;
+}
+
+
+.profile-customizer-nav.active span {
+  color:
+    #67e7dd;
+}
+
+
+.profile-customizer-sidebar-note {
+  margin:
+    28px
+    6px
+    0;
+
+  padding-top:
+    18px;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+
+  font-size:
+    10px;
+
+  line-height:
+    1.6;
+
+  color:
+    #5f6c69;
+}
+
+
+.profile-customizer-content {
+  min-width:
+    0;
+
+  overflow-y:
+    auto;
+
+  padding:
+    28px
+    30px
+    36px;
+
+  scroll-behavior:
+    smooth;
+
+  background:
+    #111a1b;
+}
+
+
+.profile-customizer-section {
+  scroll-margin-top:
+    20px;
+
+  padding-bottom:
+    30px;
+
+  margin-bottom:
+    30px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.065);
+}
+
+
+.profile-customizer-section:last-child {
+  border-bottom:
+    0;
+
+  margin-bottom:
+    0;
+}
+
+
+.profile-customizer-section-title {
+  margin-bottom:
+    18px;
+}
+
+
+.profile-customizer-section-title strong {
+  display:
+    block;
+
+  margin-bottom:
+    4px;
+
+  font-size:
+    15px;
+
+  color:
+    #e4eeec;
+}
+
+
+.profile-customizer-section-title span {
+  font-size:
+    11px;
+
+  color:
+    #73817e;
+}
+
+
+.profile-customizer-grid {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0,1fr));
+
+  gap:
+    14px;
+}
+
+
+.customizer-field {
+  position:
+    relative;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    7px;
+
+  margin-bottom:
+    15px;
+}
+
+
+.customizer-field-full {
+  width:
+    100%;
+}
+
+
+.customizer-field > span,
+.customizer-color-card > span {
+  font:
+    600 10px
+    "DM Mono",
+    monospace;
+
+  letter-spacing:
+    .045em;
+
+  text-transform:
+    uppercase;
+
+  color:
+    #8e9d9a;
+}
+
+
+.customizer-field input,
+.customizer-field select,
+.customizer-field textarea {
+  width:
+    100%;
+
+  box-sizing:
+    border-box;
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  border-radius:
+    8px;
+
+  outline:
+    none;
+
+  background:
+    #0b1112;
+
+  color:
+    #dce8e5;
+
+  font:
+    400 13px
+    "DM Sans",
+    sans-serif;
+
+  transition:
+    border-color .16s ease,
+    box-shadow .16s ease,
+    background .16s ease;
+}
+
+
+.customizer-field input,
+.customizer-field select {
+  height:
+    42px;
+
+  padding:
+    0
+    12px;
+}
+
+
+.customizer-field textarea {
+  min-height:
+    112px;
+
+  resize:
+    vertical;
+
+  padding:
+    11px
+    12px;
+
+  line-height:
+    1.5;
+}
+
+
+.customizer-field input:focus,
+.customizer-field select:focus,
+.customizer-field textarea:focus {
+  border-color:
+    rgba(103,231,221,.55);
+
+  background:
+    #0d1516;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(103,231,221,.08);
+}
+
+
+.customizer-field select {
+  appearance:
+    none;
+
+  -webkit-appearance:
+    none;
+}
+
+
+.customizer-counter {
+  position:
+    absolute;
+
+  right:
+    8px;
+
+  bottom:
+    8px;
+
+  padding:
+    2px
+    5px;
+
+  border-radius:
+    4px;
+
+  background:
+    #0b1112;
+
+  font:
+    9px
+    "DM Mono",
+    monospace;
+
+  color:
+    #586663;
+}
+
+
+.customizer-color-row {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0,1fr));
+
+  gap:
+    12px;
+}
+
+
+.customizer-color-card {
+  min-height:
+    64px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    14px;
+
+  padding:
+    13px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.07);
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(255,255,255,.025);
+}
+
+
+.customizer-color-card small {
+  display:
+    block;
+
+  margin-top:
+    4px;
+
+  font:
+    400 10px
+    "DM Sans",
+    sans-serif;
+
+  text-transform:
+    none;
+
+  letter-spacing:
+    0;
+
+  color:
+    #687773;
+}
+
+
+.customizer-color-card input {
+  width:
+    44px;
+
+  height:
+    34px;
+
+  padding:
+    2px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
+  border-radius:
+    7px;
+
+  background:
+    transparent;
+
+  cursor:
+    pointer;
+}
+
+
+.customizer-image-card {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    16px;
+
+  padding:
+    14px;
+
+  margin-bottom:
+    12px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.07);
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(255,255,255,.025);
+}
+
+
+.customizer-image-card-preview {
+  width:
+    74px;
+
+  height:
+    74px;
+
+  flex:
+    0 0 74px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  overflow:
+    hidden;
+
+  border:
+    4px solid
+    #111a1b;
+
+  border-radius:
+    50%;
+
+  background:
+    #273638;
+
+  box-shadow:
+    0 0 0 1px
+    rgba(255,255,255,.09);
+
+  font-family:
+    "DM Serif Display",
+    Georgia,
+    serif;
+
+  font-size:
+    25px;
+
+  color:
+    #9db0ad;
+}
+
+
+.customizer-image-card-preview img,
+.discord-preview-avatar img {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+}
+
+
+.customizer-image-card-copy {
+  min-width:
+    0;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    5px;
+}
+
+
+.customizer-image-card-copy strong {
+  font-size:
+    13px;
+
+  color:
+    #dce7e4;
+}
+
+
+.customizer-image-card-copy span {
+  font-size:
+    10px;
+
+  color:
+    #6f7d7a;
+}
+
+
+.customizer-upload-button {
+  width:
+    max-content;
+
+  margin-top:
+    6px;
+
+  padding:
+    7px
+    10px;
+
+  border:
+    1px solid
+    rgba(103,231,221,.20);
+
+  border-radius:
+    7px;
+
+  background:
+    rgba(103,231,221,.07);
+
+  color:
+    #67e7dd;
+
+  font:
+    600 10px
+    "DM Mono",
+    monospace;
+
+  cursor:
+    pointer;
+}
+
+
+.customizer-upload-button:hover {
+  background:
+    rgba(103,231,221,.13);
+}
+
+
+.customizer-upload-button input {
+  display:
+    none;
+}
+
+
+.customizer-banner-card {
+  align-items:
+    stretch;
+}
+
+
+.customizer-banner-preview {
+  width:
+    170px;
+
+  min-height:
+    88px;
+
+  flex:
+    0 0 170px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    8px;
+
+  background:
+    #273638
+    center / cover
+    no-repeat;
+
+  font:
+    8px
+    "DM Mono",
+    monospace;
+
+  letter-spacing:
+    .08em;
+
+  color:
+    rgba(255,255,255,.45);
+}
+
+
+.profile-customizer-preview-column {
+  min-width:
+    0;
+
+  overflow-y:
+    auto;
+
+  padding:
+    28px
+    22px;
+
+  border-left:
+    1px solid
+    rgba(255,255,255,.06);
+
+  background:
+    #0d1415;
+}
+
+
+.discord-profile-preview {
+  margin-top:
+    12px;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  border-radius:
+    12px;
+
+  background:
+    #151f20;
+
+  box-shadow:
+    0 16px 35px
+    rgba(0,0,0,.28);
+}
+
+
+.discord-preview-banner {
+  height:
+    92px;
+
+  background:
+    #273638
+    center / cover
+    no-repeat;
+}
+
+
+.discord-preview-card {
+  position:
+    relative;
+
+  padding:
+    42px
+    16px
+    18px;
+}
+
+
+.discord-preview-avatar {
+  position:
+    absolute;
+
+  top:
+    -37px;
+
+  left:
+    16px;
+
+  width:
+    74px;
+
+  height:
+    74px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  overflow:
+    hidden;
+
+  border:
+    5px solid
+    #151f20;
+
+  border-radius:
+    50%;
+
+  background:
+    #273638;
+
+  box-shadow:
+    0 0 0 1px
+    rgba(255,255,255,.08);
+
+  font:
+    28px
+    "DM Serif Display",
+    Georgia,
+    serif;
+
+  color:
+    #a5b7b4;
+}
+
+
+.discord-preview-name {
+  font:
+    700 17px
+    "DM Sans",
+    sans-serif;
+}
+
+
+.discord-preview-username {
+  margin-top:
+    1px;
+
+  font:
+    400 10px
+    "DM Mono",
+    monospace;
+
+  color:
+    #697774;
+}
+
+
+.discord-preview-status {
+  margin-top:
+    10px;
+
+  font-size:
+    10px;
+}
+
+
+.discord-preview-divider {
+  height:
+    1px;
+
+  margin:
+    14px
+    0;
+
+  background:
+    rgba(255,255,255,.07);
+}
+
+
+.discord-preview-label {
+  margin-bottom:
+    6px;
+
+  font:
+    600 8px
+    "DM Mono",
+    monospace;
+
+  letter-spacing:
+    .12em;
+
+  color:
+    #697774;
+}
+
+
+.discord-preview-bio {
+  min-height:
+    34px;
+
+  font-size:
+    10px;
+
+  line-height:
+    1.5;
+
+  color:
+    #aab8b5;
+}
+
+
+.discord-preview-meta {
+  margin-top:
+    13px;
+
+  font-size:
+    9px;
+
+  line-height:
+    1.5;
+
+  color:
+    #74827f;
+
+  overflow-wrap:
+    anywhere;
+}
+
+
+.profile-customizer-footer {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    flex-end;
+
+  gap:
+    10px;
+
+  padding:
+    15px
+    22px;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.07);
+
+  background:
+    #0d1415;
+}
+
+
+.profile-customizer-cancel,
+.profile-customizer-save {
+  min-height:
+    38px;
+
+  padding:
+    0
+    17px;
+
+  border-radius:
+    7px;
+
+  font:
+    600 10px
+    "DM Mono",
+    monospace;
+
+  cursor:
+    pointer;
+}
+
+
+.profile-customizer-cancel {
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  background:
+    transparent;
+
+  color:
+    #85938f;
+}
+
+
+.profile-customizer-save {
+  border:
+    1px solid
+    rgba(103,231,221,.24);
+
+  background:
+    #67e7dd;
+
+  color:
+    #071112;
+
+  box-shadow:
+    0 6px 18px
+    rgba(103,231,221,.12);
+}
+
+
+.profile-customizer-save:hover {
+  filter:
+    brightness(1.06);
+}
+
+
+/* A régi inline szerkesztőt elrejtjük.
+   Az adatmezői továbbra is léteznek, ezért
+   a meglévő mentési API változatlanul használható. */
+
+#profileSettings {
+  display:
+    none !important;
+}
+
+
+@media (max-width: 900px) {
+
+  .profile-customizer-dialog {
+    width:
+      calc(100vw - 24px);
+
+    height:
+      calc(100vh - 24px);
+  }
+
+  .profile-customizer-body {
+    grid-template-columns:
+      145px
+      minmax(0,1fr);
+  }
+
+  .profile-customizer-preview-column {
+    display:
+      none;
+  }
+
+}
+
+
+@media (max-width: 660px) {
+
+  .profile-customizer.open {
+    align-items:
+      stretch;
+
+    justify-content:
+      stretch;
+  }
+
+  .profile-customizer-dialog {
+    width:
+      100vw;
+
+    height:
+      100dvh;
+
+    max-height:
+      none;
+
+    border:
+      0;
+
+    border-radius:
+      0;
+  }
+
+  .profile-customizer-header {
+    padding:
+      18px
+      18px
+      15px;
+  }
+
+  .profile-customizer-header h2 {
+    font-size:
+      23px;
+  }
+
+  .profile-customizer-body {
+    grid-template-columns:
+      1fr;
+  }
+
+  .profile-customizer-sidebar {
+    display:
+      flex;
+
+    gap:
+      5px;
+
+    overflow-x:
+      auto;
+
+    padding:
+      9px
+      12px;
+
+    border-right:
+      0;
+
+    border-bottom:
+      1px solid
+      rgba(255,255,255,.06);
+  }
+
+  .profile-customizer-nav {
+    width:
+      auto;
+
+    min-width:
+      max-content;
+
+    margin:
+      0;
+
+    padding:
+      9px
+      12px;
+  }
+
+  .profile-customizer-sidebar-note {
+    display:
+      none;
+  }
+
+  .profile-customizer-content {
+    padding:
+      20px
+      16px
+      30px;
+  }
+
+  .profile-customizer-grid,
+  .customizer-color-row {
+    grid-template-columns:
+      1fr;
+  }
+
+  .customizer-banner-preview {
+    width:
+      115px;
+
+    flex-basis:
+      115px;
+  }
+
+  .profile-customizer-footer {
+    padding:
+      12px
+      16px;
+
+    padding-bottom:
+      calc(
+        12px +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+}
