@@ -1,4 +1,0 @@
-# Never commit credentials or local runtime state.
-.env
-node_modules/
-npm-debug.log*
