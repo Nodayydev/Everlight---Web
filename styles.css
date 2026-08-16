@@ -9,6 +9,8 @@
 
 :root {
   --bg: #101719;
+  --bg-deep: #091315;
+
   --panel: #162124;
   --panel-2: #142023;
 
@@ -24,9 +26,6 @@
 
   --aqua-soft: rgba(103, 231, 221, 0.08);
   --aqua-border: rgba(103, 231, 221, 0.22);
-
-  --header-dark: #071416;
-  --header-aqua: #176b68;
 }
 
 
@@ -44,9 +43,9 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
 
   background: var(--bg);
-
   color: var(--cream);
 
   font-family:
@@ -55,38 +54,11 @@ body {
     sans-serif;
 
   font-size: 14px;
-
   font-variant: normal;
-
   font-feature-settings: normal;
 
   -webkit-font-smoothing: antialiased;
-
   text-rendering: optimizeLegibility;
-}
-
-img {
-  max-width: 100%;
-}
-
-button,
-input,
-textarea,
-select {
-  font-family:
-    Manrope,
-    Arial,
-    sans-serif;
-
-  font-variant: normal;
-}
-
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-a {
-  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -105,15 +77,14 @@ a {
 
 .topbar {
   width: 100%;
-
-  height: 74px;
+  height: 82px;
 
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1fr)
+    1fr
     auto
-    minmax(0, 1fr);
+    1fr;
 
   align-items: center;
 
@@ -122,47 +93,38 @@ a {
     4.5vw;
 
   position: relative;
-
   z-index: 20;
 
   background:
     linear-gradient(
-      108deg,
-      #061113 0%,
-      #081a1c 16%,
-      #0a2527 34%,
-      #0d3537 53%,
-      #10484a 73%,
-      #145957 88%,
-      #176966 100%
+      112deg,
+      #071315 0%,
+      #091b1d 18%,
+      #0b282a 40%,
+      #0d393b 62%,
+      #104b4c 82%,
+      #12605e 100%
     );
 
   border-bottom:
     1px solid
-    rgba(103, 231, 221, 0.18);
+    rgba(103, 231, 221, 0.20);
 
   box-shadow: none;
 }
 
-.topbar::after {
-  display: none;
-}
-
 
 /* =========================================================
-   HEADER DOMAIN
+   DOMAIN
    ========================================================= */
 
-.header-domain {
+.domain {
   justify-self: start;
 
   display: flex;
-
   align-items: center;
 
   gap: 8px;
-
-  min-width: 0;
 
   white-space: nowrap;
 
@@ -172,12 +134,10 @@ a {
     10px
     "DM Mono",
     monospace;
-
-  letter-spacing: 0.015em;
 }
 
-.header-domain a {
-  color: #7e8d89;
+.domain a {
+  color: #788984;
 
   text-decoration: none;
 
@@ -185,44 +145,47 @@ a {
     color 0.2s ease;
 }
 
-.header-domain a:first-child {
+.domain a:first-child {
   color: var(--aqua);
 }
 
-.header-domain a:last-child {
-  color: #7d8986;
+.domain a:last-child {
+  color: #7e8a87;
 }
 
-.header-domain a:hover {
+.domain a:hover {
   color: var(--cream);
 }
 
-.header-domain span {
-  color: #455552;
-
-  user-select: none;
+.domain span {
+  color: #3e514e;
 }
 
 
 /* =========================================================
-   HEADER LOGO
+   CENTER LOGO
    ========================================================= */
 
 .header-logo {
   justify-self: center;
 
-  width: 46px;
-  height: 46px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
+
+  width: 58px;
+  height: 58px;
 
   text-decoration: none;
 
-  flex-shrink: 0;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.04);
+  opacity: 0.92;
 }
 
 .header-logo img {
@@ -236,13 +199,133 @@ a {
 
 
 /* =========================================================
-   EMPTY RIGHT HEADER
+   EMPTY RIGHT HEADER AREA
    ========================================================= */
 
 .header-empty {
   justify-self: end;
 
+  width: 1px;
+  height: 1px;
+}
+
+
+/* =========================================================
+   HUB NAVIGATION
+   ========================================================= */
+
+.hub-nav {
   width: 100%;
+
+  display: flex;
+
+  align-items: stretch;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding:
+    12px
+    4.5vw;
+
+  background:
+    #0b1719;
+
+  border-bottom:
+    1px solid
+    rgba(103, 231, 221, 0.12);
+}
+
+.hub-nav-item {
+  min-width: 118px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding:
+    10px
+    15px;
+
+  border:
+    1px solid
+    rgba(103, 231, 221, 0.14);
+
+  background:
+    #111f21;
+
+  color:
+    #7f8e8a;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.hub-nav-item span {
+  color: #52625e;
+
+  font:
+    8px
+    "DM Mono",
+    monospace;
+}
+
+.hub-nav-item strong {
+  color: inherit;
+
+  font:
+    600 10px
+    Manrope,
+    Arial,
+    sans-serif;
+}
+
+.hub-nav-item b {
+  padding:
+    2px
+    5px;
+
+  background:
+    #284749;
+
+  color:
+    var(--aqua);
+
+  font:
+    8px
+    "DM Mono",
+    monospace;
+}
+
+.hub-nav-item:hover {
+  color: var(--cream);
+
+  border-color:
+    rgba(103, 231, 221, 0.35);
+
+  background:
+    #14282a;
+}
+
+.hub-nav-item.active {
+  color: var(--aqua);
+
+  border-color:
+    rgba(103, 231, 221, 0.38);
+
+  background:
+    rgba(103, 231, 221, 0.07);
+}
+
+.hub-nav-item.active span {
+  color: var(--aqua);
 }
 
 
@@ -252,6 +335,9 @@ a {
 
 .layout {
   width: 100%;
+  max-width: 1440px;
+
+  margin: 0 auto;
 
   display: grid;
 
@@ -260,17 +346,15 @@ a {
     minmax(460px, 620px)
     minmax(230px, 1fr);
 
-  max-width: 1440px;
-
-  margin: 0 auto;
-
   min-height:
-    calc(100vh - 74px);
+    calc(
+      100vh - 82px
+    );
 }
 
 
 /* =========================================================
-   SIDE RAILS
+   LEFT / RIGHT RAIL
    ========================================================= */
 
 .left-rail,
@@ -282,7 +366,6 @@ a {
 
 .left-rail {
   display: flex;
-
   flex-direction: column;
 
   border-right:
@@ -290,9 +373,15 @@ a {
     var(--line);
 }
 
+.right-rail {
+  border-left:
+    1px solid
+    var(--line);
+}
+
 
 /* =========================================================
-   LEFT EVERLIGHT BRAND
+   LEFT BRAND
    ========================================================= */
 
 .brand {
@@ -310,7 +399,8 @@ a {
     700 35px
     "Playfair Display";
 
-  letter-spacing: -0.055em;
+  letter-spacing:
+    -0.055em;
 }
 
 .brand img {
@@ -327,11 +417,11 @@ a {
 
   background:
     linear-gradient(
-      112deg,
-      #72e8df 0%,
-      #67e7dd 34%,
-      #35c7c0 64%,
-      #198c88 100%
+      118deg,
+      #8dece5 0%,
+      #67e7dd 38%,
+      #2cbab5 68%,
+      #176d6b 100%
     );
 
   -webkit-background-clip: text;
@@ -340,24 +430,21 @@ a {
   color: transparent;
 }
 
-.brand-text span {
-  color: var(--aqua);
-}
-
 
 /* =========================================================
    TAGLINE
    ========================================================= */
 
 .tagline {
-  max-width: 225px;
+  max-width: 215px;
 
   margin:
     23px
     0
     59px;
 
-  color: #aeb8b3;
+  color:
+    #aeb8b3;
 
   font:
     15px/1.65
@@ -366,72 +453,7 @@ a {
 
 
 /* =========================================================
-   LEFT NAVIGATION
-   ========================================================= */
-
-.left-rail nav {
-  display: grid;
-
-  gap: 16px;
-}
-
-.left-rail nav a {
-  display: block;
-
-  color: var(--muted);
-
-  text-decoration: none;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  transition:
-    color 0.2s ease;
-}
-
-.left-rail nav a:hover {
-  color: var(--cream);
-}
-
-.left-rail nav a span {
-  display: inline-block;
-
-  margin-right: 11px;
-
-  color: #5d6b6a;
-
-  font:
-    10px
-    "DM Mono";
-}
-
-.left-rail nav a.nav-active {
-  color: var(--cream);
-}
-
-.left-rail nav b {
-  display: inline-block;
-
-  margin-left: 5px;
-
-  padding:
-    2px
-    5px;
-
-  background:
-    #284749;
-
-  color: var(--aqua);
-
-  font:
-    10px
-    "DM Mono";
-}
-
-
-/* =========================================================
-   PROFILE / SIGNED OUT
+   SIGNED OUT / PROFILE
    ========================================================= */
 
 .signed-out {
@@ -486,7 +508,8 @@ a {
 
   font:
     700 12px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 .avatar-placeholder {
@@ -558,7 +581,7 @@ a {
 
 
 /* =========================================================
-   MAIN
+   MAIN CONTENT
    ========================================================= */
 
 main {
@@ -572,14 +595,13 @@ main {
 
 
 /* =========================================================
-   TIME LOCKUP
+   TIME
    ========================================================= */
 
 .time-lockup {
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   padding-bottom: 21px;
@@ -593,7 +615,8 @@ main {
 
   font:
     10px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 
   letter-spacing:
     0.03em;
@@ -605,7 +628,8 @@ main {
 
   font:
     500 15px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 
@@ -654,6 +678,32 @@ main {
 
 
 /* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.eyebrow {
+  margin:
+    0
+    0
+    9px;
+
+  color:
+    var(--aqua);
+
+  font:
+    10px
+    "DM Mono",
+    monospace;
+
+  letter-spacing:
+    0.13em;
+
+  font-variant:
+    normal;
+}
+
+
+/* =========================================================
    COMPOSER
    ========================================================= */
 
@@ -678,29 +728,29 @@ main {
 
 .composer-body {
   width: 100%;
-
   min-width: 0;
 }
 
 textarea {
   width: 100%;
-
   height: 72px;
 
   resize: none;
 
   border: 0;
-
   outline: 0;
 
-  background: transparent;
+  background:
+    transparent;
 
   color:
     var(--cream);
 
   font:
     14px/1.6
-    Manrope;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 textarea::placeholder {
@@ -712,19 +762,235 @@ textarea::placeholder {
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 10px;
 }
 
-.composer-footer span {
+.composer-footer > span {
   color:
     #72817d;
 
   font:
     10px
-    "DM Mono";
+    "DM Mono",
+    monospace;
+}
+
+
+/* =========================================================
+   COMPOSER TOOLS
+   ========================================================= */
+
+.composer-tools {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding:
+    5px
+    0
+    13px;
+
+  color:
+    #8e9c98;
+
+  font:
+    10px
+    "DM Mono",
+    monospace;
+}
+
+.composer-tools label {
+  margin: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  cursor: pointer;
+}
+
+.composer-tools select {
+  background:
+    #213033;
+
+  border:
+    1px solid
+    #3b4c4d;
+
+  color:
+    #d7e0db;
+
+  font:
+    10px
+    "DM Mono",
+    monospace;
+
+  padding: 5px;
+}
+
+.image-upload input,
+.anonymous-toggle input {
+  display: none;
+}
+
+.anonymous-toggle span {
+  width: 19px;
+  height: 11px;
+
+  position: relative;
+
+  border-radius: 10px;
+
+  background:
+    #405052;
+}
+
+.anonymous-toggle span::after {
+  content: "";
+
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  top: 2px;
+  left: 2px;
+
+  border-radius: 50%;
+
+  background:
+    #c4cfca;
+
+  transition:
+    left 0.2s ease;
+}
+
+.anonymous-toggle input:checked + span {
+  background:
+    #278d89;
+}
+
+.anonymous-toggle input:checked + span::after {
+  left: 10px;
+
+  background:
+    #e3fffa;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+   ========================================================= */
+
+.image-preview {
+  display: none;
+
+  position: relative;
+
+  margin:
+    0
+    0
+    11px;
+}
+
+.image-preview.visible {
+  display: block;
+}
+
+.image-preview img,
+.post-image {
+  max-width: 100%;
+  max-height: 360px;
+
+  object-fit: cover;
+
+  border:
+    1px solid
+    #3b4c4d;
+}
+
+.image-preview img {
+  display: block;
+}
+
+.image-preview button {
+  position: absolute;
+
+  top: 6px;
+  right: 6px;
+
+  width: 23px;
+  height: 23px;
+
+  border: 0;
+
+  background:
+    #122022;
+
+  color:
+    #fff;
+
+  cursor: pointer;
+}
+
+.post-image {
+  display: block;
+
+  width: 100%;
+
+  margin:
+    2px
+    0
+    17px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary {
+  border: 0;
+
+  background:
+    var(--aqua);
+
+  color:
+    #123032;
+
+  padding:
+    11px
+    17px;
+
+  cursor: pointer;
+
+  font:
+    700 12px
+    Manrope,
+    Arial,
+    sans-serif;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.primary:hover {
+  background:
+    #8cf5ed;
+
+  transform:
+    translateY(-1px);
+}
+
+.account-menu .primary {
+  width: 100%;
+
+  margin-top: 7px;
 }
 
 
@@ -744,9 +1010,11 @@ textarea::placeholder {
 }
 
 .post.featured {
-  margin-left: -19px;
+  margin-left:
+    -19px;
 
-  padding-left: 17px;
+  padding-left:
+    17px;
 
   border-left:
     2px solid
@@ -763,22 +1031,17 @@ textarea::placeholder {
 
 .post-top {
   justify-content: space-between;
-
-  gap: 15px;
 }
 
 .identity {
   gap: 10px;
-
-  min-width: 0;
 }
 
 .identity strong {
   display: block;
 
-  font-size: 12px;
-
-  overflow-wrap: anywhere;
+  font-size:
+    12px;
 }
 
 .identity span {
@@ -791,20 +1054,18 @@ textarea::placeholder {
 
   font:
     10px
-    "DM Mono";
-
-  overflow-wrap: anywhere;
+    "DM Mono",
+    monospace;
 }
 
 .post time {
-  flex-shrink: 0;
-
   color:
     var(--muted);
 
   font:
     10px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 .post p {
@@ -817,10 +1078,9 @@ textarea::placeholder {
 
   font:
     14px/1.8
-    Manrope;
-
-  overflow-wrap:
-    anywhere;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .post blockquote {
@@ -840,7 +1100,8 @@ textarea::placeholder {
 }
 
 .post-bottom {
-  gap: 17px;
+  gap:
+    17px;
 }
 
 
@@ -856,7 +1117,8 @@ textarea::placeholder {
 
   font:
     9px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 
   letter-spacing:
     0.1em;
@@ -880,75 +1142,7 @@ textarea::placeholder {
 
 
 /* =========================================================
-   POST IMAGE
-   ========================================================= */
-
-.post-image {
-  display: block;
-
-  width: 100%;
-
-  max-width: 100%;
-
-  max-height: 360px;
-
-  margin:
-    2px
-    0
-    17px;
-
-  object-fit: cover;
-
-  border:
-    1px solid
-    #3b4c4d;
-}
-
-
-/* =========================================================
-   REACTION
-   ========================================================= */
-
-.reaction {
-  border: 0;
-
-  background:
-    transparent;
-
-  color:
-    #7f8e89;
-
-  font-size:
-    15px;
-
-  cursor: pointer;
-}
-
-.reaction em {
-  margin-left: 3px;
-
-  font:
-    10px
-    "DM Mono";
-
-  font-style:
-    normal;
-}
-
-
-/* =========================================================
    RIGHT RAIL
-   ========================================================= */
-
-.right-rail {
-  border-left:
-    1px solid
-    var(--line);
-}
-
-
-/* =========================================================
-   ABOUT CARD
    ========================================================= */
 
 .about-card {
@@ -994,7 +1188,9 @@ textarea::placeholder {
 
   font:
     12px/1.8
-    Manrope;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .about-card a {
@@ -1035,9 +1231,7 @@ textarea::placeholder {
   display: flex;
 
   align-items: center;
-
-  justify-content:
-    space-between;
+  justify-content: space-between;
 }
 
 .online-heading .eyebrow {
@@ -1045,24 +1239,21 @@ textarea::placeholder {
     0;
 }
 
-.online-heading span {
+.online-heading > span {
   color:
     var(--muted);
 
   font:
     10px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 .online-heading i {
-  display:
-    inline-block;
+  display: inline-block;
 
-  width:
-    6px;
-
-  height:
-    6px;
+  width: 6px;
+  height: 6px;
 
   margin-right:
     5px;
@@ -1079,19 +1270,15 @@ textarea::placeholder {
 }
 
 .faces {
-  display:
-    flex;
+  display: flex;
 
   margin-top:
     15px;
 }
 
 .faces .avatar {
-  width:
-    31px;
-
-  height:
-    31px;
+  width: 31px;
+  height: 31px;
 
   margin-right:
     -8px;
@@ -1105,20 +1292,14 @@ textarea::placeholder {
 }
 
 .more-face {
-  width:
-    31px;
+  width: 31px;
+  height: 31px;
 
-  height:
-    31px;
+  margin-left: 0;
 
-  display:
-    grid;
+  display: grid;
 
-  place-items:
-    center;
-
-  margin-left:
-    0;
+  place-items: center;
 
   border:
     2px solid
@@ -1135,7 +1316,8 @@ textarea::placeholder {
 
   font:
     8px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 
@@ -1166,8 +1348,7 @@ textarea::placeholder {
 }
 
 .activity-stats {
-  display:
-    grid;
+  display: grid;
 
   grid-template-columns:
     repeat(3, 1fr);
@@ -1186,15 +1367,15 @@ textarea::placeholder {
 }
 
 .activity-stats strong {
-  display:
-    block;
+  display: block;
 
   color:
     var(--aqua);
 
   font:
     500 18px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 .activity-stats span {
@@ -1203,7 +1384,8 @@ textarea::placeholder {
 
   font:
     9px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 }
 
 
@@ -1233,8 +1415,7 @@ textarea::placeholder {
 
 .install-button,
 .notification-button {
-  width:
-    100%;
+  width: 100%;
 
   padding:
     10px;
@@ -1244,12 +1425,9 @@ textarea::placeholder {
 
   font:
     700 10px
-    Manrope;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .install-button {
@@ -1266,9 +1444,6 @@ textarea::placeholder {
 
 .install-button:hover {
   background:
-    #8cf5ed;
-
-  border-color:
     #8cf5ed;
 }
 
@@ -1293,14 +1468,6 @@ textarea::placeholder {
 
   color:
     var(--aqua);
-
-  background:
-    rgba(
-      103,
-      231,
-      221,
-      0.04
-    );
 }
 
 .install-help {
@@ -1314,7 +1481,9 @@ textarea::placeholder {
 
   font:
     10px/1.65
-    Manrope;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .install-help strong {
@@ -1328,8 +1497,7 @@ textarea::placeholder {
    ========================================================= */
 
 .note {
-  display:
-    flex;
+  display: flex;
 
   gap:
     11px;
@@ -1356,7 +1524,9 @@ textarea::placeholder {
 
   font:
     11px/1.7
-    Manrope;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .note strong {
@@ -1370,8 +1540,7 @@ textarea::placeholder {
    ========================================================= */
 
 .messages {
-  position:
-    fixed;
+  position: fixed;
 
   z-index:
     50;
@@ -1385,9 +1554,6 @@ textarea::placeholder {
   width:
     335px;
 
-  max-width:
-    calc(100vw - 30px);
-
   padding:
     20px;
 
@@ -1400,12 +1566,7 @@ textarea::placeholder {
 
   box-shadow:
     0 17px 55px
-    rgba(
-      0,
-      0,
-      0,
-      0.68
-    );
+    rgba(0, 0, 0, 0.68);
 
   transform:
     translateY(
@@ -1429,8 +1590,7 @@ textarea::placeholder {
 }
 
 .message-head {
-  display:
-    flex;
+  display: flex;
 
   align-items:
     flex-start;
@@ -1471,9 +1631,6 @@ textarea::placeholder {
   font-size:
     24px;
 
-  line-height:
-    1;
-
   cursor:
     pointer;
 }
@@ -1485,15 +1642,14 @@ textarea::placeholder {
 
 .dm-list {
   max-height:
-    360px;
+    320px;
 
   overflow-y:
     auto;
 }
 
 .dm {
-  display:
-    flex;
+  display: flex;
 
   gap:
     10px;
@@ -1507,29 +1663,9 @@ textarea::placeholder {
     #283638;
 }
 
-.dm .avatar {
-  width:
-    31px;
-
-  height:
-    31px;
-
-  font-size:
-    10px;
-}
-
 .dm strong {
   font-size:
     11px;
-}
-
-.dm strong span {
-  color:
-    var(--aqua);
-
-  font:
-    9px
-    "DM Mono";
 }
 
 .dm p {
@@ -1560,32 +1696,44 @@ textarea::placeholder {
 }
 
 .message-compose input {
-  margin:
-    0;
+  width:
+    100%;
 
   min-width:
     0;
-}
 
-.message-compose input:first-child {
-  flex:
-    0 1 110px;
-}
+  margin:
+    0;
 
-.message-compose input:nth-child(2) {
-  flex:
-    1 1 auto;
+  padding:
+    10px;
+
+  background:
+    #10191b;
+
+  border:
+    1px solid
+    #344244;
+
+  color:
+    var(--cream);
+
+  outline:
+    none;
+
+  font:
+    11px
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .message-compose button {
   width:
     37px;
 
-  height:
-    37px;
-
-  flex:
-    0 0 37px;
+  flex-shrink:
+    0;
 
   border:
     0;
@@ -1601,104 +1749,6 @@ textarea::placeholder {
 
   cursor:
     pointer;
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-.toast {
-  position:
-    fixed;
-
-  z-index:
-    100;
-
-  bottom:
-    25px;
-
-  left:
-    50%;
-
-  max-width:
-    calc(100vw - 30px);
-
-  padding:
-    12px
-    18px;
-
-  background:
-    #dcebe6;
-
-  color:
-    #153133;
-
-  font-size:
-    12px;
-
-  font-weight:
-    700;
-
-  text-align:
-    center;
-
-  transform:
-    translate(
-      -50%,
-      100px
-    );
-
-  transition:
-    transform 0.25s ease;
-}
-
-.toast.show {
-  transform:
-    translate(
-      -50%,
-      0
-    );
-}
-
-
-/* =========================================================
-   LOADING
-   ========================================================= */
-
-.loading-copy {
-  color:
-    var(--muted);
-
-  font-size:
-    11px;
-
-  line-height:
-    1.7;
-}
-
-
-/* =========================================================
-   ANIMATION
-   ========================================================= */
-
-@keyframes fade {
-
-  from {
-    opacity:
-      0;
-
-    transform:
-      translateY(-7px);
-  }
-
-  to {
-    opacity:
-      1;
-
-    transform:
-      translateY(0);
-  }
 }
 
 
@@ -1736,13 +1786,8 @@ textarea::placeholder {
     #374749;
 
   box-shadow:
-    0 18px 50px
-    rgba(
-      0,
-      0,
-      0,
-      0.65
-    );
+    0 22px 60px
+    rgba(0, 0, 0, 0.65);
 }
 
 .account-menu.open {
@@ -1769,7 +1814,9 @@ textarea::placeholder {
 
   font:
     600 22px
-    Manrope;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .account-menu label {
@@ -1802,15 +1849,13 @@ textarea::placeholder {
 }
 
 .account-menu input,
-.message-compose input {
+.account-menu textarea,
+.account-menu select {
   width:
     100%;
 
   margin-top:
     6px;
-
-  padding:
-    11px;
 
   background:
     #10191b;
@@ -1822,18 +1867,56 @@ textarea::placeholder {
   color:
     var(--cream);
 
+  padding:
+    9px;
+
   outline:
     none;
 
   font:
-    13px
-    Manrope;
+    11px
+    Manrope,
+    Arial,
+    sans-serif;
+}
+
+.account-menu textarea {
+  min-height:
+    65px;
+
+  resize:
+    vertical;
 }
 
 .account-menu input:focus,
-.message-compose input:focus {
+.account-menu textarea:focus,
+.account-menu select:focus {
   border-color:
     var(--aqua);
+}
+
+.small-copy {
+  margin:
+    15px
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
+
+  text-align:
+    center;
+}
+
+.small-copy a {
+  color:
+    var(--aqua);
+
+  text-decoration:
+    none;
 }
 
 
@@ -1844,6 +1927,11 @@ textarea::placeholder {
 .profile-settings {
   margin-top:
     4px;
+}
+
+.profile-settings[hidden] {
+  display:
+    none !important;
 }
 
 .settings-divider {
@@ -1864,7 +1952,8 @@ textarea::placeholder {
 
   font:
     9px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 
   letter-spacing:
     0.06em;
@@ -1878,11 +1967,11 @@ textarea::placeholder {
   height:
     1px;
 
-  background:
-    #344244;
-
   flex:
     1;
+
+  background:
+    #344244;
 }
 
 .profile-cover-preview {
@@ -1908,15 +1997,15 @@ textarea::placeholder {
       #162a2b
     );
 
+  border:
+    1px solid
+    #405052;
+
   background-size:
     cover;
 
   background-position:
     center;
-
-  border:
-    1px solid
-    #405052;
 }
 
 .profile-cover-preview span {
@@ -1925,29 +2014,23 @@ textarea::placeholder {
     6px;
 
   background:
-    rgba(
-      14,
-      23,
-      25,
-      0.67
-    );
-
-  color:
-    #a6b7b2;
+    rgba(14, 23, 25, 0.67);
 
   font:
     8px
-    "DM Mono";
+    "DM Mono",
+    monospace;
+
+  color:
+    #a6b7b2;
 }
 
 .cover-upload {
   display:
     block !important;
 
-  margin:
-    0
-    0
-    12px !important;
+  cursor:
+    pointer;
 
   color:
     #90a09b !important;
@@ -1955,8 +2038,10 @@ textarea::placeholder {
   font-size:
     10px !important;
 
-  cursor:
-    pointer;
+  margin:
+    0
+    0
+    12px !important;
 }
 
 .cover-upload input,
@@ -1992,9 +2077,6 @@ textarea::placeholder {
   place-items:
     center;
 
-  overflow:
-    hidden;
-
   border-radius:
     50%;
 
@@ -2003,6 +2085,9 @@ textarea::placeholder {
 
   color:
     #a9b9b5;
+
+  overflow:
+    hidden;
 }
 
 .profile-image-preview img {
@@ -2014,41 +2099,6 @@ textarea::placeholder {
 
   object-fit:
     cover;
-}
-
-.profile-settings textarea,
-.profile-settings select {
-  width:
-    100%;
-
-  min-height:
-    31px;
-
-  margin-top:
-    6px;
-
-  padding:
-    8px;
-
-  resize:
-    vertical;
-
-  background:
-    #10191b;
-
-  border:
-    1px solid
-    #344244;
-
-  color:
-    var(--cream);
-
-  outline:
-    none;
-
-  font:
-    11px
-    Manrope;
 }
 
 .profile-details {
@@ -2117,7 +2167,9 @@ textarea::placeholder {
 
   font:
     700 11px
-    Manrope;
+    Manrope,
+    Arial,
+    sans-serif;
 }
 
 .secondary:hover {
@@ -2130,204 +2182,54 @@ textarea::placeholder {
 
 
 /* =========================================================
-   COMPOSER TOOLS
+   TOAST
    ========================================================= */
 
-.composer-tools {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    14px;
-
-  padding:
-    5px
-    0
-    13px;
-
-  color:
-    #8e9c98;
-
-  font:
-    10px
-    "DM Mono";
-
-  flex-wrap:
-    wrap;
-}
-
-.composer-tools label {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    5px;
-
-  margin:
-    0;
-
-  cursor:
-    pointer;
-}
-
-.composer-tools select {
-  padding:
-    5px;
-
-  background:
-    #213033;
-
-  border:
-    1px solid
-    #3b4c4d;
-
-  color:
-    #d7e0db;
-
-  font:
-    10px
-    "DM Mono";
-}
-
-.image-upload input,
-.anonymous-toggle input {
-  display:
-    none;
-}
-
-.anonymous-toggle span {
+.toast {
   position:
-    relative;
+    fixed;
 
-  width:
-    19px;
+  z-index:
+    100;
 
-  height:
-    11px;
-
-  border-radius:
-    10px;
-
-  background:
-    #405052;
-}
-
-.anonymous-toggle span::after {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  top:
-    2px;
+  bottom:
+    25px;
 
   left:
-    2px;
-
-  width:
-    7px;
-
-  height:
-    7px;
-
-  border-radius:
     50%;
 
-  background:
-    #c4cfca;
-
-  transition:
-    0.2s;
-}
-
-.anonymous-toggle input:checked + span {
-  background:
-    #278d89;
-}
-
-.anonymous-toggle input:checked + span::after {
-  left:
-    10px;
+  padding:
+    12px
+    18px;
 
   background:
-    #e3fffa;
-}
-
-
-/* =========================================================
-   IMAGE PREVIEW
-   ========================================================= */
-
-.image-preview {
-  display:
-    none;
-
-  position:
-    relative;
-
-  margin:
-    0
-    0
-    11px;
-}
-
-.image-preview.visible {
-  display:
-    block;
-}
-
-.image-preview img {
-  display:
-    block;
-
-  width:
-    100%;
-
-  max-height:
-    360px;
-
-  object-fit:
-    cover;
-
-  border:
-    1px solid
-    #3b4c4d;
-}
-
-.image-preview button {
-  position:
-    absolute;
-
-  top:
-    6px;
-
-  right:
-    6px;
-
-  width:
-    23px;
-
-  height:
-    23px;
-
-  border:
-    0;
-
-  background:
-    #122022;
+    #dcebe6;
 
   color:
-    #fff;
+    #153133;
 
-  cursor:
-    pointer;
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  transform:
+    translate(
+      -50%,
+      100px
+    );
+
+  transition:
+    transform 0.25s ease;
+}
+
+.toast.show {
+  transform:
+    translate(
+      -50%,
+      0
+    );
 }
 
 
@@ -2342,9 +2244,6 @@ textarea::placeholder {
   position:
     relative;
 
-  z-index:
-    3;
-
   display:
     flex;
 
@@ -2358,28 +2257,26 @@ textarea::placeholder {
     0
     4.5vw;
 
+  background:
+    #080e10;
+
   border-top:
     1px solid
     var(--line);
-
-  background:
-    #0b1113;
 
   color:
     #687572;
 
   font:
     9px
-    "DM Mono";
+    "DM Mono",
+    monospace;
 
   letter-spacing:
     0.04em;
 
   text-align:
     center;
-
-  box-shadow:
-    none;
 }
 
 .site-footer p {
@@ -2389,16 +2286,51 @@ textarea::placeholder {
 
 
 /* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading-copy {
+  color:
+    var(--muted);
+
+  font:
+    11px
+    "DM Mono",
+    monospace;
+
+  line-height:
+    1.6;
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes fade {
+  from {
+    opacity:
+      0;
+
+    transform:
+      translateY(-7px);
+  }
+
+  to {
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
    TABLET
    ========================================================= */
 
 @media (max-width: 960px) {
-
-  .topbar {
-    padding:
-      0
-      28px;
-  }
 
   .layout {
     grid-template-columns:
@@ -2432,30 +2364,24 @@ textarea::placeholder {
 
 @media (max-width: 660px) {
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      HEADER
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .topbar {
-    width:
-      100%;
-
     height:
-      68px;
+      70px;
 
     min-height:
-      68px;
+      70px;
 
     display:
       grid;
 
     grid-template-columns:
-      minmax(0, 1fr)
+      1fr
       auto
-      minmax(0, 1fr);
-
-    align-items:
-      center;
+      1fr;
 
     padding:
       0
@@ -2463,54 +2389,41 @@ textarea::placeholder {
 
     background:
       linear-gradient(
-        108deg,
-        #061113 0%,
-        #081b1d 18%,
-        #0a292b 38%,
-        #0d3b3d 58%,
-        #115150 78%,
-        #176866 100%
-      );
-
-    border-bottom:
-      1px solid
-      rgba(
-        103,
-        231,
-        221,
-        0.17
+        115deg,
+        #071416 0%,
+        #092224 25%,
+        #0c3537 50%,
+        #10494a 74%,
+        #166360 100%
       );
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      DOMAIN
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
-  .header-domain {
+  .domain {
+    display:
+      flex !important;
+
     justify-self:
       start;
 
-    gap:
-      5px;
-
-    min-width:
-      0;
-
     max-width:
-      100%;
+      125px;
+
+    gap:
+      4px;
 
     overflow:
       hidden;
 
     font-size:
       7px;
-
-    letter-spacing:
-      0;
   }
 
-  .header-domain a {
+  .domain a {
     overflow:
       hidden;
 
@@ -2518,44 +2431,80 @@ textarea::placeholder {
       ellipsis;
   }
 
-  .header-domain span {
-    flex-shrink:
-      0;
-  }
 
-
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      LOGO
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .header-logo {
     width:
-      36px;
+      43px;
 
     height:
-      36px;
-
-    justify-self:
-      center;
+      43px;
   }
 
 
-  /* -------------------------------------------------------
-     RIGHT SIDE
-     ------------------------------------------------------- */
+  /* -----------------------------------------------
+     EMPTY RIGHT
+     ----------------------------------------------- */
 
   .header-empty {
-    display:
-      block;
-
-    width:
-      100%;
+    justify-self:
+      end;
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
+     HUB NAV
+     ----------------------------------------------- */
+
+  .hub-nav {
+    gap:
+      6px;
+
+    padding:
+      8px
+      12px;
+
+    background:
+      #0b1719;
+  }
+
+  .hub-nav-item {
+    min-width:
+      0;
+
+    flex:
+      1;
+
+    padding:
+      9px
+      5px;
+
+    gap:
+      5px;
+  }
+
+  .hub-nav-item span {
+    display:
+      none;
+  }
+
+  .hub-nav-item strong {
+    font-size:
+      9px;
+  }
+
+  .hub-nav-item b {
+    font-size:
+      7px;
+  }
+
+
+  /* -----------------------------------------------
      LAYOUT
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .layout {
     display:
@@ -2566,9 +2515,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      LEFT RAIL
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .left-rail {
     display:
@@ -2576,14 +2525,11 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      MAIN
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   main {
-    width:
-      100%;
-
     padding:
       27px
       18px
@@ -2591,9 +2537,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      TIME
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .time-lockup {
     padding-bottom:
@@ -2609,9 +2555,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      HEADING
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .section-heading {
     padding:
@@ -2637,9 +2583,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      COMPOSER
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .composer {
     padding:
@@ -2647,11 +2593,6 @@ textarea::placeholder {
 
     gap:
       10px;
-  }
-
-  .composer-tools {
-    gap:
-      9px;
   }
 
   textarea {
@@ -2662,10 +2603,18 @@ textarea::placeholder {
       14px;
   }
 
+  .composer-tools {
+    flex-wrap:
+      wrap;
 
-  /* -------------------------------------------------------
+    gap:
+      9px;
+  }
+
+
+  /* -----------------------------------------------
      POSTS
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .post {
     padding:
@@ -2696,9 +2645,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      RIGHT RAIL
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .right-rail {
     display:
@@ -2718,15 +2667,12 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      MESSAGES
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .messages {
     width:
-      calc(100% - 30px);
-
-    max-width:
       calc(100% - 30px);
 
     right:
@@ -2739,25 +2685,10 @@ textarea::placeholder {
       17px;
   }
 
-  .message-compose {
-    flex-wrap:
-      wrap;
-  }
 
-  .message-compose input:first-child {
-    flex:
-      1 1 100%;
-  }
-
-  .message-compose input:nth-child(2) {
-    flex:
-      1 1 calc(100% - 44px);
-  }
-
-
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      ACCOUNT MENU
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .account-menu {
     right:
@@ -2771,9 +2702,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      PHONE
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .phone-card {
     padding:
@@ -2783,9 +2714,9 @@ textarea::placeholder {
   }
 
 
-  /* -------------------------------------------------------
+  /* -----------------------------------------------
      FOOTER
-     ------------------------------------------------------- */
+     ----------------------------------------------- */
 
   .site-footer {
     min-height:
@@ -2808,7 +2739,7 @@ textarea::placeholder {
 
 
 /* =========================================================
-   VERY SMALL MOBILE
+   VERY SMALL PHONES
    ========================================================= */
 
 @media (max-width: 380px) {
@@ -2816,23 +2747,43 @@ textarea::placeholder {
   .topbar {
     padding:
       0
-      11px;
+      10px;
   }
 
-  .header-domain {
+  .domain {
+    max-width:
+      112px;
+
     font-size:
       6.5px;
-
-    gap:
-      4px;
   }
 
   .header-logo {
     width:
-      32px;
+      39px;
 
     height:
-      32px;
+      39px;
+  }
+
+  .hub-nav {
+    gap:
+      4px;
+
+    padding:
+      7px
+      9px;
+  }
+
+  .hub-nav-item {
+    padding:
+      8px
+      3px;
+  }
+
+  .hub-nav-item strong {
+    font-size:
+      8px;
   }
 
   main {
