@@ -17,6 +17,10 @@ const app = express();
 const root = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.json({ limit: '2mb' }));
 app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} → root: ${root}`);
+  next();
+});
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
