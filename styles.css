@@ -10,6 +10,8 @@
   --muted: #8d9894;
   --aqua: #67e7dd;
   --aqua-dark: #24aba8;
+  --aqua-deep: #123d3e;
+  --aqua-glow: rgba(103, 231, 221, 0.18);
 }
 
 
@@ -29,74 +31,223 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--cream);
+
   font-family: Manrope, Arial, sans-serif;
   font-size: 14px;
+
   font-variant: normal;
   font-feature-settings: normal;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 
 /* =========================================================
-   GRAIN
+   CLEAN BACKGROUND
    ========================================================= */
 
 .grain {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  opacity: 0.035;
-  z-index: 4;
-
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  display: none !important;
 }
 
 
 /* =========================================================
-   TOP BAR
+   HEADER
    ========================================================= */
 
 .topbar {
   height: 74px;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
   padding: 0 4.5vw;
 
-  border-bottom: 1px solid var(--line);
-
   position: relative;
+  z-index: 20;
+
+  background:
+    linear-gradient(
+      112deg,
+      #071315 0%,
+      #0a1d1f 24%,
+      #0d292b 48%,
+      #124345 73%,
+      #176665 100%
+    );
+
+  border-bottom: 1px solid rgba(103, 231, 221, 0.22);
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.48),
+    inset 0 -1px 0 rgba(103, 231, 221, 0.06);
+}
+
+.topbar:after {
+  content: "";
+
+  pointer-events: none;
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: -24px;
+
+  height: 24px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.22),
+      transparent
+    );
 }
 
 
 /* =========================================================
-   PRESENCE
+   DOMAIN
    ========================================================= */
 
-.presence {
-  font: 11px 'DM Mono';
-  color: var(--muted);
-  letter-spacing: 0.03em;
-  margin-right: 25px;
+.domain {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #4f625e;
+
+  font: 10px "DM Mono";
+
+  white-space: nowrap;
 }
 
-.presence i,
-.online-heading i {
+.domain a {
+  text-decoration: none;
+
+  color: #7e8d89;
+
+  transition: color 0.2s ease;
+}
+
+.domain a:first-child {
+  color: var(--aqua);
+
+  text-shadow:
+    0 0 20px rgba(103, 231, 221, 0.16);
+}
+
+.domain a:last-child {
+  color: #7b8784;
+}
+
+.domain a:hover {
+  color: var(--cream);
+}
+
+.domain span {
+  color: #415450;
+}
+
+
+/* =========================================================
+   MOBILE BRAND
+   ========================================================= */
+
+.brand-mobile {
+  display: none;
+
+  align-items: center;
+
+  gap: 8px;
+
+  text-decoration: none;
+
+  font: 700 24px "Playfair Display";
+
+  letter-spacing: -0.045em;
+
+  color: var(--cream);
+}
+
+.brand-mobile img {
+  width: 31px;
+  height: 31px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+.brand-mobile > span {
+  color: var(--cream);
+}
+
+.brand-mobile .brand-dot {
+  color: var(--aqua);
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-left: auto;
+}
+
+.presence {
+  font: 10px "DM Mono";
+
+  color: var(--muted);
+
+  white-space: nowrap;
+}
+
+.presence i {
   display: inline-block;
+
   width: 7px;
   height: 7px;
 
-  background: var(--aqua);
+  margin-right: 6px;
+
   border-radius: 50%;
 
-  box-shadow: 0 0 12px var(--aqua);
+  background: var(--aqua);
 
-  margin-right: 7px;
+  box-shadow:
+    0 0 12px var(--aqua);
 }
 
 
 /* =========================================================
-   ACCOUNT BUTTONS
+   ACCOUNT + MESSAGE WRAPPER
+   ========================================================= */
+
+.account-wrap {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTON
    ========================================================= */
 
 .account-button {
@@ -106,43 +257,46 @@ body {
   border: 1px solid #3a4849;
   border-radius: 50%;
 
-  background: #1b282a;
+  background: rgba(20, 36, 38, 0.88);
+
   color: var(--cream);
 
   display: grid;
   place-items: center;
 
+  flex-shrink: 0;
+
   cursor: pointer;
-  transition: 0.2s;
+
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .account-button:hover,
 .account-button.active {
   border-color: var(--aqua);
+
   color: var(--aqua);
+
+  background: rgba(103, 231, 221, 0.08);
+
+  transform: translateY(-1px);
 }
 
 .account-button svg {
   width: 19px;
+  height: 19px;
 
   fill: none;
+
   stroke: currentColor;
+
   stroke-width: 1.5;
+
   stroke-linecap: round;
-}
-
-
-/* =========================================================
-   ACCOUNT WRAP
-   ========================================================= */
-
-.account-wrap {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
 }
 
 
@@ -155,7 +309,7 @@ body {
 
   position: absolute;
 
-  z-index: 10;
+  z-index: 1000;
 
   right: 0;
   top: 52px;
@@ -164,57 +318,77 @@ body {
 
   padding: 24px;
 
-  background: #1a2729;
+  background:
+    linear-gradient(
+      145deg,
+      #1a292b,
+      #152224
+    );
 
-  border: 1px solid #374749;
+  border: 1px solid #37494a;
 
-  box-shadow: 0 18px 50px #0009;
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.65);
+
+  backdrop-filter: blur(12px);
 }
 
 .account-menu.open {
   display: block;
+
   animation: fade 0.2s ease;
 }
 
+.account-menu.logged-in {
+  max-height: calc(100vh - 95px);
 
-/* =========================================================
-   EYEBROW
-   ========================================================= */
+  overflow-y: auto;
+}
 
-.eyebrow {
-  font: 10px 'DM Mono';
-  letter-spacing: 0.13em;
-
-  color: var(--aqua);
-
-  margin: 0 0 9px;
+.account-menu.logged-in .login-only {
+  display: none !important;
 }
 
 
 /* =========================================================
-   ACCOUNT MENU TYPOGRAPHY
+   TYPOGRAPHY
    ========================================================= */
 
+.eyebrow {
+  margin: 0 0 9px;
+
+  color: var(--aqua);
+
+  font: 10px "DM Mono";
+
+  letter-spacing: 0.13em;
+
+  font-variant: normal;
+}
+
 .account-menu h2 {
-  font-size: 22px;
   margin: 0 0 18px;
+
+  font: 600 22px Manrope;
 }
 
 .account-menu label {
   display: block;
 
+  margin: 12px 0;
+
   color: var(--cream);
 
   font-size: 11px;
-  font-weight: 700;
 
-  margin: 12px 0;
+  font-weight: 700;
 }
 
 .account-menu label span {
   float: right;
 
   color: var(--muted);
+
   font-weight: 500;
 }
 
@@ -223,11 +397,24 @@ body {
    INPUTS
    ========================================================= */
 
+input,
+textarea,
+select,
+button {
+  font-family: Manrope, Arial, sans-serif;
+
+  font-variant: normal;
+
+  font-feature-settings: normal;
+}
+
 .account-menu input,
 .message-compose input {
   width: 100%;
 
   margin-top: 6px;
+
+  padding: 11px;
 
   background: #10191b;
 
@@ -235,45 +422,55 @@ body {
 
   color: var(--cream);
 
-  padding: 11px;
+  outline: none;
 
   font: 13px Manrope;
-
-  outline: none;
 }
 
 .account-menu input:focus,
 .message-compose input:focus {
   border-color: var(--aqua);
+
+  box-shadow:
+    0 0 0 2px rgba(103, 231, 221, 0.06);
 }
 
 
 /* =========================================================
-   PRIMARY BUTTON
+   BUTTONS
    ========================================================= */
 
 .primary {
   border: 0;
 
   background: var(--aqua);
-  color: #123032;
 
-  font: 700 12px Manrope;
+  color: #123032;
 
   padding: 11px 17px;
 
+  font: 700 12px Manrope;
+
   cursor: pointer;
 
-  transition: 0.2s;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .primary:hover {
-  background: #a5fff5;
+  background: #8cf5ed;
+
   transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 20px rgba(103, 231, 221, 0.14);
 }
 
 .account-menu .primary {
   width: 100%;
+
   margin-top: 7px;
 }
 
@@ -283,23 +480,25 @@ body {
    ========================================================= */
 
 .small-copy {
-  font-size: 11px;
+  margin: 15px 0 0;
+
   color: var(--muted);
 
-  text-align: center;
+  font-size: 11px;
 
-  margin: 15px 0 0;
+  text-align: center;
 }
 
 .small-copy a,
 .about-card a {
   color: var(--aqua);
+
   text-decoration: none;
 }
 
 
 /* =========================================================
-   LAYOUT
+   MAIN LAYOUT
    ========================================================= */
 
 .layout {
@@ -319,7 +518,7 @@ body {
 
 
 /* =========================================================
-   LEFT + RIGHT RAIL
+   SIDE RAILS
    ========================================================= */
 
 .left-rail,
@@ -331,46 +530,59 @@ body {
   border-right: 1px solid var(--line);
 
   display: flex;
+
   flex-direction: column;
 }
 
 
 /* =========================================================
-   BRAND
+   DESKTOP BRAND
    ========================================================= */
 
-.brand,
-.brand-mobile {
-  font: 700 35px 'Playfair Display';
+.brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  text-decoration: none;
+
+  font: 700 35px "Playfair Display";
 
   letter-spacing: -0.055em;
 
+  color: var(--cream);
+}
+
+.brand img {
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: inline-block;
+
   background:
     linear-gradient(
-      110deg,
-      #fff 18%,
-      #caebe7 56%,
-      var(--aqua)
+      112deg,
+      #c9f7f3 0%,
+      #67e7dd 45%,
+      #24aba8 100%
     );
 
   -webkit-background-clip: text;
   background-clip: text;
 
   color: transparent;
-
-  text-decoration: none;
-
-  font-variant: normal;
 }
 
-.brand span,
-.brand-mobile span {
+.brand-text > span {
   color: var(--aqua);
-}
-
-.brand-mobile {
-  display: none;
-  font-size: 24px;
 }
 
 
@@ -379,11 +591,13 @@ body {
    ========================================================= */
 
 .tagline {
-  font: 15px/1.65 'Playfair Display';
+  max-width: 215px;
+
+  margin: 23px 0 59px;
 
   color: #aeb8b3;
 
-  margin: 23px 0 59px;
+  font: 15px/1.65 "Playfair Display";
 }
 
 
@@ -393,6 +607,7 @@ body {
 
 nav {
   display: grid;
+
   gap: 16px;
 }
 
@@ -402,15 +617,22 @@ nav a {
   text-decoration: none;
 
   font-size: 12px;
+
   font-weight: 700;
+
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--cream);
 }
 
 nav a span {
-  font: 10px 'DM Mono';
-
   margin-right: 11px;
 
   color: #5d6b6a;
+
+  font: 10px "DM Mono";
 }
 
 nav a.nav-active {
@@ -418,15 +640,15 @@ nav a.nav-active {
 }
 
 nav b {
+  margin-left: 5px;
+
+  padding: 2px 5px;
+
   background: #284749;
 
   color: var(--aqua);
 
-  font: 10px 'DM Mono';
-
-  padding: 2px 5px;
-
-  margin-left: 5px;
+  font: 10px "DM Mono";
 }
 
 
@@ -437,27 +659,30 @@ nav b {
 .signed-out {
   margin-top: auto;
 
-  border-top: 1px solid var(--line);
-
   padding-top: 18px;
 
+  border-top: 1px solid var(--line);
+
   display: flex;
+
   gap: 10px;
 
   align-items: center;
 }
 
 .signed-out p {
-  font-size: 10px;
-  line-height: 1.6;
+  margin: 0;
 
   color: var(--muted);
 
-  margin: 0;
+  font-size: 10px;
+
+  line-height: 1.6;
 }
 
 .signed-out strong {
   color: var(--cream);
+
   font-size: 11px;
 }
 
@@ -476,38 +701,49 @@ nav b {
   display: grid;
   place-items: center;
 
-  font: 700 12px 'DM Mono';
-
   flex: none;
+
+  font: 700 12px "DM Mono";
 }
 
 .avatar-placeholder {
   background: #273638;
+
   color: #91a5a1;
 }
 
 .aurora {
-  background: linear-gradient(145deg, #79ede0, #26646a);
+  background:
+    linear-gradient(
+      145deg,
+      #79ede0,
+      #26646a
+    );
+
   color: #153638;
 }
 
 .ember {
   background: #b56d46;
+
   color: #fee0c5;
 }
 
 .moss {
   background: #65845d;
+
   color: #e3f2cc;
 }
 
 .sky {
   background: #668fac;
+
   color: #d9f3ff;
 }
 
 .lilac {
   background: #8b779c;
+
   color: #f2e8ff;
 }
 
@@ -522,29 +758,31 @@ main {
 
 
 /* =========================================================
-   TIME
+   TIME LOCKUP
    ========================================================= */
 
 .time-lockup {
   display: flex;
 
   align-items: center;
-  justify-content: space-between;
 
-  border-bottom: 1px solid var(--line);
+  justify-content: space-between;
 
   padding-bottom: 21px;
 
+  border-bottom: 1px solid var(--line);
+
   color: var(--muted);
 
-  font: 10px 'DM Mono';
+  font: 10px "DM Mono";
 
   letter-spacing: 0.03em;
 }
 
 .time-lockup strong {
-  font: 500 15px 'DM Mono';
   color: var(--aqua);
+
+  font: 500 15px "DM Mono";
 }
 
 
@@ -553,15 +791,37 @@ main {
    ========================================================= */
 
 .section-heading {
+  position: relative;
+
   padding: 43px 0 27px;
 }
 
 .section-heading h1 {
-  font: 600 31px 'Playfair Display';
+  margin: 0;
+
+  color: var(--cream);
+
+  font: 600 31px "Playfair Display";
 
   letter-spacing: -0.035em;
+}
 
-  margin: 0;
+.section-heading:after {
+  content: "";
+
+  display: block;
+
+  width: 54px;
+  height: 2px;
+
+  margin-top: 18px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--aqua),
+      rgba(103, 231, 221, 0)
+    );
 }
 
 
@@ -578,7 +838,15 @@ main {
 
   border: 1px solid #334245;
 
-  background: #142023;
+  background:
+    linear-gradient(
+      135deg,
+      #142023,
+      #122022
+    );
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.12);
 }
 
 .composer-body {
@@ -591,13 +859,13 @@ textarea {
   width: 100%;
   height: 72px;
 
-  color: var(--cream);
-
-  background: transparent;
-
   border: 0;
 
   outline: 0;
+
+  background: transparent;
+
+  color: var(--cream);
 
   font: 14px/1.6 Manrope;
 }
@@ -610,12 +878,14 @@ textarea::placeholder {
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
 }
 
 .composer-footer span {
-  font: 10px 'DM Mono';
   color: #72817d;
+
+  font: 10px "DM Mono";
 }
 
 
@@ -630,11 +900,11 @@ textarea::placeholder {
 }
 
 .post.featured {
-  border-left: 2px solid var(--aqua);
+  margin-left: -19px;
 
   padding-left: 17px;
 
-  margin-left: -19px;
+  border-left: 2px solid var(--aqua);
 }
 
 .post-top,
@@ -654,41 +924,43 @@ textarea::placeholder {
 }
 
 .identity strong {
-  font-size: 12px;
   display: block;
+
+  font-size: 12px;
 }
 
 .identity span {
-  font: 10px 'DM Mono';
-
   display: block;
+
+  margin-top: 2px;
 
   color: var(--muted);
 
-  margin-top: 2px;
+  font: 10px "DM Mono";
 }
 
 .post time {
-  font: 10px 'DM Mono';
   color: var(--muted);
+
+  font: 10px "DM Mono";
 }
 
 .post p {
-  font: 14px/1.8 Manrope;
-
   margin: 19px 0;
 
   color: #d6d8cf;
+
+  font: 14px/1.8 Manrope;
 }
 
 .post blockquote {
   margin: 22px 0;
 
-  font: 600 22px/1.46 'Playfair Display';
+  color: #f0ede3;
+
+  font: 600 22px/1.46 "Playfair Display";
 
   letter-spacing: -0.015em;
-
-  color: #f0ede3;
 }
 
 .post-bottom {
@@ -697,31 +969,33 @@ textarea::placeholder {
 
 
 /* =========================================================
-   LABELS
+   POST LABELS
    ========================================================= */
 
 .quote-label,
 .story-label {
-  font: 9px 'DM Mono';
+  padding: 4px 6px;
+
+  font: 9px "DM Mono";
 
   letter-spacing: 0.1em;
-
-  padding: 4px 6px;
 }
 
 .quote-label {
   background: #293938;
+
   color: #9eccc5;
 }
 
 .story-label {
   background: #373832;
+
   color: #cecb9c;
 }
 
 
 /* =========================================================
-   REACTIONS
+   REACTION
    ========================================================= */
 
 .reaction {
@@ -737,11 +1011,11 @@ textarea::placeholder {
 }
 
 .reaction em {
-  font: 10px 'DM Mono';
+  margin-left: 3px;
+
+  font: 10px "DM Mono";
 
   font-style: normal;
-
-  margin-left: 3px;
 }
 
 
@@ -755,38 +1029,42 @@ textarea::placeholder {
 
 
 /* =========================================================
-   ABOUT CARD
+   ABOUT
    ========================================================= */
 
 .about-card {
-  border-bottom: 1px solid var(--line);
-
   padding-bottom: 32px;
+
+  border-bottom: 1px solid var(--line);
 }
 
 .about-card h2 {
-  font: 600 25px/1.26 'Playfair Display';
+  margin: 0 0 17px;
+
+  color: var(--cream);
+
+  font: 600 25px/1.26 "Playfair Display";
 
   letter-spacing: -0.03em;
-
-  margin: 0 0 17px;
 }
 
 .about-card h2 i {
   color: var(--aqua);
+
   font-weight: 600;
 }
 
 .about-card > p:not(.eyebrow) {
-  font: 12px/1.8 Manrope;
+  margin-bottom: 22px;
 
   color: #9ba5a0;
 
-  margin-bottom: 22px;
+  font: 12px/1.8 Manrope;
 }
 
 .about-card a {
   font-size: 11px;
+
   font-weight: 700;
 }
 
@@ -809,6 +1087,7 @@ textarea::placeholder {
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
 }
 
@@ -817,8 +1096,9 @@ textarea::placeholder {
 }
 
 .online-heading span {
-  font: 10px 'DM Mono';
   color: var(--muted);
+
+  font: 10px "DM Mono";
 }
 
 .online-heading i {
@@ -838,12 +1118,12 @@ textarea::placeholder {
 }
 
 .faces .avatar {
+  width: 31px;
+  height: 31px;
+
   margin-right: -8px;
 
   border: 2px solid var(--bg);
-
-  width: 31px;
-  height: 31px;
 
   font-size: 10px;
 }
@@ -852,9 +1132,10 @@ textarea::placeholder {
   width: 31px;
   height: 31px;
 
-  border-radius: 50%;
+  margin-left: 0;
 
   border: 2px solid var(--bg);
+  border-radius: 50%;
 
   background: #263334;
 
@@ -863,9 +1144,7 @@ textarea::placeholder {
 
   color: #b7c4c0;
 
-  font: 8px 'DM Mono';
-
-  margin-left: 0;
+  font: 8px "DM Mono";
 }
 
 
@@ -885,13 +1164,14 @@ textarea::placeholder {
 
 .note span {
   color: var(--aqua);
+
   font-size: 17px;
 }
 
 .note p {
-  font: 11px/1.7 Manrope;
-
   margin: 0;
+
+  font: 11px/1.7 Manrope;
 }
 
 .note strong {
@@ -906,30 +1186,42 @@ textarea::placeholder {
 .messages {
   position: fixed;
 
-  z-index: 8;
+  z-index: 50;
 
   right: 25px;
   bottom: 25px;
 
   width: 335px;
 
-  background: #192629;
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #19292b,
+      #152224
+    );
 
   border: 1px solid #405052;
 
-  box-shadow: 0 17px 55px #000b;
+  box-shadow:
+    0 17px 55px rgba(0, 0, 0, 0.68);
 
-  padding: 20px;
-
-  transform: translateY(calc(100% + 35px));
+  transform:
+    translateY(
+      calc(100% + 35px)
+    );
 
   opacity: 0;
 
-  transition: 0.3s;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .messages.open {
   transform: translateY(0);
+
   opacity: 1;
 }
 
@@ -942,6 +1234,7 @@ textarea::placeholder {
   display: flex;
 
   align-items: flex-start;
+
   justify-content: space-between;
 
   padding-bottom: 17px;
@@ -950,9 +1243,11 @@ textarea::placeholder {
 }
 
 .message-head h2 {
-  font: 600 20px 'Playfair Display';
-
   margin: 0;
+
+  color: var(--cream);
+
+  font: 600 20px "Playfair Display";
 }
 
 .message-head button {
@@ -965,11 +1260,17 @@ textarea::placeholder {
   font-size: 24px;
 
   cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.message-head button:hover {
+  color: var(--aqua);
 }
 
 
 /* =========================================================
-   MESSAGE LIST
+   MESSAGE ITEMS
    ========================================================= */
 
 .dm {
@@ -994,11 +1295,9 @@ textarea::placeholder {
 }
 
 .dm strong span {
-  font-weight: 400;
-
   color: var(--aqua);
 
-  font: 9px 'DM Mono';
+  font: 9px "DM Mono";
 }
 
 .dm p {
@@ -1029,6 +1328,8 @@ textarea::placeholder {
 .message-compose button {
   width: 37px;
 
+  flex-shrink: 0;
+
   border: 0;
 
   background: var(--aqua);
@@ -1036,6 +1337,8 @@ textarea::placeholder {
   color: #153133;
 
   font-weight: bold;
+
+  cursor: pointer;
 }
 
 
@@ -1046,24 +1349,25 @@ textarea::placeholder {
 .toast {
   position: fixed;
 
-  z-index: 20;
+  z-index: 100;
 
   bottom: 25px;
   left: 50%;
 
-  transform: translate(-50%, 100px);
+  padding: 12px 18px;
 
   background: #dcebe6;
 
   color: #153133;
 
-  padding: 12px 18px;
-
   font-size: 12px;
 
   font-weight: 700;
 
-  transition: 0.25s;
+  transform: translate(-50%, 100px);
+
+  transition:
+    transform 0.25s ease;
 }
 
 .toast.show {
@@ -1078,11 +1382,13 @@ textarea::placeholder {
 @keyframes fade {
   from {
     opacity: 0;
+
     transform: translateY(-7px);
   }
 
   to {
     opacity: 1;
+
     transform: none;
   }
 }
@@ -1121,142 +1427,366 @@ textarea::placeholder {
 @media (max-width: 660px) {
 
   .topbar {
-    height: 64px;
+    height: auto;
 
-    padding: 0 20px;
+    min-height: 68px;
+
+    display: flex;
+
+    flex-wrap: wrap;
 
     justify-content: space-between;
+
+    gap: 10px 8px;
+
+    padding: 13px 16px 10px;
+
+    background:
+      linear-gradient(
+        115deg,
+        #071416 0%,
+        #0b2325 30%,
+        #103d3e 65%,
+        #166260 100%
+      );
+
+    border-bottom:
+      1px solid
+      rgba(103, 231, 221, 0.25);
   }
 
+
+  /* -----------------------------------------------
+     Mobile brand
+     ----------------------------------------------- */
+
   .brand-mobile {
-    display: block;
+    display: flex;
+
+    order: 1;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 23px;
   }
+
+  .brand-mobile img {
+    width: 29px;
+    height: 29px;
+  }
+
+
+  /* -----------------------------------------------
+     Desktop brand hidden
+     ----------------------------------------------- */
+
+  .left-rail {
+    display: none !important;
+  }
+
+
+  /* -----------------------------------------------
+     Domain hidden
+     ----------------------------------------------- */
+
+  .domain {
+    display: none !important;
+  }
+
+
+  /* -----------------------------------------------
+     Presence hidden
+     ----------------------------------------------- */
 
   .presence {
     display: none;
   }
 
-  .layout {
-    display: block;
+
+  /* -----------------------------------------------
+     Header actions
+     ----------------------------------------------- */
+
+  .header-actions {
+    order: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-left: auto;
   }
 
-  .left-rail {
-    display: none;
+  .account-wrap {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+  }
+
+  .account-button {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  /* -----------------------------------------------
+     Mobile navigation
+     ----------------------------------------------- */
+
+  .top-nav {
+    order: 3;
+
+    display: flex;
+
+    width: 100%;
+
+    gap: 7px;
+
+    overflow: hidden;
+
+    padding: 3px 0 1px;
+  }
+
+  .top-nav a {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 9px 5px;
+
+    border:
+      1px solid
+      rgba(103, 231, 221, 0.14);
+
+    background:
+      rgba(6, 25, 27, 0.52);
+
+    color: #8f9e9a;
+
+    text-align: center;
+
+    font: 9px "DM Mono";
+
+    white-space: nowrap;
+
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .top-nav a:first-child {
+    color: var(--aqua);
+
+    border-color:
+      rgba(103, 231, 221, 0.32);
+
+    background:
+      rgba(103, 231, 221, 0.07);
+  }
+
+  .top-nav a:hover {
+    color: var(--aqua);
+
+    border-color:
+      rgba(103, 231, 221, 0.32);
+  }
+
+
+  /* -----------------------------------------------
+     Main
+     ----------------------------------------------- */
+
+  .layout {
+    display: block;
+
+    min-height: auto;
   }
 
   main {
-    padding: 30px 18px 60px;
+    padding: 27px 18px 60px;
   }
 
-  .time-lockup span:last-child {
-    display: none;
+
+  /* -----------------------------------------------
+     Time
+     ----------------------------------------------- */
+
+  .time-lockup {
+    padding-bottom: 17px;
+
+    font-size: 9px;
   }
+
+  .time-lockup strong {
+    font-size: 13px;
+  }
+
+
+  /* -----------------------------------------------
+     Heading
+     ----------------------------------------------- */
 
   .section-heading {
-    padding: 32px 0 22px;
+    padding: 28px 0 23px;
   }
 
   .section-heading h1 {
     font-size: 27px;
+
+    line-height: 1.2;
+  }
+
+  .section-heading:after {
+    width: 42px;
+
+    margin-top: 15px;
+  }
+
+
+  /* -----------------------------------------------
+     Composer
+     ----------------------------------------------- */
+
+  .composer {
+    padding: 15px;
+
+    gap: 10px;
+  }
+
+  textarea {
+    height: 86px;
+
+    font-size: 14px;
+  }
+
+
+  /* -----------------------------------------------
+     Posts
+     ----------------------------------------------- */
+
+  .post {
+    padding: 24px 0 21px;
+  }
+
+  .post.featured {
+    margin-left: -10px;
+
+    padding-left: 11px;
+  }
+
+  .post p {
+    font-size: 13px;
+
+    line-height: 1.75;
   }
 
   .post blockquote {
     font-size: 20px;
   }
 
+
+  /* -----------------------------------------------
+     Messages
+     ----------------------------------------------- */
+
   .messages {
-    width: calc(100% - 30px);
+    width:
+      calc(100% - 30px);
 
     right: 15px;
+
     bottom: 15px;
+
+    padding: 17px;
   }
 
   .account-menu {
     right: -5px;
 
-    width: min(
-      306px,
-      calc(100vw - 30px)
-    );
+    width:
+      min(
+        306px,
+        calc(100vw - 30px)
+      );
   }
+
+
+  /* -----------------------------------------------
+     Right rail
+     ----------------------------------------------- */
+
+  .right-rail {
+    display: block;
+
+    border-left: 0;
+
+    padding: 30px 18px;
+  }
+
+  .right-rail .about-card {
+    padding-bottom: 25px;
+  }
+
+  .phone-card {
+    padding-bottom: 4px;
+  }
+
+
+  /* -----------------------------------------------
+     Footer
+     ----------------------------------------------- */
+
+  .site-footer {
+    padding: 11px 15px;
+
+    min-height: 0;
+  }
+
+  .site-footer p {
+    font-size: 8px;
+
+    line-height: 1.5;
+  }
+
 }
 
 
 /* =========================================================
-   FINAL TYPOGRAPHY SAFETY
+   VERY SMALL MOBILE
    ========================================================= */
 
-/*
-   Font remains normal throughout the site.
-   No small-caps.
-*/
+@media (max-width: 380px) {
 
-html,
-body {
-  font-variant: normal;
-  font-feature-settings: normal;
-}
-
-button,
-input,
-textarea,
-select {
-  font-family: Manrope, Arial, sans-serif;
-  font-variant: normal;
-  font-feature-settings: normal;
-}
-
-
-/* =========================================================
-   FINAL ACCOUNT + CHAT SAFETY
-   ========================================================= */
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.account-wrap {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  flex-shrink: 0;
-}
-
-.account-wrap > .account-button {
-  display: grid;
-  place-items: center;
-
-  flex-shrink: 0;
-}
-
-
-/* =========================================================
-   MOBILE ACCOUNT + CHAT
-   ========================================================= */
-
-@media (max-width: 660px) {
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .brand-mobile {
+    font-size: 21px;
   }
 
-  .account-wrap {
-    display: flex;
-    align-items: center;
-    gap: 7px;
+  .brand-mobile img {
+    width: 26px;
+    height: 26px;
   }
 
-  .account-wrap > .account-button {
-    width: 40px;
-    height: 40px;
+  .account-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .top-nav a {
+    padding: 8px 3px;
+
+    font-size: 8px;
+  }
+
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
 }
