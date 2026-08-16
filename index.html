@@ -1,707 +1,818 @@
 <!doctype html>
 <html lang="hu">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-    <title>Everlight — gondolatok, amik megmaradnak</title>
+  <title>Everlight — gondolatok, amik megmaradnak</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- =====================================================
+       FONTS
+       ===================================================== -->
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="enhancements.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+    rel="stylesheet"
+  />
 
-    <link rel="manifest" href="manifest.webmanifest" />
+  <!-- =====================================================
+       STYLES
+       ===================================================== -->
 
-    <meta
-      name="theme-color"
-      content="#101719"
-    />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="enhancements.css" />
 
-    <meta
-      name="mobile-web-app-capable"
-      content="yes"
-    />
+  <!-- =====================================================
+       PWA
+       ===================================================== -->
 
-    <meta
-      name="apple-mobile-web-app-capable"
-      content="yes"
-    />
+  <link
+    rel="manifest"
+    href="manifest.webmanifest"
+  />
 
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-  </head>
+  <meta
+    name="theme-color"
+    content="#101719"
+  />
+
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  />
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  />
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  />
+</head>
 
 
-  <body>
+<body>
 
-    <!-- =====================================================
-         GRAIN
-         ===================================================== -->
+  <!-- =====================================================
+       CLEAN BACKGROUND
+       ===================================================== -->
 
-    <div class="grain"></div>
+  <div class="grain"></div>
 
 
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
-    <header class="topbar">
+  <header class="topbar">
 
-      <!-- DOMAIN -->
-      <div class="header-domain">
+    <!-- -------------------------------------------------
+         LEFT — DOMAIN LINKS
+         ------------------------------------------------- -->
 
-        <a
-          href="https://everlight.nodayy.hu"
+    <div class="domain">
+
+      <a
+        href="https://everlight.nodayy.hu"
+        target="_self"
+      >
+        everlight.nodayy.hu
+      </a>
+
+      <span>//</span>
+
+      <a
+        href="https://nodayy.hu"
+        target="_self"
+      >
+        nodayy.hu
+      </a>
+
+    </div>
+
+
+    <!-- -------------------------------------------------
+         CENTER — LOGO
+         ------------------------------------------------- -->
+
+    <a
+      class="header-logo"
+      href="#feed"
+      aria-label="Everlight"
+    >
+
+      <img
+        src="logo.png"
+        alt="Everlight"
+      />
+
+    </a>
+
+
+    <!-- -------------------------------------------------
+         RIGHT — EMPTY FOR NOW
+         ------------------------------------------------- -->
+
+    <div
+      class="header-empty"
+      aria-hidden="true"
+    ></div>
+
+  </header>
+
+
+  <!-- =====================================================
+       MAIN HEADER NAVIGATION
+       ===================================================== -->
+
+  <nav
+    class="hub-nav"
+    aria-label="Fő navigáció"
+  >
+
+    <!-- HUB -->
+
+    <a
+      class="hub-nav-item active"
+      href="#feed"
+    >
+
+      <span>01</span>
+
+      <strong>
+        Hub
+      </strong>
+
+    </a>
+
+
+    <!-- MESSAGES -->
+
+    <a
+      class="hub-nav-item"
+      href="#messages"
+      id="messageNav"
+    >
+
+      <span>02</span>
+
+      <strong>
+        Üzenetek
+      </strong>
+
+      <b>
+        2
+      </b>
+
+    </a>
+
+
+    <!-- ACCOUNT -->
+
+    <a
+      class="hub-nav-item"
+      href="#join"
+    >
+
+      <span>03</span>
+
+      <strong>
+        Fiók
+      </strong>
+
+    </a>
+
+  </nav>
+
+
+  <!-- =====================================================
+       MAIN LAYOUT
+       ===================================================== -->
+
+  <div class="layout">
+
+
+    <!-- ===================================================
+         LEFT RAIL
+         =================================================== -->
+
+    <aside class="left-rail">
+
+
+      <!-- -------------------------------------------------
+           EVERLIGHT BRAND
+           ------------------------------------------------- -->
+
+      <a
+        class="brand"
+        href="#feed"
+      >
+
+        <img
+          src="logo.png"
+          alt=""
+        />
+
+        <span class="brand-text">
+          Everlight
+        </span>
+
+      </a>
+
+
+      <!-- -------------------------------------------------
+           TAGLINE
+           ------------------------------------------------- -->
+
+      <p class="tagline">
+        Egy kis fény,<br />
+        annak aki nem hitt benne.
+      </p>
+
+
+      <!-- -------------------------------------------------
+           PROFILE
+           ------------------------------------------------- -->
+
+      <div
+        class="signed-out"
+        id="join"
+      >
+
+        <div
+          class="avatar-placeholder"
+          id="profileAvatar"
         >
-          everlight.nodayy.hu
-        </a>
+          ?
+        </div>
 
-        <span>//</span>
 
-        <a
-          href="https://nodayy.hu"
-        >
-          nodayy.hu
-        </a>
+        <p id="profileSummary">
+
+          <strong>
+            Még ismeretlen vagy
+          </strong>
+
+          <br />
+
+          Lépj be, hogy nyomot hagyj.
+
+        </p>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ===================================================
+         MAIN FEED
+         =================================================== -->
+
+    <main id="feed">
+
+
+      <!-- -------------------------------------------------
+           DATE / CLOCK
+           ------------------------------------------------- -->
+
+      <div class="time-lockup">
+
+        <span>
+          2026. augusztus 16., vasárnap
+        </span>
+
+        <strong id="mainClock">
+          10:41
+        </strong>
 
       </div>
 
 
-      <!-- CENTER LOGO -->
-      <a
-        class="header-logo"
-        href="#"
-        aria-label="Everlight"
-      >
-        <img
-          src="logo.png"
-          alt="Everlight"
-        />
-      </a>
+      <!-- -------------------------------------------------
+           SECTION HEADING
+           ------------------------------------------------- -->
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Mai csillaghullás
+        </p>
+
+        <h1>
+          A mai gondolatok.
+        </h1>
+
+      </div>
 
 
-      <!-- EMPTY RIGHT SIDE -->
+      <!-- =================================================
+           COMPOSER
+           ================================================= -->
+
+      <section class="composer">
+
+        <div class="avatar aurora">
+          L
+        </div>
+
+
+        <div class="composer-body">
+
+          <textarea
+            id="postText"
+            maxlength="280"
+            placeholder="Ossz meg egy gondolatot, történetet vagy idézetet…"
+          ></textarea>
+
+
+          <!-- -------------------------------------------------
+               COMPOSER TOOLS
+               ------------------------------------------------- -->
+
+          <div class="composer-tools">
+
+
+            <!-- CATEGORY -->
+
+            <label>
+
+              Kategória
+
+              <select id="category">
+
+                <option value="Gondolat">
+                  Gondolat
+                </option>
+
+                <option value="Történet">
+                  Történet
+                </option>
+
+                <option value="Idézet">
+                  Idézet
+                </option>
+
+                <option value="Élet">
+                  Élet
+                </option>
+
+                <option value="Alkotás">
+                  Alkotás
+                </option>
+
+              </select>
+
+            </label>
+
+
+            <!-- IMAGE -->
+
+            <label class="image-upload">
+
+              ▧
+
+              <input
+                id="imageInput"
+                type="file"
+                accept="image/*"
+              />
+
+              <span id="imageName">
+                Kép
+              </span>
+
+            </label>
+
+
+            <!-- ANONYMOUS -->
+
+            <label class="anonymous-toggle">
+
+              <input
+                id="anonymous"
+                type="checkbox"
+              />
+
+              <span></span>
+
+              Névtelenül
+
+            </label>
+
+          </div>
+
+
+          <!-- -------------------------------------------------
+               IMAGE PREVIEW
+               ------------------------------------------------- -->
+
+          <div
+            id="imagePreview"
+            class="image-preview"
+          ></div>
+
+
+          <!-- -------------------------------------------------
+               COMPOSER FOOTER
+               ------------------------------------------------- -->
+
+          <div class="composer-footer">
+
+            <span id="counter">
+              0 / 280
+            </span>
+
+
+            <button
+              id="postButton"
+              class="primary"
+              type="button"
+            >
+
+              Megosztás
+
+              <span>
+                ↗
+              </span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           FEED LIST
+           ================================================= -->
+
       <div
-        class="header-empty"
-        aria-hidden="true"
-      ></div>
+        class="feed-list"
+        id="feedList"
+      >
 
-    </header>
+        <p class="loading-copy">
+          Az áramlás betöltése…
+        </p>
 
+      </div>
 
-    <!-- =====================================================
-         MAIN LAYOUT
-         ===================================================== -->
-
-    <div class="layout">
-
-
-      <!-- ===================================================
-           LEFT RAIL
-           =================================================== -->
-
-      <aside class="left-rail">
-
-        <!-- Desktop / sidebar Everlight brand -->
-        <a
-          class="brand"
-          href="#"
-        >
-          Everlight<span>.</span>
-        </a>
+    </main>
 
 
-        <p class="tagline">
-          Egy kis fény,<br />
-          annak aki nem hitt benne.
+    <!-- ===================================================
+         RIGHT RAIL
+         =================================================== -->
+
+    <aside
+      class="right-rail"
+      id="about"
+    >
+
+
+      <!-- -------------------------------------------------
+           ABOUT
+           ------------------------------------------------- -->
+
+      <section class="about-card">
+
+        <p class="eyebrow">
+          MI AZ EVERLIGHT?
         </p>
 
 
-        <!-- MAIN NAVIGATION -->
-        <nav>
-
-          <a
-            class="nav-active"
-            href="#feed"
-          >
-            <span>01</span>
-            Áramlás
-          </a>
+        <h2>
+          Emlékeknek,<br />
+          <i>érzéseknek.</i>
+        </h2>
 
 
-          <a
-            href="#messages"
-            id="messageNav"
-          >
-            <span>02</span>
-            Üzenetek
-            <b>2</b>
-          </a>
+        <p>
+          Az Everlight egy emberi léptékű tér
+          rövid történetekhez, félbehagyott
+          gondolatokhoz és idézetekhez,
+          amiket jó lenne nem elfelejteni.
+        </p>
 
 
-          <a
-            href="#join"
-          >
-            <span>03</span>
-            Fiók
-          </a>
+        <a href="#join">
+          Csatlakozz hozzánk
+          <span>→</span>
+        </a>
 
-        </nav>
+      </section>
 
 
-        <!-- PROFILE -->
-        <div
-          class="signed-out"
-          id="join"
-        >
+      <!-- =================================================
+           ONLINE USERS
+           ================================================= -->
 
-          <div
-            class="avatar-placeholder"
-            id="profileAvatar"
-          >
-            ?
-          </div>
+      <section class="online">
 
+        <div class="online-heading">
 
-          <p id="profileSummary">
-
-            <strong>
-              Még ismeretlen vagy
-            </strong>
-
-            <br />
-
-            Lépj be, hogy nyomot hagyj.
-
+          <p class="eyebrow">
+            JELEN VANNAK
           </p>
 
-        </div>
 
-      </aside>
+          <span id="onlineCount">
 
+            <i></i>
+            0
 
-      <!-- ===================================================
-           MAIN FEED
-           =================================================== -->
-
-      <main id="feed">
-
-
-        <!-- DATE / CLOCK -->
-        <div class="time-lockup">
-
-          <span>
-            2026. augusztus 16., vasárnap
           </span>
 
-          <strong id="mainClock">
-            10:41
-          </strong>
-
         </div>
 
-
-        <!-- SECTION HEADING -->
-        <div class="section-heading">
-
-          <p class="eyebrow">
-            Mai csillaghullás
-          </p>
-
-          <h1>
-            A mai gondolatok.
-          </h1>
-
-        </div>
-
-
-        <!-- =================================================
-             COMPOSER
-             ================================================= -->
-
-        <section class="composer">
-
-          <div class="avatar aurora">
-            L
-          </div>
-
-
-          <div class="composer-body">
-
-            <textarea
-              id="postText"
-              maxlength="280"
-              placeholder="Ossz meg egy gondolatot, történetet vagy idézetet…"
-            ></textarea>
-
-
-            <!-- COMPOSER TOOLS -->
-            <div class="composer-tools">
-
-
-              <!-- CATEGORY -->
-              <label>
-
-                Kategória
-
-                <select id="category">
-
-                  <option>
-                    Gondolat
-                  </option>
-
-                  <option>
-                    Történet
-                  </option>
-
-                  <option>
-                    Idézet
-                  </option>
-
-                  <option>
-                    Élet
-                  </option>
-
-                  <option>
-                    Alkotás
-                  </option>
-
-                </select>
-
-              </label>
-
-
-              <!-- IMAGE -->
-              <label class="image-upload">
-
-                ▧
-
-                <input
-                  id="imageInput"
-                  type="file"
-                  accept="image/*"
-                />
-
-                <span id="imageName">
-                  Kép
-                </span>
-
-              </label>
-
-
-              <!-- ANONYMOUS -->
-              <label class="anonymous-toggle">
-
-                <input
-                  id="anonymous"
-                  type="checkbox"
-                />
-
-                <span></span>
-
-                Névtelenül
-
-              </label>
-
-            </div>
-
-
-            <!-- IMAGE PREVIEW -->
-            <div
-              id="imagePreview"
-              class="image-preview"
-            ></div>
-
-
-            <!-- COMPOSER FOOTER -->
-            <div class="composer-footer">
-
-              <span id="counter">
-                0 / 280
-              </span>
-
-
-              <button
-                id="postButton"
-                class="primary"
-                type="button"
-              >
-                Megosztás
-                <span>↗</span>
-              </button>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             FEED LIST
-             ================================================= -->
 
         <div
-          class="feed-list"
-          id="feedList"
-        >
+          class="faces"
+          id="onlineFaces"
+        ></div>
 
-          <p class="loading-copy">
-            Az áramlás betöltése…
-          </p>
+      </section>
+
+
+      <!-- =================================================
+           ACTIVITY
+           ================================================= -->
+
+      <section class="activity-card">
+
+        <p class="eyebrow">
+          AKTIVITÁSOD
+        </p>
+
+
+        <div id="activityLocked">
+
+          Lépj be, és építsd a saját
+          <em>streaked.</em>
 
         </div>
 
-      </main>
 
+        <div
+          class="activity-stats"
+          id="activityStats"
+          hidden
+        >
 
-      <!-- ===================================================
-           RIGHT RAIL
-           =================================================== -->
+          <div>
 
-      <aside
-        class="right-rail"
-        id="about"
-      >
+            <strong id="streak">
+              1
+            </strong>
 
-
-        <!-- ABOUT -->
-        <section class="about-card">
-
-          <p class="eyebrow">
-            MI AZ EVERLIGHT?
-          </p>
-
-
-          <h2>
-            Emlékeknek,<br />
-            <i>érzéseknek.</i>
-          </h2>
-
-
-          <p>
-            Az Everlight egy emberi léptékű tér
-            rövid történetekhez, félbehagyott
-            gondolatokhoz és idézetekhez,
-            amiket jó lenne nem elfelejteni.
-          </p>
-
-
-          <a href="#join">
-            Csatlakozz hozzánk
-            <span>→</span>
-          </a>
-
-        </section>
-
-
-        <!-- =================================================
-             ONLINE USERS
-             ================================================= -->
-
-        <section class="online">
-
-          <div class="online-heading">
-
-            <p class="eyebrow">
-              JELEN VANNAK
-            </p>
-
-
-            <span id="onlineCount">
-              <i></i>
-              0
+            <span>
+              day streak
             </span>
 
           </div>
 
 
-          <div
-            class="faces"
-            id="onlineFaces"
-          ></div>
+          <div>
 
-        </section>
+            <strong id="postCount">
+              0
+            </strong>
 
-
-        <!-- =================================================
-             ACTIVITY
-             ================================================= -->
-
-        <section class="activity-card">
-
-          <p class="eyebrow">
-            AKTIVITÁSOD
-          </p>
-
-
-          <div id="activityLocked">
-
-            Lépj be, és építsd a saját
-            <em>streaked.</em>
+            <span>
+              posts
+            </span>
 
           </div>
 
 
-          <div
-            class="activity-stats"
-            id="activityStats"
-            hidden
-          >
+          <div>
 
-            <div>
+            <strong id="lightCount">
+              0
+            </strong>
 
-              <strong id="streak">
-                1
-              </strong>
-
-              <span>
-                day streak
-              </span>
-
-            </div>
-
-
-            <div>
-
-              <strong id="postCount">
-                0
-              </strong>
-
-              <span>
-                posts
-              </span>
-
-            </div>
-
-
-            <div>
-
-              <strong id="lightCount">
-                0
-              </strong>
-
-              <span>
-                lights
-              </span>
-
-            </div>
+            <span>
+              lights
+            </span>
 
           </div>
 
-        </section>
+        </div>
+
+      </section>
 
 
-        <!-- =================================================
-             PHONE / PWA
-             ================================================= -->
+      <!-- =================================================
+           PHONE / PWA
+           ================================================= -->
 
-        <section class="phone-card">
+      <section class="phone-card">
 
-          <p class="eyebrow">
-            EVERLIGHT A TELEFONODON
-          </p>
-
-
-          <h3>
-            Vidd magaddal a fényt.
-          </h3>
+        <p class="eyebrow">
+          EVERLIGHT A TELEFONODON
+        </p>
 
 
-          <button
-            id="installButton"
-            class="install-button"
-            type="button"
-          >
-            ⇩ Letöltés telefonra
-          </button>
+        <h3>
+          Vidd magaddal a fényt.
+        </h3>
 
 
-          <button
-            id="notificationButton"
-            class="notification-button"
-            type="button"
-          >
-            ◌ Értesítések bekapcsolása
-          </button>
+        <button
+          id="installButton"
+          class="install-button"
+          type="button"
+        >
+          ⇩ Letöltés telefonra
+        </button>
 
 
-          <p class="install-help">
-
-            <strong>
-              iPhone:
-            </strong>
-
-            Safari → Megosztás →
-            „Főképernyőhöz adás”
-
-            <br />
-
-            <strong>
-              Android:
-            </strong>
-
-            Chrome menü →
-            „Alkalmazás telepítése”
-
-          </p>
-
-        </section>
+        <button
+          id="notificationButton"
+          class="notification-button"
+          type="button"
+        >
+          ◌ Értesítések bekapcsolása
+        </button>
 
 
-        <!-- NOTE -->
-        <section class="note">
+        <p class="install-help">
 
-          <span>
-            ✦
-          </span>
+          <strong>
+            iPhone:
+          </strong>
+
+          Safari → Megosztás →
+          „Főképernyőhöz adás”
+
+          <br />
+
+          <strong>
+            Android:
+          </strong>
+
+          Chrome menü →
+          „Alkalmazás telepítése”
+
+        </p>
+
+      </section>
 
 
-          <p>
+      <!-- =================================================
+           NOTE
+           ================================================= -->
 
-            <strong>
-              Hagyj fényt magad után.
-            </strong>
+      <section class="note">
 
-            <br />
+        <span>
+          ✦
+        </span>
 
-            Egy mondat is elég lehet valakinek.
 
-          </p>
+        <p>
 
-        </section>
+          <strong>
+            Hagyj fényt magad után.
+          </strong>
 
-      </aside>
+          <br />
+
+          Egy mondat is elég lehet valakinek.
+
+        </p>
+
+      </section>
+
+    </aside>
+
+  </div>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer class="site-footer">
+
+    <p>
+      ◇ EZ A WEBOLDAL RÉSZBEN MESTERSÉGES INTELLIGENCIA
+      (AI) SEGÍTSÉGÉVEL KÉSZÜLT
+    </p>
+
+  </footer>
+
+
+  <!-- =====================================================
+       PRIVATE MESSAGES
+       ===================================================== -->
+
+  <section
+    class="messages"
+    id="messages"
+    aria-hidden="true"
+  >
+
+    <div class="message-head">
+
+      <div>
+
+        <p class="eyebrow">
+          ÜZENETEK
+        </p>
+
+        <h2 id="dmTitle">
+          Privát tér
+        </h2>
+
+      </div>
+
+
+      <button
+        id="closeMessages"
+        type="button"
+        aria-label="Üzenetek bezárása"
+      >
+        ×
+      </button>
 
     </div>
 
 
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
-
-    <footer class="site-footer">
-
-      <p>
-        ◇ EZ A WEBOLDAL RÉSZBEN MESTERSÉGES INTELLIGENCIA
-        (AI) SEGÍTSÉGÉVEL KÉSZÜLT
-      </p>
-
-    </footer>
-
-
-    <!-- =====================================================
-         PRIVATE MESSAGES
-         ===================================================== -->
-
-    <section
-      class="messages"
-      id="messages"
-      aria-hidden="true"
+    <div
+      id="dmList"
+      class="dm-list"
     >
 
-      <div class="message-head">
+      <p class="loading-copy">
+        Add meg a címzett
+        `név#tag` azonosítóját.
+      </p>
 
-        <div>
-
-          <p class="eyebrow">
-            ÜZENETEK
-          </p>
-
-          <h2 id="dmTitle">
-            Privát tér
-          </h2>
-
-        </div>
+    </div>
 
 
-        <button
-          id="closeMessages"
-          type="button"
-          aria-label="Üzenetek bezárása"
-        >
-          ×
-        </button>
+    <form
+      class="message-compose"
+      id="messageForm"
+    >
 
-      </div>
+      <input
+        id="dmRecipient"
+        placeholder="Címzett: név#1234"
+        autocomplete="off"
+        required
+      />
 
 
-      <div
-        id="dmList"
-        class="dm-list"
+      <input
+        id="dmBody"
+        placeholder="Írj egy üzenetet…"
+        autocomplete="off"
+        required
+      />
+
+
+      <button
+        type="submit"
+        aria-label="Üzenet küldése"
       >
+        ↑
+      </button>
 
-        <p class="loading-copy">
-          Add meg a címzett
-          `név#tag` azonosítóját.
-        </p>
+    </form>
 
-      </div>
-
-
-      <form
-        class="message-compose"
-        id="messageForm"
-      >
-
-        <input
-          id="dmRecipient"
-          placeholder="Címzett: név#1234"
-          autocomplete="off"
-          required
-        />
+  </section>
 
 
-        <input
-          id="dmBody"
-          placeholder="Írj egy üzenetet…"
-          autocomplete="off"
-          required
-        />
+  <!-- =====================================================
+       TOAST
+       ===================================================== -->
+
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
 
 
-        <button
-          type="submit"
-          aria-label="Üzenet küldése"
-        >
-          ↑
-        </button>
+  <!-- =====================================================
+       APP
+       ===================================================== -->
 
-      </form>
+  <script src="app.js"></script>
 
-    </section>
-
-
-    <!-- =====================================================
-         TOAST
-         ===================================================== -->
-
-    <div
-      class="toast"
-      id="toast"
-      role="status"
-      aria-live="polite"
-    ></div>
-
-
-    <!-- =====================================================
-         APP
-         ===================================================== -->
-
-    <script src="app.js"></script>
-
-  </body>
+</body>
 </html>
