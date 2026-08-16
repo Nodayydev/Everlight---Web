@@ -1,0 +1,694 @@
+/* Everlight final polish */
+*{transition:background-color .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease}
+body.sun-mode{--accent:#C77D02;--accent-soft:rgba(199,125,2,.11);--accent-border:rgba(199,125,2,.32)}
+body.sun-mode .theme-toggle{background:rgba(199,125,2,.12)}
+button,a{touch-action:manipulation}
+@media(max-width:660px){.topbar{box-shadow:none!important}.mobile-dock{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.domain{letter-spacing:-.03em}.domain a{flex:none}.mobile-dock{bottom:max(12px,env(safe-area-inset-bottom));}}
+
+/* =========================================================
+   V2 — HEADER / LOGO / THEME
+   ========================================================= */
+
+.topbar {
+  min-height: 72px;
+}
+
+.header-logo {
+  min-width: 0;
+}
+
+.header-logo-image {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex: 0 0 34px;
+}
+
+.fallback-logo-mark {
+  display: none;
+}
+
+.topbar-theme-toggle {
+  justify-self: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--accent-border);
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font: 18px/1 "DM Mono";
+  cursor: pointer;
+}
+
+.topbar-theme-toggle span {
+  display: block;
+}
+
+/* =========================================================
+   V2 — DISCORD-STYLE PROFILE CUSTOMIZER
+   ========================================================= */
+
+.profile-customizer {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  background: #000;
+  color: var(--text);
+  overflow: hidden;
+}
+
+.profile-customizer.open {
+  display: block;
+}
+
+.profile-customizer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #000;
+}
+
+.profile-customizer-dialog {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: #000;
+  overflow: hidden;
+}
+
+.profile-customizer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 4vw 22px;
+  border-bottom: 1px solid var(--line);
+  background: #000;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-customizer-kicker {
+  color: var(--accent);
+  font: 10px/1.2 "DM Mono";
+  letter-spacing: .12em;
+  margin-bottom: 7px;
+}
+
+.profile-customizer-header h2 {
+  margin: 0;
+  font: 700 30px/1.15 "Manrope", sans-serif;
+  letter-spacing: -.03em;
+}
+
+.profile-customizer-header p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.profile-customizer-close {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #070909;
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.profile-customizer-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) 350px;
+  overflow: hidden;
+}
+
+.profile-customizer-sidebar {
+  min-height: 0;
+  padding: 26px 16px;
+  border-right: 1px solid var(--line);
+  background: #030505;
+  overflow-y: auto;
+}
+
+.profile-customizer-nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #7f8986;
+  text-align: left;
+  font: 11px "DM Mono";
+  cursor: pointer;
+}
+
+.profile-customizer-nav:hover,
+.profile-customizer-nav.active {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.profile-customizer-sidebar-note {
+  margin: 24px 10px 0;
+  color: #596361;
+  font: 9px/1.6 "DM Mono";
+}
+
+.profile-customizer-content {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 30px 34px 40px;
+}
+
+.profile-customizer-section {
+  max-width: 760px;
+  padding: 0 0 34px;
+  margin: 0 0 34px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 20px;
+}
+
+.profile-customizer-section-title {
+  margin-bottom: 20px;
+}
+
+.profile-customizer-section-title strong {
+  display: block;
+  font-size: 17px;
+}
+
+.profile-customizer-section-title span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.profile-customizer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.customizer-field {
+  position: relative;
+  display: block;
+  min-width: 0;
+  margin-bottom: 14px;
+}
+
+.customizer-field > span,
+.customizer-color-card > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #c5ccca;
+  font-size: 10px;
+}
+
+.customizer-field input,
+.customizer-field select,
+.customizer-field textarea {
+  width: 100%;
+  border: 1px solid #273031;
+  border-radius: 9px;
+  background: #080b0c;
+  color: var(--text);
+  padding: 11px 12px;
+  font: 11px "Manrope", sans-serif;
+}
+
+.customizer-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.customizer-field input:focus,
+.customizer-field select:focus,
+.customizer-field textarea:focus {
+  border-color: var(--accent-border);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.customizer-field-full {
+  width: 100%;
+}
+
+.customizer-counter {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  color: #596361;
+  font: 8px "DM Mono";
+}
+
+.customizer-color-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.customizer-color-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #070909;
+}
+
+.customizer-color-card small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.customizer-color-card input[type="color"] {
+  width: 44px;
+  height: 34px;
+  padding: 2px;
+  border: 1px solid #3a4445;
+  border-radius: 9px;
+  background: #000;
+}
+
+.customizer-image-card {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #070909;
+}
+
+.customizer-image-card-preview {
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #202a2c;
+  color: var(--accent);
+  font-size: 20px;
+}
+
+.customizer-image-card-preview img,
+.customizer-banner-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customizer-image-card-copy strong {
+  display: block;
+  font-size: 12px;
+}
+
+.customizer-image-card-copy > span {
+  display: block;
+  margin: 4px 0 9px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.customizer-upload-button {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 10px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  font: 9px "DM Mono";
+  cursor: pointer;
+}
+
+.customizer-upload-button input {
+  display: none;
+}
+
+.customizer-banner-card {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.customizer-banner-preview {
+  width: 100%;
+  height: 105px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #202a2c;
+  background-position: center;
+  background-size: cover;
+  color: #53605e;
+  font: 8px "DM Mono";
+}
+
+.profile-customizer-preview-column {
+  min-width: 0;
+  min-height: 0;
+  padding: 30px 22px;
+  border-left: 1px solid var(--line);
+  background: #030505;
+  overflow-y: auto;
+}
+
+.profile-customizer-preview-label {
+  margin-bottom: 10px;
+  color: #596361;
+  font: 9px "DM Mono";
+  letter-spacing: .08em;
+}
+
+.discord-profile-preview {
+  overflow: hidden;
+  border: 1px solid #273031;
+  border-radius: 14px;
+  background: #0b0f10;
+  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+}
+
+.discord-preview-banner {
+  height: 105px;
+  background: #263234;
+  background-size: cover;
+  background-position: center;
+}
+
+.discord-preview-card {
+  position: relative;
+  padding: 48px 18px 20px;
+}
+
+.discord-preview-avatar {
+  position: absolute;
+  left: 18px;
+  top: -36px;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 5px solid #0b0f10;
+  border-radius: 50%;
+  background: #202a2c;
+  color: var(--accent);
+  font-size: 20px;
+}
+
+.discord-preview-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.discord-preview-name {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.discord-preview-username {
+  margin-top: 3px;
+  color: var(--muted);
+  font: 9px "DM Mono";
+}
+
+.discord-preview-status {
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.discord-preview-divider {
+  height: 1px;
+  margin: 18px 0;
+  background: var(--line);
+}
+
+.discord-preview-label {
+  margin-bottom: 7px;
+  color: #69726f;
+  font: 8px "DM Mono";
+}
+
+.discord-preview-bio {
+  color: #c0c7c4;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.discord-preview-meta {
+  margin-top: 14px;
+  color: var(--muted);
+  font: 8px/1.5 "DM Mono";
+}
+
+.profile-customizer-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  padding: 14px 4vw;
+  border-top: 1px solid var(--line);
+  background: #000;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-customizer-cancel,
+.profile-customizer-save {
+  min-width: 110px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  font: 10px "DM Mono";
+}
+
+.profile-customizer-cancel {
+  border: 1px solid var(--line);
+  background: #070909;
+  color: #9ba4a1;
+}
+
+.profile-customizer-save {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #071015;
+}
+
+body.profile-customizer-open {
+  overflow: hidden;
+}
+
+body.profile-customizer-open .mobile-dock,
+body.profile-customizer-open .site-footer {
+  display: none !important;
+}
+
+/* full-screen views also own the screen: do not leave the mobile dock over them */
+body.messages-view-open .mobile-dock,
+body.profile-view-open .mobile-dock {
+  display: none !important;
+}
+
+/* =========================================================
+   V2 — MOBILE HEADER + CUSTOMIZER
+   ========================================================= */
+
+@media (max-width: 660px) {
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 600;
+    height: 64px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    padding: 0 12px;
+    gap: 9px;
+    background: #000;
+  }
+
+  .domain {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 8px;
+  }
+
+  .domain a {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-logo {
+    justify-self: end;
+    gap: 5px;
+    font-size: 16px;
+  }
+
+  .header-logo-image {
+    width: 30px;
+    height: 30px;
+  }
+
+  .logo-word {
+    display: none;
+  }
+
+  .topbar-theme-toggle {
+    justify-self: end;
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
+  .profile-customizer-dialog {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .profile-customizer-header {
+    min-height: 72px;
+    padding: 15px 14px;
+  }
+
+  .profile-customizer-header h2 {
+    font-size: 21px;
+  }
+
+  .profile-customizer-header p {
+    font-size: 9px;
+  }
+
+  .profile-customizer-body {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .profile-customizer-sidebar {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .profile-customizer-nav {
+    flex: 0 0 auto;
+    width: auto;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 999px;
+  }
+
+  .profile-customizer-sidebar-note {
+    display: none;
+  }
+
+  .profile-customizer-content {
+    flex: 0 0 auto;
+    overflow: visible;
+    padding: 18px 14px 24px;
+  }
+
+  .profile-customizer-section {
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+  }
+
+  .profile-customizer-grid,
+  .customizer-color-row {
+    grid-template-columns: 1fr;
+  }
+
+  .customizer-image-card {
+    grid-template-columns: 64px minmax(0,1fr);
+  }
+
+  .customizer-image-card-preview {
+    width: 64px;
+    height: 64px;
+  }
+
+  .profile-customizer-preview-column {
+    flex: 0 0 auto;
+    padding: 8px 14px 24px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    overflow: visible;
+  }
+
+  .discord-profile-preview {
+    max-width: none;
+  }
+
+  .profile-customizer-footer {
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .profile-customizer-cancel,
+  .profile-customizer-save {
+    flex: 1;
+  }
+
+  /* Keep the main app header visible on the Hub; only the full-screen customizer replaces it. */
+  .messages-view,
+  .profile-view {
+    z-index: 1000;
+  }
+}
+
+/* Logged-in account must never show the login form. */
+.account-menu.logged-in .login-only {
+  display: none !important;
+}
+
+/* The profile button is a navigation button, not a dropdown while logged in. */
+.account-menu.logged-in {
+  display: none !important;
+}
+
+@media (min-width: 661px) {
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+  }
+  .header-logo { grid-column: 2; }
+  .topbar-theme-toggle { grid-column: 3; margin-left: 10px; }
+  .hub-nav { grid-column: 4; justify-self: end; }
+}
+
+@media (max-width: 660px) {
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+  .header-logo { grid-column: 2; }
+  .topbar-theme-toggle { grid-column: 3; }
+}
+.topbar-theme-toggle img{width:22px;height:22px;object-fit:contain;display:block}
+@media(max-width:660px){.topbar-theme-toggle img{width:19px;height:19px}}
