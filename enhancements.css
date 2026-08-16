@@ -1,22 +1,271 @@
 /* =========================================================
-   EVERLIGHT — ENHANCEMENTS
-   Extra UI / profile / composer / PWA styles
+   EVERLIGHT — ENHANCEMENTS.CSS
    ========================================================= */
 
 
 /* =========================================================
-   ACCOUNT MENU — LOGGED IN
+   HEADER — FINAL
    ========================================================= */
 
-.account-menu.logged-in {
-  max-height: calc(100vh - 95px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #405052 transparent;
+.topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 74px;
+
+  background: #0b2426;
+
+  border-bottom: 1px solid rgba(103, 231, 221, 0.18);
+
+  box-shadow: none;
+
+  position: relative;
+  z-index: 20;
 }
 
-.account-menu.logged-in .login-only {
-  display: none !important;
+.topbar::after {
+  display: none;
+}
+
+
+/* =========================================================
+   DOMAIN
+   ========================================================= */
+
+.domain {
+  justify-self: start;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  white-space: nowrap;
+
+  font: 10px "DM Mono";
+
+  color: #64736f;
+}
+
+.domain a {
+  color: #7e8d89;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease;
+}
+
+.domain a:first-child {
+  color: var(--aqua);
+}
+
+.domain a:last-child {
+  color: #7e8d89;
+}
+
+.domain a:hover {
+  color: var(--cream);
+}
+
+.domain span {
+  color: #465754;
+}
+
+
+/* =========================================================
+   CENTER LOGO
+   ========================================================= */
+
+.header-logo {
+  justify-self: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  text-decoration: none;
+}
+
+.header-logo img {
+  width: 42px;
+  height: 42px;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   HUB NAV
+   ========================================================= */
+
+.hub-nav {
+  justify-self: end;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   HUB NAV ITEMS
+   ========================================================= */
+
+.hub-nav-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  padding: 7px 13px;
+
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  color: #8b9995;
+
+  text-decoration: none;
+
+  font:
+    10px
+    "DM Mono";
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.hub-nav-item strong {
+  font:
+    500 10px
+    "DM Mono";
+
+  font-weight: 500;
+}
+
+.hub-nav-item:hover {
+  color: var(--cream);
+
+  border-color:
+    rgba(103, 231, 221, 0.18);
+
+  background:
+    rgba(103, 231, 221, 0.035);
+}
+
+.hub-nav-item.active {
+  color: var(--aqua);
+
+  border-color:
+    rgba(103, 231, 221, 0.25);
+
+  background:
+    rgba(103, 231, 221, 0.055);
+}
+
+
+/* =========================================================
+   ACCOUNT WRAPPER
+   ========================================================= */
+
+.account-wrap {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTON
+   ========================================================= */
+
+.account-button {
+  appearance: none;
+
+  border-radius: 0;
+
+  width: auto;
+  height: auto;
+
+  background: transparent;
+
+  color: #8b9995;
+
+  transform: none;
+}
+
+.account-button:hover,
+.account-button.active {
+  background:
+    rgba(103, 231, 221, 0.035);
+
+  color: var(--aqua);
+
+  transform: none;
+}
+
+
+/* =========================================================
+   ACCOUNT MENU
+   ========================================================= */
+
+.account-menu {
+  top: calc(100% + 10px);
+
+  right: 0;
+
+  width: 306px;
+
+  background:
+    #162629;
+
+  border:
+    1px solid
+    #354849;
+
+  box-shadow:
+    0 22px 55px
+    rgba(0, 0, 0, 0.55);
+
+  backdrop-filter: none;
+}
+
+.account-menu::before {
+  content: "";
+
+  position: absolute;
+
+  top: -5px;
+  right: 22px;
+
+  width: 9px;
+  height: 9px;
+
+  background: #162629;
+
+  border-left:
+    1px solid
+    #354849;
+
+  border-top:
+    1px solid
+    #354849;
+
+  transform: rotate(45deg);
 }
 
 
@@ -24,8 +273,19 @@
    PROFILE SETTINGS
    ========================================================= */
 
+.account-menu.logged-in {
+  max-height:
+    calc(100vh - 100px);
+
+  overflow-y: auto;
+}
+
+.account-menu.logged-in .login-only {
+  display: none !important;
+}
+
 .profile-settings {
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .settings-divider {
@@ -34,35 +294,42 @@
 
   gap: 8px;
 
+  margin-bottom: 12px;
+
   color: #71807c;
 
-  font: 9px "DM Mono";
+  font:
+    9px
+    "DM Mono";
 
   letter-spacing: 0.06em;
-
-  margin-bottom: 12px;
 }
 
 .settings-divider::before,
 .settings-divider::after {
   content: "";
 
+  flex: 1;
+
   height: 1px;
 
   background: #344244;
-
-  flex: 1;
 }
 
 
 /* =========================================================
-   PROFILE COVER
+   COVER
    ========================================================= */
 
 .profile-cover-preview {
   height: 62px;
 
   margin-bottom: 7px;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
 
   background:
     linear-gradient(
@@ -71,13 +338,9 @@
       #162a2b
     );
 
-  border: 1px solid #405052;
-
-  display: grid;
-
-  place-items: center;
-
-  overflow: hidden;
+  border:
+    1px solid
+    #405052;
 
   background-size: cover;
 
@@ -87,28 +350,29 @@
 .profile-cover-preview span {
   padding: 4px 6px;
 
-  background: rgba(14, 23, 25, 0.67);
+  background:
+    rgba(14, 23, 25, 0.67);
 
   color: #a6b7b2;
 
-  font: 8px "DM Mono";
+  font:
+    8px
+    "DM Mono";
 }
-
-
-/* =========================================================
-   COVER UPLOAD
-   ========================================================= */
 
 .cover-upload {
   display: block !important;
 
-  margin: 0 0 12px !important;
+  margin:
+    0
+    0
+    12px !important;
+
+  cursor: pointer;
 
   color: #90a09b !important;
 
   font-size: 10px !important;
-
-  cursor: pointer;
 }
 
 .cover-upload input {
@@ -138,18 +402,18 @@
   width: 30px;
   height: 30px;
 
+  flex: none;
+
   display: grid;
   place-items: center;
 
-  flex-shrink: 0;
+  overflow: hidden;
 
   border-radius: 50%;
 
   background: #273638;
 
   color: #a9b9b5;
-
-  overflow: hidden;
 }
 
 .profile-image-preview img {
@@ -157,8 +421,6 @@
   height: 100%;
 
   object-fit: cover;
-
-  display: block;
 }
 
 
@@ -178,7 +440,9 @@
 
   background: #10191b;
 
-  border: 1px solid #344244;
+  border:
+    1px solid
+    #344244;
 
   color: var(--cream);
 
@@ -186,9 +450,9 @@
 
   outline: none;
 
-  font: 11px Manrope;
-
-  font-variant: normal;
+  font:
+    11px
+    Manrope;
 }
 
 .profile-settings textarea:focus,
@@ -196,28 +460,24 @@
   border-color: var(--aqua);
 }
 
-
-/* =========================================================
-   PROFILE DETAILS
-   ========================================================= */
-
 .profile-details {
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:
+    1fr
+    1fr;
 
-  gap: 0 9px;
+  gap:
+    0
+    9px;
 }
-
-
-/* =========================================================
-   COLOR CONTROLS
-   ========================================================= */
 
 .color-controls {
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:
+    1fr
+    1fr;
 
   gap: 9px;
 }
@@ -242,11 +502,13 @@
 .secondary {
   width: 100%;
 
-  margin-top: 5px;
+  margin-top: 7px;
 
   padding: 10px;
 
-  border: 1px solid #4b5c5d;
+  border:
+    1px solid
+    #4b5c5d;
 
   background: transparent;
 
@@ -254,11 +516,13 @@
 
   cursor: pointer;
 
-  font: 700 11px Manrope;
+  font:
+    700 11px
+    Manrope;
 
   transition:
-    border-color 0.2s ease,
     color 0.2s ease,
+    border-color 0.2s ease,
     background 0.2s ease;
 }
 
@@ -273,7 +537,7 @@
 
 
 /* =========================================================
-   PROFILE CUSTOM IMAGE
+   CUSTOM PROFILE IMAGE
    ========================================================= */
 
 .profile-custom-image {
@@ -286,9 +550,9 @@
   width: 100%;
   height: 100%;
 
-  object-fit: cover;
-
   display: block;
+
+  object-fit: cover;
 }
 
 
@@ -298,21 +562,24 @@
 
 .composer-tools {
   display: flex;
-
   align-items: center;
 
   gap: 14px;
 
-  padding: 5px 0 13px;
+  padding:
+    5px
+    0
+    13px;
 
   color: #8e9c98;
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 }
 
 .composer-tools label {
   display: flex;
-
   align-items: center;
 
   gap: 5px;
@@ -322,41 +589,24 @@
   cursor: pointer;
 }
 
-
-/* =========================================================
-   CATEGORY SELECT
-   ========================================================= */
-
 .composer-tools select {
   padding: 5px;
 
   background: #213033;
 
-  border: 1px solid #3b4c4d;
+  border:
+    1px solid
+    #3b4c4d;
 
   color: #d7e0db;
 
-  outline: none;
-
-  font: 10px "DM Mono";
-
-  cursor: pointer;
+  font:
+    10px
+    "DM Mono";
 }
 
-.composer-tools select:focus {
-  border-color: var(--aqua);
-}
-
-
-/* =========================================================
-   IMAGE UPLOAD
-   ========================================================= */
-
-.image-upload {
-  user-select: none;
-}
-
-.image-upload input {
+.image-upload input,
+.anonymous-toggle input {
   display: none;
 }
 
@@ -365,21 +615,15 @@
    ANONYMOUS TOGGLE
    ========================================================= */
 
-.anonymous-toggle input {
-  display: none;
-}
-
 .anonymous-toggle span {
+  position: relative;
+
   width: 19px;
   height: 11px;
-
-  position: relative;
 
   border-radius: 10px;
 
   background: #405052;
-
-  transition: background 0.2s ease;
 }
 
 .anonymous-toggle span::after {
@@ -387,11 +631,11 @@
 
   position: absolute;
 
-  width: 7px;
-  height: 7px;
-
   top: 2px;
   left: 2px;
+
+  width: 7px;
+  height: 7px;
 
   border-radius: 50%;
 
@@ -422,7 +666,10 @@
 
   position: relative;
 
-  margin: 0 0 11px;
+  margin:
+    0
+    0
+    11px;
 }
 
 .image-preview.visible {
@@ -431,17 +678,19 @@
 
 .image-preview img,
 .post-image {
-  display: block;
-
   max-width: 100%;
   max-height: 360px;
 
   object-fit: cover;
 
-  border: 1px solid #3b4c4d;
+  border:
+    1px solid
+    #3b4c4d;
 }
 
 .image-preview img {
+  display: block;
+
   width: 100%;
 }
 
@@ -463,45 +712,47 @@
   cursor: pointer;
 }
 
-
-/* =========================================================
-   POST IMAGE
-   ========================================================= */
-
 .post-image {
+  display: block;
+
   width: 100%;
 
-  margin: 2px 0 17px;
+  margin:
+    2px
+    0
+    17px;
 }
 
 
 /* =========================================================
-   ACTIVITY CARD
+   ACTIVITY
    ========================================================= */
 
 .activity-card {
-  padding: 28px 0;
+  padding:
+    28px
+    0;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid
+    var(--line);
 
   color: #87938f;
 
-  font: 12px/1.6 "Playfair Display";
+  font:
+    12px/1.6
+    "Playfair Display";
 }
 
 .activity-card em {
   color: var(--aqua);
 }
 
-
-/* =========================================================
-   ACTIVITY STATS
-   ========================================================= */
-
 .activity-stats {
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns:
+    repeat(3, 1fr);
 
   gap: 8px;
 }
@@ -509,7 +760,9 @@
 .activity-stats div {
   padding-left: 8px;
 
-  border-left: 1px solid #405052;
+  border-left:
+    1px solid
+    #405052;
 }
 
 .activity-stats strong {
@@ -517,119 +770,28 @@
 
   color: var(--aqua);
 
-  font: 500 18px "DM Mono";
+  font:
+    500 18px
+    "DM Mono";
 }
 
 .activity-stats span {
   color: #87938f;
 
-  font: 9px "DM Mono";
+  font:
+    9px
+    "DM Mono";
 }
 
 
 /* =========================================================
-   PHONE CARD
-   ========================================================= */
-
-.phone-card {
-  padding: 28px 0;
-}
-
-.phone-card h3 {
-  margin: 0 0 14px;
-
-  color: var(--cream);
-
-  font: 600 18px "Playfair Display";
-}
-
-
-/* =========================================================
-   INSTALL BUTTON
-   ========================================================= */
-
-.install-button,
-.notification-button {
-  width: 100%;
-
-  padding: 10px;
-
-  cursor: pointer;
-
-  font: 700 10px Manrope;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.install-button {
-  border: 1px solid var(--aqua);
-
-  background: var(--aqua);
-
-  color: #153133;
-}
-
-.install-button:hover {
-  background: #8cf5ed;
-
-  border-color: #8cf5ed;
-}
-
-
-/* =========================================================
-   NOTIFICATION BUTTON
-   ========================================================= */
-
-.notification-button {
-  margin-top: 7px;
-
-  border: 1px solid #465557;
-
-  background: transparent;
-
-  color: #b4c1bd;
-}
-
-.notification-button:hover {
-  border-color: var(--aqua);
-
-  color: var(--aqua);
-
-  background:
-    rgba(103, 231, 221, 0.04);
-}
-
-
-/* =========================================================
-   INSTALL HELP
-   ========================================================= */
-
-.install-help {
-  margin: 13px 0 0;
-
-  color: #82908c;
-
-  font: 10px/1.65 Manrope;
-}
-
-.install-help strong {
-  color: #c4d2cd;
-}
-
-
-/* =========================================================
-   SITE FOOTER
+   FOOTER
    ========================================================= */
 
 .site-footer {
-  min-height: 39px;
-
   position: relative;
 
-  z-index: 3;
+  min-height: 39px;
 
   display: flex;
 
@@ -637,43 +799,31 @@
 
   justify-content: center;
 
-  padding: 0 4.5vw;
+  padding:
+    0
+    4.5vw;
 
-  background: #090d0e;
+  background: #0b2426;
 
-  border-top: 1px solid var(--line);
+  border-top:
+    1px solid
+    var(--line);
+
+  box-shadow: none;
 
   color: #687572;
 
-  font: 9px "DM Mono";
+  font:
+    9px
+    "DM Mono";
 
   letter-spacing: 0.04em;
 
   text-align: center;
-
-  box-shadow:
-    0 -10px 26px rgba(0, 0, 0, 0.38);
 }
 
 .site-footer::before {
-  content: "";
-
-  pointer-events: none;
-
-  position: absolute;
-
-  left: 0;
-  right: 0;
-  top: -24px;
-
-  height: 24px;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.2),
-      transparent
-    );
+  display: none;
 }
 
 .site-footer p {
@@ -682,59 +832,413 @@
 
 
 /* =========================================================
-   MOBILE COMPOSER
+   MESSAGES
+   ========================================================= */
+
+.messages {
+  background:
+    #172629;
+
+  border:
+    1px solid
+    #405052;
+
+  box-shadow:
+    0 17px 55px
+    rgba(0, 0, 0, 0.68);
+
+  backdrop-filter: none;
+}
+
+.messages.open {
+  transform: translateY(0);
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   MESSAGE FORM
+   ========================================================= */
+
+.message-compose {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1.5fr
+    37px;
+
+  gap: 7px;
+
+  margin-top: 16px;
+}
+
+.message-compose input {
+  min-width: 0;
+}
+
+.message-compose button {
+  width: 37px;
+
+  height: 37px;
+
+  align-self: end;
+}
+
+
+/* =========================================================
+   MONO MODE
+   ========================================================= */
+
+body.mono {
+  --bg: #080808;
+  --panel: #101010;
+  --panel-2: #111111;
+  --line: #303030;
+
+  --cream: #f7f7f7;
+  --muted: #9a9a9a;
+
+  --aqua: #ffffff;
+  --aqua-dark: #dddddd;
+  --aqua-deep: #222222;
+
+  --aqua-soft: rgba(255, 255, 255, 0.08);
+  --aqua-border: rgba(255, 255, 255, 0.22);
+}
+
+body.mono .grain {
+  display: none !important;
+}
+
+body.mono .topbar,
+body.mono .site-footer {
+  background: #090909;
+}
+
+body.mono .brand-text {
+  background: #ffffff;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
+body.mono .header-logo img {
+  filter: grayscale(1);
+}
+
+body.mono .primary,
+body.mono .install-button {
+  background: #ffffff;
+
+  color: #111111;
+}
+
+body.mono .quote-label,
+body.mono .story-label {
+  background: #303030;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 960px) {
+
+  .topbar {
+    grid-template-columns:
+      1fr
+      auto;
+
+    padding:
+      0
+      25px;
+  }
+
+  .header-logo {
+    justify-self: center;
+  }
+
+  .hub-nav {
+    justify-self: end;
+  }
+
+  .domain {
+    display: flex;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
    ========================================================= */
 
 @media (max-width: 660px) {
 
-  .composer-tools {
-    gap: 8px;
+  /* -------------------------------------------------------
+     HEADER
+     ------------------------------------------------------- */
 
-    flex-wrap: wrap;
+  .topbar {
+    min-height: auto;
 
-    padding-bottom: 11px;
+    display: grid;
 
+    grid-template-columns:
+      1fr
+      auto;
+
+    grid-template-rows:
+      auto
+      auto;
+
+    column-gap: 10px;
+
+    row-gap: 9px;
+
+    padding:
+      11px
+      15px
+      10px;
+
+    background:
+      linear-gradient(
+        115deg,
+        #071416 0%,
+        #092224 25%,
+        #0c3537 50%,
+        #10494a 75%,
+        #166360 100%
+      );
+  }
+
+
+  /* -------------------------------------------------------
+     DOMAIN — MOBILE IS VISIBLE
+     ------------------------------------------------------- */
+
+  .domain {
+    grid-column: 1;
+    grid-row: 1;
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 5px;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    font-size: 8px;
+  }
+
+  .domain a {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+  }
+
+  .domain span {
+    flex-shrink: 0;
+  }
+
+
+  /* -------------------------------------------------------
+     CENTER LOGO
+     ------------------------------------------------------- */
+
+  .header-logo {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 34px;
+    height: 34px;
+
+    justify-self: end;
+  }
+
+  .header-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  /* -------------------------------------------------------
+     NAVIGATION
+     ------------------------------------------------------- */
+
+  .hub-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    width: 100%;
+
+    justify-self: stretch;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 7px;
+  }
+
+  .hub-nav-item {
+    width: 100%;
+
+    min-height: 34px;
+
+    padding:
+      8px
+      4px;
+
+    border:
+      1px solid
+      rgba(103, 231, 221, 0.15);
+
+    background:
+      rgba(6, 25, 27, 0.42);
+
+    color: #8f9e9a;
+
+    text-align: center;
+  }
+
+  .hub-nav-item strong {
     font-size: 9px;
   }
 
-  .composer-tools select {
-    max-width: 125px;
+  .hub-nav-item.active {
+    background:
+      rgba(103, 231, 221, 0.07);
 
-    font-size: 9px;
-  }
+    border-color:
+      rgba(103, 231, 221, 0.30);
 
-  .image-preview img,
-  .post-image {
-    max-height: 300px;
-  }
-
-
-  /* -----------------------------------------------
-     Activity
-     ----------------------------------------------- */
-
-  .activity-card {
-    padding: 24px 0;
+    color: var(--aqua);
   }
 
 
-  /* -----------------------------------------------
-     Phone
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     ACCOUNT
+     ------------------------------------------------------- */
 
-  .phone-card {
-    padding: 25px 0 4px;
+  .account-wrap {
+    width: 100%;
+  }
+
+  .account-button {
+    width: 100%;
+  }
+
+  .account-menu {
+    top: calc(100% + 8px);
+
+    right: 0;
+
+    width:
+      min(
+        306px,
+        calc(100vw - 30px)
+      );
   }
 
 
-  /* -----------------------------------------------
-     Footer
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     PAGE
+     ------------------------------------------------------- */
+
+  .layout {
+    display: block;
+
+    min-height: auto;
+  }
+
+
+  /* -------------------------------------------------------
+     LEFT RAIL HIDDEN
+     ------------------------------------------------------- */
+
+  .left-rail {
+    display: none !important;
+  }
+
+
+  /* -------------------------------------------------------
+     MAIN
+     ------------------------------------------------------- */
+
+  main {
+    padding:
+      27px
+      18px
+      60px;
+  }
+
+
+  /* -------------------------------------------------------
+     RIGHT RAIL
+     ------------------------------------------------------- */
+
+  .right-rail {
+    display: block;
+
+    border-left: 0;
+
+    padding:
+      30px
+      18px;
+  }
+
+
+  /* -------------------------------------------------------
+     MESSAGES
+     ------------------------------------------------------- */
+
+  .messages {
+    width:
+      calc(100% - 30px);
+
+    right: 15px;
+
+    bottom: 15px;
+
+    padding: 17px;
+  }
+
+  .message-compose {
+    grid-template-columns:
+      1fr
+      37px;
+  }
+
+  .message-compose input:first-child {
+    grid-column:
+      1 / -1;
+  }
+
+
+  /* -------------------------------------------------------
+     FOOTER
+     ------------------------------------------------------- */
 
   .site-footer {
     min-height: 0;
 
-    padding: 11px 15px;
+    padding:
+      11px
+      15px;
   }
 
   .site-footer p {
@@ -752,12 +1256,40 @@
 
 @media (max-width: 380px) {
 
-  .composer-tools {
-    gap: 6px;
+  .topbar {
+    padding-left: 11px;
+    padding-right: 11px;
   }
 
-  .composer-tools select {
-    max-width: 110px;
+  .domain {
+    font-size: 7px;
+  }
+
+  .header-logo,
+  .header-logo img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .hub-nav {
+    gap: 5px;
+  }
+
+  .hub-nav-item {
+    min-height: 32px;
+
+    padding:
+      7px
+      2px;
+  }
+
+  .hub-nav-item strong {
+    font-size: 8px;
+  }
+
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
 }
