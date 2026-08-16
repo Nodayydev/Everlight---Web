@@ -59,7 +59,7 @@ function notify(message) {
 function escapeHtml(text = "") {
   const node = document.createElement("div");
 
-  node.textContent = text;
+  node.textContent = String(text);
 
   return node.innerHTML;
 }
@@ -70,20 +70,25 @@ function escapeHtml(text = "") {
    ========================================================= */
 
 async function api(url, options = {}) {
+  const headers = {
+    ...(options.body
+      ? {
+          "Content-Type": "application/json"
+        }
+      : {}),
+
+    ...(token
+      ? {
+          Authorization: `Bearer ${token}`
+        }
+      : {}),
+
+    ...(options.headers || {})
+  };
+
   const response = await fetch(url, {
     ...options,
-
-    headers: {
-      "Content-Type": "application/json",
-
-      ...(token
-        ? {
-            Authorization: `Bearer ${token}`
-          }
-        : {}),
-
-      ...(options.headers || {})
-    }
+    headers
   });
 
   const data = await response
@@ -101,11 +106,77 @@ async function api(url, options = {}) {
 
 
 /* =========================================================
+   USER HELPERS
+   ========================================================= */
+
+/*
+ * Teljes azonosító:
+ *
+ * Nodayy#0614
+ *
+ * Ezt használjuk olyan helyeken, ahol
+ * a tényleges felhasználói azonosító kell.
+ */
+
+function getUsername(user) {
+  return (
+    user?.username ||
+    ""
+  );
+}
+
+
+/*
+ * Megjelenítési név:
+ *
+ * Nodayy
+ *
+ * Ezt csak ott használjuk, ahol valóban
+ * külön megjelenítési név szükséges.
+ */
+
+function getDisplayName(user) {
+  if (
+    user?.displayName &&
+    user.displayName.trim()
+  ) {
+    return user.displayName.trim();
+  }
+
+  const username =
+    getUsername(user);
+
+  if (username.includes("#")) {
+    return username.split("#")[0];
+  }
+
+  return username || "?";
+}
+
+
+/*
+ * Profilhoz tartozó kezdőbetű.
+ */
+
+function getInitial(user) {
+  const name =
+    getDisplayName(user);
+
+  return (
+    name.charAt(0).toUpperCase() ||
+    "?"
+  );
+}
+
+
+/* =========================================================
    AVATAR
    ========================================================= */
 
-function avatar(user, anonymous = false) {
-
+function avatar(
+  user,
+  anonymous = false
+) {
   if (anonymous) {
     return `
       <div class="avatar aurora">
@@ -114,7 +185,10 @@ function avatar(user, anonymous = false) {
     `;
   }
 
-  if (user.avatar) {
+  if (
+    user &&
+    user.avatar
+  ) {
     return `
       <div class="avatar aurora profile-custom-image">
         <img
@@ -125,15 +199,10 @@ function avatar(user, anonymous = false) {
     `;
   }
 
-  const name =
-    user.displayName ||
-    user.username ||
-    "?";
-
   return `
     <div class="avatar aurora">
       ${escapeHtml(
-        name.charAt(0).toUpperCase()
+        getInitial(user)
       )}
     </div>
   `;
@@ -145,36 +214,68 @@ function avatar(user, anonymous = false) {
    ========================================================= */
 
 function setAccount(user) {
-
   if (!user) return;
 
-  currentUser = user;
+  /*
+   * A szerver által visszaadott teljes user objektumot
+   * változtatás nélkül megtartjuk.
+   */
 
-  const displayNameOrUsername =
-    user.displayName ||
-    user.username ||
-    "?";
+  currentUser = {
+    ...user
+  };
+
+
+  /* -----------------------------------------------
+     Persistent profile image state
+     ----------------------------------------------- */
+
+  profileImageData =
+    user.avatar || "";
+
+  coverImageData =
+    user.cover || "";
+
+
+  /* -----------------------------------------------
+     Names
+     ----------------------------------------------- */
+
+  const username =
+    getUsername(user);
+
+  const displayName =
+    getDisplayName(user);
+
+
+  /*
+   * FONTOS:
+   *
+   * username = Nodayy#0614
+   *
+   * displayName = Nodayy
+   *
+   * A kettőt nem írjuk felül egymással.
+   */
 
 
   /* -----------------------------------------------
      Left profile avatar
      ----------------------------------------------- */
 
-  const profileAvatar = $("#profileAvatar");
+  const profileAvatar =
+    $("#profileAvatar");
 
   if (profileAvatar) {
 
-    profileAvatar.textContent =
-      displayNameOrUsername
-        .charAt(0)
-        .toUpperCase();
-
     profileAvatar.style.background =
-      user.profileColor || "#273638";
+      user.profileColor ||
+      "#273638";
 
     profileAvatar.classList.remove(
       "profile-custom-image"
     );
+
 
     if (user.avatar) {
 
@@ -188,6 +289,11 @@ function setAccount(user) {
       profileAvatar.classList.add(
         "profile-custom-image"
       );
+
+    } else {
+
+      profileAvatar.textContent =
+        getInitial(user);
     }
   }
 
@@ -201,13 +307,20 @@ function setAccount(user) {
 
   if (profileSummary) {
 
+    /*
+     * Itt a TELJES username jelenik meg:
+     *
+     * Nodayy#0614
+     */
+
     profileSummary.innerHTML = `
       <strong
         style="color:${escapeHtml(
-          user.nameColor || "#67e7dd"
+          user.nameColor ||
+          "#67e7dd"
         )}"
       >
-        ${escapeHtml(displayNameOrUsername)}
+        ${escapeHtml(username)}
       </strong>
 
       <br />
@@ -263,47 +376,58 @@ function setAccount(user) {
 
 
   /* -----------------------------------------------
-     Fill profile fields
+     Profile fields
      ----------------------------------------------- */
 
   const fields = {
-    displayName: user.displayName || "",
-    profileBio: user.bio || "",
-    pronouns: user.pronouns || "",
-    profileLocation: user.location || "",
-    profileWebsite: user.website || "",
+    displayName:
+      displayName,
+
+    profileBio:
+      user.bio || "",
+
+    pronouns:
+      user.pronouns || "",
+
+    profileLocation:
+      user.location || "",
+
+    profileWebsite:
+      user.website || "",
+
     profileStatus:
-      user.status || "✦ Elérhető",
+      user.status ||
+      "✦ Elérhető",
+
     nameColor:
-      user.nameColor || "#67e7dd",
+      user.nameColor ||
+      "#67e7dd",
+
     profileColor:
-      user.profileColor || "#273638"
+      user.profileColor ||
+      "#273638"
   };
 
 
   Object.entries(fields).forEach(
     ([id, value]) => {
 
-      const element = $(`#${id}`);
+      const element =
+        $(`#${id}`);
 
-      if (element) {
-        element.value = value;
+      if (!element) {
+        return;
       }
 
+      element.value =
+        value ?? "";
     }
   );
 
 
   /* -----------------------------------------------
-     Images
+     Profile image preview
      ----------------------------------------------- */
-
-  profileImageData =
-    user.avatar || "";
-
-  coverImageData =
-    user.cover || "";
-
 
   const profileImagePreview =
     $("#profileImagePreview");
@@ -321,21 +445,39 @@ function setAccount(user) {
 
     } else {
 
-      profileImagePreview.textContent = "?";
-
+      profileImagePreview.textContent =
+        getInitial(user);
     }
   }
 
+
+  /* -----------------------------------------------
+     Cover preview
+     ----------------------------------------------- */
 
   const coverPreview =
     $("#coverPreview");
 
   if (coverPreview) {
 
-    coverPreview.style.backgroundImage =
-      user.cover
-        ? `url("${user.cover}")`
-        : "";
+    if (user.cover) {
+
+      coverPreview.style.backgroundImage =
+        `url("${user.cover}")`;
+
+      coverPreview.classList.add(
+        "profile-custom-image"
+      );
+
+    } else {
+
+      coverPreview.style.backgroundImage =
+        "";
+
+      coverPreview.classList.remove(
+        "profile-custom-image"
+      );
+    }
   }
 }
 
@@ -357,11 +499,20 @@ function requireLogin() {
     $("#accountButton");
 
   if (accountMenu) {
-    accountMenu.classList.add("open");
+    accountMenu.classList.add(
+      "open"
+    );
+
+    accountMenu.setAttribute(
+      "aria-hidden",
+      "false"
+    );
   }
 
   if (accountButton) {
-    accountButton.classList.add("active");
+    accountButton.classList.add(
+      "active"
+    );
   }
 
   notify(
@@ -385,12 +536,10 @@ function getCurrentCategoryLimit() {
     return 280;
   }
 
-  const value =
-    category.value;
-
   return (
-    CATEGORY_LIMITS[value] ||
-    280
+    CATEGORY_LIMITS[
+      category.value
+    ] || 280
   );
 }
 
@@ -407,7 +556,10 @@ function updateCharacterCounter() {
   const counter =
     $("#counter");
 
-  if (!postText || !counter) {
+  if (
+    !postText ||
+    !counter
+  ) {
     return;
   }
 
@@ -421,11 +573,9 @@ function updateCharacterCounter() {
     `${currentLength} / ${limit}`;
 
 
-  /* -----------------------------------------------
-     Visual warning
-     ----------------------------------------------- */
-
-  if (currentLength >= limit) {
+  if (
+    currentLength >= limit
+  ) {
 
     counter.style.color =
       "#ff9c8f";
@@ -440,7 +590,8 @@ function updateCharacterCounter() {
 
   } else {
 
-    counter.style.color = "";
+    counter.style.color =
+      "";
   }
 }
 
@@ -454,22 +605,26 @@ function updateCategoryLimit() {
   const postText =
     $("#postText");
 
-  if (!postText) return;
+  if (!postText) {
+    return;
+  }
 
   const limit =
     getCurrentCategoryLimit();
 
 
-  /* Browser maxlength */
+  /*
+   * A HTML maxlength is dinamikus.
+   */
 
   postText.maxLength =
     limit;
 
 
-  /* If current text is too long,
-     trim it to the new category limit. */
-
-  if (postText.value.length > limit) {
+  if (
+    postText.value.length >
+    limit
+  ) {
 
     postText.value =
       postText.value.slice(
@@ -506,20 +661,31 @@ function renderPost(post) {
 
 
   const anonymous =
-    Boolean(post.is_anonymous);
+    Boolean(
+      post.is_anonymous
+    );
 
 
-  const user = {
+  const postUser = {
 
     username:
-      post.username,
+      post.username || "",
 
     displayName:
       post.display_name ||
-      post.username.split("#")[0],
+      (
+        post.username &&
+        post.username.includes("#")
+          ? post.username.split("#")[0]
+          : post.username
+      ),
 
     avatar:
-      post.avatar || ""
+      post.avatar || "",
+
+    nameColor:
+      post.name_color ||
+      "#67e7dd"
   };
 
 
@@ -527,6 +693,18 @@ function renderPost(post) {
     post.category ||
     "Gondolat";
 
+
+  /*
+   * A posztban:
+   *
+   * fő név = displayName
+   * azonosító = @username
+   *
+   * Így:
+   *
+   * Nodayy
+   * @nodayy#0614
+   */
 
   return `
     <article class="post">
@@ -536,18 +714,26 @@ function renderPost(post) {
         <div class="identity">
 
           ${avatar(
-            user,
+            postUser,
             anonymous
           )}
 
           <div>
 
-            <strong>
+            <strong
+              style="${
+                !anonymous
+                  ? `color:${escapeHtml(
+                      postUser.nameColor
+                    )}`
+                  : ""
+              }"
+            >
               ${
                 anonymous
                   ? "Névtelen"
                   : escapeHtml(
-                      user.displayName
+                      postUser.displayName
                     )
               }
             </strong>
@@ -558,7 +744,7 @@ function renderPost(post) {
                   ? "@anonymous"
                   : "@" +
                     escapeHtml(
-                      user.username
+                      postUser.username
                     )
               }
             </span>
@@ -569,7 +755,7 @@ function renderPost(post) {
 
 
         <time>
-          ${date}
+          ${escapeHtml(date)}
         </time>
 
       </div>
@@ -597,6 +783,7 @@ function renderPost(post) {
                 post.image
               )}"
               alt="Megosztott kép"
+              loading="lazy"
             >
           `
           : ""
@@ -635,7 +822,9 @@ async function loadPosts() {
     const feedList =
       $("#feedList");
 
-    if (!feedList) return;
+    if (!feedList) {
+      return;
+    }
 
 
     feedList.innerHTML =
@@ -657,7 +846,9 @@ async function loadPosts() {
     const feedList =
       $("#feedList");
 
-    if (!feedList) return;
+    if (!feedList) {
+      return;
+    }
 
     feedList.innerHTML = `
       <p class="loading-copy">
@@ -705,12 +896,20 @@ async function loadOnline() {
           ? users
               .map((user) =>
                 avatar({
-                  ...user,
+                  username:
+                    user.username,
 
                   displayName:
                     user.display_name ||
-                    user.username
-                      .split("#")[0]
+                    (
+                      user.username &&
+                      user.username.includes("#")
+                        ? user.username.split("#")[0]
+                        : user.username
+                    ),
+
+                  avatar:
+                    user.avatar
                 })
               )
               .join("")
@@ -750,12 +949,16 @@ if (accountButton) {
 
   accountButton.addEventListener(
     "click",
-    () => {
+    (event) => {
+
+      event.stopPropagation();
 
       const accountMenu =
         $("#accountMenu");
 
-      if (!accountMenu) return;
+      if (!accountMenu) {
+        return;
+      }
 
 
       const open =
@@ -788,35 +991,39 @@ document.addEventListener(
   (event) => {
 
     if (
-      !event.target.closest(
+      event.target.closest(
         ".account-wrap"
       )
     ) {
-
-      const accountMenu =
-        $("#accountMenu");
-
-      const accountButton =
-        $("#accountButton");
+      return;
+    }
 
 
-      if (accountMenu) {
-        accountMenu.classList.remove(
-          "open"
-        );
+    const accountMenu =
+      $("#accountMenu");
 
-        accountMenu.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-      }
+    const accountButton =
+      $("#accountButton");
 
 
-      if (accountButton) {
-        accountButton.classList.remove(
-          "active"
-        );
-      }
+    if (accountMenu) {
+
+      accountMenu.classList.remove(
+        "open"
+      );
+
+      accountMenu.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+    }
+
+
+    if (accountButton) {
+
+      accountButton.classList.remove(
+        "active"
+      );
     }
   }
 );
@@ -840,11 +1047,27 @@ if (loginForm) {
 
       try {
 
+        const loginName =
+          $("#loginName");
+
         const emailInput =
           $("#loginEmail");
 
         const passwordInput =
           $("#loginPassword");
+
+
+        /*
+         * A HTML-edben a password input jelenleg
+         * nincs ID-val ellátva, ezért fallbackként
+         * a formon belüli password mezőt is keressük.
+         */
+
+        const passwordElement =
+          passwordInput ||
+          loginForm.querySelector(
+            'input[type="password"]'
+          );
 
 
         const data =
@@ -853,21 +1076,24 @@ if (loginForm) {
             {
               method: "POST",
 
-              body: JSON.stringify({
+              body:
+                JSON.stringify({
 
-                username:
-                  $("#loginName").value,
+                  username:
+                    loginName
+                      ? loginName.value
+                      : "",
 
-                email:
-                  emailInput
-                    ? emailInput.value
-                    : "",
+                  email:
+                    emailInput
+                      ? emailInput.value
+                      : "",
 
-                password:
-                  passwordInput
-                    ? passwordInput.value
-                    : ""
-              })
+                  password:
+                    passwordElement
+                      ? passwordElement.value
+                      : ""
+                })
             }
           );
 
@@ -875,15 +1101,31 @@ if (loginForm) {
         token =
           data.token;
 
+
         localStorage.setItem(
           "everlight-token",
           token
         );
 
 
+        /*
+         * A teljes user objektumot
+         * használjuk.
+         */
+
         setAccount(
           data.user
         );
+
+
+        /*
+         * Bejelentkezés után a jelszómezőt
+         * kiürítjük.
+         */
+
+        if (passwordElement) {
+          passwordElement.value = "";
+        }
 
 
         notify(
@@ -975,7 +1217,25 @@ if (imageInput) {
       const file =
         imageInput.files[0];
 
-      if (!file) return;
+      if (!file) {
+        return;
+      }
+
+
+      if (
+        !file.type.startsWith(
+          "image/"
+        )
+      ) {
+
+        imageInput.value = "";
+
+        notify(
+          "Csak képfájl tölthető fel."
+        );
+
+        return;
+      }
 
 
       if (
@@ -1014,7 +1274,9 @@ if (imageInput) {
 
           imagePreview.innerHTML = `
             <img
-              src="${imageData}"
+              src="${escapeHtml(
+                imageData
+              )}"
               alt="Előnézet"
             >
 
@@ -1092,6 +1354,7 @@ if (imagePreview) {
         $("#imageName");
 
       if (imageName) {
+
         imageName.textContent =
           "Kép";
       }
@@ -1190,10 +1453,6 @@ if (postButton) {
         }
 
 
-        /* -----------------------------------------
-           Reset composer
-           ----------------------------------------- */
-
         if (postText) {
           postText.value = "";
         }
@@ -1229,10 +1488,6 @@ if (postButton) {
         updateCharacterCounter();
 
 
-        /* -----------------------------------------
-           Post count
-           ----------------------------------------- */
-
         const postCount =
           $("#postCount");
 
@@ -1246,7 +1501,7 @@ if (postButton) {
 
 
         notify(
-          "A bejegyzésed megjelent az áramlásban."
+          "A bejegyzésed megjelent."
         );
 
 
@@ -1275,7 +1530,25 @@ function readImage(
   const file =
     input.files[0];
 
-  if (!file) return;
+  if (!file) {
+    return;
+  }
+
+
+  if (
+    !file.type.startsWith(
+      "image/"
+    )
+  ) {
+
+    input.value = "";
+
+    notify(
+      "Csak képfájl tölthető fel."
+    );
+
+    return;
+  }
 
 
   if (
@@ -1298,6 +1571,7 @@ function readImage(
 
 
   reader.onload = () => {
+
     callback(
       reader.result
     );
@@ -1325,6 +1599,12 @@ if (profileImageInput) {
         profileImageInput,
         (data) => {
 
+          /*
+           * Fontos:
+           * csak akkor változtatjuk meg,
+           * ha ténylegesen új képet választott.
+           */
+
           profileImageData =
             data;
 
@@ -1336,7 +1616,7 @@ if (profileImageInput) {
 
             preview.innerHTML = `
               <img
-                src="${data}"
+                src="${escapeHtml(data)}"
                 alt="Profilkép"
               >
             `;
@@ -1376,6 +1656,10 @@ if (coverImageInput) {
 
             preview.style.backgroundImage =
               `url("${data}")`;
+
+            preview.classList.add(
+              "profile-custom-image"
+            );
           }
         }
       );
@@ -1404,6 +1688,50 @@ if (saveProfile) {
 
       try {
 
+        /*
+         * Megőrizzük a jelenlegi képeket.
+         *
+         * Ha nincs új kép kiválasztva,
+         * akkor a jelenlegi profileImageData /
+         * coverImageData marad.
+         */
+
+        const currentAvatar =
+          profileImageData ||
+          currentUser?.avatar ||
+          "";
+
+        const currentCover =
+          coverImageData ||
+          currentUser?.cover ||
+          "";
+
+
+        const displayNameInput =
+          $("#displayName");
+
+        const bioInput =
+          $("#profileBio");
+
+        const nameColorInput =
+          $("#nameColor");
+
+        const profileColorInput =
+          $("#profileColor");
+
+        const statusInput =
+          $("#profileStatus");
+
+        const pronounsInput =
+          $("#pronouns");
+
+        const locationInput =
+          $("#profileLocation");
+
+        const websiteInput =
+          $("#profileWebsite");
+
+
         const { user } =
           await api(
             "/api/profile",
@@ -1413,47 +1741,75 @@ if (saveProfile) {
               body:
                 JSON.stringify({
 
+                  /*
+                   * Ez csak displayName.
+                   *
+                   * A username-t SOHA nem küldjük
+                   * módosítandó mezőként.
+                   */
+
                   displayName:
-                    $("#displayName")
-                      .value,
+                    displayNameInput
+                      ? displayNameInput.value
+                      : getDisplayName(
+                          currentUser
+                        ),
 
                   bio:
-                    $("#profileBio")
-                      .value,
+                    bioInput
+                      ? bioInput.value
+                      : currentUser?.bio || "",
 
                   avatar:
-                    profileImageData,
+                    currentAvatar,
 
                   cover:
-                    coverImageData,
+                    currentCover,
 
                   nameColor:
-                    $("#nameColor")
-                      .value,
+                    nameColorInput
+                      ? nameColorInput.value
+                      : currentUser?.nameColor ||
+                        "#67e7dd",
 
                   profileColor:
-                    $("#profileColor")
-                      .value,
+                    profileColorInput
+                      ? profileColorInput.value
+                      : currentUser?.profileColor ||
+                        "#273638",
 
                   status:
-                    $("#profileStatus")
-                      .value,
+                    statusInput
+                      ? statusInput.value
+                      : currentUser?.status ||
+                        "✦ Elérhető",
 
                   pronouns:
-                    $("#pronouns")
-                      .value,
+                    pronounsInput
+                      ? pronounsInput.value
+                      : currentUser?.pronouns ||
+                        "",
 
                   location:
-                    $("#profileLocation")
-                      .value,
+                    locationInput
+                      ? locationInput.value
+                      : currentUser?.location ||
+                        "",
 
                   website:
-                    $("#profileWebsite")
-                      .value
+                    websiteInput
+                      ? websiteInput.value
+                      : currentUser?.website ||
+                        ""
                 })
             }
           );
 
+
+        /*
+         * A szerver által visszaadott user
+         * az új aktuális állapot.
+         */
 
         setAccount(user);
 
@@ -1487,7 +1843,9 @@ function openMessages() {
   const messages =
     $("#messages");
 
-  if (!messages) return;
+  if (!messages) {
+    return;
+  }
 
 
   messages.classList.add(
@@ -1510,7 +1868,9 @@ function closeMessages() {
   const messages =
     $("#messages");
 
-  if (!messages) return;
+  if (!messages) {
+    return;
+  }
 
 
   messages.classList.remove(
@@ -1613,7 +1973,10 @@ async function loadMessages() {
   const dmList =
     $("#dmList");
 
-  if (!recipientInput || !dmList) {
+  if (
+    !recipientInput ||
+    !dmList
+  ) {
     return;
   }
 
@@ -1650,14 +2013,22 @@ async function loadMessages() {
 
     if (dmTitle && user) {
 
+      /*
+       * Az üzenet fejlécében a teljes
+       * azonosítót használjuk.
+       */
+
       dmTitle.textContent =
-        user.displayName ||
-        user.username ||
+        getUsername(user) ||
+        getDisplayName(user) ||
         "Ismeretlen";
     }
 
 
-    if (!data.messages.length) {
+    if (
+      !data.messages ||
+      !data.messages.length
+    ) {
 
       dmList.innerHTML = `
         <p class="loading-copy">
@@ -1680,7 +2051,8 @@ async function loadMessages() {
                 <strong>
                   ${escapeHtml(
                     message.sender_name ||
-                    message.sender_username
+                    message.sender_username ||
+                    ""
                   )}
                 </strong>
 
@@ -1899,22 +2271,31 @@ if (notificationButton) {
       }
 
 
-      const permission =
-        await Notification.requestPermission();
+      try {
+
+        const permission =
+          await Notification.requestPermission();
 
 
-      if (
-        permission === "granted"
-      ) {
+        if (
+          permission === "granted"
+        ) {
+
+          notify(
+            "Értesítések engedélyezve."
+          );
+
+        } else {
+
+          notify(
+            "Az értesítések nem lettek engedélyezve."
+          );
+        }
+
+      } catch {
 
         notify(
-          "Értesítések engedélyezve."
-        );
-
-      } else {
-
-        notify(
-          "Az értesítések nem lettek engedélyezve."
+          "Az értesítések engedélyezése nem sikerült."
         );
       }
     }
@@ -1937,7 +2318,9 @@ if (
       navigator.serviceWorker
         .register("./sw.js")
         .catch(() => {
-          /* Service worker nem kötelező */
+          /*
+           * A service worker nem kötelező.
+           */
         });
 
     }
@@ -1954,7 +2337,9 @@ function updateClock() {
   const clock =
     $("#mainClock");
 
-  if (!clock) return;
+  if (!clock) {
+    return;
+  }
 
 
   const now =
@@ -1974,6 +2359,7 @@ function updateClock() {
 
 updateClock();
 
+
 setInterval(
   updateClock,
   1000
@@ -1981,7 +2367,7 @@ setInterval(
 
 
 /* =========================================================
-   INITIALIZE CATEGORY LIMIT
+   INITIAL CATEGORY LIMIT
    ========================================================= */
 
 updateCategoryLimit();
@@ -1993,6 +2379,18 @@ updateCategoryLimit();
 
 (async () => {
 
+  /*
+   * Elsőként mindig a szervertől kérjük le
+   * a tényleges felhasználót.
+   *
+   * Ez biztosítja, hogy F5 után is:
+   *
+   * username    = Nodayy#0614
+   * displayName = Nodayy
+   * avatar      = mentett kép
+   * cover       = mentett kép
+   */
+
   if (token) {
 
     try {
@@ -2003,7 +2401,16 @@ updateCategoryLimit();
         );
 
 
-      setAccount(user);
+      if (!user) {
+        throw new Error(
+          "A felhasználó nem található."
+        );
+      }
+
+
+      setAccount(
+        user
+      );
 
     } catch {
 
@@ -2014,6 +2421,10 @@ updateCategoryLimit();
       token = "";
 
       currentUser = null;
+
+      profileImageData = "";
+
+      coverImageData = "";
     }
   }
 
@@ -2024,16 +2435,23 @@ updateCategoryLimit();
   ]);
 
 
-  /* -----------------------------------------------
-     Background refresh
-     ----------------------------------------------- */
+  /*
+   * Online lista frissítése.
+   *
+   * Üzeneteket csak akkor kérünk le,
+   * ha már van megadott címzett.
+   */
 
   setInterval(
     async () => {
 
       await loadOnline();
 
-      if (currentUser) {
+      if (
+        currentUser &&
+        $("#dmRecipient")?.value.trim()
+      ) {
+
         await loadMessages();
       }
 
