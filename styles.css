@@ -2,11 +2,18 @@
    EVERLIGHT — STYLES.CSS
    ========================================================= */
 
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
 :root {
   --bg: #101719;
   --panel: #162124;
   --panel-2: #142023;
+
   --line: #283538;
+  --line-soft: rgba(103, 231, 221, 0.14);
 
   --cream: #e9e5d8;
   --muted: #8d9894;
@@ -17,6 +24,9 @@
 
   --aqua-soft: rgba(103, 231, 221, 0.08);
   --aqua-border: rgba(103, 231, 221, 0.22);
+
+  --header-dark: #071416;
+  --header-aqua: #176b68;
 }
 
 
@@ -39,14 +49,44 @@ body {
 
   color: var(--cream);
 
-  font-family: Manrope, Arial, sans-serif;
+  font-family:
+    Manrope,
+    Arial,
+    sans-serif;
+
   font-size: 14px;
 
   font-variant: normal;
+
   font-feature-settings: normal;
 
   -webkit-font-smoothing: antialiased;
+
   text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family:
+    Manrope,
+    Arial,
+    sans-serif;
+
+  font-variant: normal;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -64,15 +104,22 @@ body {
    ========================================================= */
 
 .topbar {
+  width: 100%;
+
   height: 74px;
 
   display: grid;
 
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto
+    minmax(0, 1fr);
 
   align-items: center;
 
-  padding: 0 4.5vw;
+  padding:
+    0
+    4.5vw;
 
   position: relative;
 
@@ -80,68 +127,56 @@ body {
 
   background:
     linear-gradient(
-      112deg,
-      #071315 0%,
-      #091b1d 18%,
-      #0b282a 38%,
-      #0e3a3c 60%,
-      #135254 80%,
-      #176866 100%
+      108deg,
+      #061113 0%,
+      #081a1c 16%,
+      #0a2527 34%,
+      #0d3537 53%,
+      #10484a 73%,
+      #145957 88%,
+      #176966 100%
     );
 
   border-bottom:
     1px solid
-    rgba(103, 231, 221, 0.24);
+    rgba(103, 231, 221, 0.18);
 
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.48),
-    inset 0 -1px 0
-      rgba(103, 231, 221, 0.06);
+  box-shadow: none;
 }
 
 .topbar::after {
-  content: "";
-
-  pointer-events: none;
-
-  position: absolute;
-
-  left: 0;
-  right: 0;
-  bottom: -24px;
-
-  height: 24px;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.22),
-      transparent
-    );
+  display: none;
 }
 
 
 /* =========================================================
-   DOMAIN
+   HEADER DOMAIN
    ========================================================= */
 
-.domain {
+.header-domain {
   justify-self: start;
 
   display: flex;
 
   align-items: center;
 
-  gap: 7px;
+  gap: 8px;
+
+  min-width: 0;
 
   white-space: nowrap;
 
-  color: #546360;
+  color: #53635f;
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono",
+    monospace;
+
+  letter-spacing: 0.015em;
 }
 
-.domain a {
+.header-domain a {
   color: #7e8d89;
 
   text-decoration: none;
@@ -150,33 +185,34 @@ body {
     color 0.2s ease;
 }
 
-.domain a:first-child {
+.header-domain a:first-child {
   color: var(--aqua);
-
-  text-shadow:
-    0 0 20px
-      rgba(103, 231, 221, 0.16);
 }
 
-.domain a:last-child {
-  color: #7b8784;
+.header-domain a:last-child {
+  color: #7d8986;
 }
 
-.domain a:hover {
+.header-domain a:hover {
   color: var(--cream);
 }
 
-.domain span {
-  color: #415450;
+.header-domain span {
+  color: #455552;
+
+  user-select: none;
 }
 
 
 /* =========================================================
-   DESKTOP TOP NAV
+   HEADER LOGO
    ========================================================= */
 
-.top-nav {
+.header-logo {
   justify-self: center;
+
+  width: 46px;
+  height: 46px;
 
   display: flex;
 
@@ -184,401 +220,29 @@ body {
 
   justify-content: center;
 
-  gap: 22px;
-
-  white-space: nowrap;
-}
-
-.top-nav a {
-  display: inline-block;
-
-  padding: 4px 0;
-
-  color: #8b9995;
-
   text-decoration: none;
 
-  font: 10px "DM Mono";
-
-  transition:
-    color 0.2s ease,
-    opacity 0.2s ease;
+  flex-shrink: 0;
 }
 
-.top-nav a:first-child {
-  color: var(--aqua);
-}
+.header-logo img {
+  display: block;
 
-.top-nav a:hover {
-  color: var(--cream);
-}
-
-
-/* =========================================================
-   MOBILE BRAND
-   ========================================================= */
-
-.brand-mobile {
-  display: none;
-
-  align-items: center;
-
-  gap: 8px;
-
-  color: var(--cream);
-
-  text-decoration: none;
-
-  font:
-    700 24px
-    "Playfair Display";
-
-  letter-spacing: -0.045em;
-}
-
-.brand-mobile img {
-  width: 31px;
-  height: 31px;
+  width: 100%;
+  height: 100%;
 
   object-fit: contain;
-
-  flex-shrink: 0;
-}
-
-.brand-mobile span {
-  color: var(--aqua);
 }
 
 
 /* =========================================================
-   HEADER ACTIONS
+   EMPTY RIGHT HEADER
    ========================================================= */
 
-.header-actions {
+.header-empty {
   justify-self: end;
 
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  margin: 0;
-}
-
-.presence {
-  color: var(--muted);
-
-  white-space: nowrap;
-
-  font: 10px "DM Mono";
-}
-
-.presence i {
-  display: inline-block;
-
-  width: 7px;
-  height: 7px;
-
-  margin-right: 6px;
-
-  border-radius: 50%;
-
-  background: var(--aqua);
-
-  box-shadow:
-    0 0 12px var(--aqua);
-}
-
-
-/* =========================================================
-   ACCOUNT WRAPPER
-   ========================================================= */
-
-.account-wrap {
-  position: relative;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: flex-end;
-
-  gap: 8px;
-
-  flex-shrink: 0;
-}
-
-
-/* =========================================================
-   ACCOUNT / MESSAGE BUTTON
-   ========================================================= */
-
-.account-button {
-  width: 40px;
-  height: 40px;
-
-  flex-shrink: 0;
-
-  display: grid;
-
-  place-items: center;
-
-  border:
-    1px solid
-    #3a4849;
-
-  border-radius: 50%;
-
-  background:
-    rgba(20, 36, 38, 0.9);
-
-  color: var(--cream);
-
-  cursor: pointer;
-
-  transition:
-    border-color 0.2s ease,
-    color 0.2s ease,
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-.account-button:hover,
-.account-button.active {
-  border-color: var(--aqua);
-
-  color: var(--aqua);
-
-  background:
-    rgba(103, 231, 221, 0.08);
-
-  transform: translateY(-1px);
-}
-
-.account-button svg {
-  width: 19px;
-  height: 19px;
-
-  fill: none;
-
-  stroke: currentColor;
-
-  stroke-width: 1.5;
-
-  stroke-linecap: round;
-
-  stroke-linejoin: round;
-}
-
-
-/* =========================================================
-   ACCOUNT MENU
-   ========================================================= */
-
-.account-menu {
-  display: none;
-
-  position: absolute;
-
-  z-index: 1000;
-
-  top: 52px;
-  right: 0;
-
-  width: 306px;
-
-  padding: 24px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #1a292b,
-      #152224
-    );
-
-  border:
-    1px solid
-    #37494a;
-
-  box-shadow:
-    0 22px 60px
-      rgba(0, 0, 0, 0.65);
-
-  backdrop-filter: blur(12px);
-}
-
-.account-menu.open {
-  display: block;
-
-  animation:
-    fade 0.2s ease;
-}
-
-.account-menu.logged-in {
-  max-height:
-    calc(100vh - 95px);
-
-  overflow-y: auto;
-}
-
-
-/* =========================================================
-   TYPOGRAPHY
-   ========================================================= */
-
-.eyebrow {
-  margin: 0 0 9px;
-
-  color: var(--aqua);
-
-  font: 10px "DM Mono";
-
-  letter-spacing: 0.13em;
-
-  font-variant: normal;
-}
-
-.account-menu h2 {
-  margin: 0 0 18px;
-
-  font:
-    600 22px
-    Manrope;
-}
-
-.account-menu label {
-  display: block;
-
-  margin: 12px 0;
-
-  color: var(--cream);
-
-  font-size: 11px;
-
-  font-weight: 700;
-}
-
-.account-menu label span {
-  float: right;
-
-  color: var(--muted);
-
-  font-weight: 500;
-}
-
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
-input,
-textarea,
-select,
-button {
-  font-family:
-    Manrope,
-    Arial,
-    sans-serif;
-
-  font-variant: normal;
-
-  font-feature-settings: normal;
-}
-
-.account-menu input,
-.message-compose input {
   width: 100%;
-
-  margin-top: 6px;
-
-  padding: 11px;
-
-  background: #10191b;
-
-  border:
-    1px solid
-    #344244;
-
-  color: var(--cream);
-
-  outline: none;
-
-  font: 13px Manrope;
-}
-
-.account-menu input:focus,
-.message-compose input:focus {
-  border-color: var(--aqua);
-
-  box-shadow:
-    0 0 0 2px
-      rgba(103, 231, 221, 0.06);
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-.primary {
-  border: 0;
-
-  background: var(--aqua);
-
-  color: #123032;
-
-  padding: 11px 17px;
-
-  font:
-    700 12px
-    Manrope;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.primary:hover {
-  background: #8cf5ed;
-
-  transform:
-    translateY(-1px);
-
-  box-shadow:
-    0 7px 20px
-      rgba(103, 231, 221, 0.14);
-}
-
-.account-menu .primary {
-  width: 100%;
-
-  margin-top: 7px;
-}
-
-
-/* =========================================================
-   SMALL COPY
-   ========================================================= */
-
-.small-copy {
-  margin: 15px 0 0;
-
-  color: var(--muted);
-
-  font-size: 11px;
-
-  text-align: center;
-}
-
-.small-copy a,
-.about-card a {
-  color: var(--aqua);
-
-  text-decoration: none;
 }
 
 
@@ -587,6 +251,8 @@ button {
    ========================================================= */
 
 .layout {
+  width: 100%;
+
   display: grid;
 
   grid-template-columns:
@@ -596,7 +262,7 @@ button {
 
   max-width: 1440px;
 
-  margin: auto;
+  margin: 0 auto;
 
   min-height:
     calc(100vh - 74px);
@@ -626,7 +292,7 @@ button {
 
 
 /* =========================================================
-   LEFT BRAND
+   LEFT EVERLIGHT BRAND
    ========================================================= */
 
 .brand {
@@ -662,10 +328,10 @@ button {
   background:
     linear-gradient(
       112deg,
-      #bdf5f0 0%,
-      #67e7dd 45%,
-      #24aba8 78%,
-      #176b69 100%
+      #72e8df 0%,
+      #67e7dd 34%,
+      #35c7c0 64%,
+      #198c88 100%
     );
 
   -webkit-background-clip: text;
@@ -684,7 +350,7 @@ button {
    ========================================================= */
 
 .tagline {
-  max-width: 215px;
+  max-width: 225px;
 
   margin:
     23px
@@ -700,7 +366,7 @@ button {
 
 
 /* =========================================================
-   LEFT NAV
+   LEFT NAVIGATION
    ========================================================= */
 
 .left-rail nav {
@@ -710,6 +376,8 @@ button {
 }
 
 .left-rail nav a {
+  display: block;
+
   color: var(--muted);
 
   text-decoration: none;
@@ -727,11 +395,15 @@ button {
 }
 
 .left-rail nav a span {
+  display: inline-block;
+
   margin-right: 11px;
 
   color: #5d6b6a;
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 }
 
 .left-rail nav a.nav-active {
@@ -739,20 +411,27 @@ button {
 }
 
 .left-rail nav b {
+  display: inline-block;
+
   margin-left: 5px;
 
-  padding: 2px 5px;
+  padding:
+    2px
+    5px;
 
-  background: #284749;
+  background:
+    #284749;
 
   color: var(--aqua);
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 }
 
 
 /* =========================================================
-   SIGNED OUT
+   PROFILE / SIGNED OUT
    ========================================================= */
 
 .signed-out {
@@ -811,9 +490,11 @@ button {
 }
 
 .avatar-placeholder {
-  background: #273638;
+  background:
+    #273638;
 
-  color: #91a5a1;
+  color:
+    #91a5a1;
 }
 
 .aurora {
@@ -824,31 +505,40 @@ button {
       #26646a
     );
 
-  color: #153638;
+  color:
+    #153638;
 }
 
 .ember {
-  background: #b56d46;
+  background:
+    #b56d46;
 
-  color: #fee0c5;
+  color:
+    #fee0c5;
 }
 
 .moss {
-  background: #65845d;
+  background:
+    #65845d;
 
-  color: #e3f2cc;
+  color:
+    #e3f2cc;
 }
 
 .sky {
-  background: #668fac;
+  background:
+    #668fac;
 
-  color: #d9f3ff;
+  color:
+    #d9f3ff;
 }
 
 .lilac {
-  background: #8b779c;
+  background:
+    #8b779c;
 
-  color: #f2e8ff;
+  color:
+    #f2e8ff;
 }
 
 .profile-custom-image {
@@ -868,10 +558,12 @@ button {
 
 
 /* =========================================================
-   MAIN CONTENT
+   MAIN
    ========================================================= */
 
 main {
+  min-width: 0;
+
   padding:
     46px
     50px
@@ -880,7 +572,7 @@ main {
 
 
 /* =========================================================
-   TIME
+   TIME LOCKUP
    ========================================================= */
 
 .time-lockup {
@@ -896,15 +588,20 @@ main {
     1px solid
     var(--line);
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 
-  letter-spacing: 0.03em;
+  letter-spacing:
+    0.03em;
 }
 
 .time-lockup strong {
-  color: var(--aqua);
+  color:
+    var(--aqua);
 
   font:
     500 15px
@@ -926,13 +623,15 @@ main {
 .section-heading h1 {
   margin: 0;
 
-  color: var(--cream);
+  color:
+    var(--cream);
 
   font:
     600 31px
     "Playfair Display";
 
-  letter-spacing: -0.035em;
+  letter-spacing:
+    -0.035em;
 }
 
 .section-heading::after {
@@ -975,18 +674,17 @@ main {
       #142023,
       #122022
     );
-
-  box-shadow:
-    0 10px 28px
-      rgba(0, 0, 0, 0.12);
 }
 
 .composer-body {
   width: 100%;
+
+  min-width: 0;
 }
 
 textarea {
   width: 100%;
+
   height: 72px;
 
   resize: none;
@@ -997,7 +695,8 @@ textarea {
 
   background: transparent;
 
-  color: var(--cream);
+  color:
+    var(--cream);
 
   font:
     14px/1.6
@@ -1005,7 +704,8 @@ textarea {
 }
 
 textarea::placeholder {
-  color: #82908c;
+  color:
+    #82908c;
 }
 
 .composer-footer {
@@ -1014,12 +714,17 @@ textarea::placeholder {
   align-items: center;
 
   justify-content: space-between;
+
+  gap: 10px;
 }
 
 .composer-footer span {
-  color: #72817d;
+  color:
+    #72817d;
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 }
 
 
@@ -1058,16 +763,22 @@ textarea::placeholder {
 
 .post-top {
   justify-content: space-between;
+
+  gap: 15px;
 }
 
 .identity {
   gap: 10px;
+
+  min-width: 0;
 }
 
 .identity strong {
   display: block;
 
   font-size: 12px;
+
+  overflow-wrap: anywhere;
 }
 
 .identity span {
@@ -1075,15 +786,25 @@ textarea::placeholder {
 
   margin-top: 2px;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
+
+  overflow-wrap: anywhere;
 }
 
 .post time {
-  color: var(--muted);
+  flex-shrink: 0;
 
-  font: 10px "DM Mono";
+  color:
+    var(--muted);
+
+  font:
+    10px
+    "DM Mono";
 }
 
 .post p {
@@ -1091,11 +812,15 @@ textarea::placeholder {
     19px
     0;
 
-  color: #d6d8cf;
+  color:
+    #d6d8cf;
 
   font:
     14px/1.8
     Manrope;
+
+  overflow-wrap:
+    anywhere;
 }
 
 .post blockquote {
@@ -1103,13 +828,15 @@ textarea::placeholder {
     22px
     0;
 
-  color: #f0ede3;
+  color:
+    #f0ede3;
 
   font:
     600 22px/1.46
     "Playfair Display";
 
-  letter-spacing: -0.015em;
+  letter-spacing:
+    -0.015em;
 }
 
 .post-bottom {
@@ -1127,21 +854,54 @@ textarea::placeholder {
     4px
     6px;
 
-  font: 9px "DM Mono";
+  font:
+    9px
+    "DM Mono";
 
-  letter-spacing: 0.1em;
+  letter-spacing:
+    0.1em;
 }
 
 .quote-label {
-  background: #293938;
+  background:
+    #293938;
 
-  color: #9eccc5;
+  color:
+    #9eccc5;
 }
 
 .story-label {
-  background: #373832;
+  background:
+    #373832;
 
-  color: #cecb9c;
+  color:
+    #cecb9c;
+}
+
+
+/* =========================================================
+   POST IMAGE
+   ========================================================= */
+
+.post-image {
+  display: block;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  max-height: 360px;
+
+  margin:
+    2px
+    0
+    17px;
+
+  object-fit: cover;
+
+  border:
+    1px solid
+    #3b4c4d;
 }
 
 
@@ -1152,11 +912,14 @@ textarea::placeholder {
 .reaction {
   border: 0;
 
-  background: transparent;
+  background:
+    transparent;
 
-  color: #7f8e89;
+  color:
+    #7f8e89;
 
-  font-size: 15px;
+  font-size:
+    15px;
 
   cursor: pointer;
 }
@@ -1168,7 +931,8 @@ textarea::placeholder {
     10px
     "DM Mono";
 
-  font-style: normal;
+  font-style:
+    normal;
 }
 
 
@@ -1188,7 +952,8 @@ textarea::placeholder {
    ========================================================= */
 
 .about-card {
-  padding-bottom: 32px;
+  padding-bottom:
+    32px;
 
   border-bottom:
     1px solid
@@ -1201,25 +966,31 @@ textarea::placeholder {
     0
     17px;
 
-  color: var(--cream);
+  color:
+    var(--cream);
 
   font:
     600 25px/1.26
     "Playfair Display";
 
-  letter-spacing: -0.03em;
+  letter-spacing:
+    -0.03em;
 }
 
 .about-card h2 i {
-  color: var(--aqua);
+  color:
+    var(--aqua);
 
-  font-weight: 600;
+  font-weight:
+    600;
 }
 
 .about-card > p:not(.eyebrow) {
-  margin-bottom: 22px;
+  margin-bottom:
+    22px;
 
-  color: #9ba5a0;
+  color:
+    #9ba5a0;
 
   font:
     12px/1.8
@@ -1227,13 +998,22 @@ textarea::placeholder {
 }
 
 .about-card a {
-  font-size: 11px;
+  color:
+    var(--aqua);
 
-  font-weight: 700;
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  text-decoration:
+    none;
 }
 
 .about-card a span {
-  margin-left: 6px;
+  margin-left:
+    6px;
 }
 
 
@@ -1256,75 +1036,106 @@ textarea::placeholder {
 
   align-items: center;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 }
 
 .online-heading .eyebrow {
-  margin: 0;
+  margin:
+    0;
 }
 
 .online-heading span {
-  color: var(--muted);
+  color:
+    var(--muted);
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 }
 
 .online-heading i {
-  display: inline-block;
+  display:
+    inline-block;
 
-  width: 6px;
-  height: 6px;
+  width:
+    6px;
 
-  margin-right: 5px;
+  height:
+    6px;
 
-  border-radius: 50%;
+  margin-right:
+    5px;
 
-  background: var(--aqua);
+  border-radius:
+    50%;
+
+  background:
+    var(--aqua);
 
   box-shadow:
-    0 0 10px var(--aqua);
+    0 0 10px
+    var(--aqua);
 }
 
 .faces {
-  display: flex;
+  display:
+    flex;
 
-  margin-top: 15px;
+  margin-top:
+    15px;
 }
 
 .faces .avatar {
-  width: 31px;
-  height: 31px;
+  width:
+    31px;
 
-  margin-right: -8px;
+  height:
+    31px;
+
+  margin-right:
+    -8px;
 
   border:
     2px solid
     var(--bg);
 
-  font-size: 10px;
+  font-size:
+    10px;
 }
 
 .more-face {
-  width: 31px;
-  height: 31px;
+  width:
+    31px;
 
-  margin-left: 0;
+  height:
+    31px;
 
-  display: grid;
+  display:
+    grid;
 
-  place-items: center;
+  place-items:
+    center;
+
+  margin-left:
+    0;
 
   border:
     2px solid
     var(--bg);
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
-  background: #263334;
+  background:
+    #263334;
 
-  color: #b7c4c0;
+  color:
+    #b7c4c0;
 
-  font: 8px "DM Mono";
+  font:
+    8px
+    "DM Mono";
 }
 
 
@@ -1341,7 +1152,8 @@ textarea::placeholder {
     1px solid
     var(--line);
 
-  color: #87938f;
+  color:
+    #87938f;
 
   font:
     12px/1.6
@@ -1349,20 +1161,24 @@ textarea::placeholder {
 }
 
 .activity-card em {
-  color: var(--aqua);
+  color:
+    var(--aqua);
 }
 
 .activity-stats {
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap: 8px;
+  gap:
+    8px;
 }
 
 .activity-stats div {
-  padding-left: 8px;
+  padding-left:
+    8px;
 
   border-left:
     1px solid
@@ -1370,9 +1186,11 @@ textarea::placeholder {
 }
 
 .activity-stats strong {
-  display: block;
+  display:
+    block;
 
-  color: var(--aqua);
+  color:
+    var(--aqua);
 
   font:
     500 18px
@@ -1380,9 +1198,12 @@ textarea::placeholder {
 }
 
 .activity-stats span {
-  color: #87938f;
+  color:
+    #87938f;
 
-  font: 9px "DM Mono";
+  font:
+    9px
+    "DM Mono";
 }
 
 
@@ -1402,7 +1223,8 @@ textarea::placeholder {
     0
     14px;
 
-  color: var(--cream);
+  color:
+    var(--cream);
 
   font:
     600 18px
@@ -1411,11 +1233,14 @@ textarea::placeholder {
 
 .install-button,
 .notification-button {
-  width: 100%;
+  width:
+    100%;
 
-  padding: 10px;
+  padding:
+    10px;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
   font:
     700 10px
@@ -1432,36 +1257,50 @@ textarea::placeholder {
     1px solid
     var(--aqua);
 
-  background: var(--aqua);
+  background:
+    var(--aqua);
 
-  color: #153133;
+  color:
+    #153133;
 }
 
 .install-button:hover {
-  background: #8cf5ed;
+  background:
+    #8cf5ed;
 
-  border-color: #8cf5ed;
+  border-color:
+    #8cf5ed;
 }
 
 .notification-button {
-  margin-top: 7px;
+  margin-top:
+    7px;
 
   border:
     1px solid
     #465557;
 
-  background: transparent;
+  background:
+    transparent;
 
-  color: #b4c1bd;
+  color:
+    #b4c1bd;
 }
 
 .notification-button:hover {
-  border-color: var(--aqua);
+  border-color:
+    var(--aqua);
 
-  color: var(--aqua);
+  color:
+    var(--aqua);
 
   background:
-    rgba(103, 231, 221, 0.04);
+    rgba(
+      103,
+      231,
+      221,
+      0.04
+    );
 }
 
 .install-help {
@@ -1470,7 +1309,8 @@ textarea::placeholder {
     0
     0;
 
-  color: #82908c;
+  color:
+    #82908c;
 
   font:
     10px/1.65
@@ -1478,7 +1318,8 @@ textarea::placeholder {
 }
 
 .install-help strong {
-  color: #c4d2cd;
+  color:
+    #c4d2cd;
 }
 
 
@@ -1487,25 +1328,31 @@ textarea::placeholder {
    ========================================================= */
 
 .note {
-  display: flex;
+  display:
+    flex;
 
-  gap: 11px;
+  gap:
+    11px;
 
   padding:
     28px
     0;
 
-  color: #83908c;
+  color:
+    #83908c;
 }
 
 .note span {
-  color: var(--aqua);
+  color:
+    var(--aqua);
 
-  font-size: 17px;
+  font-size:
+    17px;
 }
 
 .note p {
-  margin: 0;
+  margin:
+    0;
 
   font:
     11px/1.7
@@ -1513,32 +1360,39 @@ textarea::placeholder {
 }
 
 .note strong {
-  color: #d5d8ce;
+  color:
+    #d5d8ce;
 }
 
 
 /* =========================================================
-   MESSAGES WINDOW
+   MESSAGES
    ========================================================= */
 
 .messages {
-  position: fixed;
+  position:
+    fixed;
 
-  z-index: 50;
+  z-index:
+    50;
 
-  right: 25px;
-  bottom: 25px;
+  right:
+    25px;
 
-  width: 335px;
+  bottom:
+    25px;
 
-  padding: 20px;
+  width:
+    335px;
+
+  max-width:
+    calc(100vw - 30px);
+
+  padding:
+    20px;
 
   background:
-    linear-gradient(
-      145deg,
-      #19292b,
-      #152224
-    );
+    #192629;
 
   border:
     1px solid
@@ -1546,14 +1400,20 @@ textarea::placeholder {
 
   box-shadow:
     0 17px 55px
-      rgba(0, 0, 0, 0.68);
+    rgba(
+      0,
+      0,
+      0,
+      0.68
+    );
 
   transform:
     translateY(
       calc(100% + 35px)
     );
 
-  opacity: 0;
+  opacity:
+    0;
 
   transition:
     transform 0.3s ease,
@@ -1564,17 +1424,22 @@ textarea::placeholder {
   transform:
     translateY(0);
 
-  opacity: 1;
+  opacity:
+    1;
 }
 
 .message-head {
-  display: flex;
+  display:
+    flex;
 
-  align-items: flex-start;
+  align-items:
+    flex-start;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
-  padding-bottom: 17px;
+  padding-bottom:
+    17px;
 
   border-bottom:
     1px solid
@@ -1582,9 +1447,11 @@ textarea::placeholder {
 }
 
 .message-head h2 {
-  margin: 0;
+  margin:
+    0;
 
-  color: var(--cream);
+  color:
+    var(--cream);
 
   font:
     600 20px
@@ -1592,25 +1459,44 @@ textarea::placeholder {
 }
 
 .message-head button {
-  border: 0;
+  border:
+    0;
 
-  background: transparent;
+  background:
+    transparent;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
-  font-size: 24px;
+  font-size:
+    24px;
 
-  cursor: pointer;
+  line-height:
+    1;
+
+  cursor:
+    pointer;
 }
 
 .message-head button:hover {
-  color: var(--aqua);
+  color:
+    var(--aqua);
+}
+
+.dm-list {
+  max-height:
+    360px;
+
+  overflow-y:
+    auto;
 }
 
 .dm {
-  display: flex;
+  display:
+    flex;
 
-  gap: 10px;
+  gap:
+    10px;
 
   padding:
     16px
@@ -1622,18 +1508,24 @@ textarea::placeholder {
 }
 
 .dm .avatar {
-  width: 31px;
-  height: 31px;
+  width:
+    31px;
 
-  font-size: 10px;
+  height:
+    31px;
+
+  font-size:
+    10px;
 }
 
 .dm strong {
-  font-size: 11px;
+  font-size:
+    11px;
 }
 
 .dm strong span {
-  color: var(--aqua);
+  color:
+    var(--aqua);
 
   font:
     9px
@@ -1646,37 +1538,69 @@ textarea::placeholder {
     0
     0;
 
-  color: #9ca8a4;
+  color:
+    #9ca8a4;
 
-  font-size: 11px;
+  font-size:
+    11px;
+
+  line-height:
+    1.6;
 }
 
 .message-compose {
-  display: flex;
+  display:
+    flex;
 
-  gap: 7px;
+  gap:
+    7px;
 
-  margin-top: 16px;
+  margin-top:
+    16px;
 }
 
 .message-compose input {
-  margin: 0;
+  margin:
+    0;
+
+  min-width:
+    0;
+}
+
+.message-compose input:first-child {
+  flex:
+    0 1 110px;
+}
+
+.message-compose input:nth-child(2) {
+  flex:
+    1 1 auto;
 }
 
 .message-compose button {
-  width: 37px;
+  width:
+    37px;
 
-  flex-shrink: 0;
+  height:
+    37px;
 
-  border: 0;
+  flex:
+    0 0 37px;
 
-  background: var(--aqua);
+  border:
+    0;
 
-  color: #153133;
+  background:
+    var(--aqua);
 
-  font-weight: bold;
+  color:
+    #153133;
 
-  cursor: pointer;
+  font-weight:
+    bold;
+
+  cursor:
+    pointer;
 }
 
 
@@ -1685,24 +1609,39 @@ textarea::placeholder {
    ========================================================= */
 
 .toast {
-  position: fixed;
+  position:
+    fixed;
 
-  z-index: 100;
+  z-index:
+    100;
 
-  bottom: 25px;
-  left: 50%;
+  bottom:
+    25px;
+
+  left:
+    50%;
+
+  max-width:
+    calc(100vw - 30px);
 
   padding:
     12px
     18px;
 
-  background: #dcebe6;
+  background:
+    #dcebe6;
 
-  color: #153133;
+  color:
+    #153133;
 
-  font-size: 12px;
+  font-size:
+    12px;
 
-  font-weight: 700;
+  font-weight:
+    700;
+
+  text-align:
+    center;
 
   transform:
     translate(
@@ -1724,24 +1663,728 @@ textarea::placeholder {
 
 
 /* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading-copy {
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
+
+  line-height:
+    1.7;
+}
+
+
+/* =========================================================
    ANIMATION
    ========================================================= */
 
 @keyframes fade {
 
   from {
-    opacity: 0;
+    opacity:
+      0;
 
     transform:
       translateY(-7px);
   }
 
   to {
-    opacity: 1;
+    opacity:
+      1;
 
     transform:
       translateY(0);
   }
+}
+
+
+/* =========================================================
+   ACCOUNT MENU
+   ========================================================= */
+
+.account-menu {
+  display:
+    none;
+
+  position:
+    absolute;
+
+  z-index:
+    1000;
+
+  top:
+    52px;
+
+  right:
+    0;
+
+  width:
+    306px;
+
+  padding:
+    24px;
+
+  background:
+    #1a2729;
+
+  border:
+    1px solid
+    #374749;
+
+  box-shadow:
+    0 18px 50px
+    rgba(
+      0,
+      0,
+      0,
+      0.65
+    );
+}
+
+.account-menu.open {
+  display:
+    block;
+
+  animation:
+    fade 0.2s ease;
+}
+
+.account-menu.logged-in {
+  max-height:
+    calc(100vh - 95px);
+
+  overflow-y:
+    auto;
+}
+
+.account-menu h2 {
+  margin:
+    0
+    0
+    18px;
+
+  font:
+    600 22px
+    Manrope;
+}
+
+.account-menu label {
+  display:
+    block;
+
+  margin:
+    12px
+    0;
+
+  color:
+    var(--cream);
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+}
+
+.account-menu label span {
+  float:
+    right;
+
+  color:
+    var(--muted);
+
+  font-weight:
+    500;
+}
+
+.account-menu input,
+.message-compose input {
+  width:
+    100%;
+
+  margin-top:
+    6px;
+
+  padding:
+    11px;
+
+  background:
+    #10191b;
+
+  border:
+    1px solid
+    #344244;
+
+  color:
+    var(--cream);
+
+  outline:
+    none;
+
+  font:
+    13px
+    Manrope;
+}
+
+.account-menu input:focus,
+.message-compose input:focus {
+  border-color:
+    var(--aqua);
+}
+
+
+/* =========================================================
+   PROFILE SETTINGS
+   ========================================================= */
+
+.profile-settings {
+  margin-top:
+    4px;
+}
+
+.settings-divider {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  margin-bottom:
+    12px;
+
+  color:
+    #71807c;
+
+  font:
+    9px
+    "DM Mono";
+
+  letter-spacing:
+    0.06em;
+}
+
+.settings-divider::before,
+.settings-divider::after {
+  content:
+    "";
+
+  height:
+    1px;
+
+  background:
+    #344244;
+
+  flex:
+    1;
+}
+
+.profile-cover-preview {
+  height:
+    62px;
+
+  margin-bottom:
+    7px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  overflow:
+    hidden;
+
+  background:
+    linear-gradient(
+      120deg,
+      #335052,
+      #162a2b
+    );
+
+  background-size:
+    cover;
+
+  background-position:
+    center;
+
+  border:
+    1px solid
+    #405052;
+}
+
+.profile-cover-preview span {
+  padding:
+    4px
+    6px;
+
+  background:
+    rgba(
+      14,
+      23,
+      25,
+      0.67
+    );
+
+  color:
+    #a6b7b2;
+
+  font:
+    8px
+    "DM Mono";
+}
+
+.cover-upload {
+  display:
+    block !important;
+
+  margin:
+    0
+    0
+    12px !important;
+
+  color:
+    #90a09b !important;
+
+  font-size:
+    10px !important;
+
+  cursor:
+    pointer;
+}
+
+.cover-upload input,
+.profile-image-input input {
+  display:
+    none;
+}
+
+.profile-image-input {
+  display:
+    flex !important;
+
+  align-items:
+    center;
+
+  gap:
+    9px;
+
+  cursor:
+    pointer;
+}
+
+.profile-image-preview {
+  width:
+    30px;
+
+  height:
+    30px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    50%;
+
+  background:
+    #273638;
+
+  color:
+    #a9b9b5;
+}
+
+.profile-image-preview img {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+}
+
+.profile-settings textarea,
+.profile-settings select {
+  width:
+    100%;
+
+  min-height:
+    31px;
+
+  margin-top:
+    6px;
+
+  padding:
+    8px;
+
+  resize:
+    vertical;
+
+  background:
+    #10191b;
+
+  border:
+    1px solid
+    #344244;
+
+  color:
+    var(--cream);
+
+  outline:
+    none;
+
+  font:
+    11px
+    Manrope;
+}
+
+.profile-details {
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:
+    0
+    9px;
+}
+
+.color-controls {
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:
+    9px;
+}
+
+.color-controls label {
+  font-size:
+    10px !important;
+}
+
+.color-controls input {
+  height:
+    31px;
+
+  padding:
+    2px !important;
+
+  cursor:
+    pointer;
+}
+
+.secondary {
+  width:
+    100%;
+
+  margin-top:
+    5px;
+
+  padding:
+    10px;
+
+  border:
+    1px solid
+    #4b5c5d;
+
+  background:
+    transparent;
+
+  color:
+    #cbd7d2;
+
+  cursor:
+    pointer;
+
+  font:
+    700 11px
+    Manrope;
+}
+
+.secondary:hover {
+  border-color:
+    var(--aqua);
+
+  color:
+    var(--aqua);
+}
+
+
+/* =========================================================
+   COMPOSER TOOLS
+   ========================================================= */
+
+.composer-tools {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    14px;
+
+  padding:
+    5px
+    0
+    13px;
+
+  color:
+    #8e9c98;
+
+  font:
+    10px
+    "DM Mono";
+
+  flex-wrap:
+    wrap;
+}
+
+.composer-tools label {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    5px;
+
+  margin:
+    0;
+
+  cursor:
+    pointer;
+}
+
+.composer-tools select {
+  padding:
+    5px;
+
+  background:
+    #213033;
+
+  border:
+    1px solid
+    #3b4c4d;
+
+  color:
+    #d7e0db;
+
+  font:
+    10px
+    "DM Mono";
+}
+
+.image-upload input,
+.anonymous-toggle input {
+  display:
+    none;
+}
+
+.anonymous-toggle span {
+  position:
+    relative;
+
+  width:
+    19px;
+
+  height:
+    11px;
+
+  border-radius:
+    10px;
+
+  background:
+    #405052;
+}
+
+.anonymous-toggle span::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    2px;
+
+  left:
+    2px;
+
+  width:
+    7px;
+
+  height:
+    7px;
+
+  border-radius:
+    50%;
+
+  background:
+    #c4cfca;
+
+  transition:
+    0.2s;
+}
+
+.anonymous-toggle input:checked + span {
+  background:
+    #278d89;
+}
+
+.anonymous-toggle input:checked + span::after {
+  left:
+    10px;
+
+  background:
+    #e3fffa;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+   ========================================================= */
+
+.image-preview {
+  display:
+    none;
+
+  position:
+    relative;
+
+  margin:
+    0
+    0
+    11px;
+}
+
+.image-preview.visible {
+  display:
+    block;
+}
+
+.image-preview img {
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-height:
+    360px;
+
+  object-fit:
+    cover;
+
+  border:
+    1px solid
+    #3b4c4d;
+}
+
+.image-preview button {
+  position:
+    absolute;
+
+  top:
+    6px;
+
+  right:
+    6px;
+
+  width:
+    23px;
+
+  height:
+    23px;
+
+  border:
+    0;
+
+  background:
+    #122022;
+
+  color:
+    #fff;
+
+  cursor:
+    pointer;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+  min-height:
+    39px;
+
+  position:
+    relative;
+
+  z-index:
+    3;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    0
+    4.5vw;
+
+  border-top:
+    1px solid
+    var(--line);
+
+  background:
+    #0b1113;
+
+  color:
+    #687572;
+
+  font:
+    9px
+    "DM Mono";
+
+  letter-spacing:
+    0.04em;
+
+  text-align:
+    center;
+
+  box-shadow:
+    none;
+}
+
+.site-footer p {
+  margin:
+    0;
 }
 
 
@@ -1751,6 +2394,12 @@ textarea::placeholder {
 
 @media (max-width: 960px) {
 
+  .topbar {
+    padding:
+      0
+      28px;
+  }
+
   .layout {
     grid-template-columns:
       170px
@@ -1758,7 +2407,8 @@ textarea::placeholder {
   }
 
   .right-rail {
-    display: none;
+    display:
+      none;
   }
 
   main {
@@ -1782,214 +2432,157 @@ textarea::placeholder {
 
 @media (max-width: 660px) {
 
-  /* -----------------------------------------------
+  /* -------------------------------------------------------
      HEADER
-     ----------------------------------------------- */
+     ------------------------------------------------------- */
 
   .topbar {
+    width:
+      100%;
 
-    height: auto;
+    height:
+      68px;
 
-    min-height: 68px;
+    min-height:
+      68px;
 
-    display: flex;
+    display:
+      grid;
 
-    flex-wrap: wrap;
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto
+      minmax(0, 1fr);
 
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap:
-      10px
-      8px;
+    align-items:
+      center;
 
     padding:
-      13px
-      15px
-      10px;
+      0
+      15px;
 
     background:
       linear-gradient(
-        115deg,
-        #071416 0%,
-        #092224 24%,
-        #0c3537 48%,
-        #10494a 72%,
-        #166360 100%
+        108deg,
+        #061113 0%,
+        #081b1d 18%,
+        #0a292b 38%,
+        #0d3b3d 58%,
+        #115150 78%,
+        #176866 100%
+      );
+
+    border-bottom:
+      1px solid
+      rgba(
+        103,
+        231,
+        221,
+        0.17
       );
   }
 
 
-  /* -----------------------------------------------
-     Mobile brand
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     DOMAIN
+     ------------------------------------------------------- */
 
-  .brand-mobile {
+  .header-domain {
+    justify-self:
+      start;
 
-    display: flex;
+    gap:
+      5px;
 
-    order: 1;
+    min-width:
+      0;
 
-    font-size: 23px;
+    max-width:
+      100%;
+
+    overflow:
+      hidden;
+
+    font-size:
+      7px;
+
+    letter-spacing:
+      0;
   }
 
-  .brand-mobile img {
+  .header-domain a {
+    overflow:
+      hidden;
 
-    width: 29px;
-    height: 29px;
+    text-overflow:
+      ellipsis;
   }
 
-
-  /* -----------------------------------------------
-     Hide desktop domain
-     ----------------------------------------------- */
-
-  .domain {
-    display: none !important;
-  }
-
-
-  /* -----------------------------------------------
-     Header actions
-     ----------------------------------------------- */
-
-  .header-actions {
-
-    order: 2;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    margin-left: auto;
-  }
-
-  .presence {
-    display: none;
-  }
-
-  .account-wrap {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-  }
-
-  .account-button {
-
-    width: 38px;
-    height: 38px;
+  .header-domain span {
+    flex-shrink:
+      0;
   }
 
 
-  /* -----------------------------------------------
-     Mobile navigation
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     LOGO
+     ------------------------------------------------------- */
 
-  .top-nav {
+  .header-logo {
+    width:
+      36px;
 
-    order: 3;
+    height:
+      36px;
 
-    width: 100%;
-
-    display: flex;
-
-    align-items: stretch;
-
-    justify-content: stretch;
-
-    gap: 7px;
-
-    overflow: visible;
-
-    white-space: normal;
-
-    padding:
-      2px
-      0
-      1px;
-  }
-
-  .top-nav a {
-
-    flex: 1;
-
-    min-width: 0;
-
-    display: block;
-
-    padding:
-      9px
-      4px;
-
-    border:
-      1px solid
-      rgba(103, 231, 221, 0.14);
-
-    background:
-      rgba(6, 25, 27, 0.52);
-
-    color: #8f9e9a;
-
-    text-align: center;
-
-    font:
-      9px
-      "DM Mono";
-
-    white-space: nowrap;
-  }
-
-  .top-nav a:first-child {
-
-    color: var(--aqua);
-
-    border-color:
-      rgba(103, 231, 221, 0.32);
-
-    background:
-      rgba(103, 231, 221, 0.07);
-  }
-
-  .top-nav a:hover {
-    color: var(--aqua);
-
-    border-color:
-      rgba(103, 231, 221, 0.32);
+    justify-self:
+      center;
   }
 
 
-  /* -----------------------------------------------
-     Layout
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     RIGHT SIDE
+     ------------------------------------------------------- */
+
+  .header-empty {
+    display:
+      block;
+
+    width:
+      100%;
+  }
+
+
+  /* -------------------------------------------------------
+     LAYOUT
+     ------------------------------------------------------- */
 
   .layout {
+    display:
+      block;
 
-    display: block;
-
-    min-height: auto;
+    min-height:
+      auto;
   }
 
 
-  /* -----------------------------------------------
-     Hide left desktop rail
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     LEFT RAIL
+     ------------------------------------------------------- */
 
   .left-rail {
-    display: none !important;
+    display:
+      none !important;
   }
 
 
-  /* -----------------------------------------------
-     Main
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     MAIN
+     ------------------------------------------------------- */
 
   main {
+    width:
+      100%;
 
     padding:
       27px
@@ -1998,28 +2591,29 @@ textarea::placeholder {
   }
 
 
-  /* -----------------------------------------------
-     Time
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     TIME
+     ------------------------------------------------------- */
 
   .time-lockup {
+    padding-bottom:
+      17px;
 
-    padding-bottom: 17px;
-
-    font-size: 9px;
+    font-size:
+      9px;
   }
 
   .time-lockup strong {
-    font-size: 13px;
+    font-size:
+      13px;
   }
 
 
-  /* -----------------------------------------------
-     Heading
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     HEADING
+     ------------------------------------------------------- */
 
   .section-heading {
-
     padding:
       28px
       0
@@ -2027,45 +2621,53 @@ textarea::placeholder {
   }
 
   .section-heading h1 {
+    font-size:
+      27px;
 
-    font-size: 27px;
-
-    line-height: 1.2;
+    line-height:
+      1.2;
   }
 
   .section-heading::after {
+    width:
+      42px;
 
-    width: 42px;
-
-    margin-top: 15px;
+    margin-top:
+      15px;
   }
 
 
-  /* -----------------------------------------------
-     Composer
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     COMPOSER
+     ------------------------------------------------------- */
 
   .composer {
+    padding:
+      15px;
 
-    padding: 15px;
+    gap:
+      10px;
+  }
 
-    gap: 10px;
+  .composer-tools {
+    gap:
+      9px;
   }
 
   textarea {
+    height:
+      86px;
 
-    height: 86px;
-
-    font-size: 14px;
+    font-size:
+      14px;
   }
 
 
-  /* -----------------------------------------------
-     Posts
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     POSTS
+     ------------------------------------------------------- */
 
   .post {
-
     padding:
       24px
       0
@@ -2073,34 +2675,37 @@ textarea::placeholder {
   }
 
   .post.featured {
+    margin-left:
+      -10px;
 
-    margin-left: -10px;
-
-    padding-left: 11px;
+    padding-left:
+      11px;
   }
 
   .post p {
+    font-size:
+      13px;
 
-    font-size: 13px;
-
-    line-height: 1.75;
+    line-height:
+      1.75;
   }
 
   .post blockquote {
-
-    font-size: 20px;
+    font-size:
+      20px;
   }
 
 
-  /* -----------------------------------------------
-     Right rail
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     RIGHT RAIL
+     ------------------------------------------------------- */
 
   .right-rail {
+    display:
+      block;
 
-    display: block;
-
-    border-left: 0;
+    border-left:
+      0;
 
     padding:
       30px
@@ -2108,35 +2713,55 @@ textarea::placeholder {
   }
 
   .right-rail .about-card {
-
-    padding-bottom: 25px;
+    padding-bottom:
+      25px;
   }
 
 
-  /* -----------------------------------------------
-     Messages
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     MESSAGES
+     ------------------------------------------------------- */
 
   .messages {
-
     width:
       calc(100% - 30px);
 
-    right: 15px;
+    max-width:
+      calc(100% - 30px);
 
-    bottom: 15px;
+    right:
+      15px;
 
-    padding: 17px;
+    bottom:
+      15px;
+
+    padding:
+      17px;
+  }
+
+  .message-compose {
+    flex-wrap:
+      wrap;
+  }
+
+  .message-compose input:first-child {
+    flex:
+      1 1 100%;
+  }
+
+  .message-compose input:nth-child(2) {
+    flex:
+      1 1 calc(100% - 44px);
   }
 
 
-  /* -----------------------------------------------
-     Account menu
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     ACCOUNT MENU
+     ------------------------------------------------------- */
 
   .account-menu {
-
-    right: -5px;
+    right:
+      -5px;
 
     width:
       min(
@@ -2146,12 +2771,11 @@ textarea::placeholder {
   }
 
 
-  /* -----------------------------------------------
-     Phone
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     PHONE
+     ------------------------------------------------------- */
 
   .phone-card {
-
     padding:
       25px
       0
@@ -2159,13 +2783,13 @@ textarea::placeholder {
   }
 
 
-  /* -----------------------------------------------
-     Footer
-     ----------------------------------------------- */
+  /* -------------------------------------------------------
+     FOOTER
+     ------------------------------------------------------- */
 
   .site-footer {
-
-    min-height: 0;
+    min-height:
+      0;
 
     padding:
       11px
@@ -2173,10 +2797,11 @@ textarea::placeholder {
   }
 
   .site-footer p {
+    font-size:
+      8px;
 
-    font-size: 8px;
-
-    line-height: 1.5;
+    line-height:
+      1.5;
   }
 
 }
@@ -2188,40 +2813,34 @@ textarea::placeholder {
 
 @media (max-width: 380px) {
 
-  .brand-mobile {
-    font-size: 21px;
-  }
-
-  .brand-mobile img {
-
-    width: 26px;
-    height: 26px;
-  }
-
-  .account-button {
-
-    width: 35px;
-    height: 35px;
-  }
-
-  .top-nav {
-
-    gap: 5px;
-  }
-
-  .top-nav a {
-
+  .topbar {
     padding:
-      8px
-      2px;
+      0
+      11px;
+  }
 
-    font-size: 8px;
+  .header-domain {
+    font-size:
+      6.5px;
+
+    gap:
+      4px;
+  }
+
+  .header-logo {
+    width:
+      32px;
+
+    height:
+      32px;
   }
 
   main {
+    padding-left:
+      14px;
 
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-right:
+      14px;
   }
 
 }
