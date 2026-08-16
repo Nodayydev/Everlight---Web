@@ -123,7 +123,8 @@ function getDisplayName(user) {
     return String(user.displayName).trim();
   }
 
-  const username = getUsername(user);
+  const username =
+    getUsername(user);
 
   if (username.includes("#")) {
     return username.split("#")[0];
@@ -134,7 +135,8 @@ function getDisplayName(user) {
 
 
 function getInitial(user) {
-  const name = getDisplayName(user);
+  const name =
+    getDisplayName(user);
 
   return (
     name.charAt(0).toUpperCase() ||
@@ -147,7 +149,10 @@ function getInitial(user) {
    AVATAR
    ========================================================= */
 
-function avatar(user, anonymous = false) {
+function avatar(
+  user,
+  anonymous = false
+) {
   if (anonymous) {
     return `
       <div class="avatar aurora">
@@ -169,7 +174,9 @@ function avatar(user, anonymous = false) {
 
   return `
     <div class="avatar aurora">
-      ${escapeHtml(getInitial(user))}
+      ${escapeHtml(
+        getInitial(user)
+      )}
     </div>
   `;
 }
@@ -186,28 +193,39 @@ function setAccount(user) {
     ...user
   };
 
-  profileImageData = user.avatar || "";
-  coverImageData = user.cover || "";
+  profileImageData =
+    user.avatar || "";
 
-  const username = getUsername(user);
-  const displayName = getDisplayName(user);
+  coverImageData =
+    user.cover || "";
+
+  const username =
+    getUsername(user);
+
+  const displayName =
+    getDisplayName(user);
 
 
   /* -------------------------------------------------------
      LEFT PROFILE AVATAR
      ------------------------------------------------------- */
 
-  const profileAvatar = $("#profileAvatar");
+  const profileAvatar =
+    $("#profileAvatar");
 
   if (profileAvatar) {
+
     profileAvatar.style.background =
-      user.profileColor || "#273638";
+      user.profileColor ||
+      "#273638";
 
     profileAvatar.classList.remove(
       "profile-custom-image"
     );
 
+
     if (user.avatar) {
+
       profileAvatar.innerHTML = `
         <img
           src="${escapeHtml(user.avatar)}"
@@ -218,7 +236,9 @@ function setAccount(user) {
       profileAvatar.classList.add(
         "profile-custom-image"
       );
+
     } else {
+
       profileAvatar.textContent =
         getInitial(user);
     }
@@ -233,10 +253,12 @@ function setAccount(user) {
     $("#profileSummary");
 
   if (profileSummary) {
+
     profileSummary.innerHTML = `
       <strong
         style="color:${escapeHtml(
-          user.nameColor || "#67e7dd"
+          user.nameColor ||
+          "#67e7dd"
         )}"
       >
         ${escapeHtml(username)}
@@ -261,14 +283,18 @@ function setAccount(user) {
     $("#composerAvatar");
 
   if (composerAvatar) {
+
     composerAvatar.style.background =
-      user.profileColor || "#273638";
+      user.profileColor ||
+      "#273638";
 
     composerAvatar.classList.remove(
       "profile-custom-image"
     );
 
+
     if (user.avatar) {
+
       composerAvatar.innerHTML = `
         <img
           src="${escapeHtml(user.avatar)}"
@@ -279,7 +305,9 @@ function setAccount(user) {
       composerAvatar.classList.add(
         "profile-custom-image"
       );
+
     } else {
+
       composerAvatar.textContent =
         getInitial(user);
     }
@@ -320,7 +348,9 @@ function setAccount(user) {
     $("#accountMenu");
 
   if (accountMenu) {
-    accountMenu.classList.add("logged-in");
+    accountMenu.classList.add(
+      "logged-in"
+    );
   }
 
 
@@ -329,6 +359,7 @@ function setAccount(user) {
      ------------------------------------------------------- */
 
   const fields = {
+
     displayName:
       displayName,
 
@@ -345,21 +376,28 @@ function setAccount(user) {
       user.website || "",
 
     profileStatus:
-      user.status || "✦ Elérhető",
+      user.status ||
+      "✦ Elérhető",
 
     nameColor:
-      user.nameColor || "#67e7dd",
+      user.nameColor ||
+      "#67e7dd",
 
     profileColor:
-      user.profileColor || "#273638"
+      user.profileColor ||
+      "#273638"
   };
+
 
   Object.entries(fields).forEach(
     ([id, value]) => {
-      const element = $(`#${id}`);
+
+      const element =
+        $(`#${id}`);
 
       if (element) {
-        element.value = value ?? "";
+        element.value =
+          value ?? "";
       }
     }
   );
@@ -373,14 +411,18 @@ function setAccount(user) {
     $("#profileImagePreview");
 
   if (profileImagePreview) {
+
     if (user.avatar) {
+
       profileImagePreview.innerHTML = `
         <img
           src="${escapeHtml(user.avatar)}"
           alt="Profilkép"
         >
       `;
+
     } else {
+
       profileImagePreview.textContent =
         getInitial(user);
     }
@@ -395,15 +437,20 @@ function setAccount(user) {
     $("#coverPreview");
 
   if (coverPreview) {
+
     if (user.cover) {
+
       coverPreview.style.backgroundImage =
         `url("${escapeHtml(user.cover)}")`;
 
       coverPreview.classList.add(
         "profile-custom-image"
       );
+
     } else {
-      coverPreview.style.backgroundImage = "";
+
+      coverPreview.style.backgroundImage =
+        "";
 
       coverPreview.classList.remove(
         "profile-custom-image"
@@ -427,18 +474,24 @@ function setAccount(user) {
 function updateProfileView(user) {
   if (!user) return;
 
-  const username = getUsername(user);
-  const displayName = getDisplayName(user);
+  const username =
+    getUsername(user);
+
+  const displayName =
+    getDisplayName(user);
 
 
   const profileViewName =
     $("#profileViewName");
 
   if (profileViewName) {
+
     profileViewName.textContent =
       displayName;
+
     profileViewName.style.color =
-      user.nameColor || "#67e7dd";
+      user.nameColor ||
+      "#67e7dd";
   }
 
 
@@ -446,6 +499,7 @@ function updateProfileView(user) {
     $("#profileViewUsername");
 
   if (profileViewUsername) {
+
     profileViewUsername.textContent =
       `@${username}`;
   }
@@ -455,6 +509,7 @@ function updateProfileView(user) {
     $("#profileViewBio");
 
   if (profileViewBio) {
+
     profileViewBio.textContent =
       user.bio ||
       user.status ||
@@ -466,6 +521,7 @@ function updateProfileView(user) {
     $("#profileViewStatus");
 
   if (profileViewStatus) {
+
     profileViewStatus.textContent =
       user.status ||
       "✦ Elérhető";
@@ -476,6 +532,7 @@ function updateProfileView(user) {
     $("#profileViewLocation");
 
   if (profileViewLocation) {
+
     profileViewLocation.textContent =
       user.location ||
       "—";
@@ -486,6 +543,7 @@ function updateProfileView(user) {
     $("#profileViewWebsite");
 
   if (profileViewWebsite) {
+
     profileViewWebsite.textContent =
       user.website ||
       "—";
@@ -496,14 +554,18 @@ function updateProfileView(user) {
     $("#profileViewAvatar");
 
   if (profileViewAvatar) {
+
     profileViewAvatar.style.background =
-      user.profileColor || "#273638";
+      user.profileColor ||
+      "#273638";
 
     profileViewAvatar.classList.remove(
       "profile-custom-image"
     );
 
+
     if (user.avatar) {
+
       profileViewAvatar.innerHTML = `
         <img
           src="${escapeHtml(user.avatar)}"
@@ -514,7 +576,9 @@ function updateProfileView(user) {
       profileViewAvatar.classList.add(
         "profile-custom-image"
       );
+
     } else {
+
       profileViewAvatar.textContent =
         getInitial(user);
     }
@@ -525,10 +589,14 @@ function updateProfileView(user) {
     $("#profileViewCover");
 
   if (profileViewCover) {
+
     if (user.cover) {
+
       profileViewCover.style.backgroundImage =
         `url("${escapeHtml(user.cover)}")`;
+
     } else {
+
       profileViewCover.style.backgroundImage =
         "";
     }
@@ -541,6 +609,7 @@ function updateProfileView(user) {
    ========================================================= */
 
 function requireLogin() {
+
   if (currentUser) {
     return true;
   }
@@ -560,6 +629,7 @@ function requireLogin() {
    ========================================================= */
 
 function getCurrentCategoryLimit() {
+
   const category =
     $("#category");
 
@@ -580,6 +650,7 @@ function getCurrentCategoryLimit() {
    ========================================================= */
 
 function updateCharacterCounter() {
+
   const postText =
     $("#postText");
 
@@ -602,19 +673,26 @@ function updateCharacterCounter() {
   counter.textContent =
     `${currentLength} / ${limit}`;
 
+
   if (
     currentLength >= limit
   ) {
+
     counter.style.color =
       "#ff9c8f";
+
   } else if (
     currentLength >=
     Math.floor(limit * 0.9)
   ) {
+
     counter.style.color =
       "#e8c77c";
+
   } else {
-    counter.style.color = "";
+
+    counter.style.color =
+      "";
   }
 }
 
@@ -624,6 +702,7 @@ function updateCharacterCounter() {
    ========================================================= */
 
 function updateCategoryLimit() {
+
   const postText =
     $("#postText");
 
@@ -637,10 +716,12 @@ function updateCategoryLimit() {
   postText.maxLength =
     limit;
 
+
   if (
     postText.value.length >
     limit
   ) {
+
     postText.value =
       postText.value.slice(
         0,
@@ -652,6 +733,7 @@ function updateCategoryLimit() {
     );
   }
 
+
   updateCharacterCounter();
 }
 
@@ -661,6 +743,7 @@ function updateCategoryLimit() {
    ========================================================= */
 
 function renderPost(post) {
+
   const date =
     new Date(
       post.created_at
@@ -672,10 +755,15 @@ function renderPost(post) {
       }
     );
 
+
   const anonymous =
-    Boolean(post.is_anonymous);
+    Boolean(
+      post.is_anonymous
+    );
+
 
   const postUser = {
+
     username:
       post.username || "",
 
@@ -696,9 +784,11 @@ function renderPost(post) {
       "#67e7dd"
   };
 
+
   const category =
     post.category ||
     "Gondolat";
+
 
   return `
     <article class="post">
@@ -747,11 +837,13 @@ function renderPost(post) {
 
         </div>
 
+
         <time>
           ${escapeHtml(date)}
         </time>
 
       </div>
+
 
       ${
         post.body
@@ -764,6 +856,7 @@ function renderPost(post) {
           `
           : ""
       }
+
 
       ${
         post.image
@@ -779,6 +872,7 @@ function renderPost(post) {
           `
           : ""
       }
+
 
       <div class="post-bottom">
 
@@ -800,9 +894,14 @@ function renderPost(post) {
    ========================================================= */
 
 async function loadPosts() {
+
   try {
+
     const { posts } =
-      await api("/api/posts");
+      await api(
+        "/api/posts"
+      );
+
 
     const feedList =
       $("#feedList");
@@ -811,18 +910,23 @@ async function loadPosts() {
       return;
     }
 
+
     feedList.innerHTML =
       posts.length
+
         ? posts
             .map(renderPost)
             .join("")
+
         : `
           <p class="loading-copy">
             Még nincs bejegyzés.
             Légy te az első.
           </p>
         `;
+
   } catch {
+
     const feedList =
       $("#feedList");
 
@@ -845,9 +949,14 @@ async function loadPosts() {
    ========================================================= */
 
 async function loadOnline() {
+
   try {
+
     const { users } =
-      await api("/api/online");
+      await api(
+        "/api/online"
+      );
+
 
     const onlineCount =
       $("#onlineCount");
@@ -855,14 +964,19 @@ async function loadOnline() {
     const onlineFaces =
       $("#onlineFaces");
 
+
     if (onlineCount) {
+
       onlineCount.innerHTML =
         `<i></i> ${users.length}`;
     }
 
+
     if (onlineFaces) {
+
       onlineFaces.innerHTML =
         users.length
+
           ? users
               .map((user) =>
                 avatar({
@@ -883,17 +997,21 @@ async function loadOnline() {
                 })
               )
               .join("")
+
           : `
             <span class="loading-copy">
               Most nincs aktív felhasználó.
             </span>
           `;
     }
+
   } catch {
+
     const onlineFaces =
       $("#onlineFaces");
 
     if (onlineFaces) {
+
       onlineFaces.innerHTML = `
         <span class="loading-copy">
           Nincs kapcsolat.
@@ -902,340 +1020,112 @@ async function loadOnline() {
     }
   }
 }
+/* =========================================================
+   ACCOUNT / NAVIGATION
+   ========================================================= */
 
 
 /* =========================================================
-   VIEW HELPERS
+   OPEN ACCOUNT MENU
    ========================================================= */
 
-function getViewElements() {
-  return {
-    feed:
-      $("#feed"),
+function openAccountMenu() {
 
-    messages:
-      $("#messagesView"),
-
-    profile:
-      $("#profileView")
-  };
-}
-
-
-/* =========================================================
-   UPDATE NAVIGATION STATE
-   ========================================================= */
-
-function updateNavigationState(view) {
-  currentView = view;
-
-  const desktopHubNav =
-    $("#desktopHubNav");
-
-  const messageNav =
-    $("#messageNav");
+  const accountMenu =
+    $("#accountMenu");
 
   const accountButton =
     $("#accountButton");
 
-  const leftMessageNav =
-    $("#leftMessageNav");
+  if (!accountMenu) {
+    return;
+  }
 
-  const leftProfileNav =
-    $("#leftProfileNav");
+  accountMenu.classList.add("open");
 
-  const mobileHubNav =
-    $("#mobileHubNav");
+  accountMenu.setAttribute(
+    "aria-hidden",
+    "false"
+  );
 
-  const mobileMessageNav =
-    $("#mobileMessageNav");
+  if (accountButton) {
 
-  const mobileProfileNav =
-    $("#mobileProfileNav");
-
-
-  const desktopItems = [
-    desktopHubNav,
-    messageNav,
-    accountButton,
-    leftMessageNav,
-    leftProfileNav
-  ];
-
-  desktopItems.forEach((item) => {
-    if (!item) return;
-
-    item.classList.remove(
-      "active",
-      "nav-active"
-    );
-  });
-
-
-  const mobileItems = [
-    mobileHubNav,
-    mobileMessageNav,
-    mobileProfileNav
-  ];
-
-  mobileItems.forEach((item) => {
-    if (!item) return;
-
-    item.classList.remove(
+    accountButton.classList.add(
       "active"
     );
-  });
 
-
-  if (view === "hub") {
-    desktopHubNav?.classList.add("active");
-    mobileHubNav?.classList.add("active");
-  }
-
-  if (view === "messages") {
-    messageNav?.classList.add("active");
-    leftMessageNav?.classList.add("nav-active");
-    mobileMessageNav?.classList.add("active");
-  }
-
-  if (view === "profile") {
-    accountButton?.classList.add("active");
-    leftProfileNav?.classList.add("nav-active");
-    mobileProfileNav?.classList.add("active");
+    accountButton.setAttribute(
+      "aria-expanded",
+      "true"
+    );
   }
 }
 
 
 /* =========================================================
-   CLOSE ALL VIEWS
+   CLOSE ACCOUNT MENU
    ========================================================= */
 
-function closeAllViews() {
-  const {
-    feed,
-    messages,
-    profile
-  } = getViewElements();
+function closeAccountMenu() {
 
+  const accountMenu =
+    $("#accountMenu");
 
-  if (messages) {
-    messages.classList.remove("open");
-    messages.setAttribute(
+  const accountButton =
+    $("#accountButton");
+
+  if (accountMenu) {
+
+    accountMenu.classList.remove(
+      "open"
+    );
+
+    accountMenu.setAttribute(
       "aria-hidden",
       "true"
     );
   }
 
+  if (accountButton) {
 
-  if (profile) {
-    profile.classList.remove("open");
-    profile.setAttribute(
-      "aria-hidden",
-      "true"
+    accountButton.classList.remove(
+      "active"
     );
-  }
 
-
-  if (feed) {
-    feed.classList.remove(
-      "view-hidden"
-    );
-  }
-
-
-  document.body.classList.remove(
-    "messages-open",
-    "profile-open"
-  );
-}
-
-
-/* =========================================================
-   OPEN HUB
-   ========================================================= */
-
-function openHub() {
-  closeAllViews();
-
-  updateNavigationState(
-    "hub"
-  );
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-  if (
-    window.location.hash !==
-    "#feed"
-  ) {
-    history.replaceState(
-      null,
-      "",
-      "#feed"
+    accountButton.setAttribute(
+      "aria-expanded",
+      "false"
     );
   }
 }
 
 
 /* =========================================================
-   OPEN MESSAGES
+   TOGGLE ACCOUNT MENU
    ========================================================= */
 
-function openMessages() {
-  if (!requireLogin()) {
+function toggleAccountMenu() {
+
+  const accountMenu =
+    $("#accountMenu");
+
+  if (!accountMenu) {
     return;
   }
 
-  const messages =
-    $("#messagesView");
-
-  if (!messages) {
-    return;
-  }
-
-
-  closeAllViews();
-
-
-  messages.classList.add(
-    "open"
-  );
-
-  messages.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body.classList.add(
-    "messages-open"
-  );
-
-
-  updateNavigationState(
-    "messages"
-  );
-
-
-  history.replaceState(
-    null,
-    "",
-    "#messages"
-  );
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-
-  const recipient =
-    $("#dmRecipient");
-
-  if (
-    recipient &&
-    recipient.value.trim()
-  ) {
-    loadMessages();
-  }
-}
-
-
-/* =========================================================
-   OPEN PROFILE
-   ========================================================= */
-
-function openProfile() {
-  if (!requireLogin()) {
-    return;
-  }
-
-  const profile =
-    $("#profileView");
-
-  if (!profile) {
-    return;
-  }
-
-
-  closeAllViews();
-
-
-  if (currentUser) {
-    updateProfileView(
-      currentUser
+  const isOpen =
+    accountMenu.classList.contains(
+      "open"
     );
+
+  if (isOpen) {
+
+    closeAccountMenu();
+
+  } else {
+
+    openAccountMenu();
   }
-
-
-  profile.classList.add(
-    "open"
-  );
-
-  profile.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body.classList.add(
-    "profile-open"
-  );
-
-
-  updateNavigationState(
-    "profile"
-  );
-
-
-  history.replaceState(
-    null,
-    "",
-    "#profile"
-  );
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-
-/* =========================================================
-   TOGGLE MESSAGES
-   ========================================================= */
-
-function toggleMessages() {
-  if (
-    currentView ===
-    "messages"
-  ) {
-    openHub();
-    return;
-  }
-
-  openMessages();
-}
-
-
-/* =========================================================
-   TOGGLE PROFILE
-   ========================================================= */
-
-function toggleProfile() {
-  if (
-    currentView ===
-    "profile"
-  ) {
-    openHub();
-    return;
-  }
-
-  openProfile();
 }
 
 
@@ -1247,301 +1137,18 @@ const accountButton =
   $("#accountButton");
 
 if (accountButton) {
+
   accountButton.addEventListener(
     "click",
     (event) => {
+
       event.preventDefault();
+
       event.stopPropagation();
 
-      /*
-       * Az új rendszerben a Fiók nem popup,
-       * hanem teljes nézet.
-       */
-
-      toggleProfile();
+      toggleAccountMenu();
     }
   );
-}
-
-
-/* =========================================================
-   DESKTOP HUB
-   ========================================================= */
-
-const desktopHubNav =
-  $("#desktopHubNav");
-
-if (desktopHubNav) {
-  desktopHubNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      if (
-        currentView ===
-        "hub"
-      ) {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-        return;
-      }
-
-      openHub();
-    }
-  );
-}
-
-
-/* =========================================================
-   HEADER LOGO
-   ========================================================= */
-
-const headerLogo =
-  document.querySelector(
-    ".header-logo"
-  );
-
-if (headerLogo) {
-  headerLogo.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      openHub();
-    }
-  );
-}
-
-
-/* =========================================================
-   DESKTOP MESSAGE NAV
-   ========================================================= */
-
-const messageNav =
-  $("#messageNav");
-
-if (messageNav) {
-  messageNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      toggleMessages();
-    }
-  );
-}
-
-
-/* =========================================================
-   LEFT MESSAGE NAV
-   ========================================================= */
-
-const leftMessageNav =
-  $("#leftMessageNav");
-
-if (leftMessageNav) {
-  leftMessageNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      toggleMessages();
-    }
-  );
-}
-
-
-/* =========================================================
-   LEFT PROFILE NAV
-   ========================================================= */
-
-const leftProfileNav =
-  $("#leftProfileNav");
-
-if (leftProfileNav) {
-  leftProfileNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      toggleProfile();
-    }
-  );
-}
-
-
-/* =========================================================
-   MOBILE HUB
-   ========================================================= */
-
-const mobileHubNav =
-  $("#mobileHubNav");
-
-if (mobileHubNav) {
-  mobileHubNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      openHub();
-    }
-  );
-}
-
-
-/* =========================================================
-   MOBILE MESSAGE NAV
-   ========================================================= */
-
-const mobileMessageNav =
-  $("#mobileMessageNav");
-
-if (mobileMessageNav) {
-  mobileMessageNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      toggleMessages();
-    }
-  );
-}
-
-
-/* =========================================================
-   MOBILE PROFILE NAV
-   ========================================================= */
-
-const mobileProfileNav =
-  $("#mobileProfileNav");
-
-if (mobileProfileNav) {
-  mobileProfileNav.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-
-      toggleProfile();
-    }
-  );
-}
-
-
-/* =========================================================
-   CLOSE MESSAGES VIEW
-   ========================================================= */
-
-const closeMessagesView =
-  $("#closeMessagesView");
-
-if (closeMessagesView) {
-  closeMessagesView.addEventListener(
-    "click",
-    () => {
-      openHub();
-    }
-  );
-}
-
-
-/* =========================================================
-   CLOSE PROFILE VIEW
-   ========================================================= */
-
-const closeProfileView =
-  $("#closeProfileView");
-
-if (closeProfileView) {
-  closeProfileView.addEventListener(
-    "click",
-    () => {
-      openHub();
-    }
-  );
-}
-
-
-/* =========================================================
-   PROFILE SETTINGS
-   ========================================================= */
-
-const openProfileSettings =
-  $("#openProfileSettings");
-
-if (openProfileSettings) {
-  openProfileSettings.addEventListener(
-    "click",
-    () => {
-      if (!requireLogin()) {
-        return;
-      }
-
-      /*
-       * A szerkesztéshez a régi account menüt használjuk,
-       * de a profil nézetet nem zárjuk be.
-       */
-
-      const accountMenu =
-        $("#accountMenu");
-
-      if (!accountMenu) {
-        return;
-      }
-
-      accountMenu.classList.add(
-        "open"
-      );
-
-      accountMenu.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      const accountButton =
-        $("#accountButton");
-
-      if (accountButton) {
-        accountButton.classList.add(
-          "active"
-        );
-      }
-    }
-  );
-}
-
-
-/* =========================================================
-   OLD ACCOUNT MENU OPEN
-   ========================================================= */
-
-function openAccountMenu() {
-  const accountMenu =
-    $("#accountMenu");
-
-  const accountButton =
-    $("#accountButton");
-
-  if (!accountMenu) {
-    return;
-  }
-
-  accountMenu.classList.add(
-    "open"
-  );
-
-  accountMenu.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-  if (accountButton) {
-    accountButton.classList.add(
-      "active"
-    );
-  }
 }
 
 
@@ -1552,110 +1159,16 @@ function openAccountMenu() {
 document.addEventListener(
   "click",
   (event) => {
+
     if (
       event.target.closest(
         ".account-wrap"
-      ) ||
-      event.target.closest(
-        "#openProfileSettings"
       )
     ) {
       return;
     }
 
-    const accountMenu =
-      $("#accountMenu");
-
-    const accountButton =
-      $("#accountButton");
-
-    if (accountMenu) {
-      accountMenu.classList.remove(
-        "open"
-      );
-
-      accountMenu.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-    }
-
-    /*
-     * Csak akkor vesszük le az aktív állapotot,
-     * ha ténylegesen nem a profil nézet aktív.
-     */
-
-    if (
-      accountButton &&
-      currentView !== "profile"
-    ) {
-      accountButton.classList.remove(
-        "active"
-      );
-    }
-  }
-);
-
-
-/* =========================================================
-   ESC KEY
-   ========================================================= */
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-    if (
-      event.key !==
-      "Escape"
-    ) {
-      return;
-    }
-
-    if (
-      currentView === "messages" ||
-      currentView === "profile"
-    ) {
-      openHub();
-    }
-  }
-);
-
-
-/* =========================================================
-   BROWSER BACK / FORWARD
-   ========================================================= */
-
-window.addEventListener(
-  "popstate",
-  () => {
-    const hash =
-      window.location.hash;
-
-    if (
-      hash === "#messages"
-    ) {
-      if (currentUser) {
-        openMessages();
-      } else {
-        openHub();
-      }
-
-      return;
-    }
-
-    if (
-      hash === "#profile"
-    ) {
-      if (currentUser) {
-        openProfile();
-      } else {
-        openHub();
-      }
-
-      return;
-    }
-
-    openHub();
+    closeAccountMenu();
   }
 );
 
@@ -1668,12 +1181,16 @@ const loginForm =
   $("#loginForm");
 
 if (loginForm) {
+
   loginForm.addEventListener(
     "submit",
     async (event) => {
+
       event.preventDefault();
 
+
       try {
+
         const loginName =
           $("#loginName");
 
@@ -1683,6 +1200,14 @@ if (loginForm) {
         const passwordInput =
           $("#loginPassword");
 
+
+        const passwordElement =
+          passwordInput ||
+          loginForm.querySelector(
+            'input[type="password"]'
+          );
+
+
         const data =
           await api(
             "/api/auth/enter",
@@ -1691,6 +1216,7 @@ if (loginForm) {
 
               body:
                 JSON.stringify({
+
                   username:
                     loginName
                       ? loginName.value.trim()
@@ -1702,8 +1228,8 @@ if (loginForm) {
                       : "",
 
                   password:
-                    passwordInput
-                      ? passwordInput.value
+                    passwordElement
+                      ? passwordElement.value
                       : ""
                 })
             }
@@ -1712,6 +1238,7 @@ if (loginForm) {
 
         token =
           data.token;
+
 
         localStorage.setItem(
           "everlight-token",
@@ -1724,41 +1251,9 @@ if (loginForm) {
         );
 
 
-        if (passwordInput) {
-          passwordInput.value = "";
+        if (passwordElement) {
+          passwordElement.value = "";
         }
-
-
-        /*
-         * Belépés után bezárjuk a login menüt,
-         * majd visszatérünk a Hubra.
-         */
-
-        const accountMenu =
-          $("#accountMenu");
-
-        const accountButton =
-          $("#accountButton");
-
-        if (accountMenu) {
-          accountMenu.classList.remove(
-            "open"
-          );
-
-          accountMenu.setAttribute(
-            "aria-hidden",
-            "true"
-          );
-        }
-
-        if (accountButton) {
-          accountButton.classList.remove(
-            "active"
-          );
-        }
-
-
-        openHub();
 
 
         notify(
@@ -1771,7 +1266,11 @@ if (loginForm) {
           loadOnline()
         ]);
 
+
+        closeAccountMenu();
+
       } catch (error) {
+
         notify(
           error.message
         );
@@ -1789,6 +1288,7 @@ const category =
   $("#category");
 
 if (category) {
+
   category.addEventListener(
     "change",
     updateCategoryLimit
@@ -1804,22 +1304,27 @@ const postText =
   $("#postText");
 
 if (postText) {
+
   postText.addEventListener(
     "input",
     () => {
+
       const limit =
         getCurrentCategoryLimit();
+
 
       if (
         postText.value.length >
         limit
       ) {
+
         postText.value =
           postText.value.slice(
             0,
             limit
           );
       }
+
 
       updateCharacterCounter();
     }
@@ -1835,9 +1340,11 @@ const imageInput =
   $("#imageInput");
 
 if (imageInput) {
+
   imageInput.addEventListener(
     "change",
     () => {
+
       const file =
         imageInput.files[0];
 
@@ -1845,11 +1352,13 @@ if (imageInput) {
         return;
       }
 
+
       if (
         !file.type.startsWith(
           "image/"
         )
       ) {
+
         imageInput.value = "";
 
         notify(
@@ -1859,10 +1368,12 @@ if (imageInput) {
         return;
       }
 
+
       if (
         file.size >
         1024 * 1024
       ) {
+
         imageInput.value = "";
 
         notify(
@@ -1872,12 +1383,16 @@ if (imageInput) {
         return;
       }
 
+
       const reader =
         new FileReader();
 
+
       reader.onload = () => {
+
         imageData =
           reader.result;
+
 
         const imagePreview =
           $("#imagePreview");
@@ -1885,7 +1400,9 @@ if (imageInput) {
         const imageName =
           $("#imageName");
 
+
         if (imagePreview) {
+
           imagePreview.innerHTML = `
             <img
               src="${escapeHtml(
@@ -1907,7 +1424,9 @@ if (imageInput) {
           );
         }
 
+
         if (imageName) {
+
           imageName.textContent =
             file.name.slice(
               0,
@@ -1915,6 +1434,7 @@ if (imageInput) {
             );
         }
       };
+
 
       reader.readAsDataURL(file);
     }
@@ -1930,9 +1450,11 @@ const imagePreview =
   $("#imagePreview");
 
 if (imagePreview) {
+
   imagePreview.addEventListener(
     "click",
     (event) => {
+
       if (
         event.target.tagName !==
         "BUTTON"
@@ -1940,7 +1462,9 @@ if (imagePreview) {
         return;
       }
 
+
       imageData = "";
+
 
       const input =
         $("#imageInput");
@@ -1949,16 +1473,19 @@ if (imagePreview) {
         input.value = "";
       }
 
+
       imagePreview.innerHTML = "";
 
       imagePreview.classList.remove(
         "visible"
       );
 
+
       const imageName =
         $("#imageName");
 
       if (imageName) {
+
         imageName.textContent =
           "Kép";
       }
@@ -1975,32 +1502,39 @@ const postButton =
   $("#postButton");
 
 if (postButton) {
+
   postButton.addEventListener(
     "click",
     async () => {
+
       if (!requireLogin()) {
         return;
       }
+
 
       const body =
         postText
           ? postText.value.trim()
           : "";
 
+
       const selectedCategory =
         category
           ? category.value
           : "Gondolat";
+
 
       const limit =
         CATEGORY_LIMITS[
           selectedCategory
         ] || 280;
 
+
       if (
         body.length >
         limit
       ) {
+
         notify(
           `A ${selectedCategory.toLowerCase()} kategóriában maximum ${limit} karakter használható.`
         );
@@ -2008,7 +1542,22 @@ if (postButton) {
         return;
       }
 
+
+      if (
+        !body &&
+        !imageData
+      ) {
+
+        notify(
+          "Írj valamit, vagy válassz egy képet."
+        );
+
+        return;
+      }
+
+
       try {
+
         const { post } =
           await api(
             "/api/posts",
@@ -2017,6 +1566,7 @@ if (postButton) {
 
               body:
                 JSON.stringify({
+
                   body,
 
                   category:
@@ -2037,7 +1587,9 @@ if (postButton) {
         const feedList =
           $("#feedList");
 
+
         if (feedList) {
+
           feedList.insertAdjacentHTML(
             "afterbegin",
             renderPost(post)
@@ -2049,6 +1601,7 @@ if (postButton) {
           postText.value = "";
         }
 
+
         imageData = "";
 
 
@@ -2058,6 +1611,7 @@ if (postButton) {
 
 
         if (imagePreview) {
+
           imagePreview.innerHTML = "";
 
           imagePreview.classList.remove(
@@ -2082,6 +1636,7 @@ if (postButton) {
           $("#postCount");
 
         if (postCount) {
+
           postCount.textContent =
             Number(
               postCount.textContent || 0
@@ -2097,6 +1652,7 @@ if (postButton) {
         await loadOnline();
 
       } catch (error) {
+
         notify(
           error.message
         );
@@ -2114,6 +1670,7 @@ function readImage(
   input,
   callback
 ) {
+
   const file =
     input.files[0];
 
@@ -2121,11 +1678,13 @@ function readImage(
     return;
   }
 
+
   if (
     !file.type.startsWith(
       "image/"
     )
   ) {
+
     input.value = "";
 
     notify(
@@ -2135,10 +1694,12 @@ function readImage(
     return;
   }
 
+
   if (
     file.size >
     1024 * 1024
   ) {
+
     input.value = "";
 
     notify(
@@ -2148,14 +1709,18 @@ function readImage(
     return;
   }
 
+
   const reader =
     new FileReader();
 
+
   reader.onload = () => {
+
     callback(
       reader.result
     );
   };
+
 
   reader.readAsDataURL(file);
 }
@@ -2169,25 +1734,43 @@ const profileImageInput =
   $("#profileImageInput");
 
 if (profileImageInput) {
+
   profileImageInput.addEventListener(
     "change",
     () => {
+
       readImage(
         profileImageInput,
         (data) => {
+
           profileImageData =
             data;
+
 
           const preview =
             $("#profileImagePreview");
 
           if (preview) {
+
             preview.innerHTML = `
               <img
                 src="${escapeHtml(data)}"
                 alt="Profilkép"
               >
             `;
+          }
+
+
+          /*
+           * Azonnal frissítjük a teljes profilnézetet is.
+           */
+
+          if (currentUser) {
+
+            updateProfileView({
+              ...currentUser,
+              avatar: data
+            });
           }
         }
       );
@@ -2204,19 +1787,24 @@ const coverImageInput =
   $("#coverImageInput");
 
 if (coverImageInput) {
+
   coverImageInput.addEventListener(
     "change",
     () => {
+
       readImage(
         coverImageInput,
         (data) => {
+
           coverImageData =
             data;
+
 
           const preview =
             $("#coverPreview");
 
           if (preview) {
+
             preview.style.backgroundImage =
               `url("${data}")`;
 
@@ -2224,13 +1812,20 @@ if (coverImageInput) {
               "profile-custom-image"
             );
           }
+
+
+          if (currentUser) {
+
+            updateProfileView({
+              ...currentUser,
+              cover: data
+            });
+          }
         }
       );
     }
   );
 }
-
-
 /* =========================================================
    SAVE PROFILE
    ========================================================= */
@@ -2239,24 +1834,17 @@ const saveProfile =
   $("#saveProfile");
 
 if (saveProfile) {
+
   saveProfile.addEventListener(
     "click",
     async () => {
+
       if (!requireLogin()) {
         return;
       }
 
+
       try {
-        const currentAvatar =
-          profileImageData ||
-          currentUser?.avatar ||
-          "";
-
-        const currentCover =
-          coverImageData ||
-          currentUser?.cover ||
-          "";
-
 
         const displayNameInput =
           $("#displayName");
@@ -2283,6 +1871,22 @@ if (saveProfile) {
           $("#profileWebsite");
 
 
+        /*
+         * Ha nem választottál új képet,
+         * megtartjuk a szerveren lévő régit.
+         */
+
+        const currentAvatar =
+          profileImageData ||
+          currentUser?.avatar ||
+          "";
+
+        const currentCover =
+          coverImageData ||
+          currentUser?.cover ||
+          "";
+
+
         const { user } =
           await api(
             "/api/profile",
@@ -2291,6 +1895,11 @@ if (saveProfile) {
 
               body:
                 JSON.stringify({
+
+                  /*
+                   * A username-t itt továbbra sem módosítjuk.
+                   */
+
                   displayName:
                     displayNameInput
                       ? displayNameInput.value.trim()
@@ -2300,7 +1909,7 @@ if (saveProfile) {
 
                   bio:
                     bioInput
-                      ? bioInput.value
+                      ? bioInput.value.trim()
                       : currentUser?.bio || "",
 
                   avatar:
@@ -2329,19 +1938,19 @@ if (saveProfile) {
 
                   pronouns:
                     pronounsInput
-                      ? pronounsInput.value
+                      ? pronounsInput.value.trim()
                       : currentUser?.pronouns ||
                         "",
 
                   location:
                     locationInput
-                      ? locationInput.value
+                      ? locationInput.value.trim()
                       : currentUser?.location ||
                         "",
 
                   website:
                     websiteInput
-                      ? websiteInput.value
+                      ? websiteInput.value.trim()
                       : currentUser?.website ||
                         ""
                 })
@@ -2349,37 +1958,861 @@ if (saveProfile) {
           );
 
 
-        setAccount(user);
+        /*
+         * A szerver által visszaadott
+         * felhasználó lesz az új állapot.
+         */
+
+        setAccount(
+          user
+        );
 
 
         /*
-         * Sikeres mentés után bezárjuk
-         * a szerkesztő popupot.
+         * A teljes profilnézetet is frissítjük.
          */
 
-        const accountMenu =
-          $("#accountMenu");
-
-        if (accountMenu) {
-          accountMenu.classList.remove(
-            "open"
-          );
-
-          accountMenu.setAttribute(
-            "aria-hidden",
-            "true"
-          );
-        }
+        updateProfileView(
+          user
+        );
 
 
         notify(
           "A profilod mentve lett."
         );
 
+
       } catch (error) {
+
         notify(
           error.message
         );
+      }
+    }
+  );
+}
+
+
+/* =========================================================
+   PROFILE VIEW — UPDATE
+   ========================================================= */
+
+function updateProfileView(
+  user = currentUser
+) {
+
+  if (!user) {
+    return;
+  }
+
+
+  const profileViewName =
+    $("#profileViewName");
+
+  const profileViewUsername =
+    $("#profileViewUsername");
+
+  const profileViewBio =
+    $("#profileViewBio");
+
+  const profileViewStatus =
+    $("#profileViewStatus");
+
+  const profileViewLocation =
+    $("#profileViewLocation");
+
+  const profileViewWebsite =
+    $("#profileViewWebsite");
+
+  const profileViewAvatar =
+    $("#profileViewAvatar");
+
+  const profileViewCover =
+    $("#profileViewCover");
+
+
+  /* -------------------------------------------------------
+     NAME
+     ------------------------------------------------------- */
+
+  if (profileViewName) {
+
+    profileViewName.textContent =
+      getDisplayName(user);
+
+    profileViewName.style.color =
+      user.nameColor ||
+      "#67e7dd";
+  }
+
+
+  /* -------------------------------------------------------
+     USERNAME
+     ------------------------------------------------------- */
+
+  if (profileViewUsername) {
+
+    profileViewUsername.textContent =
+      user.username
+        ? `@${user.username}`
+        : "Lépj be az Everlightba.";
+  }
+
+
+  /* -------------------------------------------------------
+     BIO
+     ------------------------------------------------------- */
+
+  if (profileViewBio) {
+
+    profileViewBio.textContent =
+      user.bio ||
+      "Lépj be, hogy nyomot hagyj.";
+  }
+
+
+  /* -------------------------------------------------------
+     STATUS
+     ------------------------------------------------------- */
+
+  if (profileViewStatus) {
+
+    profileViewStatus.textContent =
+      user.status ||
+      "✦ Elérhető";
+  }
+
+
+  /* -------------------------------------------------------
+     LOCATION
+     ------------------------------------------------------- */
+
+  if (profileViewLocation) {
+
+    profileViewLocation.textContent =
+      user.location ||
+      "—";
+  }
+
+
+  /* -------------------------------------------------------
+     WEBSITE
+     ------------------------------------------------------- */
+
+  if (profileViewWebsite) {
+
+    profileViewWebsite.textContent =
+      user.website ||
+      "—";
+  }
+
+
+  /* -------------------------------------------------------
+     AVATAR
+     ------------------------------------------------------- */
+
+  if (profileViewAvatar) {
+
+    profileViewAvatar.style.background =
+      user.profileColor ||
+      "#273638";
+
+    profileViewAvatar.classList.remove(
+      "profile-custom-image"
+    );
+
+
+    if (user.avatar) {
+
+      profileViewAvatar.innerHTML = `
+        <img
+          src="${escapeHtml(user.avatar)}"
+          alt="Profilkép"
+        >
+      `;
+
+      profileViewAvatar.classList.add(
+        "profile-custom-image"
+      );
+
+    } else {
+
+      profileViewAvatar.textContent =
+        getInitial(user);
+    }
+  }
+
+
+  /* -------------------------------------------------------
+     COVER
+     ------------------------------------------------------- */
+
+  if (profileViewCover) {
+
+    if (user.cover) {
+
+      profileViewCover.style.backgroundImage =
+        `url("${escapeHtml(user.cover)}")`;
+
+      profileViewCover.classList.add(
+        "profile-custom-image"
+      );
+
+    } else {
+
+      profileViewCover.style.backgroundImage =
+        "";
+
+      profileViewCover.classList.remove(
+        "profile-custom-image"
+      );
+    }
+  }
+}
+
+
+/* =========================================================
+   OPEN PROFILE VIEW
+   ========================================================= */
+
+function openProfileView() {
+
+  if (!requireLogin()) {
+    return;
+  }
+
+
+  const profileView =
+    $("#profileView");
+
+  if (!profileView) {
+    return;
+  }
+
+
+  /*
+   * Mindig a legfrissebb adatokat mutatjuk.
+   */
+
+  updateProfileView(
+    currentUser
+  );
+
+
+  profileView.classList.add(
+    "open"
+  );
+
+  profileView.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  /*
+   * Desktopon és mobilon is
+   * bezárjuk az account lenyílót.
+   */
+
+  closeAccountMenu();
+
+
+  /*
+   * Mobil dock állapot.
+   */
+
+  setMobileDockActive(
+    "profile"
+  );
+
+
+  document.body.classList.add(
+    "profile-view-open"
+  );
+}
+
+
+/* =========================================================
+   CLOSE PROFILE VIEW
+   ========================================================= */
+
+function closeProfileView() {
+
+  const profileView =
+    $("#profileView");
+
+  if (!profileView) {
+    return;
+  }
+
+
+  profileView.classList.remove(
+    "open"
+  );
+
+  profileView.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body.classList.remove(
+    "profile-view-open"
+  );
+
+
+  setMobileDockActive(
+    "hub"
+  );
+}
+
+
+/* =========================================================
+   PROFILE SETTINGS FROM FULLSCREEN PROFILE
+   ========================================================= */
+
+const openProfileSettings =
+  $("#openProfileSettings");
+
+if (openProfileSettings) {
+
+  openProfileSettings.addEventListener(
+    "click",
+    () => {
+
+      if (!requireLogin()) {
+        return;
+      }
+
+
+      /*
+       * A teljes profilnézetből
+       * megnyitjuk a szerkesztő panelt.
+       */
+
+      closeProfileView();
+
+      openAccountMenu();
+
+
+      /*
+       * Görgessünk a profilbeállításokhoz,
+       * ha szükséges.
+       */
+
+      setTimeout(
+        () => {
+
+          const profileSettings =
+            $("#profileSettings");
+
+          if (profileSettings) {
+
+            profileSettings.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+
+        },
+        80
+      );
+    }
+  );
+}
+
+
+/* =========================================================
+   CLOSE PROFILE VIEW BUTTON
+   ========================================================= */
+
+const closeProfileViewButton =
+  $("#closeProfileView");
+
+if (closeProfileViewButton) {
+
+  closeProfileViewButton.addEventListener(
+    "click",
+    closeProfileView
+  );
+}
+
+
+/* =========================================================
+   CLICK PROFILE VIEW BACKDROP
+   ========================================================= */
+
+const profileView =
+  $("#profileView");
+
+if (profileView) {
+
+  profileView.addEventListener(
+    "click",
+    (event) => {
+
+      if (
+        event.target ===
+        profileView
+      ) {
+
+        closeProfileView();
+      }
+    }
+  );
+}
+
+
+/* =========================================================
+   DESKTOP LEFT PROFILE NAV
+   ========================================================= */
+
+const leftProfileNav =
+  $("#leftProfileNav");
+
+if (leftProfileNav) {
+
+  leftProfileNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      openProfileView();
+    }
+  );
+}
+
+
+/* =========================================================
+   HEADER ACCOUNT → PROFILE VIEW
+   ========================================================= */
+
+function handleAccountNavigation() {
+
+  if (!currentUser) {
+
+    toggleAccountMenu();
+
+    return;
+  }
+
+
+  /*
+   * Bejelentkezve a Fiók már nem
+   * egy kis lenyíló ablakot jelent,
+   * hanem a teljes profilnézetet.
+   */
+
+  openProfileView();
+}
+
+
+/*
+ * A meglévő account gomb eseményét
+ * nem duplázzuk meg.
+ *
+ * Ehelyett csak a kattintás után
+ * kezeljük a bejelentkezett állapotot.
+ */
+
+if (accountButton) {
+
+  accountButton.addEventListener(
+    "click",
+    () => {
+
+      if (currentUser) {
+
+        /*
+         * A második handler miatt
+         * az account menu röviden megnyílhatna.
+         * Ezért azonnal bezárjuk.
+         */
+
+        closeAccountMenu();
+
+        openProfileView();
+      }
+    }
+  );
+}
+
+
+/* =========================================================
+   MOBILE DOCK ACTIVE STATE
+   ========================================================= */
+
+function setMobileDockActive(
+  view
+) {
+
+  const items =
+    document.querySelectorAll(
+      ".mobile-dock-item"
+    );
+
+
+  items.forEach(
+    (item) => {
+
+      item.classList.remove(
+        "active"
+      );
+    }
+  );
+
+
+  const target =
+    document.querySelector(
+      `.mobile-dock-item[data-view="${view}"]`
+    );
+
+
+  if (target) {
+
+    target.classList.add(
+      "active"
+    );
+  }
+}
+
+
+/* =========================================================
+   HUB VIEW
+   ========================================================= */
+
+function openHubView() {
+
+  closeMessages();
+
+  closeProfileView();
+
+
+  setMobileDockActive(
+    "hub"
+  );
+
+
+  /*
+   * A főoldal elejére megyünk,
+   * de nem ugrunk agresszívan.
+   */
+
+  const feed =
+    $("#feed");
+
+  if (feed) {
+
+    feed.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
+
+
+/* =========================================================
+   DESKTOP HUB
+   ========================================================= */
+
+const desktopHubNav =
+  $("#desktopHubNav");
+
+if (desktopHubNav) {
+
+  desktopHubNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      openHubView();
+    }
+  );
+}
+
+
+/* =========================================================
+   MOBILE HUB
+   ========================================================= */
+
+const mobileHubNav =
+  $("#mobileHubNav");
+
+if (mobileHubNav) {
+
+  mobileHubNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      openHubView();
+    }
+  );
+}
+
+
+/* =========================================================
+   MOBILE PROFILE
+   ========================================================= */
+
+const mobileProfileNav =
+  $("#mobileProfileNav");
+
+if (mobileProfileNav) {
+
+  mobileProfileNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      openProfileView();
+    }
+  );
+}
+/* =========================================================
+   MESSAGES / CHAT
+   ========================================================= */
+
+
+/* =========================================================
+   OPEN MESSAGES VIEW
+   ========================================================= */
+
+function openMessages() {
+
+  if (!requireLogin()) {
+    return;
+  }
+
+
+  const messagesView =
+    $("#messagesView");
+
+  if (!messagesView) {
+    return;
+  }
+
+
+  /*
+   * Profilnézet bezárása,
+   * hogy egyszerre csak egy teljes nézet legyen nyitva.
+   */
+
+  closeProfileView();
+
+  closeAccountMenu();
+
+
+  messagesView.classList.add(
+    "open"
+  );
+
+  messagesView.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document.body.classList.add(
+    "messages-view-open"
+  );
+
+
+  setMobileDockActive(
+    "messages"
+  );
+
+
+  /*
+   * Ha már van címzett, rögtön betöltjük
+   * a hozzá tartozó beszélgetést.
+   */
+
+  if (
+    $("#dmRecipient")?.value.trim()
+  ) {
+
+    loadMessages();
+  }
+}
+
+
+/* =========================================================
+   CLOSE MESSAGES VIEW
+   ========================================================= */
+
+function closeMessages() {
+
+  const messagesView =
+    $("#messagesView");
+
+  if (!messagesView) {
+    return;
+  }
+
+
+  messagesView.classList.remove(
+    "open"
+  );
+
+  messagesView.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body.classList.remove(
+    "messages-view-open"
+  );
+
+
+  setMobileDockActive(
+    "hub"
+  );
+}
+
+
+/* =========================================================
+   TOGGLE MESSAGES
+   ========================================================= */
+
+function toggleMessages() {
+
+  const messagesView =
+    $("#messagesView");
+
+  if (!messagesView) {
+    return;
+  }
+
+
+  const isOpen =
+    messagesView.classList.contains(
+      "open"
+    );
+
+
+  if (isOpen) {
+
+    closeMessages();
+
+  } else {
+
+    openMessages();
+  }
+}
+
+
+/* =========================================================
+   DESKTOP MESSAGE BUTTON
+   ========================================================= */
+
+const messageNav =
+  $("#messageNav");
+
+if (messageNav) {
+
+  messageNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      toggleMessages();
+    }
+  );
+}
+
+
+/* =========================================================
+   LEFT RAIL MESSAGE BUTTON
+   ========================================================= */
+
+const leftMessageNav =
+  $("#leftMessageNav");
+
+if (leftMessageNav) {
+
+  leftMessageNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      openMessages();
+    }
+  );
+}
+
+
+/* =========================================================
+   MOBILE MESSAGE BUTTON
+   ========================================================= */
+
+const mobileMessageNav =
+  $("#mobileMessageNav");
+
+if (mobileMessageNav) {
+
+  mobileMessageNav.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+
+      toggleMessages();
+    }
+  );
+}
+
+
+/* =========================================================
+   CLOSE FULLSCREEN CHAT
+   ========================================================= */
+
+const closeMessagesView =
+  $("#closeMessagesView");
+
+if (closeMessagesView) {
+
+  closeMessagesView.addEventListener(
+    "click",
+    () => {
+
+      closeMessages();
+    }
+  );
+}
+
+
+/* =========================================================
+   BACKDROP CLOSE
+   ========================================================= */
+
+const messagesView =
+  $("#messagesView");
+
+if (messagesView) {
+
+  messagesView.addEventListener(
+    "click",
+    (event) => {
+
+      /*
+       * Csak akkor zárjuk,
+       * ha ténylegesen a háttérre kattintottak.
+       */
+
+      if (
+        event.target ===
+        messagesView
+      ) {
+
+        closeMessages();
       }
     }
   );
@@ -2391,11 +2824,13 @@ if (saveProfile) {
    ========================================================= */
 
 async function loadMessages() {
+
   const recipientInput =
     $("#dmRecipient");
 
   const dmList =
     $("#dmList");
+
 
   if (
     !recipientInput ||
@@ -2404,17 +2839,52 @@ async function loadMessages() {
     return;
   }
 
+
   const recipient =
     recipientInput.value.trim();
+
 
   if (
     !recipient ||
     !currentUser
   ) {
+
+    dmList.innerHTML = `
+      <div class="chat-empty">
+
+        <div class="chat-empty-icon">
+          ✉
+        </div>
+
+        <strong>
+          Válassz egy beszélgetést
+        </strong>
+
+        <p>
+          Add meg annak a felhasználónak
+          az azonosítóját, akivel beszélgetni szeretnél.
+        </p>
+
+      </div>
+    `;
+
     return;
   }
 
+
+  /*
+   * Betöltés közben egyértelmű állapot.
+   */
+
+  dmList.innerHTML = `
+    <p class="loading-copy">
+      Beszélgetés betöltése…
+    </p>
+  `;
+
+
   try {
+
     const data =
       await api(
         `/api/messages/${encodeURIComponent(
@@ -2422,97 +2892,358 @@ async function loadMessages() {
         )}`
       );
 
+
     const user =
       data.user;
+
+
+    /* -----------------------------------------------------
+       CHAT TITLE
+       ----------------------------------------------------- */
 
     const dmTitle =
       $("#dmTitle");
 
-    if (dmTitle && user) {
+
+    if (dmTitle) {
+
       dmTitle.textContent =
-        getUsername(user) ||
         getDisplayName(user) ||
-        "Ismeretlen";
+        getUsername(user) ||
+        recipient;
     }
+
+
+    /* -----------------------------------------------------
+       CONTACT LIST
+       ----------------------------------------------------- */
+
+    renderMessageContact(
+      user
+    );
+
+
+    /* -----------------------------------------------------
+       EMPTY CHAT
+       ----------------------------------------------------- */
 
     if (
       !data.messages ||
       !data.messages.length
     ) {
+
       dmList.innerHTML = `
-        <p class="loading-copy">
-          Még nincs üzenet.
-        </p>
+        <div class="chat-empty">
+
+          <div class="chat-empty-icon">
+            ✦
+          </div>
+
+          <strong>
+            Még nincs üzenet
+          </strong>
+
+          <p>
+            Írd meg az első üzenetet
+            ebben a beszélgetésben.
+          </p>
+
+        </div>
       `;
 
       return;
     }
 
+
+    /* -----------------------------------------------------
+       RENDER MESSAGES
+       ----------------------------------------------------- */
+
     dmList.innerHTML =
       data.messages
         .map(
-          (message) => `
-            <div class="dm">
+          (message) => {
 
-              <div>
+            const ownMessage =
+              message.sender_username ===
+              currentUser?.username;
 
-                <strong>
-                  ${escapeHtml(
-                    message.sender_name ||
-                    message.sender_username ||
-                    ""
-                  )}
-                </strong>
 
-                <p>
+            const sender =
+              message.sender_name ||
+              message.sender_username ||
+              "";
+
+
+            const messageTime =
+              message.created_at
+                ? new Date(
+                    message.created_at
+                  ).toLocaleTimeString(
+                    "hu-HU",
+                    {
+                      hour:
+                        "2-digit",
+
+                      minute:
+                        "2-digit"
+                    }
+                  )
+                : "";
+
+
+            return `
+              <article
+                class="
+                  chat-message
+                  ${
+                    ownMessage
+                      ? "chat-message-own"
+                      : "chat-message-other"
+                  }
+                "
+              >
+
+                <div class="chat-message-meta">
+
+                  <strong>
+                    ${escapeHtml(
+                      sender
+                    )}
+                  </strong>
+
+                  <time>
+                    ${escapeHtml(
+                      messageTime
+                    )}
+                  </time>
+
+                </div>
+
+
+                <div class="chat-bubble">
+
                   ${escapeHtml(
                     message.body
                   )}
-                </p>
 
-              </div>
+                </div>
 
-            </div>
-          `
+              </article>
+            `;
+          }
         )
         .join("");
 
+
+    /*
+     * A legújabb üzenetre görgetünk.
+     */
+
+    requestAnimationFrame(
+      () => {
+
+        dmList.scrollTop =
+          dmList.scrollHeight;
+      }
+    );
+
+
   } catch (error) {
+
     dmList.innerHTML = `
-      <p class="loading-copy">
-        ${escapeHtml(
-          error.message
-        )}
-      </p>
+      <div class="chat-empty">
+
+        <div class="chat-empty-icon">
+          !
+        </div>
+
+        <strong>
+          Nem sikerült betölteni
+        </strong>
+
+        <p>
+          ${escapeHtml(
+            error.message
+          )}
+        </p>
+
+      </div>
     `;
   }
 }
 
 
 /* =========================================================
-   MESSAGE RECIPIENT CHANGE
+   MESSAGE CONTACT
+   ========================================================= */
+
+function renderMessageContact(
+  user
+) {
+
+  const contactsList =
+    $("#messageContactsList");
+
+  if (
+    !contactsList ||
+    !user
+  ) {
+    return;
+  }
+
+
+  const username =
+    getUsername(user);
+
+  const displayName =
+    getDisplayName(user);
+
+
+  contactsList.innerHTML = `
+    <button
+      type="button"
+      class="message-contact active"
+      data-recipient="${escapeHtml(
+        username
+      )}"
+    >
+
+      <span class="message-contact-avatar">
+
+        ${
+          user.avatar
+
+            ? `
+              <img
+                src="${escapeHtml(
+                  user.avatar
+                )}"
+                alt=""
+              >
+            `
+
+            : escapeHtml(
+                getInitial(user)
+              )
+        }
+
+      </span>
+
+
+      <span class="message-contact-copy">
+
+        <strong>
+          ${escapeHtml(
+            displayName
+          )}
+        </strong>
+
+        <small>
+          @${escapeHtml(
+            username
+          )}
+        </small>
+
+      </span>
+
+    </button>
+  `;
+}
+
+
+/* =========================================================
+   MESSAGE CONTACT CLICK
+   ========================================================= */
+
+const messageContactsList =
+  $("#messageContactsList");
+
+if (messageContactsList) {
+
+  messageContactsList.addEventListener(
+    "click",
+    (event) => {
+
+      const contact =
+        event.target.closest(
+          ".message-contact"
+        );
+
+
+      if (!contact) {
+        return;
+      }
+
+
+      const recipient =
+        contact.dataset.recipient;
+
+
+      const recipientInput =
+        $("#dmRecipient");
+
+
+      if (
+        recipientInput
+      ) {
+
+        recipientInput.value =
+          recipient;
+      }
+
+
+      document
+        .querySelectorAll(
+          ".message-contact"
+        )
+        .forEach(
+          (item) => {
+
+            item.classList.remove(
+              "active"
+            );
+          }
+        );
+
+
+      contact.classList.add(
+        "active"
+      );
+
+
+      loadMessages();
+    }
+  );
+}
+
+
+/* =========================================================
+   RECIPIENT CHANGE
    ========================================================= */
 
 const dmRecipient =
   $("#dmRecipient");
 
 if (dmRecipient) {
-  dmRecipient.addEventListener(
-    "change",
-    loadMessages
-  );
 
   dmRecipient.addEventListener(
-    "blur",
-    loadMessages
+    "change",
+    () => {
+
+      loadMessages();
+    }
   );
+
 
   dmRecipient.addEventListener(
     "keydown",
     (event) => {
+
       if (
         event.key === "Enter"
       ) {
+
         event.preventDefault();
 
         loadMessages();
@@ -2530,45 +3261,65 @@ const messageForm =
   $("#messageForm");
 
 if (messageForm) {
+
   messageForm.addEventListener(
     "submit",
     async (event) => {
+
       event.preventDefault();
+
 
       if (!requireLogin()) {
         return;
       }
+
 
       const recipient =
         dmRecipient
           ? dmRecipient.value.trim()
           : "";
 
+
       const bodyInput =
         $("#dmBody");
+
 
       const body =
         bodyInput
           ? bodyInput.value.trim()
           : "";
 
+
       if (!recipient) {
+
         notify(
           "Add meg a címzettet."
         );
 
+        if (dmRecipient) {
+          dmRecipient.focus();
+        }
+
         return;
       }
 
+
       if (!body) {
+
         notify(
           "Az üzenet üres."
         );
 
+        if (bodyInput) {
+          bodyInput.focus();
+        }
+
         return;
       }
 
+
       try {
+
         await api(
           `/api/messages/${encodeURIComponent(
             recipient
@@ -2583,17 +3334,24 @@ if (messageForm) {
           }
         );
 
+
         if (bodyInput) {
-          bodyInput.value = "";
+
+          bodyInput.value =
+            "";
         }
 
+
         await loadMessages();
+
 
         notify(
           "Üzenet elküldve."
         );
 
+
       } catch (error) {
+
         notify(
           error.message
         );
@@ -2604,12 +3362,89 @@ if (messageForm) {
 
 
 /* =========================================================
+   ESCAPE KEY
+   ========================================================= */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key !== "Escape"
+    ) {
+      return;
+    }
+
+
+    const messagesView =
+      $("#messagesView");
+
+    const profileView =
+      $("#profileView");
+
+
+    if (
+      messagesView?.classList.contains(
+        "open"
+      )
+    ) {
+
+      closeMessages();
+
+      return;
+    }
+
+
+    if (
+      profileView?.classList.contains(
+        "open"
+      )
+    ) {
+
+      closeProfileView();
+
+      return;
+    }
+
+
+    closeAccountMenu();
+  }
+);
+
+
+/* =========================================================
+   PREVENT BACKGROUND SCROLL
+   ========================================================= */
+
+function updateViewScrollLock() {
+
+  const messagesOpen =
+    $("#messagesView")?.classList.contains(
+      "open"
+    );
+
+  const profileOpen =
+    $("#profileView")?.classList.contains(
+      "open"
+    );
+
+
+  document.body.classList.toggle(
+    "view-is-open",
+    Boolean(
+      messagesOpen ||
+      profileOpen
+    )
+  );
+}
+/* =========================================================
    PWA INSTALL
    ========================================================= */
 
 window.addEventListener(
   "beforeinstallprompt",
   (event) => {
+
     event.preventDefault();
 
     window.everlightInstall =
@@ -2622,12 +3457,15 @@ const installButton =
   $("#installButton");
 
 if (installButton) {
+
   installButton.addEventListener(
     "click",
     async () => {
+
       if (
         !window.everlightInstall
       ) {
+
         notify(
           "iPhone: Safari → Megosztás → Főképernyőhöz adás. Android: böngésző menü → Telepítés."
         );
@@ -2635,13 +3473,25 @@ if (installButton) {
         return;
       }
 
-      window.everlightInstall.prompt();
 
-      await window.everlightInstall
-        .userChoice;
+      try {
 
-      window.everlightInstall =
-        null;
+        window.everlightInstall.prompt();
+
+        await window.everlightInstall
+          .userChoice;
+
+      } catch {
+
+        /*
+         * A telepítési ablakot a böngésző kezeli.
+         */
+
+      } finally {
+
+        window.everlightInstall =
+          null;
+      }
     }
   );
 }
@@ -2655,12 +3505,15 @@ const notificationButton =
   $("#notificationButton");
 
 if (notificationButton) {
+
   notificationButton.addEventListener(
     "click",
     async () => {
+
       if (
         !("Notification" in window)
       ) {
+
         notify(
           "Ez a böngésző nem támogatja az értesítéseket."
         );
@@ -2668,23 +3521,30 @@ if (notificationButton) {
         return;
       }
 
+
       try {
+
         const permission =
           await Notification.requestPermission();
 
+
         if (
-          permission ===
-          "granted"
+          permission === "granted"
         ) {
+
           notify(
             "Értesítések engedélyezve."
           );
+
         } else {
+
           notify(
             "Az értesítések nem lettek engedélyezve."
           );
         }
+
       } catch {
+
         notify(
           "Az értesítések engedélyezése nem sikerült."
         );
@@ -2701,45 +3561,75 @@ if (notificationButton) {
 if (
   "serviceWorker" in navigator
 ) {
+
   window.addEventListener(
     "load",
     () => {
+
       navigator.serviceWorker
         .register("./sw.js")
         .catch(() => {
-          /* Nem kötelező. */
+
+          /*
+           * A service worker nem kötelező
+           * az oldal működéséhez.
+           */
+
         });
+
     }
   );
 }
 
 
 /* =========================================================
-   CLOCK
+   CLOCK + DATE
    ========================================================= */
 
 function updateClock() {
+
   const clock =
     $("#mainClock");
 
-  if (!clock) {
-    return;
-  }
+  const date =
+    $("#mainDate");
+
 
   const now =
     new Date();
 
-  clock.textContent =
-    now.toLocaleTimeString(
-      "hu-HU",
-      {
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
+
+  if (clock) {
+
+    clock.textContent =
+      now.toLocaleTimeString(
+        "hu-HU",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+  }
+
+
+  if (date) {
+
+    date.textContent =
+      now.toLocaleDateString(
+        "hu-HU",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          weekday: "long"
+        }
+      );
+  }
 }
 
+
 updateClock();
+
 
 setInterval(
   updateClock,
@@ -2748,33 +3638,86 @@ setInterval(
 
 
 /* =========================================================
-   DATE
+   VIEW SCROLL LOCK
    ========================================================= */
 
-function updateDate() {
-  const dateElement =
-    $("#mainDate");
+function syncViewScrollLock() {
 
-  if (!dateElement) {
-    return;
-  }
-
-  const now =
-    new Date();
-
-  dateElement.textContent =
-    now.toLocaleDateString(
-      "hu-HU",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        weekday: "long"
-      }
+  const messagesOpen =
+    $("#messagesView")?.classList.contains(
+      "open"
     );
+
+
+  const profileOpen =
+    $("#profileView")?.classList.contains(
+      "open"
+    );
+
+
+  document.body.classList.toggle(
+    "view-is-open",
+    Boolean(
+      messagesOpen ||
+      profileOpen
+    )
+  );
 }
 
-updateDate();
+
+/* =========================================================
+   OBSERVE FULLSCREEN VIEWS
+   ========================================================= */
+
+const messagesViewObserver =
+  $("#messagesView");
+
+const profileViewObserver =
+  $("#profileView");
+
+
+if (
+  messagesViewObserver
+) {
+
+  const observer =
+    new MutationObserver(
+      syncViewScrollLock
+    );
+
+
+  observer.observe(
+    messagesViewObserver,
+    {
+      attributes: true,
+      attributeFilter: [
+        "class"
+      ]
+    }
+  );
+}
+
+
+if (
+  profileViewObserver
+) {
+
+  const observer =
+    new MutationObserver(
+      syncViewScrollLock
+    );
+
+
+  observer.observe(
+    profileViewObserver,
+    {
+      attributes: true,
+      attributeFilter: [
+        "class"
+      ]
+    }
+  );
+}
 
 
 /* =========================================================
@@ -2785,30 +3728,23 @@ updateCategoryLimit();
 
 
 /* =========================================================
-   INITIAL VIEW FROM HASH
+   INITIAL MOBILE DOCK STATE
    ========================================================= */
 
-function initializeView() {
-  const hash =
-    window.location.hash;
+setMobileDockActive(
+  "hub"
+);
 
-  if (
-    hash === "#messages" &&
+
+/* =========================================================
+   INITIAL PROFILE VIEW
+   ========================================================= */
+
+if (currentUser) {
+
+  updateProfileView(
     currentUser
-  ) {
-    openMessages();
-    return;
-  }
-
-  if (
-    hash === "#profile" &&
-    currentUser
-  ) {
-    openProfile();
-    return;
-  }
-
-  openHub();
+  );
 }
 
 
@@ -2819,36 +3755,45 @@ function initializeView() {
 (async () => {
 
   /*
-   * Mindig a szerverről kérjük le
-   * a teljes usert.
-   *
-   * Így F5 után:
-   *
-   * username    = Nodayy#0614
-   * displayName = Nodayy
-   * avatar      = mentett kép
-   * cover       = mentett kép
+   * Ha van mentett token,
+   * először mindig a szervertől kérjük le
+   * az aktuális felhasználót.
    */
 
   if (token) {
+
     try {
+
       const { user } =
         await api(
           "/api/auth/me"
         );
 
+
       if (!user) {
+
         throw new Error(
           "A felhasználó nem található."
         );
       }
 
-      setAccount(user);
+
+      setAccount(
+        user
+      );
+
+
+      updateProfileView(
+        user
+      );
+
 
     } catch {
+
       localStorage.removeItem(
         "everlight-token"
       );
+
 
       token = "";
 
@@ -2861,30 +3806,68 @@ function initializeView() {
   }
 
 
+  /*
+   * Fő tartalom betöltése.
+   */
+
   await Promise.all([
     loadPosts(),
     loadOnline()
   ]);
 
 
-  initializeView();
+  /*
+   * Ha van megnyitott beszélgetés,
+   * azt is betöltjük.
+   */
+
+  if (
+    currentUser &&
+    $("#dmRecipient")?.value.trim()
+  ) {
+
+    await loadMessages();
+  }
 
 
-  /* -------------------------------------------------------
-     Background refresh
-     ------------------------------------------------------- */
+  /*
+   * Nézet scroll állapot.
+   */
+
+  syncViewScrollLock();
+
+
+  /*
+   * Online lista + megnyitott chat
+   * frissítése 30 másodpercenként.
+   */
 
   setInterval(
     async () => {
 
-      await loadOnline();
+      try {
 
-      if (
-        currentUser &&
-        currentView === "messages" &&
-        $("#dmRecipient")?.value.trim()
-      ) {
-        await loadMessages();
+        await loadOnline();
+
+
+        if (
+          currentUser &&
+          $("#dmRecipient")?.value.trim() &&
+          $("#messagesView")?.classList.contains(
+            "open"
+          )
+        ) {
+
+          await loadMessages();
+        }
+
+      } catch {
+
+        /*
+         * Háttérfrissítésnél nem dobunk
+         * külön toast hibát.
+         */
+
       }
 
     },
