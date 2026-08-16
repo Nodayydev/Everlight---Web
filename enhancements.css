@@ -4,1292 +4,612 @@
 
 
 /* =========================================================
-   HEADER — FINAL
+   GLOBAL POLISH
    ========================================================= */
 
-.topbar {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  min-height: 74px;
-
-  background: #0b2426;
-
-  border-bottom: 1px solid rgba(103, 231, 221, 0.18);
-
-  box-shadow: none;
-
-  position: relative;
-  z-index: 20;
-}
-
-.topbar::after {
-  display: none;
-}
-
-
-/* =========================================================
-   DOMAIN
-   ========================================================= */
-
-.domain {
-  justify-self: start;
-
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  white-space: nowrap;
-
-  font: 10px "DM Mono";
-
-  color: #64736f;
-}
-
-.domain a {
-  color: #7e8d89;
-
-  text-decoration: none;
-
-  transition:
-    color 0.2s ease;
-}
-
-.domain a:first-child {
-  color: var(--aqua);
-}
-
-.domain a:last-child {
-  color: #7e8d89;
-}
-
-.domain a:hover {
+::selection {
+  background: rgba(103, 231, 221, 0.22);
   color: var(--cream);
 }
 
-.domain span {
-  color: #465754;
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline:
+    2px solid
+    rgba(103, 231, 221, 0.65);
+
+  outline-offset: 3px;
 }
 
 
 /* =========================================================
-   CENTER LOGO
+   DESKTOP HEADER — FLAT / NO DEPTH
    ========================================================= */
 
-.header-logo {
-  justify-self: center;
+@media (min-width: 661px) {
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .topbar {
+    box-shadow: none !important;
 
-  width: 44px;
-  height: 44px;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 
-  text-decoration: none;
-}
+  .topbar::after {
+    display: none !important;
+  }
 
-.header-logo img {
-  width: 42px;
-  height: 42px;
+  .hub-nav {
+    align-self: center;
+  }
 
-  display: block;
+  .hub-nav-item {
+    border-radius: 4px;
+  }
 
-  object-fit: contain;
 }
 
 
 /* =========================================================
-   HUB NAV
+   DESKTOP HEADER ALIGNMENT
    ========================================================= */
 
-.hub-nav {
-  justify-self: end;
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   HUB NAV ITEMS
-   ========================================================= */
-
-.hub-nav-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: 34px;
-
-  padding: 7px 13px;
-
-  border: 1px solid transparent;
-
-  background: transparent;
-
-  color: #8b9995;
-
-  text-decoration: none;
-
-  font:
-    10px
-    "DM Mono";
-
-  cursor: pointer;
-
-  transition:
-    color 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.hub-nav-item strong {
-  font:
-    500 10px
-    "DM Mono";
-
-  font-weight: 500;
-}
-
-.hub-nav-item:hover {
-  color: var(--cream);
-
-  border-color:
-    rgba(103, 231, 221, 0.18);
-
-  background:
-    rgba(103, 231, 221, 0.035);
-}
-
-.hub-nav-item.active {
-  color: var(--aqua);
-
-  border-color:
-    rgba(103, 231, 221, 0.25);
-
-  background:
-    rgba(103, 231, 221, 0.055);
-}
-
-
-/* =========================================================
-   ACCOUNT WRAPPER
-   ========================================================= */
-
-.account-wrap {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-}
-
-
-/* =========================================================
-   ACCOUNT BUTTON
-   ========================================================= */
-
-.account-button {
-  appearance: none;
-
-  border-radius: 0;
-
-  width: auto;
-  height: auto;
-
-  background: transparent;
-
-  color: #8b9995;
-
-  transform: none;
-}
-
-.account-button:hover,
-.account-button.active {
-  background:
-    rgba(103, 231, 221, 0.035);
-
-  color: var(--aqua);
-
-  transform: none;
-}
-
-
-/* =========================================================
-   ACCOUNT MENU
-   ========================================================= */
-
-.account-menu {
-  top: calc(100% + 10px);
-
-  right: 0;
-
-  width: 306px;
-
-  background:
-    #162629;
-
-  border:
-    1px solid
-    #354849;
-
-  box-shadow:
-    0 22px 55px
-    rgba(0, 0, 0, 0.55);
-
-  backdrop-filter: none;
-}
-
-.account-menu::before {
-  content: "";
-
-  position: absolute;
-
-  top: -5px;
-  right: 22px;
-
-  width: 9px;
-  height: 9px;
-
-  background: #162629;
-
-  border-left:
-    1px solid
-    #354849;
-
-  border-top:
-    1px solid
-    #354849;
-
-  transform: rotate(45deg);
-}
-
-
-/* =========================================================
-   PROFILE SETTINGS
-   ========================================================= */
-
-.account-menu.logged-in {
-  max-height:
-    calc(100vh - 100px);
-
-  overflow-y: auto;
-}
-
-.account-menu.logged-in .login-only {
-  display: none !important;
-}
-
-.profile-settings {
-  margin-top: 0;
-}
-
-.settings-divider {
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  margin-bottom: 12px;
-
-  color: #71807c;
-
-  font:
-    9px
-    "DM Mono";
-
-  letter-spacing: 0.06em;
-}
-
-.settings-divider::before,
-.settings-divider::after {
-  content: "";
-
-  flex: 1;
-
-  height: 1px;
-
-  background: #344244;
-}
-
-
-/* =========================================================
-   COVER
-   ========================================================= */
-
-.profile-cover-preview {
-  height: 62px;
-
-  margin-bottom: 7px;
-
-  display: grid;
-  place-items: center;
-
-  overflow: hidden;
-
-  background:
-    linear-gradient(
-      120deg,
-      #335052,
-      #162a2b
-    );
-
-  border:
-    1px solid
-    #405052;
-
-  background-size: cover;
-
-  background-position: center;
-}
-
-.profile-cover-preview span {
-  padding: 4px 6px;
-
-  background:
-    rgba(14, 23, 25, 0.67);
-
-  color: #a6b7b2;
-
-  font:
-    8px
-    "DM Mono";
-}
-
-.cover-upload {
-  display: block !important;
-
-  margin:
-    0
-    0
-    12px !important;
-
-  cursor: pointer;
-
-  color: #90a09b !important;
-
-  font-size: 10px !important;
-}
-
-.cover-upload input {
-  display: none;
-}
-
-
-/* =========================================================
-   PROFILE IMAGE
-   ========================================================= */
-
-.profile-image-input {
-  display: flex !important;
-
-  align-items: center;
-
-  gap: 9px;
-
-  cursor: pointer;
-}
-
-.profile-image-input input {
-  display: none;
-}
-
-.profile-image-preview {
-  width: 30px;
-  height: 30px;
-
-  flex: none;
-
-  display: grid;
-  place-items: center;
-
-  overflow: hidden;
-
-  border-radius: 50%;
-
-  background: #273638;
-
-  color: #a9b9b5;
-}
-
-.profile-image-preview img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-
-/* =========================================================
-   PROFILE FORM
-   ========================================================= */
-
-.profile-settings textarea,
-.profile-settings select {
-  width: 100%;
-
-  min-height: 31px;
-
-  margin-top: 6px;
-
-  resize: vertical;
-
-  background: #10191b;
-
-  border:
-    1px solid
-    #344244;
-
-  color: var(--cream);
-
-  padding: 8px;
-
-  outline: none;
-
-  font:
-    11px
-    Manrope;
-}
-
-.profile-settings textarea:focus,
-.profile-settings select:focus {
-  border-color: var(--aqua);
-}
-
-.profile-details {
-  display: grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  gap:
-    0
-    9px;
-}
-
-.color-controls {
-  display: grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  gap: 9px;
-}
-
-.color-controls label {
-  font-size: 10px !important;
-}
-
-.color-controls input {
-  height: 31px;
-
-  padding: 2px !important;
-
-  cursor: pointer;
-}
-
-
-/* =========================================================
-   SECONDARY BUTTON
-   ========================================================= */
-
-.secondary {
-  width: 100%;
-
-  margin-top: 7px;
-
-  padding: 10px;
-
-  border:
-    1px solid
-    #4b5c5d;
-
-  background: transparent;
-
-  color: #cbd7d2;
-
-  cursor: pointer;
-
-  font:
-    700 11px
-    Manrope;
-
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
-}
-
-.secondary:hover {
-  border-color: var(--aqua);
-
-  color: var(--aqua);
-
-  background:
-    rgba(103, 231, 221, 0.04);
-}
-
-
-/* =========================================================
-   CUSTOM PROFILE IMAGE
-   ========================================================= */
-
-.profile-custom-image {
-  overflow: hidden;
-
-  padding: 0 !important;
-}
-
-.profile-custom-image img {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-}
-
-
-/* =========================================================
-   COMPOSER TOOLS
-   ========================================================= */
-
-.composer-tools {
-  display: flex;
-  align-items: center;
-
-  gap: 14px;
-
-  padding:
-    5px
-    0
-    13px;
-
-  color: #8e9c98;
-
-  font:
-    10px
-    "DM Mono";
-}
-
-.composer-tools label {
-  display: flex;
-  align-items: center;
-
-  gap: 5px;
-
-  margin: 0;
-
-  cursor: pointer;
-}
-
-.composer-tools select {
-  padding: 5px;
-
-  background: #213033;
-
-  border:
-    1px solid
-    #3b4c4d;
-
-  color: #d7e0db;
-
-  font:
-    10px
-    "DM Mono";
-}
-
-.image-upload input,
-.anonymous-toggle input {
-  display: none;
-}
-
-
-/* =========================================================
-   ANONYMOUS TOGGLE
-   ========================================================= */
-
-.anonymous-toggle span {
-  position: relative;
-
-  width: 19px;
-  height: 11px;
-
-  border-radius: 10px;
-
-  background: #405052;
-}
-
-.anonymous-toggle span::after {
-  content: "";
-
-  position: absolute;
-
-  top: 2px;
-  left: 2px;
-
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background: #c4cfca;
-
-  transition:
-    left 0.2s ease,
-    background 0.2s ease;
-}
-
-.anonymous-toggle input:checked + span {
-  background: #278d89;
-}
-
-.anonymous-toggle input:checked + span::after {
-  left: 10px;
-
-  background: #e3fffa;
-}
-
-
-/* =========================================================
-   IMAGE PREVIEW
-   ========================================================= */
-
-.image-preview {
-  display: none;
-
-  position: relative;
-
-  margin:
-    0
-    0
-    11px;
-}
-
-.image-preview.visible {
-  display: block;
-}
-
-.image-preview img,
-.post-image {
-  max-width: 100%;
-  max-height: 360px;
-
-  object-fit: cover;
-
-  border:
-    1px solid
-    #3b4c4d;
-}
-
-.image-preview img {
-  display: block;
-
-  width: 100%;
-}
-
-.image-preview button {
-  position: absolute;
-
-  top: 6px;
-  right: 6px;
-
-  width: 23px;
-  height: 23px;
-
-  border: 0;
-
-  background: #122022;
-
-  color: #fff;
-
-  cursor: pointer;
-}
-
-.post-image {
-  display: block;
-
-  width: 100%;
-
-  margin:
-    2px
-    0
-    17px;
-}
-
-
-/* =========================================================
-   ACTIVITY
-   ========================================================= */
-
-.activity-card {
-  padding:
-    28px
-    0;
-
-  border-bottom:
-    1px solid
-    var(--line);
-
-  color: #87938f;
-
-  font:
-    12px/1.6
-    "Playfair Display";
-}
-
-.activity-card em {
-  color: var(--aqua);
-}
-
-.activity-stats {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 8px;
-}
-
-.activity-stats div {
-  padding-left: 8px;
-
-  border-left:
-    1px solid
-    #405052;
-}
-
-.activity-stats strong {
-  display: block;
-
-  color: var(--aqua);
-
-  font:
-    500 18px
-    "DM Mono";
-}
-
-.activity-stats span {
-  color: #87938f;
-
-  font:
-    9px
-    "DM Mono";
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.site-footer {
-  position: relative;
-
-  min-height: 39px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding:
-    0
-    4.5vw;
-
-  background: #0b2426;
-
-  border-top:
-    1px solid
-    var(--line);
-
-  box-shadow: none;
-
-  color: #687572;
-
-  font:
-    9px
-    "DM Mono";
-
-  letter-spacing: 0.04em;
-
-  text-align: center;
-}
-
-.site-footer::before {
-  display: none;
-}
-
-.site-footer p {
-  margin: 0;
-}
-
-
-/* =========================================================
-   MESSAGES
-   ========================================================= */
-
-.messages {
-  background:
-    #172629;
-
-  border:
-    1px solid
-    #405052;
-
-  box-shadow:
-    0 17px 55px
-    rgba(0, 0, 0, 0.68);
-
-  backdrop-filter: none;
-}
-
-.messages.open {
-  transform: translateY(0);
-
-  opacity: 1;
-}
-
-
-/* =========================================================
-   MESSAGE FORM
-   ========================================================= */
-
-.message-compose {
-  display: grid;
-
-  grid-template-columns:
-    1fr
-    1.5fr
-    37px;
-
-  gap: 7px;
-
-  margin-top: 16px;
-}
-
-.message-compose input {
-  min-width: 0;
-}
-
-.message-compose button {
-  width: 37px;
-
-  height: 37px;
-
-  align-self: end;
-}
-
-
-/* =========================================================
-   MONO MODE
-   ========================================================= */
-
-body.mono {
-  --bg: #080808;
-  --panel: #101010;
-  --panel-2: #111111;
-  --line: #303030;
-
-  --cream: #f7f7f7;
-  --muted: #9a9a9a;
-
-  --aqua: #ffffff;
-  --aqua-dark: #dddddd;
-  --aqua-deep: #222222;
-
-  --aqua-soft: rgba(255, 255, 255, 0.08);
-  --aqua-border: rgba(255, 255, 255, 0.22);
-}
-
-body.mono .grain {
-  display: none !important;
-}
-
-body.mono .topbar,
-body.mono .site-footer {
-  background: #090909;
-}
-
-body.mono .brand-text {
-  background: #ffffff;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
-}
-
-body.mono .header-logo img {
-  filter: grayscale(1);
-}
-
-body.mono .primary,
-body.mono .install-button {
-  background: #ffffff;
-
-  color: #111111;
-}
-
-body.mono .quote-label,
-body.mono .story-label {
-  background: #303030;
-
-  color: #ffffff;
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 960px) {
+@media (min-width: 961px) {
 
   .topbar {
     grid-template-columns:
-      1fr
-      auto;
-
-    padding:
-      0
-      25px;
+      minmax(0, 1fr)
+      auto
+      minmax(0, 1fr);
   }
 
-  .header-logo {
-    justify-self: center;
+  .domain {
+    min-width: 0;
   }
 
   .hub-nav {
     justify-self: end;
+
+    margin-left: auto;
   }
 
-  .domain {
-    display: flex;
+  .header-logo {
+    margin: 0 auto;
   }
 
 }
 
 
 /* =========================================================
-   MOBILE
+   DOMAIN TEXT
+   ========================================================= */
+
+.domain a {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.domain span {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   HUB BUTTONS
+   ========================================================= */
+
+.hub-nav-item {
+  min-width: 78px;
+
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.hub-nav-item.active {
+  box-shadow:
+    inset 0 -1px 0
+    rgba(103, 231, 221, 0.25);
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTON FIX
+   ========================================================= */
+
+.account-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  font:
+    500 9px
+    "DM Mono";
+
+  line-height: 1;
+
+  vertical-align: middle;
+}
+
+.account-button strong {
+  display: block;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   ACCOUNT MENU — BETTER POSITION
+   ========================================================= */
+
+.account-menu {
+  transform-origin:
+    top right;
+}
+
+.account-menu.open {
+  animation:
+    accountOpen
+    0.18s
+    ease-out;
+}
+
+@keyframes accountOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-5px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   PROFILE COLORS
+   ========================================================= */
+
+.profile-view-avatar {
+  overflow: hidden;
+}
+
+.profile-view-avatar img {
+  display: block;
+}
+
+
+/* =========================================================
+   FEED IMAGE
+   ========================================================= */
+
+.post-image {
+  border-radius: 2px;
+
+  cursor: zoom-in;
+
+  transition:
+    opacity 0.2s ease;
+}
+
+.post-image:hover {
+  opacity: 0.94;
+}
+
+
+/* =========================================================
+   COMPOSER
+   ========================================================= */
+
+.composer {
+  border-radius: 2px;
+}
+
+.composer-tools select {
+  border-radius: 3px;
+}
+
+.image-upload {
+  user-select: none;
+}
+
+.anonymous-toggle {
+  user-select: none;
+}
+
+
+/* =========================================================
+   FULLSCREEN VIEWS
+   ========================================================= */
+
+.messages-view,
+.profile-view {
+  overscroll-behavior: contain;
+}
+
+.messages-view-inner,
+.profile-view-inner {
+  min-height: 100dvh;
+}
+
+
+/* =========================================================
+   MESSAGE VIEW
+   ========================================================= */
+
+.message-contacts-list {
+  scrollbar-width: thin;
+  scrollbar-color:
+    #344547
+    transparent;
+}
+
+.dm-list {
+  scrollbar-width: thin;
+  scrollbar-color:
+    #344547
+    transparent;
+}
+
+.message-contacts {
+  scrollbar-width: thin;
+  scrollbar-color:
+    #344547
+    transparent;
+}
+
+
+/* =========================================================
+   MESSAGE EMPTY STATE
+   ========================================================= */
+
+.message-chat:has(.dm-list:empty)::after {
+  content: "";
+
+  display: block;
+}
+
+
+/* =========================================================
+   PROFILE VIEW
+   ========================================================= */
+
+.profile-view-content {
+  animation:
+    viewFade
+    0.22s
+    ease-out;
+}
+
+.messages-view.open
+.messages-view-inner {
+  animation:
+    viewFade
+    0.2s
+    ease-out;
+}
+
+@keyframes viewFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE — CLEAN APP SHELL
    ========================================================= */
 
 @media (max-width: 660px) {
+
+  html {
+    background: #101719;
+  }
+
+  body {
+    overflow-x: hidden;
+
+    min-height: 100dvh;
+  }
+
 
   /* -------------------------------------------------------
      HEADER
      ------------------------------------------------------- */
 
   .topbar {
-    min-height: auto;
+    position: sticky;
 
-    display: grid;
+    top: 0;
 
-    grid-template-columns:
-      1fr
-      auto;
+    z-index: 100;
 
-    grid-template-rows:
-      auto
-      auto;
+    box-shadow: none !important;
 
-    column-gap: 10px;
-
-    row-gap: 9px;
-
-    padding:
-      11px
-      15px
-      10px;
-
-    background:
-      linear-gradient(
-        115deg,
-        #071416 0%,
-        #092224 25%,
-        #0c3537 50%,
-        #10494a 75%,
-        #166360 100%
-      );
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
-
-  /* -------------------------------------------------------
-     DOMAIN — MOBILE IS VISIBLE
-     ------------------------------------------------------- */
-
-  .domain {
-    grid-column: 1;
-    grid-row: 1;
-
-    display: flex !important;
-
-    align-items: center;
-
-    gap: 5px;
-
-    min-width: 0;
-
-    overflow: hidden;
-
-    font-size: 8px;
-  }
-
-  .domain a {
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-  }
-
-  .domain span {
-    flex-shrink: 0;
-  }
-
-
-  /* -------------------------------------------------------
-     CENTER LOGO
-     ------------------------------------------------------- */
-
-  .header-logo {
-    grid-column: 2;
-    grid-row: 1;
-
-    width: 34px;
-    height: 34px;
-
-    justify-self: end;
-  }
-
-  .header-logo img {
-    width: 32px;
-    height: 32px;
-  }
-
-
-  /* -------------------------------------------------------
-     NAVIGATION
-     ------------------------------------------------------- */
-
-  .hub-nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-
-    width: 100%;
-
-    justify-self: stretch;
-
-    display: grid;
-
-    grid-template-columns:
-      repeat(3, 1fr);
-
-    gap: 7px;
-  }
-
-  .hub-nav-item {
-    width: 100%;
-
-    min-height: 34px;
-
-    padding:
-      8px
-      4px;
-
-    border:
-      1px solid
-      rgba(103, 231, 221, 0.15);
-
-    background:
-      rgba(6, 25, 27, 0.42);
-
-    color: #8f9e9a;
-
-    text-align: center;
-  }
-
-  .hub-nav-item strong {
-    font-size: 9px;
-  }
-
-  .hub-nav-item.active {
-    background:
-      rgba(103, 231, 221, 0.07);
-
-    border-color:
-      rgba(103, 231, 221, 0.30);
-
-    color: var(--aqua);
-  }
-
-
-  /* -------------------------------------------------------
-     ACCOUNT
-     ------------------------------------------------------- */
-
-  .account-wrap {
-    width: 100%;
-  }
-
-  .account-button {
-    width: 100%;
-  }
-
-  .account-menu {
-    top: calc(100% + 8px);
-
-    right: 0;
-
-    width:
-      min(
-        306px,
-        calc(100vw - 30px)
-      );
-  }
-
-
-  /* -------------------------------------------------------
-     PAGE
-     ------------------------------------------------------- */
-
-  .layout {
-    display: block;
-
-    min-height: auto;
-  }
-
-
-  /* -------------------------------------------------------
-     LEFT RAIL HIDDEN
-     ------------------------------------------------------- */
-
-  .left-rail {
+  .topbar::after {
     display: none !important;
   }
 
 
   /* -------------------------------------------------------
-     MAIN
+     MOBILE DOCK — IPHONE / SAMSUNG STYLE
      ------------------------------------------------------- */
 
-  main {
+  .mobile-dock {
+    isolation: isolate;
+
+    overflow: hidden;
+
     padding:
-      27px
-      18px
-      60px;
+      5px;
+
+    background:
+      rgba(17, 30, 32, 0.96);
+
+    border:
+      1px solid
+      rgba(103, 231, 221, 0.16);
+
+    border-radius:
+      23px;
+
+    box-shadow:
+      0 12px 30px
+      rgba(0, 0, 0, 0.38),
+      0 2px 8px
+      rgba(0, 0, 0, 0.2);
+
+    backdrop-filter:
+      blur(18px)
+      saturate(135%);
+
+    -webkit-backdrop-filter:
+      blur(18px)
+      saturate(135%);
+
+    transform:
+      translateZ(0);
   }
 
+  .mobile-dock::before {
+    content: "";
 
-  /* -------------------------------------------------------
-     RIGHT RAIL
-     ------------------------------------------------------- */
+    position: absolute;
 
-  .right-rail {
-    display: block;
+    left: 50%;
+    top: 5px;
 
-    border-left: 0;
+    width: 48px;
+    height: 2px;
 
-    padding:
-      30px
+    transform:
+      translateX(-50%);
+
+    border-radius: 99px;
+
+    background:
+      rgba(255, 255, 255, 0.07);
+
+    pointer-events: none;
+  }
+
+  .mobile-dock-item {
+    position: relative;
+    z-index: 1;
+
+    border-radius:
       18px;
   }
 
+  .mobile-dock-item.active {
+    background:
+      rgba(103, 231, 221, 0.10);
+
+    color: var(--aqua);
+  }
+
+  .mobile-dock-item.active
+  .mobile-dock-icon {
+    transform:
+      translateY(-1px);
+  }
+
+  .mobile-dock-icon {
+    transition:
+      transform 0.18s ease;
+  }
+
 
   /* -------------------------------------------------------
-     MESSAGES
+     MOBILE ACCOUNT MENU
      ------------------------------------------------------- */
 
-  .messages {
-    width:
-      calc(100% - 30px);
+  .account-menu {
+    border-radius:
+      20px;
 
-    right: 15px;
+    box-shadow:
+      0 22px 55px
+      rgba(0, 0, 0, 0.55);
 
-    bottom: 15px;
+    backdrop-filter:
+      blur(16px);
 
-    padding: 17px;
+    -webkit-backdrop-filter:
+      blur(16px);
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE FULLSCREEN MESSAGES
+     ------------------------------------------------------- */
+
+  .messages-view {
+    background:
+      #0b1416;
+  }
+
+  .messages-view-header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 5;
+
+    background:
+      rgba(16, 26, 28, 0.96);
+
+    backdrop-filter:
+      blur(15px);
+
+    -webkit-backdrop-filter:
+      blur(15px);
+  }
+
+  .message-chat {
+    min-height:
+      calc(
+        100dvh - 70px
+      );
   }
 
   .message-compose {
-    grid-template-columns:
-      1fr
-      37px;
-  }
+    position: sticky;
 
-  .message-compose input:first-child {
-    grid-column:
-      1 / -1;
+    bottom: 0;
+
+    z-index: 5;
   }
 
 
   /* -------------------------------------------------------
-     FOOTER
+     MOBILE PROFILE
      ------------------------------------------------------- */
 
-  .site-footer {
-    min-height: 0;
-
-    padding:
-      11px
-      15px;
+  .profile-view {
+    background:
+      #0b1416;
   }
 
-  .site-footer p {
-    font-size: 8px;
+  .profile-view-header {
+    position: sticky;
 
-    line-height: 1.5;
+    top: 0;
+
+    z-index: 5;
+
+    background:
+      rgba(16, 26, 28, 0.96);
+
+    backdrop-filter:
+      blur(15px);
+
+    -webkit-backdrop-filter:
+      blur(15px);
+  }
+
+  .profile-view-card {
+    border-radius:
+      0
+      0
+      18px
+      18px;
+  }
+
+  .profile-view-cover {
+    border-radius:
+      16px
+      16px
+      0
+      0;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE TOAST
+     ------------------------------------------------------- */
+
+  .toast {
+    border-radius:
+      14px;
+
+    box-shadow:
+      0 10px 30px
+      rgba(0, 0, 0, 0.35);
   }
 
 }
 
 
 /* =========================================================
-   VERY SMALL MOBILE
+   SMALL PHONE
    ========================================================= */
 
 @media (max-width: 380px) {
 
-  .topbar {
-    padding-left: 11px;
-    padding-right: 11px;
+  .mobile-dock {
+    border-radius:
+      21px;
   }
 
-  .domain {
-    font-size: 7px;
+  .mobile-dock-item {
+    border-radius:
+      16px;
   }
 
-  .header-logo,
-  .header-logo img {
-    width: 30px;
-    height: 30px;
-  }
+}
 
-  .hub-nav {
-    gap: 5px;
-  }
 
-  .hub-nav-item {
-    min-height: 32px;
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 
-    padding:
-      7px
-      2px;
-  }
+@media (prefers-reduced-motion: reduce) {
 
-  .hub-nav-item strong {
-    font-size: 8px;
-  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
 
-  main {
-    padding-left: 14px;
-    padding-right: 14px;
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
   }
 
 }
