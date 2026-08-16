@@ -1097,6 +1097,10 @@ function closeAccountMenu() {
       "false"
     );
   }
+
+  document.body.classList.remove(
+    "profile-editor-open"
+  );
 }
 
 
@@ -1135,21 +1139,6 @@ function toggleAccountMenu() {
 
 const accountButton =
   $("#accountButton");
-
-if (accountButton) {
-
-  accountButton.addEventListener(
-    "click",
-    (event) => {
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      toggleAccountMenu();
-    }
-  );
-}
 
 
 /* =========================================================
@@ -2194,6 +2183,9 @@ function openProfileView() {
    * Mindig a legfrissebb adatokat mutatjuk.
    */
 
+  closeMessages();
+  closeAccountMenu();
+
   updateProfileView(
     currentUser
   );
@@ -2221,6 +2213,8 @@ function openProfileView() {
    * Mobil dock állapot.
    */
 
+  currentView = "profile";
+
   setMobileDockActive(
     "profile"
   );
@@ -2236,7 +2230,9 @@ function openProfileView() {
    CLOSE PROFILE VIEW
    ========================================================= */
 
-function closeProfileView() {
+function closeProfileView(
+  updateDock = true
+) {
 
   const profileView =
     $("#profileView");
@@ -2261,15 +2257,93 @@ function closeProfileView() {
   );
 
 
-  setMobileDockActive(
-    "hub"
-  );
+  if (updateDock) {
+    syncNavigationState();
+  }
+
+  syncViewScrollLock();
 }
 
 
 /* =========================================================
    PROFILE SETTINGS FROM FULLSCREEN PROFILE
    ========================================================= */
+
+function openProfileEditor() {
+
+  if (!requireLogin()) {
+    return;
+  }
+
+  const accountMenu =
+    $("#accountMenu");
+
+  const profileSettings =
+    $("#profileSettings");
+
+  if (!accountMenu || !profileSettings) {
+    notify(
+      "A profil szerkesztő nem érhető el."
+    );
+    return;
+  }
+
+  /*
+   * A profilnézet bezárása után az account panel
+   * lesz a szerkesztő felülete.
+   *
+   * FONTOS:
+   * Nem használunk scrollIntoView()-t, mert mobilon
+   * az a teljes Hub oldalt is el tudja görgetni.
+   */
+  closeProfileView(false);
+  closeMessages();
+
+  profileSettings.hidden = false;
+
+  openAccountMenu();
+
+  document.body.classList.add(
+    "profile-editor-open"
+  );
+
+  requestAnimationFrame(() => {
+
+    const top =
+      Math.max(
+        0,
+        profileSettings.offsetTop - 16
+      );
+
+    if (
+      typeof accountMenu.scrollTo ===
+      "function"
+    ) {
+      accountMenu.scrollTo({
+        top,
+        behavior: "smooth"
+      });
+    } else {
+      accountMenu.scrollTop = top;
+    }
+
+    const firstInput =
+      profileSettings.querySelector(
+        "input, textarea, select"
+      );
+
+    if (
+      firstInput &&
+      window.innerWidth <= 660
+    ) {
+      firstInput.focus({
+        preventScroll: true
+      });
+    }
+
+  });
+}
+
 
 const openProfileSettings =
   $("#openProfileSettings");
@@ -2278,45 +2352,12 @@ if (openProfileSettings) {
 
   openProfileSettings.addEventListener(
     "click",
-    () => {
+    (event) => {
 
-      if (!requireLogin()) {
-        return;
-      }
+      event.preventDefault();
+      event.stopPropagation();
 
-
-      /*
-       * A teljes profilnézetből
-       * megnyitjuk a szerkesztő panelt.
-       */
-
-      closeProfileView();
-
-      openAccountMenu();
-
-
-      /*
-       * Görgessünk a profilbeállításokhoz,
-       * ha szükséges.
-       */
-
-      setTimeout(
-        () => {
-
-          const profileSettings =
-            $("#profileSettings");
-
-          if (profileSettings) {
-
-            profileSettings.scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
-          }
-
-        },
-        80
-      );
+      openProfileEditor();
     }
   );
 }
@@ -2388,53 +2429,29 @@ if (leftProfileNav) {
    HEADER ACCOUNT → PROFILE VIEW
    ========================================================= */
 
-function handleAccountNavigation() {
+function handleAccountNavigation(
+  event
+) {
 
-  if (!currentUser) {
-
-    toggleAccountMenu();
-
-    return;
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
-
-  /*
-   * Bejelentkezve a Fiók már nem
-   * egy kis lenyíló ablakot jelent,
-   * hanem a teljes profilnézetet.
-   */
+  if (!currentUser) {
+    openAccountMenu();
+    return;
+  }
 
   openProfileView();
 }
 
 
-/*
- * A meglévő account gomb eseményét
- * nem duplázzuk meg.
- *
- * Ehelyett csak a kattintás után
- * kezeljük a bejelentkezett állapotot.
- */
-
 if (accountButton) {
 
   accountButton.addEventListener(
     "click",
-    () => {
-
-      if (currentUser) {
-
-        /*
-         * A második handler miatt
-         * az account menu röviden megnyílhatna.
-         * Ezért azonnal bezárjuk.
-         */
-
-        closeAccountMenu();
-
-        openProfileView();
-      }
-    }
+    handleAccountNavigation
   );
 }
 
@@ -2479,19 +2496,66 @@ function setMobileDockActive(
 
 
 /* =========================================================
+   NAVIGATION STATE
+   ========================================================= */
+
+function syncNavigationState() {
+
+  const messagesOpen =
+    $("#messagesView")?.classList.contains(
+      "open"
+    );
+
+  const profileOpen =
+    $("#profileView")?.classList.contains(
+      "open"
+    );
+
+  if (messagesOpen) {
+    currentView = "messages";
+
+    setMobileDockActive(
+      "messages"
+    );
+
+    return;
+  }
+
+  if (profileOpen) {
+    currentView = "profile";
+
+    setMobileDockActive(
+      "profile"
+    );
+
+    return;
+  }
+
+  currentView = "hub";
+
+  setMobileDockActive(
+    "hub"
+  );
+}
+
+
+/* =========================================================
    HUB VIEW
    ========================================================= */
 
 function openHubView() {
 
-  closeMessages();
+  closeMessages(false);
+  closeProfileView(false);
+  closeAccountMenu();
 
-  closeProfileView();
-
+  currentView = "hub";
 
   setMobileDockActive(
     "hub"
   );
+
+  syncViewScrollLock();
 
 
   /*
@@ -2602,8 +2666,7 @@ function openMessages() {
    * hogy egyszerre csak egy teljes nézet legyen nyitva.
    */
 
-  closeProfileView();
-
+  closeProfileView(false);
   closeAccountMenu();
 
 
@@ -2622,9 +2685,13 @@ function openMessages() {
   );
 
 
+  currentView = "messages";
+
   setMobileDockActive(
     "messages"
   );
+
+  syncViewScrollLock();
 
 
   /*
@@ -2645,7 +2712,9 @@ function openMessages() {
    CLOSE MESSAGES VIEW
    ========================================================= */
 
-function closeMessages() {
+function closeMessages(
+  updateDock = true
+) {
 
   const messagesView =
     $("#messagesView");
@@ -2670,9 +2739,11 @@ function closeMessages() {
   );
 
 
-  setMobileDockActive(
-    "hub"
-  );
+  if (updateDock) {
+    syncNavigationState();
+  }
+
+  syncViewScrollLock();
 }
 
 
@@ -3417,25 +3488,7 @@ document.addEventListener(
    ========================================================= */
 
 function updateViewScrollLock() {
-
-  const messagesOpen =
-    $("#messagesView")?.classList.contains(
-      "open"
-    );
-
-  const profileOpen =
-    $("#profileView")?.classList.contains(
-      "open"
-    );
-
-
-  document.body.classList.toggle(
-    "view-is-open",
-    Boolean(
-      messagesOpen ||
-      profileOpen
-    )
-  );
+  syncViewScrollLock();
 }
 /* =========================================================
    PWA INSTALL
@@ -3660,6 +3713,17 @@ function syncViewScrollLock() {
     Boolean(
       messagesOpen ||
       profileOpen
+    )
+  );
+
+  document.body.classList.toggle(
+    "profile-editor-open",
+    Boolean(
+      $("#accountMenu")?.classList.contains(
+        "open"
+      ) &&
+      $("#profileSettings") &&
+      !$("#profileSettings").hidden
     )
   );
 }
