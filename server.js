@@ -23,6 +23,7 @@ app.use((req, res, next) => {
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
+app.use(express.static(root));
 
 const safeUser = (user) => ({ id: user.id, username: user.username, displayName: user.display_name || user.username.split('#')[0], bio: user.bio || '', avatar: user.avatar || '', cover: user.cover || '', nameColor: user.name_color || '#67e7dd', profileColor: user.profile_color || '#273638', status: user.status || '✦ Elérhető', pronouns: user.pronouns || '', location: user.location || '', website: user.website || '' });
 const tokenFor = (user) => jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '30d' });
@@ -69,9 +70,6 @@ app.get('/api/messages/:username', auth, async (req, res, next) => { try { const
 app.post('/api/messages/:username', auth, async (req, res, next) => { try { const body = clean(req.body.body, 1000); if (!body) return res.status(400).json({ error: 'Az üzenet üres.' }); const other = await dbGet('SELECT id FROM everlight_users WHERE username=?', [clean(req.params.username, 30).toLowerCase()]); if (!other) return res.status(404).json({ error: 'A címzett nem található.' }); if (other.id === req.userId) return res.status(400).json({ error: 'Magadnak nem küldhetsz üzenetet.' }); const result = await dbRun('INSERT INTO everlight_messages (sender_id, recipient_id, body) VALUES (?, ?, ?)', [req.userId, other.id, body]); await touch(req.userId); res.status(201).json({ id: result.lastID }); } catch (error) { next(error); } });
 
 app.use((error, req, res, next) => { console.error(error); res.status(500).json({ error: 'Szerverhiba. Nézd meg a szerver konzolt.' }); });
-
-// Serve static files LAST - after all API routes
-app.use(express.static(root));
 
 (async () => {
   await createSchema();
