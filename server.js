@@ -17,14 +17,17 @@ const app = express();
 const root = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.json({ limit: '2mb' }));
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} → root: ${root}`);
-  next();
-});
-app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+app.use((req, res, next) => {
+  if (req.path.endsWith('.css')) res.type('text/css');
+  if (req.path.endsWith('.js')) res.type('application/javascript');
+  if (req.path.endsWith('.svg')) res.type('image/svg+xml');
+  if (req.path.endsWith('.webmanifest') || req.path.endsWith('.json')) res.type('application/json');
   next();
 });
 app.use(express.static(root));
