@@ -8,14 +8,24 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>Everlight — gondolatok, amik megmaradnak</title>
+  <title>
+    Everlight — gondolatok, amik megmaradnak
+  </title>
 
   <!-- =====================================================
        FONTS
        ===================================================== -->
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
 
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
@@ -26,8 +36,15 @@
        STYLES
        ===================================================== -->
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="enhancements.css" />
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="enhancements.css"
+  />
 
   <!-- =====================================================
        PWA
@@ -66,24 +83,27 @@
        CLEAN BACKGROUND
        ===================================================== -->
 
-  <div class="grain"></div>
+  <div
+    class="grain"
+    aria-hidden="true"
+  ></div>
 
 
   <!-- =====================================================
-       HEADER
+       MAIN HEADER
        ===================================================== -->
 
   <header class="topbar">
 
-    <!-- -------------------------------------------------
-         LEFT — DOMAIN LINKS
-         ------------------------------------------------- -->
+    <!-- ===================================================
+         LEFT — DOMAINS
+         =================================================== -->
 
     <div class="domain">
 
       <a
         href="https://everlight.nodayy.hu"
-        target="_self"
+        aria-label="Everlight"
       >
         everlight.nodayy.hu
       </a>
@@ -92,7 +112,7 @@
 
       <a
         href="https://nodayy.hu"
-        target="_self"
+        aria-label="Nodayy"
       >
         nodayy.hu
       </a>
@@ -100,102 +120,383 @@
     </div>
 
 
-    <!-- -------------------------------------------------
+    <!-- ===================================================
          CENTER — LOGO
-         ------------------------------------------------- -->
+         =================================================== -->
 
     <a
       class="header-logo"
-      href="#feed"
-      aria-label="Everlight"
+      href="/"
+      aria-label="Everlight főoldal"
     >
-
       <img
         src="logo.png"
         alt="Everlight"
       />
-
     </a>
 
 
-    <!-- -------------------------------------------------
-         RIGHT — EMPTY FOR NOW
-         ------------------------------------------------- -->
+    <!-- ===================================================
+         RIGHT — HUB / ÜZENETEK / FIÓK
+         =================================================== -->
 
-    <div
-      class="header-empty"
-      aria-hidden="true"
-    ></div>
+    <nav
+      class="hub-nav"
+      aria-label="Fő navigáció"
+    >
+
+      <a
+        class="hub-nav-item active"
+        href="#feed"
+      >
+        <strong>Hub</strong>
+      </a>
+
+
+      <a
+        class="hub-nav-item"
+        href="#messages"
+        id="messageNav"
+      >
+        <strong>Üzenetek</strong>
+      </a>
+
+
+      <!-- ===============================================
+           ACCOUNT
+           =============================================== -->
+
+      <div class="account-wrap">
+
+        <button
+          class="hub-nav-item account-button"
+          id="accountButton"
+          type="button"
+          aria-expanded="false"
+          aria-controls="accountMenu"
+        >
+          <strong>Fiók</strong>
+        </button>
+
+
+        <!-- =============================================
+             ACCOUNT MENU
+             ============================================= -->
+
+        <section
+          class="account-menu"
+          id="accountMenu"
+          aria-hidden="true"
+        >
+
+          <!-- -------------------------------------------
+               LOGIN
+               ------------------------------------------- -->
+
+          <div class="login-only">
+
+            <p class="eyebrow">
+              ÜDV AZ EVERLIGHTON
+            </p>
+
+            <h2>
+              Jelentkezz be
+            </h2>
+
+
+            <form
+              id="loginForm"
+            >
+
+              <label>
+                Név
+                <span>és tag</span>
+
+                <input
+                  id="loginName"
+                  name="username"
+                  type="text"
+                  placeholder="pl. nodayy#0614"
+                  autocomplete="username"
+                  required
+                />
+              </label>
+
+
+              <label>
+                E-mail
+                <span>opcionális</span>
+
+                <input
+                  id="loginEmail"
+                  name="email"
+                  type="email"
+                  placeholder="hello@pelda.hu"
+                  autocomplete="email"
+                />
+              </label>
+
+
+              <label>
+                Jelszó
+
+                <input
+                  id="loginPassword"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                  required
+                />
+              </label>
+
+
+              <button
+                class="primary"
+                type="submit"
+              >
+                Belépés
+              </button>
+
+            </form>
+
+          </div>
+
+
+          <!-- ===========================================
+               PROFILE SETTINGS
+               =========================================== -->
+
+          <div
+            class="profile-settings"
+            id="profileSettings"
+            hidden
+          >
+
+            <div class="settings-divider">
+              <span>
+                PROFIL TESTRESZABÁSA
+              </span>
+            </div>
+
+
+            <!-- COVER -->
+
+            <div
+              class="profile-cover-preview"
+              id="coverPreview"
+            >
+              <span>
+                PROFIL BORÍTÓKÉP
+              </span>
+            </div>
+
+
+            <label class="cover-upload">
+
+              ▧ Borítókép feltöltése
+
+              <input
+                id="coverImageInput"
+                type="file"
+                accept="image/*"
+              />
+
+            </label>
+
+
+            <!-- PROFILE IMAGE -->
+
+            <label class="profile-image-input">
+
+              <span
+                id="profileImagePreview"
+                class="profile-image-preview"
+              >
+                ?
+              </span>
+
+              Profilkép módosítása
+
+              <input
+                id="profileImageInput"
+                type="file"
+                accept="image/*"
+              />
+
+            </label>
+
+
+            <!-- DISPLAY NAME -->
+
+            <label>
+
+              Megjelenítési név
+
+              <input
+                id="displayName"
+                maxlength="24"
+                placeholder="A profilodon látható név"
+              />
+
+            </label>
+
+
+            <!-- BIO -->
+
+            <label>
+
+              Bemutatkozás
+
+              <textarea
+                id="profileBio"
+                maxlength="100"
+                placeholder="Pár szó rólad…"
+              ></textarea>
+
+            </label>
+
+
+            <!-- DETAILS -->
+
+            <div class="profile-details">
+
+              <label>
+
+                Státusz
+
+                <select id="profileStatus">
+
+                  <option>
+                    ✦ Elérhető
+                  </option>
+
+                  <option>
+                    ◐ Távol
+                  </option>
+
+                  <option>
+                    — Elfoglalt
+                  </option>
+
+                  <option>
+                    ☾ Láthatatlan
+                  </option>
+
+                </select>
+
+              </label>
+
+
+              <label>
+
+                Névmások
+
+                <input
+                  id="pronouns"
+                  maxlength="30"
+                  placeholder="pl. she/her"
+                />
+
+              </label>
+
+
+              <label>
+
+                Hely
+
+                <input
+                  id="profileLocation"
+                  maxlength="40"
+                  placeholder="pl. Budapest"
+                />
+
+              </label>
+
+
+              <label>
+
+                Weboldal
+
+                <input
+                  id="profileWebsite"
+                  maxlength="60"
+                  placeholder="pl. nodayy.hu"
+                />
+
+              </label>
+
+            </div>
+
+
+            <!-- COLORS -->
+
+            <div class="color-controls">
+
+              <label>
+
+                Név színe
+
+                <input
+                  id="nameColor"
+                  type="color"
+                  value="#67e7dd"
+                />
+
+              </label>
+
+
+              <label>
+
+                Profil színe
+
+                <input
+                  id="profileColor"
+                  type="color"
+                  value="#273638"
+                />
+
+              </label>
+
+            </div>
+
+
+            <button
+              id="saveProfile"
+              class="secondary"
+              type="button"
+            >
+              Profil mentése
+            </button>
+
+          </div>
+
+
+          <!-- ===========================================
+               ACCOUNT FOOTER
+               =========================================== -->
+
+          <p class="small-copy login-only">
+
+            Nincs fiókod?
+
+            <a href="#join">
+              Készíts egyet
+            </a>
+
+          </p>
+
+        </section>
+
+      </div>
+
+    </nav>
 
   </header>
 
 
   <!-- =====================================================
-       MAIN HEADER NAVIGATION
-       ===================================================== -->
-
-  <nav
-    class="hub-nav"
-    aria-label="Fő navigáció"
-  >
-
-    <!-- HUB -->
-
-    <a
-      class="hub-nav-item active"
-      href="#feed"
-    >
-
-      <span>01</span>
-
-      <strong>
-        Hub
-      </strong>
-
-    </a>
-
-
-    <!-- MESSAGES -->
-
-    <a
-      class="hub-nav-item"
-      href="#messages"
-      id="messageNav"
-    >
-
-      <span>02</span>
-
-      <strong>
-        Üzenetek
-      </strong>
-
-      <b>
-        2
-      </b>
-
-    </a>
-
-
-    <!-- ACCOUNT -->
-
-    <a
-      class="hub-nav-item"
-      href="#join"
-    >
-
-      <span>03</span>
-
-      <strong>
-        Fiók
-      </strong>
-
-    </a>
-
-  </nav>
-
-
-  <!-- =====================================================
-       MAIN LAYOUT
+       MAIN PAGE LAYOUT
        ===================================================== -->
 
   <div class="layout">
@@ -207,14 +508,10 @@
 
     <aside class="left-rail">
 
-
-      <!-- -------------------------------------------------
-           EVERLIGHT BRAND
-           ------------------------------------------------- -->
-
       <a
         class="brand"
-        href="#feed"
+        href="#"
+        aria-label="Everlight"
       >
 
         <img
@@ -223,15 +520,11 @@
         />
 
         <span class="brand-text">
-          Everlight
+          Everlight<span>.</span>
         </span>
 
       </a>
 
-
-      <!-- -------------------------------------------------
-           TAGLINE
-           ------------------------------------------------- -->
 
       <p class="tagline">
         Egy kis fény,<br />
@@ -239,9 +532,39 @@
       </p>
 
 
-      <!-- -------------------------------------------------
-           PROFILE
-           ------------------------------------------------- -->
+      <!--
+        A régi 01 / 02 / 03 jelölések
+        teljesen kikerültek.
+      -->
+
+      <nav aria-label="Oldal navigáció">
+
+        <a
+          class="nav-active"
+          href="#feed"
+        >
+          Áramlás
+        </a>
+
+        <a
+          href="#messages"
+          id="leftMessageNav"
+        >
+          Üzenetek
+        </a>
+
+        <a
+          href="#about"
+        >
+          Rólunk
+        </a>
+
+      </nav>
+
+
+      <!-- =================================================
+           SIGNED OUT / PROFILE
+           ================================================= -->
 
       <div
         class="signed-out"
@@ -280,9 +603,9 @@
     <main id="feed">
 
 
-      <!-- -------------------------------------------------
+      <!-- =================================================
            DATE / CLOCK
-           ------------------------------------------------- -->
+           ================================================= -->
 
       <div class="time-lockup">
 
@@ -297,9 +620,9 @@
       </div>
 
 
-      <!-- -------------------------------------------------
-           SECTION HEADING
-           ------------------------------------------------- -->
+      <!-- =================================================
+           MAIN HEADING
+           ================================================= -->
 
       <div class="section-heading">
 
@@ -320,12 +643,14 @@
 
       <section class="composer">
 
+
         <div class="avatar aurora">
           L
         </div>
 
 
         <div class="composer-body">
+
 
           <textarea
             id="postText"
@@ -334,14 +659,12 @@
           ></textarea>
 
 
-          <!-- -------------------------------------------------
+          <!-- =============================================
                COMPOSER TOOLS
-               ------------------------------------------------- -->
+               ============================================= -->
 
           <div class="composer-tools">
 
-
-            <!-- CATEGORY -->
 
             <label>
 
@@ -374,8 +697,6 @@
             </label>
 
 
-            <!-- IMAGE -->
-
             <label class="image-upload">
 
               ▧
@@ -393,8 +714,6 @@
             </label>
 
 
-            <!-- ANONYMOUS -->
-
             <label class="anonymous-toggle">
 
               <input
@@ -411,9 +730,7 @@
           </div>
 
 
-          <!-- -------------------------------------------------
-               IMAGE PREVIEW
-               ------------------------------------------------- -->
+          <!-- IMAGE PREVIEW -->
 
           <div
             id="imagePreview"
@@ -421,9 +738,7 @@
           ></div>
 
 
-          <!-- -------------------------------------------------
-               COMPOSER FOOTER
-               ------------------------------------------------- -->
+          <!-- COMPOSER FOOTER -->
 
           <div class="composer-footer">
 
@@ -431,19 +746,13 @@
               0 / 280
             </span>
 
-
             <button
               id="postButton"
               class="primary"
               type="button"
             >
-
               Megosztás
-
-              <span>
-                ↗
-              </span>
-
+              <span>↗</span>
             </button>
 
           </div>
@@ -454,7 +763,7 @@
 
 
       <!-- =================================================
-           FEED LIST
+           FEED
            ================================================= -->
 
       <div
@@ -481,9 +790,9 @@
     >
 
 
-      <!-- -------------------------------------------------
+      <!-- =================================================
            ABOUT
-           ------------------------------------------------- -->
+           ================================================= -->
 
       <section class="about-card">
 
@@ -499,10 +808,9 @@
 
 
         <p>
-          Az Everlight egy emberi léptékű tér
-          rövid történetekhez, félbehagyott
-          gondolatokhoz és idézetekhez,
-          amiket jó lenne nem elfelejteni.
+          Az Everlight egy emberi léptékű tér rövid
+          történetekhez, félbehagyott gondolatokhoz
+          és idézetekhez, amiket jó lenne nem elfelejteni.
         </p>
 
 
@@ -515,7 +823,7 @@
 
 
       <!-- =================================================
-           ONLINE USERS
+           ONLINE
            ================================================= -->
 
       <section class="online">
@@ -528,10 +836,7 @@
 
 
           <span id="onlineCount">
-
-            <i></i>
-            0
-
+            <i></i> 0
           </span>
 
         </div>
@@ -649,19 +954,13 @@
 
         <p class="install-help">
 
-          <strong>
-            iPhone:
-          </strong>
-
+          <strong>iPhone:</strong>
           Safari → Megosztás →
           „Főképernyőhöz adás”
 
           <br />
 
-          <strong>
-            Android:
-          </strong>
-
+          <strong>Android:</strong>
           Chrome menü →
           „Alkalmazás telepítése”
 
@@ -679,7 +978,6 @@
         <span>
           ✦
         </span>
-
 
         <p>
 
@@ -770,6 +1068,7 @@
 
       <input
         id="dmRecipient"
+        type="text"
         placeholder="Címzett: név#1234"
         autocomplete="off"
         required
@@ -778,6 +1077,7 @@
 
       <input
         id="dmBody"
+        type="text"
         placeholder="Írj egy üzenetet…"
         autocomplete="off"
         required
@@ -809,7 +1109,7 @@
 
 
   <!-- =====================================================
-       APP
+       JAVASCRIPT
        ===================================================== -->
 
   <script src="app.js"></script>
