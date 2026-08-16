@@ -1,1 +1,1262 @@
-:root{--bg:#101719;--panel:#162124;--line:#283538;--cream:#e9e5d8;--muted:#8d9894;--aqua:#67e7dd;--aqua-dark:#24aba8}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--cream);font-family:Manrope,Arial,sans-serif;font-size:14px;font-variant:small-caps}.grain{pointer-events:none;position:fixed;inset:0;opacity:.035;z-index:4;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}.topbar{height:74px;display:flex;align-items:center;justify-content:flex-end;padding:0 4.5vw;border-bottom:1px solid var(--line);position:relative}.presence{font:11px 'DM Mono';color:var(--muted);letter-spacing:.03em;margin-right:25px}.presence i,.online-heading i{display:inline-block;width:7px;height:7px;background:var(--aqua);border-radius:50%;box-shadow:0 0 12px var(--aqua);margin-right:7px}.account-button{width:40px;height:40px;border:1px solid #3a4849;border-radius:50%;background:#1b282a;color:var(--cream);display:grid;place-items:center;cursor:pointer;transition:.2s}.account-button:hover,.account-button.active{border-color:var(--aqua);color:var(--aqua)}.account-button svg{width:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}.account-wrap{position:relative}.account-menu{display:none;position:absolute;z-index:10;right:0;top:52px;width:306px;padding:24px;background:#1a2729;border:1px solid #374749;box-shadow:0 18px 50px #0009}.account-menu.open{display:block;animation:fade .2s ease}.eyebrow{font:10px 'DM Mono';letter-spacing:.13em;color:var(--aqua);margin:0 0 9px}.account-menu h2{font-size:22px;margin:0 0 18px}.account-menu label{display:block;color:var(--cream);font-size:11px;font-weight:700;margin:12px 0}.account-menu label span{float:right;color:var(--muted);font-weight:500}.account-menu input,.message-compose input{width:100%;margin-top:6px;background:#10191b;border:1px solid #344244;color:var(--cream);padding:11px;font:13px Manrope;outline:none}.account-menu input:focus,.message-compose input:focus{border-color:var(--aqua)}.primary{border:0;background:var(--aqua);color:#123032;font:700 12px Manrope;padding:11px 17px;cursor:pointer;transition:.2s}.primary:hover{background:#a5fff5;transform:translateY(-1px)}.account-menu .primary{width:100%;margin-top:7px}.small-copy{font-size:11px;color:var(--muted);text-align:center;margin:15px 0 0}.small-copy a,.about-card a{color:var(--aqua);text-decoration:none}.layout{display:grid;grid-template-columns:minmax(205px,1fr) minmax(460px,620px) minmax(230px,1fr);max-width:1440px;margin:auto;min-height:calc(100vh - 74px)}.left-rail,.right-rail{padding:52px clamp(25px,4vw,64px)}.left-rail{border-right:1px solid var(--line);display:flex;flex-direction:column}.brand,.brand-mobile{font:700 35px 'Playfair Display';letter-spacing:-.055em;background:linear-gradient(110deg,#fff 18%,#caebe7 56%,var(--aqua));-webkit-background-clip:text;background-clip:text;color:transparent;text-decoration:none;font-variant:normal}.brand span,.brand-mobile span{color:var(--aqua)}.brand-mobile{display:none;font-size:24px}.tagline{font:15px/1.65 'Playfair Display';color:#aeb8b3;margin:23px 0 59px}nav{display:grid;gap:16px}nav a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:700}nav a span{font:10px 'DM Mono';margin-right:11px;color:#5d6b6a}nav a.nav-active{color:var(--cream)}nav b{background:#284749;color:var(--aqua);font:10px 'DM Mono';padding:2px 5px;margin-left:5px}.signed-out{margin-top:auto;border-top:1px solid var(--line);padding-top:18px;display:flex;gap:10px;align-items:center}.signed-out p{font-size:10px;line-height:1.6;color:var(--muted);margin:0}.signed-out strong{color:var(--cream);font-size:11px}.avatar,.avatar-placeholder{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;font:700 12px 'DM Mono';flex:none}.avatar-placeholder{background:#273638;color:#91a5a1}.aurora{background:linear-gradient(145deg,#79ede0,#26646a);color:#153638}.ember{background:#b56d46;color:#fee0c5}.moss{background:#65845d;color:#e3f2cc}.sky{background:#668fac;color:#d9f3ff}.lilac{background:#8b779c;color:#f2e8ff}main{padding:46px 50px 80px}.time-lockup{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:21px;color:var(--muted);font:10px 'DM Mono';letter-spacing:.03em}.time-lockup strong{font:500 15px 'DM Mono';color:var(--aqua)}.section-heading{padding:43px 0 27px}.section-heading h1{font:600 31px 'Playfair Display';letter-spacing:-.035em;margin:0}.composer{display:flex;gap:13px;padding:19px;border:1px solid #334245;background:#142023}.composer-body{width:100%}textarea{resize:none;width:100%;height:72px;color:var(--cream);background:transparent;border:0;outline:0;font:14px/1.6 Manrope}textarea::placeholder{color:#82908c}.composer-footer{display:flex;align-items:center;justify-content:space-between}.composer-footer span{font:10px 'DM Mono';color:#72817d}.post{padding:28px 3px 23px;border-bottom:1px solid var(--line)}.post.featured{border-left:2px solid var(--aqua);padding-left:17px;margin-left:-19px}.post-top,.identity,.post-bottom{display:flex;align-items:center}.post-top{justify-content:space-between}.identity{gap:10px}.identity strong{font-size:12px;display:block}.identity span{font:10px 'DM Mono';display:block;color:var(--muted);margin-top:2px}.post time{font:10px 'DM Mono';color:var(--muted)}.post p{font:14px/1.8 Manrope;margin:19px 0;color:#d6d8cf}.post blockquote{margin:22px 0;font:600 22px/1.46 'Playfair Display';letter-spacing:-.015em;color:#f0ede3}.post-bottom{gap:17px}.quote-label,.story-label{font:9px 'DM Mono';letter-spacing:.1em;padding:4px 6px}.quote-label{background:#293938;color:#9eccc5}.story-label{background:#373832;color:#cecb9c}.reaction{border:0;background:transparent;color:#7f8e89;font-size:15px;cursor:pointer}.reaction em{font:10px 'DM Mono';font-style:normal;margin-left:3px}.right-rail{border-left:1px solid var(--line)}.about-card{border-bottom:1px solid var(--line);padding-bottom:32px}.about-card h2{font:600 25px/1.26 'Playfair Display';letter-spacing:-.03em;margin:0 0 17px}.about-card h2 i{color:var(--aqua);font-weight:600}.about-card>p:not(.eyebrow){font:12px/1.8 Manrope;color:#9ba5a0;margin-bottom:22px}.about-card a{font-size:11px;font-weight:700}.about-card a span{margin-left:6px}.online{padding:29px 0;border-bottom:1px solid var(--line)}.online-heading{display:flex;align-items:center;justify-content:space-between}.online-heading .eyebrow{margin:0}.online-heading span{font:10px 'DM Mono';color:var(--muted)}.online-heading i{width:6px;height:6px}.faces{display:flex;margin-top:15px}.faces .avatar{margin-right:-8px;border:2px solid var(--bg);width:31px;height:31px;font-size:10px}.more-face{width:31px;height:31px;border-radius:50%;border:2px solid var(--bg);background:#263334;display:grid;place-items:center;color:#b7c4c0;font:8px 'DM Mono';margin-left:0}.note{display:flex;gap:11px;padding:28px 0;color:#83908c}.note span{color:var(--aqua);font-size:17px}.note p{font:11px/1.7 Manrope;margin:0}.note strong{color:#d5d8ce}.messages{position:fixed;z-index:8;right:25px;bottom:25px;width:335px;background:#192629;border:1px solid #405052;box-shadow:0 17px 55px #000b;padding:20px;transform:translateY(calc(100% + 35px));opacity:0;transition:.3s}.messages.open{transform:translateY(0);opacity:1}.message-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:17px;border-bottom:1px solid var(--line)}.message-head h2{font:600 20px 'Playfair Display';margin:0}.message-head button{border:0;background:none;color:var(--muted);font-size:24px;cursor:pointer}.dm{display:flex;gap:10px;padding:16px 0;border-bottom:1px solid #283638}.dm .avatar{width:31px;height:31px;font-size:10px}.dm strong{font-size:11px}.dm strong span{font-weight:400;color:var(--aqua);font:9px 'DM Mono'}.dm p{margin:4px 0 0;color:#9ca8a4;font-size:11px}.message-compose{display:flex;gap:7px;margin-top:16px}.message-compose input{margin:0}.message-compose button{width:37px;border:0;background:var(--aqua);color:#153133;font-weight:bold}.toast{position:fixed;z-index:20;bottom:25px;left:50%;transform:translate(-50%,100px);background:#dcebe6;color:#153133;padding:12px 18px;font-size:12px;font-weight:700;transition:.25s}.toast.show{transform:translate(-50%,0)}@keyframes fade{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}@media(max-width:960px){.layout{grid-template-columns:170px minmax(420px,1fr)}.right-rail{display:none}main{padding:42px 35px}.left-rail{padding:45px 28px}}@media(max-width:660px){.topbar{height:64px;padding:0 20px;justify-content:space-between}.brand-mobile{display:block}.presence{display:none}.layout{display:block}.left-rail{display:none}main{padding:30px 18px 60px}.time-lockup span:last-child{display:none}.section-heading{padding:32px 0 22px}.section-heading h1{font-size:27px}.post blockquote{font-size:20px}.messages{width:calc(100% - 30px);right:15px;bottom:15px}.account-menu{right:-5px;width:min(306px,calc(100vw - 30px))}}
+/* =========================================================
+   EVERLIGHT — BASE STYLES
+   ========================================================= */
+
+:root {
+  --bg: #101719;
+  --panel: #162124;
+  --line: #283538;
+  --cream: #e9e5d8;
+  --muted: #8d9894;
+  --aqua: #67e7dd;
+  --aqua-dark: #24aba8;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 14px;
+  font-variant: normal;
+  font-feature-settings: normal;
+}
+
+
+/* =========================================================
+   GRAIN
+   ========================================================= */
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  opacity: 0.035;
+  z-index: 4;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 0 4.5vw;
+
+  border-bottom: 1px solid var(--line);
+
+  position: relative;
+}
+
+
+/* =========================================================
+   PRESENCE
+   ========================================================= */
+
+.presence {
+  font: 11px 'DM Mono';
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  margin-right: 25px;
+}
+
+.presence i,
+.online-heading i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+
+  background: var(--aqua);
+  border-radius: 50%;
+
+  box-shadow: 0 0 12px var(--aqua);
+
+  margin-right: 7px;
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTONS
+   ========================================================= */
+
+.account-button {
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #3a4849;
+  border-radius: 50%;
+
+  background: #1b282a;
+  color: var(--cream);
+
+  display: grid;
+  place-items: center;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.account-button:hover,
+.account-button.active {
+  border-color: var(--aqua);
+  color: var(--aqua);
+}
+
+.account-button svg {
+  width: 19px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+
+/* =========================================================
+   ACCOUNT WRAP
+   ========================================================= */
+
+.account-wrap {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   ACCOUNT MENU
+   ========================================================= */
+
+.account-menu {
+  display: none;
+
+  position: absolute;
+
+  z-index: 10;
+
+  right: 0;
+  top: 52px;
+
+  width: 306px;
+
+  padding: 24px;
+
+  background: #1a2729;
+
+  border: 1px solid #374749;
+
+  box-shadow: 0 18px 50px #0009;
+}
+
+.account-menu.open {
+  display: block;
+  animation: fade 0.2s ease;
+}
+
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.eyebrow {
+  font: 10px 'DM Mono';
+  letter-spacing: 0.13em;
+
+  color: var(--aqua);
+
+  margin: 0 0 9px;
+}
+
+
+/* =========================================================
+   ACCOUNT MENU TYPOGRAPHY
+   ========================================================= */
+
+.account-menu h2 {
+  font-size: 22px;
+  margin: 0 0 18px;
+}
+
+.account-menu label {
+  display: block;
+
+  color: var(--cream);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  margin: 12px 0;
+}
+
+.account-menu label span {
+  float: right;
+
+  color: var(--muted);
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.account-menu input,
+.message-compose input {
+  width: 100%;
+
+  margin-top: 6px;
+
+  background: #10191b;
+
+  border: 1px solid #344244;
+
+  color: var(--cream);
+
+  padding: 11px;
+
+  font: 13px Manrope;
+
+  outline: none;
+}
+
+.account-menu input:focus,
+.message-compose input:focus {
+  border-color: var(--aqua);
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.primary {
+  border: 0;
+
+  background: var(--aqua);
+  color: #123032;
+
+  font: 700 12px Manrope;
+
+  padding: 11px 17px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.primary:hover {
+  background: #a5fff5;
+  transform: translateY(-1px);
+}
+
+.account-menu .primary {
+  width: 100%;
+  margin-top: 7px;
+}
+
+
+/* =========================================================
+   SMALL COPY
+   ========================================================= */
+
+.small-copy {
+  font-size: 11px;
+  color: var(--muted);
+
+  text-align: center;
+
+  margin: 15px 0 0;
+}
+
+.small-copy a,
+.about-card a {
+  color: var(--aqua);
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(205px, 1fr)
+    minmax(460px, 620px)
+    minmax(230px, 1fr);
+
+  max-width: 1440px;
+
+  margin: auto;
+
+  min-height: calc(100vh - 74px);
+}
+
+
+/* =========================================================
+   LEFT + RIGHT RAIL
+   ========================================================= */
+
+.left-rail,
+.right-rail {
+  padding: 52px clamp(25px, 4vw, 64px);
+}
+
+.left-rail {
+  border-right: 1px solid var(--line);
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand,
+.brand-mobile {
+  font: 700 35px 'Playfair Display';
+
+  letter-spacing: -0.055em;
+
+  background:
+    linear-gradient(
+      110deg,
+      #fff 18%,
+      #caebe7 56%,
+      var(--aqua)
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+
+  text-decoration: none;
+
+  font-variant: normal;
+}
+
+.brand span,
+.brand-mobile span {
+  color: var(--aqua);
+}
+
+.brand-mobile {
+  display: none;
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   TAGLINE
+   ========================================================= */
+
+.tagline {
+  font: 15px/1.65 'Playfair Display';
+
+  color: #aeb8b3;
+
+  margin: 23px 0 59px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+  display: grid;
+  gap: 16px;
+}
+
+nav a {
+  color: var(--muted);
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+nav a span {
+  font: 10px 'DM Mono';
+
+  margin-right: 11px;
+
+  color: #5d6b6a;
+}
+
+nav a.nav-active {
+  color: var(--cream);
+}
+
+nav b {
+  background: #284749;
+
+  color: var(--aqua);
+
+  font: 10px 'DM Mono';
+
+  padding: 2px 5px;
+
+  margin-left: 5px;
+}
+
+
+/* =========================================================
+   SIGNED OUT
+   ========================================================= */
+
+.signed-out {
+  margin-top: auto;
+
+  border-top: 1px solid var(--line);
+
+  padding-top: 18px;
+
+  display: flex;
+  gap: 10px;
+
+  align-items: center;
+}
+
+.signed-out p {
+  font-size: 10px;
+  line-height: 1.6;
+
+  color: var(--muted);
+
+  margin: 0;
+}
+
+.signed-out strong {
+  color: var(--cream);
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   AVATARS
+   ========================================================= */
+
+.avatar,
+.avatar-placeholder {
+  width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  font: 700 12px 'DM Mono';
+
+  flex: none;
+}
+
+.avatar-placeholder {
+  background: #273638;
+  color: #91a5a1;
+}
+
+.aurora {
+  background: linear-gradient(145deg, #79ede0, #26646a);
+  color: #153638;
+}
+
+.ember {
+  background: #b56d46;
+  color: #fee0c5;
+}
+
+.moss {
+  background: #65845d;
+  color: #e3f2cc;
+}
+
+.sky {
+  background: #668fac;
+  color: #d9f3ff;
+}
+
+.lilac {
+  background: #8b779c;
+  color: #f2e8ff;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+  padding: 46px 50px 80px;
+}
+
+
+/* =========================================================
+   TIME
+   ========================================================= */
+
+.time-lockup {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--line);
+
+  padding-bottom: 21px;
+
+  color: var(--muted);
+
+  font: 10px 'DM Mono';
+
+  letter-spacing: 0.03em;
+}
+
+.time-lockup strong {
+  font: 500 15px 'DM Mono';
+  color: var(--aqua);
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.section-heading {
+  padding: 43px 0 27px;
+}
+
+.section-heading h1 {
+  font: 600 31px 'Playfair Display';
+
+  letter-spacing: -0.035em;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   COMPOSER
+   ========================================================= */
+
+.composer {
+  display: flex;
+
+  gap: 13px;
+
+  padding: 19px;
+
+  border: 1px solid #334245;
+
+  background: #142023;
+}
+
+.composer-body {
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+
+  width: 100%;
+  height: 72px;
+
+  color: var(--cream);
+
+  background: transparent;
+
+  border: 0;
+
+  outline: 0;
+
+  font: 14px/1.6 Manrope;
+}
+
+textarea::placeholder {
+  color: #82908c;
+}
+
+.composer-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.composer-footer span {
+  font: 10px 'DM Mono';
+  color: #72817d;
+}
+
+
+/* =========================================================
+   POSTS
+   ========================================================= */
+
+.post {
+  padding: 28px 3px 23px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.post.featured {
+  border-left: 2px solid var(--aqua);
+
+  padding-left: 17px;
+
+  margin-left: -19px;
+}
+
+.post-top,
+.identity,
+.post-bottom {
+  display: flex;
+
+  align-items: center;
+}
+
+.post-top {
+  justify-content: space-between;
+}
+
+.identity {
+  gap: 10px;
+}
+
+.identity strong {
+  font-size: 12px;
+  display: block;
+}
+
+.identity span {
+  font: 10px 'DM Mono';
+
+  display: block;
+
+  color: var(--muted);
+
+  margin-top: 2px;
+}
+
+.post time {
+  font: 10px 'DM Mono';
+  color: var(--muted);
+}
+
+.post p {
+  font: 14px/1.8 Manrope;
+
+  margin: 19px 0;
+
+  color: #d6d8cf;
+}
+
+.post blockquote {
+  margin: 22px 0;
+
+  font: 600 22px/1.46 'Playfair Display';
+
+  letter-spacing: -0.015em;
+
+  color: #f0ede3;
+}
+
+.post-bottom {
+  gap: 17px;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.quote-label,
+.story-label {
+  font: 9px 'DM Mono';
+
+  letter-spacing: 0.1em;
+
+  padding: 4px 6px;
+}
+
+.quote-label {
+  background: #293938;
+  color: #9eccc5;
+}
+
+.story-label {
+  background: #373832;
+  color: #cecb9c;
+}
+
+
+/* =========================================================
+   REACTIONS
+   ========================================================= */
+
+.reaction {
+  border: 0;
+
+  background: transparent;
+
+  color: #7f8e89;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.reaction em {
+  font: 10px 'DM Mono';
+
+  font-style: normal;
+
+  margin-left: 3px;
+}
+
+
+/* =========================================================
+   RIGHT RAIL
+   ========================================================= */
+
+.right-rail {
+  border-left: 1px solid var(--line);
+}
+
+
+/* =========================================================
+   ABOUT CARD
+   ========================================================= */
+
+.about-card {
+  border-bottom: 1px solid var(--line);
+
+  padding-bottom: 32px;
+}
+
+.about-card h2 {
+  font: 600 25px/1.26 'Playfair Display';
+
+  letter-spacing: -0.03em;
+
+  margin: 0 0 17px;
+}
+
+.about-card h2 i {
+  color: var(--aqua);
+  font-weight: 600;
+}
+
+.about-card > p:not(.eyebrow) {
+  font: 12px/1.8 Manrope;
+
+  color: #9ba5a0;
+
+  margin-bottom: 22px;
+}
+
+.about-card a {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.about-card a span {
+  margin-left: 6px;
+}
+
+
+/* =========================================================
+   ONLINE
+   ========================================================= */
+
+.online {
+  padding: 29px 0;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.online-heading {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.online-heading .eyebrow {
+  margin: 0;
+}
+
+.online-heading span {
+  font: 10px 'DM Mono';
+  color: var(--muted);
+}
+
+.online-heading i {
+  width: 6px;
+  height: 6px;
+}
+
+
+/* =========================================================
+   ONLINE FACES
+   ========================================================= */
+
+.faces {
+  display: flex;
+
+  margin-top: 15px;
+}
+
+.faces .avatar {
+  margin-right: -8px;
+
+  border: 2px solid var(--bg);
+
+  width: 31px;
+  height: 31px;
+
+  font-size: 10px;
+}
+
+.more-face {
+  width: 31px;
+  height: 31px;
+
+  border-radius: 50%;
+
+  border: 2px solid var(--bg);
+
+  background: #263334;
+
+  display: grid;
+  place-items: center;
+
+  color: #b7c4c0;
+
+  font: 8px 'DM Mono';
+
+  margin-left: 0;
+}
+
+
+/* =========================================================
+   NOTE
+   ========================================================= */
+
+.note {
+  display: flex;
+
+  gap: 11px;
+
+  padding: 28px 0;
+
+  color: #83908c;
+}
+
+.note span {
+  color: var(--aqua);
+  font-size: 17px;
+}
+
+.note p {
+  font: 11px/1.7 Manrope;
+
+  margin: 0;
+}
+
+.note strong {
+  color: #d5d8ce;
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.messages {
+  position: fixed;
+
+  z-index: 8;
+
+  right: 25px;
+  bottom: 25px;
+
+  width: 335px;
+
+  background: #192629;
+
+  border: 1px solid #405052;
+
+  box-shadow: 0 17px 55px #000b;
+
+  padding: 20px;
+
+  transform: translateY(calc(100% + 35px));
+
+  opacity: 0;
+
+  transition: 0.3s;
+}
+
+.messages.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+
+/* =========================================================
+   MESSAGE HEADER
+   ========================================================= */
+
+.message-head {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding-bottom: 17px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.message-head h2 {
+  font: 600 20px 'Playfair Display';
+
+  margin: 0;
+}
+
+.message-head button {
+  border: 0;
+
+  background: none;
+
+  color: var(--muted);
+
+  font-size: 24px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MESSAGE LIST
+   ========================================================= */
+
+.dm {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid #283638;
+}
+
+.dm .avatar {
+  width: 31px;
+  height: 31px;
+
+  font-size: 10px;
+}
+
+.dm strong {
+  font-size: 11px;
+}
+
+.dm strong span {
+  font-weight: 400;
+
+  color: var(--aqua);
+
+  font: 9px 'DM Mono';
+}
+
+.dm p {
+  margin: 4px 0 0;
+
+  color: #9ca8a4;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   MESSAGE COMPOSE
+   ========================================================= */
+
+.message-compose {
+  display: flex;
+
+  gap: 7px;
+
+  margin-top: 16px;
+}
+
+.message-compose input {
+  margin: 0;
+}
+
+.message-compose button {
+  width: 37px;
+
+  border: 0;
+
+  background: var(--aqua);
+
+  color: #153133;
+
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+  position: fixed;
+
+  z-index: 20;
+
+  bottom: 25px;
+  left: 50%;
+
+  transform: translate(-50%, 100px);
+
+  background: #dcebe6;
+
+  color: #153133;
+
+  padding: 12px 18px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  transition: 0.25s;
+}
+
+.toast.show {
+  transform: translate(-50%, 0);
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 960px) {
+
+  .layout {
+    grid-template-columns:
+      170px
+      minmax(420px, 1fr);
+  }
+
+  .right-rail {
+    display: none;
+  }
+
+  main {
+    padding: 42px 35px;
+  }
+
+  .left-rail {
+    padding: 45px 28px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 660px) {
+
+  .topbar {
+    height: 64px;
+
+    padding: 0 20px;
+
+    justify-content: space-between;
+  }
+
+  .brand-mobile {
+    display: block;
+  }
+
+  .presence {
+    display: none;
+  }
+
+  .layout {
+    display: block;
+  }
+
+  .left-rail {
+    display: none;
+  }
+
+  main {
+    padding: 30px 18px 60px;
+  }
+
+  .time-lockup span:last-child {
+    display: none;
+  }
+
+  .section-heading {
+    padding: 32px 0 22px;
+  }
+
+  .section-heading h1 {
+    font-size: 27px;
+  }
+
+  .post blockquote {
+    font-size: 20px;
+  }
+
+  .messages {
+    width: calc(100% - 30px);
+
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .account-menu {
+    right: -5px;
+
+    width: min(
+      306px,
+      calc(100vw - 30px)
+    );
+  }
+}
+
+
+/* =========================================================
+   FINAL TYPOGRAPHY SAFETY
+   ========================================================= */
+
+/*
+   Font remains normal throughout the site.
+   No small-caps.
+*/
+
+html,
+body {
+  font-variant: normal;
+  font-feature-settings: normal;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: Manrope, Arial, sans-serif;
+  font-variant: normal;
+  font-feature-settings: normal;
+}
+
+
+/* =========================================================
+   FINAL ACCOUNT + CHAT SAFETY
+   ========================================================= */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.account-wrap {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+.account-wrap > .account-button {
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MOBILE ACCOUNT + CHAT
+   ========================================================= */
+
+@media (max-width: 660px) {
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .account-wrap {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .account-wrap > .account-button {
+    width: 40px;
+    height: 40px;
+  }
+
+}
