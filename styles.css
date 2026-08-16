@@ -1,17 +1,22 @@
 /* =========================================================
-   EVERLIGHT — BASE STYLES
+   EVERLIGHT — STYLES.CSS
    ========================================================= */
 
 :root {
   --bg: #101719;
   --panel: #162124;
+  --panel-2: #142023;
   --line: #283538;
+
   --cream: #e9e5d8;
   --muted: #8d9894;
+
   --aqua: #67e7dd;
   --aqua-dark: #24aba8;
   --aqua-deep: #123d3e;
-  --aqua-glow: rgba(103, 231, 221, 0.18);
+
+  --aqua-soft: rgba(103, 231, 221, 0.08);
+  --aqua-border: rgba(103, 231, 221, 0.22);
 }
 
 
@@ -29,7 +34,9 @@ html {
 
 body {
   margin: 0;
+
   background: var(--bg);
+
   color: var(--cream);
 
   font-family: Manrope, Arial, sans-serif;
@@ -59,33 +66,40 @@ body {
 .topbar {
   height: 74px;
 
-  display: flex;
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
   align-items: center;
-  justify-content: flex-end;
 
   padding: 0 4.5vw;
 
   position: relative;
+
   z-index: 20;
 
   background:
     linear-gradient(
       112deg,
       #071315 0%,
-      #0a1d1f 24%,
-      #0d292b 48%,
-      #124345 73%,
-      #176665 100%
+      #091b1d 18%,
+      #0b282a 38%,
+      #0e3a3c 60%,
+      #135254 80%,
+      #176866 100%
     );
 
-  border-bottom: 1px solid rgba(103, 231, 221, 0.22);
+  border-bottom:
+    1px solid
+    rgba(103, 231, 221, 0.24);
 
   box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.48),
-    inset 0 -1px 0 rgba(103, 231, 221, 0.06);
+    inset 0 -1px 0
+      rgba(103, 231, 221, 0.06);
 }
 
-.topbar:after {
+.topbar::after {
   content: "";
 
   pointer-events: none;
@@ -112,31 +126,36 @@ body {
    ========================================================= */
 
 .domain {
+  justify-self: start;
+
   display: flex;
+
   align-items: center;
 
   gap: 7px;
 
-  color: #4f625e;
+  white-space: nowrap;
+
+  color: #546360;
 
   font: 10px "DM Mono";
-
-  white-space: nowrap;
 }
 
 .domain a {
-  text-decoration: none;
-
   color: #7e8d89;
 
-  transition: color 0.2s ease;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease;
 }
 
 .domain a:first-child {
   color: var(--aqua);
 
   text-shadow:
-    0 0 20px rgba(103, 231, 221, 0.16);
+    0 0 20px
+      rgba(103, 231, 221, 0.16);
 }
 
 .domain a:last-child {
@@ -153,6 +172,49 @@ body {
 
 
 /* =========================================================
+   DESKTOP TOP NAV
+   ========================================================= */
+
+.top-nav {
+  justify-self: center;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 22px;
+
+  white-space: nowrap;
+}
+
+.top-nav a {
+  display: inline-block;
+
+  padding: 4px 0;
+
+  color: #8b9995;
+
+  text-decoration: none;
+
+  font: 10px "DM Mono";
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.top-nav a:first-child {
+  color: var(--aqua);
+}
+
+.top-nav a:hover {
+  color: var(--cream);
+}
+
+
+/* =========================================================
    MOBILE BRAND
    ========================================================= */
 
@@ -163,13 +225,15 @@ body {
 
   gap: 8px;
 
+  color: var(--cream);
+
   text-decoration: none;
 
-  font: 700 24px "Playfair Display";
+  font:
+    700 24px
+    "Playfair Display";
 
   letter-spacing: -0.045em;
-
-  color: var(--cream);
 }
 
 .brand-mobile img {
@@ -181,11 +245,7 @@ body {
   flex-shrink: 0;
 }
 
-.brand-mobile > span {
-  color: var(--cream);
-}
-
-.brand-mobile .brand-dot {
+.brand-mobile span {
   color: var(--aqua);
 }
 
@@ -195,20 +255,23 @@ body {
    ========================================================= */
 
 .header-actions {
+  justify-self: end;
+
   display: flex;
+
   align-items: center;
 
-  gap: 14px;
+  gap: 10px;
 
-  margin-left: auto;
+  margin: 0;
 }
 
 .presence {
-  font: 10px "DM Mono";
-
   color: var(--muted);
 
   white-space: nowrap;
+
+  font: 10px "DM Mono";
 }
 
 .presence i {
@@ -229,13 +292,14 @@ body {
 
 
 /* =========================================================
-   ACCOUNT + MESSAGE WRAPPER
+   ACCOUNT WRAPPER
    ========================================================= */
 
 .account-wrap {
   position: relative;
 
   display: flex;
+
   align-items: center;
 
   justify-content: flex-end;
@@ -247,24 +311,29 @@ body {
 
 
 /* =========================================================
-   ACCOUNT BUTTON
+   ACCOUNT / MESSAGE BUTTON
    ========================================================= */
 
 .account-button {
   width: 40px;
   height: 40px;
 
-  border: 1px solid #3a4849;
-  border-radius: 50%;
-
-  background: rgba(20, 36, 38, 0.88);
-
-  color: var(--cream);
+  flex-shrink: 0;
 
   display: grid;
+
   place-items: center;
 
-  flex-shrink: 0;
+  border:
+    1px solid
+    #3a4849;
+
+  border-radius: 50%;
+
+  background:
+    rgba(20, 36, 38, 0.9);
+
+  color: var(--cream);
 
   cursor: pointer;
 
@@ -281,7 +350,8 @@ body {
 
   color: var(--aqua);
 
-  background: rgba(103, 231, 221, 0.08);
+  background:
+    rgba(103, 231, 221, 0.08);
 
   transform: translateY(-1px);
 }
@@ -297,6 +367,8 @@ body {
   stroke-width: 1.5;
 
   stroke-linecap: round;
+
+  stroke-linejoin: round;
 }
 
 
@@ -311,8 +383,8 @@ body {
 
   z-index: 1000;
 
-  right: 0;
   top: 52px;
+  right: 0;
 
   width: 306px;
 
@@ -325,10 +397,13 @@ body {
       #152224
     );
 
-  border: 1px solid #37494a;
+  border:
+    1px solid
+    #37494a;
 
   box-shadow:
-    0 22px 60px rgba(0, 0, 0, 0.65);
+    0 22px 60px
+      rgba(0, 0, 0, 0.65);
 
   backdrop-filter: blur(12px);
 }
@@ -336,17 +411,15 @@ body {
 .account-menu.open {
   display: block;
 
-  animation: fade 0.2s ease;
+  animation:
+    fade 0.2s ease;
 }
 
 .account-menu.logged-in {
-  max-height: calc(100vh - 95px);
+  max-height:
+    calc(100vh - 95px);
 
   overflow-y: auto;
-}
-
-.account-menu.logged-in .login-only {
-  display: none !important;
 }
 
 
@@ -369,7 +442,9 @@ body {
 .account-menu h2 {
   margin: 0 0 18px;
 
-  font: 600 22px Manrope;
+  font:
+    600 22px
+    Manrope;
 }
 
 .account-menu label {
@@ -401,7 +476,10 @@ input,
 textarea,
 select,
 button {
-  font-family: Manrope, Arial, sans-serif;
+  font-family:
+    Manrope,
+    Arial,
+    sans-serif;
 
   font-variant: normal;
 
@@ -418,7 +496,9 @@ button {
 
   background: #10191b;
 
-  border: 1px solid #344244;
+  border:
+    1px solid
+    #344244;
 
   color: var(--cream);
 
@@ -432,7 +512,8 @@ button {
   border-color: var(--aqua);
 
   box-shadow:
-    0 0 0 2px rgba(103, 231, 221, 0.06);
+    0 0 0 2px
+      rgba(103, 231, 221, 0.06);
 }
 
 
@@ -449,7 +530,9 @@ button {
 
   padding: 11px 17px;
 
-  font: 700 12px Manrope;
+  font:
+    700 12px
+    Manrope;
 
   cursor: pointer;
 
@@ -462,10 +545,12 @@ button {
 .primary:hover {
   background: #8cf5ed;
 
-  transform: translateY(-1px);
+  transform:
+    translateY(-1px);
 
   box-shadow:
-    0 7px 20px rgba(103, 231, 221, 0.14);
+    0 7px 20px
+      rgba(103, 231, 221, 0.14);
 }
 
 .account-menu .primary {
@@ -513,7 +598,8 @@ button {
 
   margin: auto;
 
-  min-height: calc(100vh - 74px);
+  min-height:
+    calc(100vh - 74px);
 }
 
 
@@ -523,20 +609,24 @@ button {
 
 .left-rail,
 .right-rail {
-  padding: 52px clamp(25px, 4vw, 64px);
+  padding:
+    52px
+    clamp(25px, 4vw, 64px);
 }
 
 .left-rail {
-  border-right: 1px solid var(--line);
-
   display: flex;
 
   flex-direction: column;
+
+  border-right:
+    1px solid
+    var(--line);
 }
 
 
 /* =========================================================
-   DESKTOP BRAND
+   LEFT BRAND
    ========================================================= */
 
 .brand {
@@ -546,13 +636,15 @@ button {
 
   gap: 10px;
 
+  color: var(--cream);
+
   text-decoration: none;
 
-  font: 700 35px "Playfair Display";
+  font:
+    700 35px
+    "Playfair Display";
 
   letter-spacing: -0.055em;
-
-  color: var(--cream);
 }
 
 .brand img {
@@ -570,9 +662,10 @@ button {
   background:
     linear-gradient(
       112deg,
-      #c9f7f3 0%,
+      #bdf5f0 0%,
       #67e7dd 45%,
-      #24aba8 100%
+      #24aba8 78%,
+      #176b69 100%
     );
 
   -webkit-background-clip: text;
@@ -581,7 +674,7 @@ button {
   color: transparent;
 }
 
-.brand-text > span {
+.brand-text span {
   color: var(--aqua);
 }
 
@@ -593,25 +686,30 @@ button {
 .tagline {
   max-width: 215px;
 
-  margin: 23px 0 59px;
+  margin:
+    23px
+    0
+    59px;
 
   color: #aeb8b3;
 
-  font: 15px/1.65 "Playfair Display";
+  font:
+    15px/1.65
+    "Playfair Display";
 }
 
 
 /* =========================================================
-   NAVIGATION
+   LEFT NAV
    ========================================================= */
 
-nav {
+.left-rail nav {
   display: grid;
 
   gap: 16px;
 }
 
-nav a {
+.left-rail nav a {
   color: var(--muted);
 
   text-decoration: none;
@@ -620,14 +718,15 @@ nav a {
 
   font-weight: 700;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease;
 }
 
-nav a:hover {
+.left-rail nav a:hover {
   color: var(--cream);
 }
 
-nav a span {
+.left-rail nav a span {
   margin-right: 11px;
 
   color: #5d6b6a;
@@ -635,11 +734,11 @@ nav a span {
   font: 10px "DM Mono";
 }
 
-nav a.nav-active {
+.left-rail nav a.nav-active {
   color: var(--cream);
 }
 
-nav b {
+.left-rail nav b {
   margin-left: 5px;
 
   padding: 2px 5px;
@@ -661,13 +760,15 @@ nav b {
 
   padding-top: 18px;
 
-  border-top: 1px solid var(--line);
+  border-top:
+    1px solid
+    var(--line);
 
   display: flex;
 
-  gap: 10px;
-
   align-items: center;
+
+  gap: 10px;
 }
 
 .signed-out p {
@@ -696,14 +797,17 @@ nav b {
   width: 35px;
   height: 35px;
 
-  border-radius: 50%;
-
-  display: grid;
-  place-items: center;
-
   flex: none;
 
-  font: 700 12px "DM Mono";
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  font:
+    700 12px
+    "DM Mono";
 }
 
 .avatar-placeholder {
@@ -747,18 +851,36 @@ nav b {
   color: #f2e8ff;
 }
 
+.profile-custom-image {
+  overflow: hidden;
 
-/* =========================================================
-   MAIN
-   ========================================================= */
+  padding: 0 !important;
+}
 
-main {
-  padding: 46px 50px 80px;
+.profile-custom-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
 }
 
 
 /* =========================================================
-   TIME LOCKUP
+   MAIN CONTENT
+   ========================================================= */
+
+main {
+  padding:
+    46px
+    50px
+    80px;
+}
+
+
+/* =========================================================
+   TIME
    ========================================================= */
 
 .time-lockup {
@@ -770,7 +892,9 @@ main {
 
   padding-bottom: 21px;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid
+    var(--line);
 
   color: var(--muted);
 
@@ -782,7 +906,9 @@ main {
 .time-lockup strong {
   color: var(--aqua);
 
-  font: 500 15px "DM Mono";
+  font:
+    500 15px
+    "DM Mono";
 }
 
 
@@ -791,9 +917,10 @@ main {
    ========================================================= */
 
 .section-heading {
-  position: relative;
-
-  padding: 43px 0 27px;
+  padding:
+    43px
+    0
+    27px;
 }
 
 .section-heading h1 {
@@ -801,12 +928,14 @@ main {
 
   color: var(--cream);
 
-  font: 600 31px "Playfair Display";
+  font:
+    600 31px
+    "Playfair Display";
 
   letter-spacing: -0.035em;
 }
 
-.section-heading:after {
+.section-heading::after {
   content: "";
 
   display: block;
@@ -836,7 +965,9 @@ main {
 
   padding: 19px;
 
-  border: 1px solid #334245;
+  border:
+    1px solid
+    #334245;
 
   background:
     linear-gradient(
@@ -846,7 +977,8 @@ main {
     );
 
   box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.12);
+    0 10px 28px
+      rgba(0, 0, 0, 0.12);
 }
 
 .composer-body {
@@ -854,10 +986,10 @@ main {
 }
 
 textarea {
-  resize: none;
-
   width: 100%;
   height: 72px;
+
+  resize: none;
 
   border: 0;
 
@@ -867,7 +999,9 @@ textarea {
 
   color: var(--cream);
 
-  font: 14px/1.6 Manrope;
+  font:
+    14px/1.6
+    Manrope;
 }
 
 textarea::placeholder {
@@ -894,9 +1028,14 @@ textarea::placeholder {
    ========================================================= */
 
 .post {
-  padding: 28px 3px 23px;
+  padding:
+    28px
+    3px
+    23px;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid
+    var(--line);
 }
 
 .post.featured {
@@ -904,7 +1043,9 @@ textarea::placeholder {
 
   padding-left: 17px;
 
-  border-left: 2px solid var(--aqua);
+  border-left:
+    2px solid
+    var(--aqua);
 }
 
 .post-top,
@@ -946,19 +1087,27 @@ textarea::placeholder {
 }
 
 .post p {
-  margin: 19px 0;
+  margin:
+    19px
+    0;
 
   color: #d6d8cf;
 
-  font: 14px/1.8 Manrope;
+  font:
+    14px/1.8
+    Manrope;
 }
 
 .post blockquote {
-  margin: 22px 0;
+  margin:
+    22px
+    0;
 
   color: #f0ede3;
 
-  font: 600 22px/1.46 "Playfair Display";
+  font:
+    600 22px/1.46
+    "Playfair Display";
 
   letter-spacing: -0.015em;
 }
@@ -974,7 +1123,9 @@ textarea::placeholder {
 
 .quote-label,
 .story-label {
-  padding: 4px 6px;
+  padding:
+    4px
+    6px;
 
   font: 9px "DM Mono";
 
@@ -1013,7 +1164,9 @@ textarea::placeholder {
 .reaction em {
   margin-left: 3px;
 
-  font: 10px "DM Mono";
+  font:
+    10px
+    "DM Mono";
 
   font-style: normal;
 }
@@ -1024,26 +1177,35 @@ textarea::placeholder {
    ========================================================= */
 
 .right-rail {
-  border-left: 1px solid var(--line);
+  border-left:
+    1px solid
+    var(--line);
 }
 
 
 /* =========================================================
-   ABOUT
+   ABOUT CARD
    ========================================================= */
 
 .about-card {
   padding-bottom: 32px;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid
+    var(--line);
 }
 
 .about-card h2 {
-  margin: 0 0 17px;
+  margin:
+    0
+    0
+    17px;
 
   color: var(--cream);
 
-  font: 600 25px/1.26 "Playfair Display";
+  font:
+    600 25px/1.26
+    "Playfair Display";
 
   letter-spacing: -0.03em;
 }
@@ -1059,7 +1221,9 @@ textarea::placeholder {
 
   color: #9ba5a0;
 
-  font: 12px/1.8 Manrope;
+  font:
+    12px/1.8
+    Manrope;
 }
 
 .about-card a {
@@ -1078,9 +1242,13 @@ textarea::placeholder {
    ========================================================= */
 
 .online {
-  padding: 29px 0;
+  padding:
+    29px
+    0;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid
+    var(--line);
 }
 
 .online-heading {
@@ -1102,14 +1270,20 @@ textarea::placeholder {
 }
 
 .online-heading i {
+  display: inline-block;
+
   width: 6px;
   height: 6px;
+
+  margin-right: 5px;
+
+  border-radius: 50%;
+
+  background: var(--aqua);
+
+  box-shadow:
+    0 0 10px var(--aqua);
 }
-
-
-/* =========================================================
-   ONLINE FACES
-   ========================================================= */
 
 .faces {
   display: flex;
@@ -1123,7 +1297,9 @@ textarea::placeholder {
 
   margin-right: -8px;
 
-  border: 2px solid var(--bg);
+  border:
+    2px solid
+    var(--bg);
 
   font-size: 10px;
 }
@@ -1134,17 +1310,175 @@ textarea::placeholder {
 
   margin-left: 0;
 
-  border: 2px solid var(--bg);
+  display: grid;
+
+  place-items: center;
+
+  border:
+    2px solid
+    var(--bg);
+
   border-radius: 50%;
 
   background: #263334;
 
-  display: grid;
-  place-items: center;
-
   color: #b7c4c0;
 
   font: 8px "DM Mono";
+}
+
+
+/* =========================================================
+   ACTIVITY
+   ========================================================= */
+
+.activity-card {
+  padding:
+    28px
+    0;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
+  color: #87938f;
+
+  font:
+    12px/1.6
+    "Playfair Display";
+}
+
+.activity-card em {
+  color: var(--aqua);
+}
+
+.activity-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 8px;
+}
+
+.activity-stats div {
+  padding-left: 8px;
+
+  border-left:
+    1px solid
+    #405052;
+}
+
+.activity-stats strong {
+  display: block;
+
+  color: var(--aqua);
+
+  font:
+    500 18px
+    "DM Mono";
+}
+
+.activity-stats span {
+  color: #87938f;
+
+  font: 9px "DM Mono";
+}
+
+
+/* =========================================================
+   PHONE CARD
+   ========================================================= */
+
+.phone-card {
+  padding:
+    28px
+    0;
+}
+
+.phone-card h3 {
+  margin:
+    0
+    0
+    14px;
+
+  color: var(--cream);
+
+  font:
+    600 18px
+    "Playfair Display";
+}
+
+.install-button,
+.notification-button {
+  width: 100%;
+
+  padding: 10px;
+
+  cursor: pointer;
+
+  font:
+    700 10px
+    Manrope;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.install-button {
+  border:
+    1px solid
+    var(--aqua);
+
+  background: var(--aqua);
+
+  color: #153133;
+}
+
+.install-button:hover {
+  background: #8cf5ed;
+
+  border-color: #8cf5ed;
+}
+
+.notification-button {
+  margin-top: 7px;
+
+  border:
+    1px solid
+    #465557;
+
+  background: transparent;
+
+  color: #b4c1bd;
+}
+
+.notification-button:hover {
+  border-color: var(--aqua);
+
+  color: var(--aqua);
+
+  background:
+    rgba(103, 231, 221, 0.04);
+}
+
+.install-help {
+  margin:
+    13px
+    0
+    0;
+
+  color: #82908c;
+
+  font:
+    10px/1.65
+    Manrope;
+}
+
+.install-help strong {
+  color: #c4d2cd;
 }
 
 
@@ -1157,7 +1491,9 @@ textarea::placeholder {
 
   gap: 11px;
 
-  padding: 28px 0;
+  padding:
+    28px
+    0;
 
   color: #83908c;
 }
@@ -1171,7 +1507,9 @@ textarea::placeholder {
 .note p {
   margin: 0;
 
-  font: 11px/1.7 Manrope;
+  font:
+    11px/1.7
+    Manrope;
 }
 
 .note strong {
@@ -1180,7 +1518,7 @@ textarea::placeholder {
 
 
 /* =========================================================
-   MESSAGES
+   MESSAGES WINDOW
    ========================================================= */
 
 .messages {
@@ -1202,10 +1540,13 @@ textarea::placeholder {
       #152224
     );
 
-  border: 1px solid #405052;
+  border:
+    1px solid
+    #405052;
 
   box-shadow:
-    0 17px 55px rgba(0, 0, 0, 0.68);
+    0 17px 55px
+      rgba(0, 0, 0, 0.68);
 
   transform:
     translateY(
@@ -1220,15 +1561,11 @@ textarea::placeholder {
 }
 
 .messages.open {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 
   opacity: 1;
 }
-
-
-/* =========================================================
-   MESSAGE HEADER
-   ========================================================= */
 
 .message-head {
   display: flex;
@@ -1239,7 +1576,9 @@ textarea::placeholder {
 
   padding-bottom: 17px;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid
+    var(--line);
 }
 
 .message-head h2 {
@@ -1247,40 +1586,39 @@ textarea::placeholder {
 
   color: var(--cream);
 
-  font: 600 20px "Playfair Display";
+  font:
+    600 20px
+    "Playfair Display";
 }
 
 .message-head button {
   border: 0;
 
-  background: none;
+  background: transparent;
 
   color: var(--muted);
 
   font-size: 24px;
 
   cursor: pointer;
-
-  transition: color 0.2s ease;
 }
 
 .message-head button:hover {
   color: var(--aqua);
 }
 
-
-/* =========================================================
-   MESSAGE ITEMS
-   ========================================================= */
-
 .dm {
   display: flex;
 
   gap: 10px;
 
-  padding: 16px 0;
+  padding:
+    16px
+    0;
 
-  border-bottom: 1px solid #283638;
+  border-bottom:
+    1px solid
+    #283638;
 }
 
 .dm .avatar {
@@ -1297,21 +1635,21 @@ textarea::placeholder {
 .dm strong span {
   color: var(--aqua);
 
-  font: 9px "DM Mono";
+  font:
+    9px
+    "DM Mono";
 }
 
 .dm p {
-  margin: 4px 0 0;
+  margin:
+    4px
+    0
+    0;
 
   color: #9ca8a4;
 
   font-size: 11px;
 }
-
-
-/* =========================================================
-   MESSAGE COMPOSE
-   ========================================================= */
 
 .message-compose {
   display: flex;
@@ -1354,7 +1692,9 @@ textarea::placeholder {
   bottom: 25px;
   left: 50%;
 
-  padding: 12px 18px;
+  padding:
+    12px
+    18px;
 
   background: #dcebe6;
 
@@ -1364,14 +1704,22 @@ textarea::placeholder {
 
   font-weight: 700;
 
-  transform: translate(-50%, 100px);
+  transform:
+    translate(
+      -50%,
+      100px
+    );
 
   transition:
     transform 0.25s ease;
 }
 
 .toast.show {
-  transform: translate(-50%, 0);
+  transform:
+    translate(
+      -50%,
+      0
+    );
 }
 
 
@@ -1380,16 +1728,19 @@ textarea::placeholder {
    ========================================================= */
 
 @keyframes fade {
+
   from {
     opacity: 0;
 
-    transform: translateY(-7px);
+    transform:
+      translateY(-7px);
   }
 
   to {
     opacity: 1;
 
-    transform: none;
+    transform:
+      translateY(0);
   }
 }
 
@@ -1411,12 +1762,17 @@ textarea::placeholder {
   }
 
   main {
-    padding: 42px 35px;
+    padding:
+      42px
+      35px;
   }
 
   .left-rail {
-    padding: 45px 28px;
+    padding:
+      45px
+      28px;
   }
+
 }
 
 
@@ -1426,7 +1782,12 @@ textarea::placeholder {
 
 @media (max-width: 660px) {
 
+  /* -----------------------------------------------
+     HEADER
+     ----------------------------------------------- */
+
   .topbar {
+
     height: auto;
 
     min-height: 68px;
@@ -1435,24 +1796,28 @@ textarea::placeholder {
 
     flex-wrap: wrap;
 
+    align-items: center;
+
     justify-content: space-between;
 
-    gap: 10px 8px;
+    gap:
+      10px
+      8px;
 
-    padding: 13px 16px 10px;
+    padding:
+      13px
+      15px
+      10px;
 
     background:
       linear-gradient(
         115deg,
         #071416 0%,
-        #0b2325 30%,
-        #103d3e 65%,
-        #166260 100%
+        #092224 24%,
+        #0c3537 48%,
+        #10494a 72%,
+        #166360 100%
       );
-
-    border-bottom:
-      1px solid
-      rgba(103, 231, 221, 0.25);
   }
 
 
@@ -1461,34 +1826,23 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .brand-mobile {
+
     display: flex;
 
     order: 1;
-
-    align-items: center;
-
-    gap: 8px;
 
     font-size: 23px;
   }
 
   .brand-mobile img {
+
     width: 29px;
     height: 29px;
   }
 
 
   /* -----------------------------------------------
-     Desktop brand hidden
-     ----------------------------------------------- */
-
-  .left-rail {
-    display: none !important;
-  }
-
-
-  /* -----------------------------------------------
-     Domain hidden
+     Hide desktop domain
      ----------------------------------------------- */
 
   .domain {
@@ -1497,19 +1851,11 @@ textarea::placeholder {
 
 
   /* -----------------------------------------------
-     Presence hidden
-     ----------------------------------------------- */
-
-  .presence {
-    display: none;
-  }
-
-
-  /* -----------------------------------------------
      Header actions
      ----------------------------------------------- */
 
   .header-actions {
+
     order: 2;
 
     display: flex;
@@ -1521,7 +1867,12 @@ textarea::placeholder {
     margin-left: auto;
   }
 
+  .presence {
+    display: none;
+  }
+
   .account-wrap {
+
     display: flex;
 
     align-items: center;
@@ -1530,6 +1881,7 @@ textarea::placeholder {
   }
 
   .account-button {
+
     width: 38px;
     height: 38px;
   }
@@ -1540,25 +1892,40 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .top-nav {
-    order: 3;
 
-    display: flex;
+    order: 3;
 
     width: 100%;
 
+    display: flex;
+
+    align-items: stretch;
+
+    justify-content: stretch;
+
     gap: 7px;
 
-    overflow: hidden;
+    overflow: visible;
 
-    padding: 3px 0 1px;
+    white-space: normal;
+
+    padding:
+      2px
+      0
+      1px;
   }
 
   .top-nav a {
+
     flex: 1;
 
     min-width: 0;
 
-    padding: 9px 5px;
+    display: block;
+
+    padding:
+      9px
+      4px;
 
     border:
       1px solid
@@ -1571,17 +1938,15 @@ textarea::placeholder {
 
     text-align: center;
 
-    font: 9px "DM Mono";
+    font:
+      9px
+      "DM Mono";
 
     white-space: nowrap;
-
-    transition:
-      color 0.2s ease,
-      border-color 0.2s ease,
-      background 0.2s ease;
   }
 
   .top-nav a:first-child {
+
     color: var(--aqua);
 
     border-color:
@@ -1600,17 +1965,36 @@ textarea::placeholder {
 
 
   /* -----------------------------------------------
-     Main
+     Layout
      ----------------------------------------------- */
 
   .layout {
+
     display: block;
 
     min-height: auto;
   }
 
+
+  /* -----------------------------------------------
+     Hide left desktop rail
+     ----------------------------------------------- */
+
+  .left-rail {
+    display: none !important;
+  }
+
+
+  /* -----------------------------------------------
+     Main
+     ----------------------------------------------- */
+
   main {
-    padding: 27px 18px 60px;
+
+    padding:
+      27px
+      18px
+      60px;
   }
 
 
@@ -1619,6 +2003,7 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .time-lockup {
+
     padding-bottom: 17px;
 
     font-size: 9px;
@@ -1634,16 +2019,22 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .section-heading {
-    padding: 28px 0 23px;
+
+    padding:
+      28px
+      0
+      23px;
   }
 
   .section-heading h1 {
+
     font-size: 27px;
 
     line-height: 1.2;
   }
 
-  .section-heading:after {
+  .section-heading::after {
+
     width: 42px;
 
     margin-top: 15px;
@@ -1655,12 +2046,14 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .composer {
+
     padding: 15px;
 
     gap: 10px;
   }
 
   textarea {
+
     height: 86px;
 
     font-size: 14px;
@@ -1672,23 +2065,51 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .post {
-    padding: 24px 0 21px;
+
+    padding:
+      24px
+      0
+      21px;
   }
 
   .post.featured {
+
     margin-left: -10px;
 
     padding-left: 11px;
   }
 
   .post p {
+
     font-size: 13px;
 
     line-height: 1.75;
   }
 
   .post blockquote {
+
     font-size: 20px;
+  }
+
+
+  /* -----------------------------------------------
+     Right rail
+     ----------------------------------------------- */
+
+  .right-rail {
+
+    display: block;
+
+    border-left: 0;
+
+    padding:
+      30px
+      18px;
+  }
+
+  .right-rail .about-card {
+
+    padding-bottom: 25px;
   }
 
 
@@ -1697,6 +2118,7 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .messages {
+
     width:
       calc(100% - 30px);
 
@@ -1707,7 +2129,13 @@ textarea::placeholder {
     padding: 17px;
   }
 
+
+  /* -----------------------------------------------
+     Account menu
+     ----------------------------------------------- */
+
   .account-menu {
+
     right: -5px;
 
     width:
@@ -1719,23 +2147,15 @@ textarea::placeholder {
 
 
   /* -----------------------------------------------
-     Right rail
+     Phone
      ----------------------------------------------- */
 
-  .right-rail {
-    display: block;
-
-    border-left: 0;
-
-    padding: 30px 18px;
-  }
-
-  .right-rail .about-card {
-    padding-bottom: 25px;
-  }
-
   .phone-card {
-    padding-bottom: 4px;
+
+    padding:
+      25px
+      0
+      4px;
   }
 
 
@@ -1744,12 +2164,16 @@ textarea::placeholder {
      ----------------------------------------------- */
 
   .site-footer {
-    padding: 11px 15px;
 
     min-height: 0;
+
+    padding:
+      11px
+      15px;
   }
 
   .site-footer p {
+
     font-size: 8px;
 
     line-height: 1.5;
@@ -1769,22 +2193,33 @@ textarea::placeholder {
   }
 
   .brand-mobile img {
+
     width: 26px;
     height: 26px;
   }
 
   .account-button {
+
     width: 35px;
     height: 35px;
   }
 
+  .top-nav {
+
+    gap: 5px;
+  }
+
   .top-nav a {
-    padding: 8px 3px;
+
+    padding:
+      8px
+      2px;
 
     font-size: 8px;
   }
 
   main {
+
     padding-left: 14px;
     padding-right: 14px;
   }
