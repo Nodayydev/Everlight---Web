@@ -1,0 +1,6 @@
+/* Everlight final polish */
+*{transition:background-color .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease}
+body.sun-mode{--accent:#C77D02;--accent-soft:rgba(199,125,2,.11);--accent-border:rgba(199,125,2,.32)}
+body.sun-mode .theme-toggle{background:rgba(199,125,2,.12)}
+button,a{touch-action:manipulation}
+@media(max-width:660px){.topbar{box-shadow:none!important}.mobile-dock{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.domain{letter-spacing:-.03em}.domain a{flex:none}.mobile-dock{bottom:max(12px,env(safe-area-inset-bottom));}}
