@@ -1,0 +1,839 @@
+/* =========================================================
+   EVERLIGHT — CLEAN ENHANCEMENTS
+   Header + Discord-style profile customizer
+   ========================================================= */
+
+:root{
+  --ui-bg:#000;
+  --ui-panel:#080b0c;
+  --ui-panel-2:#0d1011;
+  --ui-line:#202729;
+  --ui-text:#e8e7df;
+  --ui-muted:#7d8785;
+  --ui-blue:#8BADCC;
+  --ui-gold:#C77D02;
+  --ui-radius:14px;
+}
+
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+button,a,input,textarea,select{touch-action:manipulation}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.topbar{
+  position:sticky !important;
+  top:0 !important;
+  z-index:2000 !important;
+  width:100% !important;
+  height:72px !important;
+  min-height:72px !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:16px !important;
+  padding:0 28px !important;
+  overflow:visible !important;
+  isolation:isolate !important;
+}
+
+.topbar .domain{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  justify-self:start !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+}
+
+.topbar .domain a{
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+.topbar .header-logo{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  justify-self:center !important;
+  align-self:center !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  width:max-content !important;
+  height:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  white-space:nowrap !important;
+  position:relative !important;
+  z-index:30 !important;
+}
+
+.topbar .header-logo-image{
+  display:block !important;
+  width:30px !important;
+  height:30px !important;
+  min-width:30px !important;
+  min-height:30px !important;
+  max-width:30px !important;
+  max-height:30px !important;
+  object-fit:contain !important;
+  flex:0 0 30px !important;
+}
+
+.topbar .fallback-logo-mark{display:none !important}
+.topbar .logo-word{
+  display:inline !important;
+  white-space:nowrap !important;
+  font:600 24px/1 "Playfair Display",serif !important;
+  color:var(--ui-blue) !important;
+}
+
+.topbar .hub-nav{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  justify-self:end !important;
+  align-self:center !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:7px !important;
+  min-width:0 !important;
+  position:relative !important;
+  z-index:40 !important;
+}
+
+.topbar .hub-nav-item{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
+
+.topbar .topbar-theme-toggle{
+  position:absolute !important;
+  left:calc(50% + 115px) !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:40px !important;
+  height:40px !important;
+  min-width:40px !important;
+  min-height:40px !important;
+  padding:3px !important;
+  margin:0 !important;
+  border-radius:50% !important;
+  overflow:hidden !important;
+  display:grid !important;
+  place-items:center !important;
+  z-index:50 !important;
+}
+
+.theme-split-switch{
+  width:100% !important;
+  height:100% !important;
+  border-radius:50% !important;
+  overflow:hidden !important;
+  display:flex !important;
+  pointer-events:none !important;
+}
+
+.theme-switch-half{
+  width:50% !important;
+  flex:0 0 50% !important;
+  height:100% !important;
+  display:grid !important;
+  place-items:center !important;
+  font:500 13px/1 Arial,sans-serif !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.theme-switch-aqua{background:var(--ui-blue) !important;color:#071015 !important}
+.theme-switch-gold{background:var(--ui-gold) !important;color:#140c00 !important}
+
+/* =========================================================
+   NORMAL FULL-SCREEN PROFILE VIEW
+   ========================================================= */
+
+.profile-view{
+  background:#000 !important;
+  overflow:hidden auto !important;
+  overscroll-behavior:contain !important;
+}
+
+.profile-view-inner{
+  min-height:100dvh !important;
+  padding-bottom:40px !important;
+}
+
+.profile-view-content{
+  width:min(920px,calc(100% - 32px)) !important;
+  margin:30px auto 60px !important;
+}
+
+.profile-view-cover{
+  border-radius:16px 16px 0 0 !important;
+}
+
+.profile-view-card{
+  border-radius:0 0 16px 16px !important;
+}
+
+/* =========================================================
+   DISCORD-STYLE PROFILE CUSTOMIZER
+   ========================================================= */
+
+.profile-customizer{
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100dvh !important;
+  min-height:0 !important;
+  display:none !important;
+  background:#000 !important;
+  color:var(--ui-text) !important;
+  overflow:hidden !important;
+  z-index:5000 !important;
+}
+
+.profile-customizer.open{
+  display:block !important;
+}
+
+body.profile-customizer-open{
+  overflow:hidden !important;
+  height:100dvh !important;
+}
+
+body.profile-customizer-open .mobile-dock,
+body.profile-customizer-open .site-footer{
+  display:none !important;
+}
+
+.profile-customizer-backdrop{
+  position:absolute !important;
+  inset:0 !important;
+  background:#000 !important;
+}
+
+.profile-customizer-dialog{
+  position:relative !important;
+  width:100% !important;
+  height:100dvh !important;
+  min-height:0 !important;
+  display:grid !important;
+  grid-template-rows:auto minmax(0,1fr) auto !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+
+.profile-customizer-header{
+  min-height:78px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:24px !important;
+  padding:16px 32px !important;
+  border-bottom:1px solid var(--ui-line) !important;
+  background:#000 !important;
+  position:relative !important;
+  z-index:5 !important;
+}
+
+.profile-customizer-kicker{
+  color:var(--ui-blue) !important;
+  font:9px/1.2 "DM Mono",monospace !important;
+  letter-spacing:.16em !important;
+  margin-bottom:7px !important;
+}
+
+.profile-customizer-header h2{
+  margin:0 !important;
+  font:600 28px/1.1 "Playfair Display",serif !important;
+}
+
+.profile-customizer-header p{
+  margin:7px 0 0 !important;
+  color:var(--ui-muted) !important;
+  font:11px/1.4 Manrope,sans-serif !important;
+}
+
+.profile-customizer-close{
+  flex:0 0 42px !important;
+  width:42px !important;
+  height:42px !important;
+  border:1px solid var(--ui-line) !important;
+  border-radius:10px !important;
+  background:#070909 !important;
+  color:var(--ui-text) !important;
+  cursor:pointer !important;
+  font-size:22px !important;
+}
+
+.profile-customizer-body{
+  min-height:0 !important;
+  display:grid !important;
+  grid-template-columns:190px minmax(0,1fr) 360px !important;
+  overflow:hidden !important;
+}
+
+.profile-customizer-sidebar{
+  min-width:0 !important;
+  padding:18px 12px !important;
+  border-right:1px solid var(--ui-line) !important;
+  background:#050707 !important;
+  overflow:auto !important;
+}
+
+.profile-customizer-nav{
+  width:100% !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:11px 12px !important;
+  margin:0 0 6px !important;
+  border:1px solid transparent !important;
+  border-radius:10px !important;
+  background:transparent !important;
+  color:var(--ui-muted) !important;
+  font:10px/1 "DM Mono",monospace !important;
+  cursor:pointer !important;
+  text-align:left !important;
+}
+
+.profile-customizer-nav.active,
+.profile-customizer-nav:hover{
+  color:var(--ui-blue) !important;
+  background:rgba(139,173,204,.09) !important;
+  border-color:rgba(139,173,204,.18) !important;
+}
+
+.profile-customizer-sidebar-note{
+  margin:26px 8px 0 !important;
+  color:#59615f !important;
+  font:9px/1.6 "DM Mono",monospace !important;
+}
+
+.profile-customizer-content{
+  min-width:0 !important;
+  overflow:auto !important;
+  padding:24px 28px 36px !important;
+}
+
+.profile-customizer-section{
+  max-width:760px !important;
+  margin:0 auto 34px !important;
+}
+
+.profile-customizer-section-title{
+  display:flex !important;
+  justify-content:space-between !important;
+  margin-bottom:18px !important;
+  padding-bottom:12px !important;
+  border-bottom:1px solid var(--ui-line) !important;
+}
+
+.profile-customizer-section-title strong{
+  display:block !important;
+  font:600 18px/1.2 "Playfair Display",serif !important;
+}
+
+.profile-customizer-section-title span{
+  display:block !important;
+  margin-top:5px !important;
+  color:var(--ui-muted) !important;
+  font:9px/1.4 "DM Mono",monospace !important;
+}
+
+.profile-customizer-grid{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:12px !important;
+}
+
+.customizer-field{
+  display:block !important;
+  margin-bottom:14px !important;
+}
+
+.customizer-field > span{
+  display:block !important;
+  margin-bottom:7px !important;
+  color:#9ca6a3 !important;
+  font:9px/1 "DM Mono",monospace !important;
+  letter-spacing:.05em !important;
+  text-transform:uppercase !important;
+}
+
+.customizer-field input[type="text"],
+.customizer-field textarea,
+.customizer-field select{
+  width:100% !important;
+  min-height:42px !important;
+  border:1px solid #293233 !important;
+  border-radius:9px !important;
+  background:#050707 !important;
+  color:var(--ui-text) !important;
+  padding:10px 12px !important;
+  outline:none !important;
+  font:13px/1.4 Manrope,sans-serif !important;
+}
+
+.customizer-field textarea{
+  min-height:120px !important;
+  resize:vertical !important;
+}
+
+.customizer-field select{
+  appearance:auto !important;
+}
+
+.customizer-field input:focus,
+.customizer-field textarea:focus,
+.customizer-field select:focus{
+  border-color:rgba(139,173,204,.55) !important;
+  box-shadow:0 0 0 2px rgba(139,173,204,.08) !important;
+}
+
+.customizer-field-full{
+  grid-column:1/-1 !important;
+}
+
+.customizer-counter{
+  display:block !important;
+  margin-top:5px !important;
+  color:#59615f !important;
+  font:8px "DM Mono",monospace !important;
+}
+
+.customizer-color-row{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:12px !important;
+}
+
+.customizer-color-card{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  padding:14px !important;
+  border:1px solid var(--ui-line) !important;
+  border-radius:11px !important;
+  background:#050707 !important;
+}
+
+.customizer-color-card > span{
+  font:10px/1.2 "DM Mono",monospace !important;
+}
+
+.customizer-color-card small{
+  display:block !important;
+  margin-top:5px !important;
+  color:var(--ui-muted) !important;
+  font:8px/1.35 Manrope,sans-serif !important;
+}
+
+.customizer-color-card input[type="color"]{
+  width:42px !important;
+  height:42px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:50% !important;
+  background:transparent !important;
+}
+
+.customizer-image-card{
+  display:grid !important;
+  grid-template-columns:120px minmax(0,1fr) !important;
+  gap:16px !important;
+  align-items:center !important;
+  margin-bottom:12px !important;
+  padding:14px !important;
+  border:1px solid var(--ui-line) !important;
+  border-radius:12px !important;
+  background:#050707 !important;
+}
+
+.customizer-image-card-preview,
+.customizer-banner-preview{
+  width:120px !important;
+  height:120px !important;
+  border-radius:10px !important;
+  overflow:hidden !important;
+  background:#172024 !important;
+  display:grid !important;
+  place-items:center !important;
+  color:#66706e !important;
+  font:8px "DM Mono",monospace !important;
+}
+
+.customizer-image-card-preview img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+
+.customizer-banner-preview{
+  height:70px !important;
+  background-size:cover !important;
+  background-position:center !important;
+}
+
+.customizer-image-card-copy strong{
+  display:block !important;
+  font:600 14px Manrope,sans-serif !important;
+}
+
+.customizer-image-card-copy > span{
+  display:block !important;
+  margin:5px 0 11px !important;
+  color:var(--ui-muted) !important;
+  font:9px/1.45 Manrope,sans-serif !important;
+}
+
+.customizer-upload-button{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:34px !important;
+  padding:0 12px !important;
+  border:1px solid #303a3b !important;
+  border-radius:8px !important;
+  color:#aab2b0 !important;
+  background:#080b0c !important;
+  font:9px "DM Mono",monospace !important;
+  cursor:pointer !important;
+}
+
+.customizer-upload-button input{
+  display:none !important;
+}
+
+/* Preview */
+.profile-customizer-preview-column{
+  min-width:0 !important;
+  padding:24px 22px !important;
+  border-left:1px solid var(--ui-line) !important;
+  background:#050707 !important;
+  overflow:auto !important;
+}
+
+.profile-customizer-preview-label{
+  margin-bottom:12px !important;
+  color:var(--ui-muted) !important;
+  font:9px "DM Mono",monospace !important;
+  letter-spacing:.14em !important;
+}
+
+.discord-profile-preview{
+  width:100% !important;
+  max-width:340px !important;
+  margin:0 auto !important;
+  border:1px solid #2a3334 !important;
+  border-radius:14px !important;
+  overflow:hidden !important;
+  background:#111416 !important;
+  box-shadow:0 16px 45px rgba(0,0,0,.35) !important;
+}
+
+.discord-preview-banner{
+  height:110px !important;
+  background:#26373b !important;
+  background-size:cover !important;
+  background-position:center !important;
+}
+
+.discord-preview-card{
+  position:relative !important;
+  padding:58px 20px 22px !important;
+  background:#111416 !important;
+}
+
+.discord-preview-avatar{
+  position:absolute !important;
+  left:18px !important;
+  top:-42px !important;
+  width:84px !important;
+  height:84px !important;
+  border:5px solid #111416 !important;
+  border-radius:50% !important;
+  background:#26373b center/cover no-repeat !important;
+}
+
+.discord-preview-name{
+  font:700 20px/1.1 Manrope,sans-serif !important;
+}
+
+.discord-preview-username{
+  margin-top:5px !important;
+  color:#9da7a5 !important;
+  font:10px "DM Mono",monospace !important;
+}
+
+.discord-preview-status{
+  margin-top:12px !important;
+  display:inline-flex !important;
+  padding:7px 9px !important;
+  border:1px solid #344042 !important;
+  border-radius:999px !important;
+  color:var(--ui-blue) !important;
+  font:9px "DM Mono",monospace !important;
+}
+
+.discord-preview-divider{
+  height:1px !important;
+  margin:18px 0 !important;
+  background:#283133 !important;
+}
+
+.discord-preview-label{
+  margin-bottom:7px !important;
+  color:#7f8986 !important;
+  font:8px "DM Mono",monospace !important;
+  letter-spacing:.12em !important;
+}
+
+.discord-preview-bio{
+  color:#d3d7d2 !important;
+  font:11px/1.55 Manrope,sans-serif !important;
+}
+
+.discord-preview-meta{
+  margin-top:15px !important;
+  color:#8c9794 !important;
+  font:8px/1.5 "DM Mono",monospace !important;
+}
+
+/* Footer actions */
+.profile-customizer-footer{
+  min-height:66px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:8px !important;
+  padding:12px 28px !important;
+  border-top:1px solid var(--ui-line) !important;
+  background:#050707 !important;
+}
+
+.profile-customizer-cancel,
+.profile-customizer-save{
+  min-height:40px !important;
+  padding:0 15px !important;
+  border-radius:8px !important;
+  cursor:pointer !important;
+  font:10px "DM Mono",monospace !important;
+}
+
+.profile-customizer-cancel{
+  border:1px solid #30393a !important;
+  background:transparent !important;
+  color:#9ca6a3 !important;
+}
+
+.profile-customizer-save{
+  border:1px solid var(--ui-blue) !important;
+  background:var(--ui-blue) !important;
+  color:#071015 !important;
+  font-weight:700 !important;
+}
+
+/* =========================================================
+   MOBILE — Discord-style customizer
+   ========================================================= */
+
+@media (max-width:660px){
+  .topbar{
+    position:sticky !important;
+    top:0 !important;
+    height:64px !important;
+    min-height:64px !important;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
+    padding:0 12px !important;
+  }
+
+  .topbar .header-logo{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    justify-self:center !important;
+  }
+
+  .topbar .topbar-theme-toggle{
+    left:auto !important;
+    right:10px !important;
+    top:50% !important;
+    transform:translateY(-50%) !important;
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+  }
+
+  .topbar .hub-nav{
+    grid-column:3 !important;
+    grid-row:1 !important;
+    justify-self:end !important;
+  }
+
+  .topbar .hub-nav > .hub-nav-item,
+  .topbar .hub-nav > .account-wrap{
+    display:none !important;
+  }
+
+  .profile-customizer-dialog{
+    height:100dvh !important;
+    grid-template-rows:auto minmax(0,1fr) auto !important;
+  }
+
+  .profile-customizer-header{
+    min-height:76px !important;
+    padding:12px 14px !important;
+    padding-top:calc(12px + env(safe-area-inset-top)) !important;
+  }
+
+  .profile-customizer-header h2{
+    font-size:21px !important;
+  }
+
+  .profile-customizer-header p{
+    max-width:260px !important;
+    font-size:9px !important;
+  }
+
+  .profile-customizer-body{
+    min-height:0 !important;
+    display:block !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+  }
+
+  .profile-customizer-sidebar{
+    position:sticky !important;
+    top:0 !important;
+    z-index:20 !important;
+    display:flex !important;
+    gap:6px !important;
+    width:100% !important;
+    padding:8px 10px !important;
+    border-right:0 !important;
+    border-bottom:1px solid var(--ui-line) !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    background:rgba(0,0,0,.96) !important;
+  }
+
+  .profile-customizer-nav{
+    flex:0 0 auto !important;
+    width:auto !important;
+    min-height:34px !important;
+    margin:0 !important;
+    padding:0 12px !important;
+    border-radius:999px !important;
+  }
+
+  .profile-customizer-sidebar-note{
+    display:none !important;
+  }
+
+  .profile-customizer-content{
+    width:100% !important;
+    padding:18px 14px 26px !important;
+    overflow:visible !important;
+  }
+
+  .profile-customizer-section{
+    width:100% !important;
+    margin-bottom:28px !important;
+  }
+
+  .profile-customizer-section-title strong{
+    font-size:17px !important;
+  }
+
+  .profile-customizer-grid,
+  .customizer-color-row{
+    grid-template-columns:1fr !important;
+  }
+
+  .customizer-field-full{
+    grid-column:auto !important;
+  }
+
+  .customizer-image-card{
+    grid-template-columns:92px minmax(0,1fr) !important;
+    gap:12px !important;
+  }
+
+  .customizer-image-card-preview{
+    width:92px !important;
+    height:92px !important;
+  }
+
+  .customizer-banner-preview{
+    width:92px !important;
+    height:58px !important;
+  }
+
+  .profile-customizer-preview-column{
+    width:100% !important;
+    padding:0 14px 28px !important;
+    border-left:0 !important;
+    border-top:1px solid var(--ui-line) !important;
+    overflow:visible !important;
+  }
+
+  .discord-profile-preview{
+    width:100% !important;
+    max-width:none !important;
+  }
+
+  .discord-preview-banner{
+    height:100px !important;
+  }
+
+  .profile-customizer-footer{
+    position:sticky !important;
+    bottom:0 !important;
+    min-height:62px !important;
+    padding:9px 12px calc(9px + env(safe-area-inset-bottom)) !important;
+    z-index:30 !important;
+  }
+
+  .profile-customizer-cancel,
+  .profile-customizer-save{
+    flex:1 1 0 !important;
+  }
+
+  /* When customizer is open, no global mobile dock can cover it. */
+  body.profile-customizer-open .mobile-dock,
+  body.profile-customizer-open .site-footer{
+    display:none !important;
+  }
+
+  /* The normal profile view remains a single contained scroll area. */
+  .profile-view{
+    position:fixed !important;
+    inset:0 !important;
+    width:100vw !important;
+    height:100dvh !important;
+    overflow:hidden auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+    z-index:4500 !important;
+  }
+
+  .profile-view-content{
+    width:100% !important;
+    margin:0 auto !important;
+    padding:14px !important;
+    box-sizing:border-box !important;
+  }
+}
