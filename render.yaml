@@ -1,0 +1,18 @@
+# Render.com deployment configuration
+# docs: https://render.com/docs/deploy-node
+
+services:
+  - type: web
+    name: everlight
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        sync: false
+        # Generate a long random string and paste it here
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true
