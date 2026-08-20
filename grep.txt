@@ -1,0 +1,1728 @@
+/mnt/data/fullcheck/styles.css:1::root{--bg:#000;--panel:#080b0c;--panel2:#0d1011;--line:#202729;--text:#e8e7df;--muted:#7d8785;--accent:#8BADCC;--accent-soft:rgba(139,173,204,.10);--accent-border:rgba(139,173,204,.28);--gold:#C77D02}*{box-sizing:border-box}html{scroll-behavior:smooth;background:#000}body{margin:0;background:#000;color:var(--text);font-family:Manrope,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}.grain{display:none}.topbar{height:72px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 3vw;background:#000;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}.domain{justify-self:start;display:flex;gap:8px;align-items:center;white-space:nowrap;font:10px "DM Mono";min-width:0}.domain a{color:var(--accent);text-decoration:none}.domain span{color:#4b5555}.header-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);font:700 24px "Playfair Display";letter-spacing:-.04em}.logo-mark{color:var(--accent);font-size:23px}.logo-word{color:var(--accent)}primary,.secondary{border:1px solid var(--accent);background:var(--accent);color:#071015;padding:10px 16px;border-radius:8px;font-weight:800;cursor:pointer}.secondary{background:transparent;color:var(--accent)}.layout{max-width:1480px;margin:0 auto;display:grid;grid-template-columns:210px minmax(480px,700px) 290px;min-height:calc(100vh - 72px)}.left-rail{border-right:1px solid var(--line);padding:48px 28px;display:flex;flex-direction:column}.rail-heading{display:flex;justify-content:space-between;color:#65706e;font:9px "DM Mono";letter-spacing:.12em;margin-bottom:22px}.left-rail nav{display:grid;gap:8px}.left-rail nav a{padding:10px 11px;border-radius:8px;color:#7f8b88;text-decoration:none;font-size:12px}.left-rail nav a:hover,.left-rail nav a.nav-active{background:var(--accent-soft);color:var(--accent)}.rail-note{margin-top:42px;color:#788380;font:12px/1.6 "Playfair Display";display:flex;gap:10px}.rail-note span{color:var(--accent)}.signed-out{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);display:flex;gap:9px;align-items:center}.signed-out p{margin:0;color:var(--muted);font-size:9px;line-height:1.5}.signed-out strong{color:var(--text)}.avatar,.avatar-placeholder{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;font:700 11px "DM Mono";background:#182024;color:var(--accent);overflow:hidden}.avatar img,.profile-view-avatar img{width:100%;height:100%;object-fit:cover}main{padding:38px 46px 80px}.time-lockup{display:flex;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line);color:var(--muted);font:9px "DM Mono"}.time-lockup strong{color:var(--accent);font-size:14px}.section-heading{display:flex;justify-content:space-between;align-items:flex-end;padding:38px 0 24px}.eyebrow{margin:0 0 8px;color:var(--accent);font:9px "DM Mono";letter-spacing:.12em}.section-heading h1{margin:0;font:600 34px "Playfair Display";letter-spacing:-.04em}.theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--accent-border);background:var(--accent-soft);color:var(--accent);cursor:pointer;font-size:18px}.composer{display:flex;gap:12px;padding:17px;border:1px solid #252e30;background:#060909;border-radius:12px}.composer-body{width:100%}textarea{width:100%;height:76px;resize:none;border:0;outline:0;background:transparent;color:var(--text);font:14px/1.6 Manrope}.composer-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:10px}.composer-tools label{display:flex;align-items:center;gap:6px}.composer-tools select{background:#050707;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:6px}.image-upload input{display:none}.anonymous-toggle input{accent-color:var(--accent)}.composer-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.composer-footer span{font:9px "DM Mono";color:var(--muted)}.post{padding:24px 2px;border-bottom:1px solid var(--line)}.post-top,.identity,.post-bottom{display:flex;align-items:center}.post-top{justify-content:space-between}.identity{gap:9px}.identity strong{display:block;font-size:12px}.identity span,.post time{color:var(--muted);font:9px "DM Mono"}.post p{font-size:13px;line-height:1.75;color:#d4d6d1;margin:16px 0}.post-image{max-width:100%;display:block;border-radius:9px;margin-top:12px}.story-label{font:9px "DM Mono";padding:4px 6px;border-radius:5px;background:#151a1b;color:var(--accent)}.right-rail{border-left:1px solid var(--line);padding:48px 30px}.about-card,.online,.activity-card{padding-bottom:25px;margin-bottom:25px;border-bottom:1px solid var(--line)}.about-card h2{margin:0 0 14px;font:600 24px/1.2 "Playfair Display"}.about-card h2 i{color:var(--accent)}.about-card p:not(.eyebrow){font-size:11px;line-height:1.7;color:#8d9693}.about-card a{color:var(--accent);text-decoration:none;font-size:10px}.online-heading{display:flex;justify-content:space-between}.online-heading span{font:9px "DM Mono";color:var(--muted)}.online-heading i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent)}.faces{display:flex;margin-top:13px}.faces .avatar{width:30px;height:30px;margin-right:-7px;border:2px solid #000}.activity-card{font:11px/1.6 "Playfair Display";color:#7f8986}.activity-card em{color:var(--accent)}.activity-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.activity-stats strong{display:block;color:var(--accent);font:500 17px "DM Mono"}.activity-stats span{font:8px "DM Mono";color:var(--muted)}.phone-card h3{font:600 18px "Playfair Display"}.install-button,.notification-button{width:100%;padding:9px;border-radius:8px;cursor:pointer;font-size:10px}.install-button{border:1px solid var(--accent);background:var(--accent);color:#071015}.notification-button{margin-top:7px;background:transparent;border:1px solid #30393a;color:#9ca6a3}.messages-view,.profile-view{position:fixed;inset:0;z-index:200;background:#000;display:none;overflow:auto}.messages-view.open,.profile-view.open{display:block}.messages-view-inner,.profile-view-inner{min-height:100dvh}.messages-view-header,.profile-view-header{height:72px;padding:0 4vw;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.messages-view-header h1,.profile-view-header h1{font:600 25px "Playfair Display";margin:0}.messages-close,.profile-close{border:1px solid var(--line);background:#050707;color:#9ca6a3;border-radius:9px;width:40px;height:40px;font-size:22px}.messages-layout{max-width:1200px;margin:auto;min-height:calc(100dvh - 72px);display:grid;grid-template-columns:280px 1fr}.message-contacts{border-right:1px solid var(--line);padding:28px}.message-contacts-title{font:9px "DM Mono";color:var(--muted);margin-bottom:18px}.message-chat{display:flex;flex-direction:column;min-width:0}.message-chat-header{padding:24px;border-bottom:1px solid var(--line)}.message-chat-header span{font:8px "DM Mono";color:var(--accent)}.message-chat-header h2{margin:5px 0 0;font:600 20px "Playfair Display"}.dm-list{flex:1;padding:22px;overflow:auto}.dm{padding:12px 0;border-bottom:1px solid var(--line)}.dm strong{font-size:11px}.dm p{font-size:11px;color:#a4adab}.message-compose{display:flex;gap:8px;padding:16px;border-top:1px solid var(--line);background:#000}.message-compose input{min-width:0;flex:1;padding:11px;border:1px solid #283132;background:#070909;color:var(--text);border-radius:8px}.message-compose button{width:42px;border:1px solid var(--accent);background:var(--accent);border-radius:8px}.profile-view-content{max-width:900px;margin:30px auto;padding:0 20px}.profile-view-cover{height:220px;background:#080b0c;border:1px solid var(--line);border-radius:16px 16px 0 0;background-size:cover;background-position:center}.profile-view-card{position:relative;background:#080b0c;border:1px solid var(--line);border-top:0;padding:60px 34px 34px;border-radius:0 0 16px 16px}.profile-view-avatar{position:absolute;top:-42px;left:34px;width:84px;height:84px;border:4px solid #080b0c;font-size:24px}.profile-view-identity h2{margin:0;font:600 27px "Playfair Display"}.profile-view-identity p{color:var(--accent);font:10px "DM Mono"}.profile-view-bio{margin:20px 0;color:#b6bfbc;line-height:1.7}.profile-view-details{display:flex;gap:15px;flex-wrap:wrap;color:#7f8986;font:9px "DM Mono";margin-bottom:22px}.site-footer{text-align:center;padding:14px 15px;border-top:1px solid var(--line);color:#5e6866;font:8px "DM Mono";letter-spacing:.04em}.toast{position:fixed;z-index:500;left:50%;bottom:25px;transform:translate(-50%,100px);transition:.25s;background:#e5e8e5;color:#071015;padding:11px 17px;border-radius:10px;font-size:11px}.toast.show{transform:translate(-50%,0)}.loading-copy{color:var(--muted);font-size:10px}.profile-custom-image{overflow:hidden}
+/mnt/data/fullcheck/styles.css:3:@media(max-width:660px){.topbar{height:64px;padding:0 12px;display:grid;grid-template-columns:1fr auto;gap:8px}.domain{font-size:8px;gap:4px;overflow:visible}.domain a{display:block;overflow:visible}.header-logo{justify-self:end;order:2;font-size:19px}.logo-mark{font-size:18px}layout{display:block;min-height:auto}.left-rail,.right-rail{display:none}main{padding:24px 14px 100px}.time-lockup{font-size:8px}.time-lockup strong{font-size:12px}.section-heading{padding:24px 0 18px}.section-heading h1{font-size:27px}.theme-toggle{width:34px;height:34px}.composer{padding:13px;border-radius:12px}.composer-tools{gap:8px}.composer-tools select{max-width:125px}.post{padding:20px 0}.messages-view-header,.profile-view-header{height:62px;padding:0 14px}.messages-view-header h1,.profile-view-header h1{font-size:21px}.messages-layout{display:block;min-height:calc(100dvh - 62px)}.message-contacts{display:none}.message-chat{min-height:calc(100dvh - 62px)}.message-compose{padding-bottom:calc(12px + env(safe-area-inset-bottom));position:sticky;bottom:0}.message-compose #dmRecipient{display:none}.profile-view-content{padding:0 14px;margin:20px auto}.profile-view-cover{height:155px}.profile-view-card{padding:55px 20px 24px}.profile-view-avatar{left:20px}.site-footer{padding-bottom:88px;font-size:7px;line-height:1.5}.toast{bottom:88px}}
+/mnt/data/fullcheck/styles.css:6:   FINAL TYPOGRAPHY + CENTERED FEED POLISH
+/mnt/data/fullcheck/styles.css:21:/* The feed stays visually centered inside the desktop layout. */
+/mnt/data/fullcheck/styles.css:29:  main#feed {
+/mnt/data/fullcheck/styles.css:85:  main#feed {
+/mnt/data/fullcheck/styles.css:138:/* FINAL: AI attribution footer sizing — desktop larger, mobile smaller */
+/mnt/data/fullcheck/styles.css:143:  overflow: visible;
+/mnt/data/fullcheck/styles.css:153:    overflow: visible;
+/mnt/data/fullcheck/styles.css:160:.feed-edit-trigger {
+/mnt/data/fullcheck/styles.css:164:.feed-edit-trigger svg {
+/mnt/data/fullcheck/styles.css:181:  .feed-card-actions {
+/mnt/data/fullcheck/styles.css:185:  .feed-edit-trigger {
+/mnt/data/fullcheck/styles.css:211:  position: fixed;
+/mnt/data/fullcheck/styles.css:233:  overflow: auto;
+/mnt/data/fullcheck/enhancements.css:1:/* Everlight — MOBILE PROFILE / DISCORD-LIKE FIX
+/mnt/data/fullcheck/enhancements.css:11:    overflow: hidden !important;
+/mnt/data/fullcheck/enhancements.css:16:    position: fixed !important;
+/mnt/data/fullcheck/enhancements.css:23:    overflow: hidden auto !important;
+/mnt/data/fullcheck/enhancements.css:24:    -webkit-overflow-scrolling: touch !important;
+/mnt/data/fullcheck/enhancements.css:124:     underneath the viewport/dock on mobile. */
+/mnt/data/fullcheck/enhancements.css:170:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:183:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:191:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:192:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:236:.topbar .hub-nav{
+/mnt/data/fullcheck/enhancements.css:250:.topbar .hub-nav-item{white-space:nowrap !important;flex:0 0 auto !important}
+/mnt/data/fullcheck/enhancements.css:268:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:276:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:277:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:352:  .topbar .hub-nav{
+/mnt/data/fullcheck/enhancements.css:359:  .topbar .hub-nav-item{
+/mnt/data/fullcheck/enhancements.css:385:   EVERLIGHT — MOBILE HEADER + MESSAGES FIX
+/mnt/data/fullcheck/enhancements.css:388:/* Global hard stop for horizontal overflow. */
+/mnt/data/fullcheck/enhancements.css:393:  overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:397:   MOBILE HEADER
+/mnt/data/fullcheck/enhancements.css:417:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:431:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:438:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:439:    text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:469:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:489:  /* Right side: only the theme switch remains on mobile. */
+/mnt/data/fullcheck/enhancements.css:490:  .topbar .hub-nav{
+/mnt/data/fullcheck/enhancements.css:499:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:502:  .topbar .hub-nav > .hub-nav-item,
+/mnt/data/fullcheck/enhancements.css:503:  .topbar .hub-nav > .account-wrap{
+/mnt/data/fullcheck/enhancements.css:536:     MESSAGES VIEW — REAL MOBILE CHAT
+/mnt/data/fullcheck/enhancements.css:548:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:560:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:598:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:613:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:614:    overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:615:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:628:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:668:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:691:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:692:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:693:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:818:   MOBILE HEADER — TRUE VIEWPORT TOP FIX
+/mnt/data/fullcheck/enhancements.css:825:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:834:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:857:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:865:  main#feed{
+/mnt/data/fullcheck/enhancements.css:871:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:874:  /* The fixed header is not part of mobile fullscreen views. */
+/mnt/data/fullcheck/enhancements.css:920:   MOBILE — REMOVE WHITE GAP + FIX AI TEXT BELOW DOCK
+/mnt/data/fullcheck/enhancements.css:957:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:976:  /* Keep feed/content above the bottom controls without painting a strip. */
+/mnt/data/fullcheck/enhancements.css:977:  #feed,
+/mnt/data/fullcheck/enhancements.css:995:  #feed,
+/mnt/data/fullcheck/enhancements.css:1003:   MOBILE PROFILE SETTINGS — NO WHITE FLASH / REAL OPEN STATE
+/mnt/data/fullcheck/enhancements.css:1042:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1067:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:1068:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1069:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:1081:  /* No mobile dock or page footer over the editor. */
+/mnt/data/fullcheck/enhancements.css:1086:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1093:   MOBILE MESSAGES — SOLID FULLSCREEN / NO FLASH FIX
+/mnt/data/fullcheck/enhancements.css:1105:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1113:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:1123:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1130:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1148:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1202:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1216:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:1217:    overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1218:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:1231:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:1240:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1264:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:1265:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1267:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:1362:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1375:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1383:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1385:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1437:/* Mobile: header has its own 64px row and the time/date starts below it. */
+/mnt/data/fullcheck/enhancements.css:1448:  main#feed{
+/mnt/data/fullcheck/enhancements.css:1549:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1551:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1608:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1620:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:1634:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1642:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1666:  overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:1675:/* ---------- Mobile ---------- */
+/mnt/data/fullcheck/enhancements.css:1688:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1719:  /* Remove the old mobile footer/dock from fullscreen views. */
+/mnt/data/fullcheck/enhancements.css:1777:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1790:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1831:   EVERLIGHT — FINAL THEME + MOBILE DOCK / VIEWS FIX
+/mnt/data/fullcheck/enhancements.css:1853:body .hub-nav-item.active,
+/mnt/data/fullcheck/enhancements.css:1854:body .hub-nav-item:hover,
+/mnt/data/fullcheck/enhancements.css:1859:body .profile-customizer-nav.active,
+/mnt/data/fullcheck/enhancements.css:1860:body .profile-customizer-nav:hover{
+/mnt/data/fullcheck/enhancements.css:1865:body .hub-nav-item.active,
+/mnt/data/fullcheck/enhancements.css:1866:body .hub-nav-item:hover,
+/mnt/data/fullcheck/enhancements.css:1867:body .profile-customizer-nav.active,
+/mnt/data/fullcheck/enhancements.css:1868:body .profile-customizer-nav:hover{
+/mnt/data/fullcheck/enhancements.css:1872:body .hub-nav-item.active,
+/mnt/data/fullcheck/enhancements.css:1873:body .hub-nav-item:hover,
+/mnt/data/fullcheck/enhancements.css:1874:body .profile-customizer-nav.active,
+/mnt/data/fullcheck/enhancements.css:1875:body .profile-customizer-nav:hover{
+/mnt/data/fullcheck/enhancements.css:1879:/* Right-side mode button has the SAME button shell as Hub / Üzenetek / Fiók. */
+/mnt/data/fullcheck/enhancements.css:1895:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:1912:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1941:   MOBILE DOCK
+/mnt/data/fullcheck/enhancements.css:1953:   MOBILE VIEWS — NO WHITE FLASH
+/mnt/data/fullcheck/enhancements.css:1967:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:1977:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:1984:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:2008:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:2009:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:2042:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:2050:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:2071:/* Main desktop navigation */
+/mnt/data/fullcheck/enhancements.css:2088:  .topbar .hub-nav{
+/mnt/data/fullcheck/enhancements.css:2092:  .topbar .hub-nav-item{
+/mnt/data/fullcheck/enhancements.css:2121:  .left-rail nav,
+/mnt/data/fullcheck/enhancements.css:2132:  .left-rail nav a{
+/mnt/data/fullcheck/enhancements.css:2154:  /* Main feed */
+/mnt/data/fullcheck/enhancements.css:2331:/* Mobile retains its compact scale but uses the same legible fonts. */
+/mnt/data/fullcheck/enhancements.css:2348:   Desktop only. Header + mobile dock remain intact.
+/mnt/data/fullcheck/enhancements.css:2357:  /* X-like 3-column shell: narrow rail / focused feed / utility rail. */
+/mnt/data/fullcheck/enhancements.css:2376:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:2385:  .left-rail nav{
+/mnt/data/fullcheck/enhancements.css:2389:  .left-rail nav a{
+/mnt/data/fullcheck/enhancements.css:2411:  main#feed{
+/mnt/data/fullcheck/enhancements.css:2439:  .feed-list{
+/mnt/data/fullcheck/enhancements.css:2450:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:2474:  main#feed{
+/mnt/data/fullcheck/enhancements.css:2492:   Hub / Csevegés / Profil on the left
+/mnt/data/fullcheck/enhancements.css:2546:  .left-rail > nav:not(.desktop-rail-actions){
+/mnt/data/fullcheck/enhancements.css:2550:  .left-rail > nav:not(.desktop-rail-actions) a{
+/mnt/data/fullcheck/enhancements.css:2560:  main#feed{
+/mnt/data/fullcheck/enhancements.css:2580:   Hub / Csevegés / Kategória / Profil
+/mnt/data/fullcheck/enhancements.css:2680:/* Hide new desktop-only rail pieces on mobile/tablet. */
+/mnt/data/fullcheck/enhancements.css:2813:  .desktop-category-menu a.nav-active{
+/mnt/data/fullcheck/enhancements.css:2842:  /* Hide desktop top-right navigation; keep only the mode button. */
+/mnt/data/fullcheck/enhancements.css:2843:  .topbar .hub-nav > .hub-nav-item,
+/mnt/data/fullcheck/enhancements.css:2844:  .topbar .hub-nav > .account-wrap{
+/mnt/data/fullcheck/enhancements.css:2848:  .topbar .hub-nav{
+/mnt/data/fullcheck/enhancements.css:3067:/* Preserve the existing mobile top/bottom shell. */
+/mnt/data/fullcheck/enhancements.css:3069:  .topbar .hub-nav > .hub-nav-item,
+/mnt/data/fullcheck/enhancements.css:3070:  .topbar .hub-nav > .account-wrap{
+/mnt/data/fullcheck/enhancements.css:3084:  .topbar .hub-nav{
+/mnt/data/fullcheck/enhancements.css:3090:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:3093:  .topbar .hub-nav > .hub-nav-item,
+/mnt/data/fullcheck/enhancements.css:3094:  .topbar .hub-nav > .account-wrap{
+/mnt/data/fullcheck/enhancements.css:3112:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:3234:   MOBILE NAV — ABOVE EVERYTHING / FULLSCREEN VIEWS
+/mnt/data/fullcheck/enhancements.css:3251:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:3261:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:3268:    overflow:hidden auto !important;
+/mnt/data/fullcheck/enhancements.css:3288:  /* Mobile chat layout: no overlay that could block the form. */
+/mnt/data/fullcheck/enhancements.css:3302:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:3307:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:3310:  /* Mobile profile content remains interactive. */
+/mnt/data/fullcheck/enhancements.css:3316:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:3324:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:3330:   FINAL V3 — MOBILE NO-WHITE-FLASH + DESKTOP TYPE/MODE
+/mnt/data/fullcheck/enhancements.css:3333:/* No global transition on fullscreen/mobile overlays. */
+/mnt/data/fullcheck/enhancements.css:3357:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:3370:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:3389:  /* Mobile fullscreen views */
+/mnt/data/fullcheck/enhancements.css:3402:    overflow:hidden auto !important;
+/mnt/data/fullcheck/enhancements.css:3403:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:3512:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:3557:.profile-view{position:fixed!important;inset:0!important;z-index:5200!important;overflow:auto!important;background:radial-gradient(circle at 50% 0%,rgba(139,173,204,.10),transparent 38%),#000!important;color:#f2f4f5!important}
+/mnt/data/fullcheck/enhancements.css:3563:.profile-discord-card{position:relative!important;overflow:hidden!important;border:1px solid #273236!important;border-radius:22px!important;background:#090c0d!important;box-shadow:0 24px 70px rgba(0,0,0,.45)!important}
+/mnt/data/fullcheck/enhancements.css:3564:.profile-view-cover{position:relative!important;width:100%!important;height:clamp(180px,23vw,290px)!important;margin:0!important;border-radius:0!important;background:linear-gradient(135deg,#18252a,#273638)!important;background-size:cover!important;background-position:center!important;overflow:hidden!important}
+/mnt/data/fullcheck/enhancements.css:3565:.profile-cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.38));pointer-events:none}
+/mnt/data/fullcheck/enhancements.css:3588:.profile-info-card strong{display:block;color:#e6eaec;font-size:14px;overflow-wrap:anywhere}
+/mnt/data/fullcheck/enhancements.css:3600:  body.profile-view-open{overflow:hidden!important;height:100dvh!important}
+/mnt/data/fullcheck/enhancements.css:3601:  .profile-view{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)!important;-webkit-overflow-scrolling:touch!important}
+/mnt/data/fullcheck/enhancements.css:3633:   DESKTOP SIDEBAR NAVIGATION — CSEVEGÉS PARENT
+/mnt/data/fullcheck/enhancements.css:3637:  .desktop-sidebar .nav-group-cseveges,
+/mnt/data/fullcheck/enhancements.css:3638:  .sidebar .nav-group-cseveges{
+/mnt/data/fullcheck/enhancements.css:3643:  .desktop-sidebar .nav-group-cseveges > .nav-item,
+/mnt/data/fullcheck/enhancements.css:3644:  .sidebar .nav-group-cseveges > .nav-item{
+/mnt/data/fullcheck/enhancements.css:3648:  .desktop-sidebar .nav-group-cseveges .nav-subitems,
+/mnt/data/fullcheck/enhancements.css:3649:  .sidebar .nav-group-cseveges .nav-subitems{
+/mnt/data/fullcheck/enhancements.css:3657:  .desktop-sidebar .nav-group-cseveges .nav-subitems .nav-item,
+/mnt/data/fullcheck/enhancements.css:3658:  .sidebar .nav-group-cseveges .nav-subitems .nav-item{
+/mnt/data/fullcheck/enhancements.css:3665:  .desktop-sidebar > .nav-item[data-nav="category"],
+/mnt/data/fullcheck/enhancements.css:3666:  .desktop-sidebar > .nav-item[data-nav="categories"],
+/mnt/data/fullcheck/enhancements.css:3667:  .desktop-sidebar > .nav-item[data-nav="profile"],
+/mnt/data/fullcheck/enhancements.css:3668:  .sidebar > .nav-item[data-nav="category"],
+/mnt/data/fullcheck/enhancements.css:3669:  .sidebar > .nav-item[data-nav="categories"],
+/mnt/data/fullcheck/enhancements.css:3670:  .sidebar > .nav-item[data-nav="profile"]{
+/mnt/data/fullcheck/enhancements.css:3736:  .nav-group-cseveges,
+/mnt/data/fullcheck/enhancements.css:3737:  .desktop-sidebar .nav-group-cseveges,
+/mnt/data/fullcheck/enhancements.css:3738:  .sidebar .nav-group-cseveges{
+/mnt/data/fullcheck/enhancements.css:3767:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:3851:body:not(.mono-mode) .hub-nav-item.active,
+/mnt/data/fullcheck/enhancements.css:3858:body.sun-mode .hub-nav-item.active,
+/mnt/data/fullcheck/enhancements.css:3864:body.mono-mode .hub-nav-item.active,
+/mnt/data/fullcheck/enhancements.css:3882:   MOBILE: clean header + style picker
+/mnt/data/fullcheck/enhancements.css:3935:/* Final login gate: mobile profile never reveals customization before authentication. */
+/mnt/data/fullcheck/enhancements.css:3950:   VIEWPORT LAYOUT — ONLY THE CENTER FEED SCROLLS
+/mnt/data/fullcheck/enhancements.css:3956:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:3977:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:3983:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:3985:  main#feed{
+/mnt/data/fullcheck/enhancements.css:3988:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:3989:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:4000:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:4012:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:4014:  main#feed{
+/mnt/data/fullcheck/enhancements.css:4017:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:4018:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:4020:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:4031:   MOBILE DOCK — FORCE VISIBLE ICONS
+/mnt/data/fullcheck/enhancements.css:4032:   A szigeten a Hub / Csevegés / Profil ikonok mindig látszanak.
+/mnt/data/fullcheck/enhancements.css:4039:  /* Hub */
+/mnt/data/fullcheck/enhancements.css:4082:   FINAL MOBILE DOMAIN + STYLE SWITCH
+/mnt/data/fullcheck/enhancements.css:4105:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4122:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:4129:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4262:  /* Much larger Everlight wordmark on mobile. */
+/mnt/data/fullcheck/enhancements.css:4355:   MOBILE DOMAIN — TWO LINES
+/mnt/data/fullcheck/enhancements.css:4475:   FINAL MOBILE VISUAL PASS
+/mnt/data/fullcheck/enhancements.css:4603:   MOBILE DOMAIN — MATCHED WEIGHT
+/mnt/data/fullcheck/enhancements.css:4686:   FINAL MOBILE CLOCK/DATE POSITION
+/mnt/data/fullcheck/enhancements.css:4694:  main#feed{
+/mnt/data/fullcheck/enhancements.css:4733:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4827:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4843:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4847:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4853:   MOBILE EVERLIGHT WORDMARK — BALANCED SIZE
+/mnt/data/fullcheck/enhancements.css:4870:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:4927:/* Mobile: slightly smaller Everlight and domain */
+/mnt/data/fullcheck/enhancements.css:4975:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5021:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5029:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5071:   MOBILE HEADER — SLIGHTLY SMALLER DOMAIN + WORDMARK
+/mnt/data/fullcheck/enhancements.css:5121:  main#feed{
+/mnt/data/fullcheck/enhancements.css:5151:    position:relative!important;z-index:2147483647!important;pointer-events:auto!important;touch-action:manipulation!important;transform:none!important;
+/mnt/data/fullcheck/enhancements.css:5153:  .topbar{position:relative!important;z-index:2147483500!important;isolation:isolate!important;overflow:visible!important;}
+/mnt/data/fullcheck/enhancements.css:5158:   AI NOTICE — SLIGHTLY LARGER ON PC + MOBILE
+/mnt/data/fullcheck/enhancements.css:5183:   FINAL MODE LIGHT + MOBILE STYLE SWITCH
+/mnt/data/fullcheck/enhancements.css:5204:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:5215:/* Mobile: keep the light beside the first domain line and animate it. */
+/mnt/data/fullcheck/enhancements.css:5220:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5230:    animation:everlight-domain-pulse-mobile 1.45s ease-in-out infinite !important;
+/mnt/data/fullcheck/enhancements.css:5232:  @keyframes everlight-domain-pulse-mobile{
+/mnt/data/fullcheck/enhancements.css:5241:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:5242:    touch-action:manipulation !important;
+/mnt/data/fullcheck/enhancements.css:5247:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5275:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5295:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:5311:/* Mobile uses the real element too, so the light is exactly beside
+/mnt/data/fullcheck/enhancements.css:5386:   DOMAIN LIGHT — MOBILE BESIDE DOMAIN + SMOOTH PULSE
+/mnt/data/fullcheck/enhancements.css:5390:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5418:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:5452:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5490:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5553:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:5575:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5604:   MOBILE DOMAIN — FULLY VISIBLE + REAL SMOOTH PULSE
+/mnt/data/fullcheck/enhancements.css:5612:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5623:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5629:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5663:    animation:everlight-mobile-pulse 1.8s ease-in-out infinite !important;
+/mnt/data/fullcheck/enhancements.css:5678:  @keyframes everlight-mobile-pulse{
+/mnt/data/fullcheck/enhancements.css:5692:    animation-name:everlight-mobile-pulse-sun !important;
+/mnt/data/fullcheck/enhancements.css:5695:  @keyframes everlight-mobile-pulse-sun{
+/mnt/data/fullcheck/enhancements.css:5772:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5778:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5784:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:5820:  touch-action:manipulation !important;
+/mnt/data/fullcheck/enhancements.css:5936:  touch-action:manipulation !important;
+/mnt/data/fullcheck/enhancements.css:5977:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:5978:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:5987:   SETTINGS HAMBURGER — CLEAN ICON + MOBILE SAFE MENU
+/mnt/data/fullcheck/enhancements.css:6030:/* Make the menu sit above every mobile header layer. */
+/mnt/data/fullcheck/enhancements.css:6042:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:6043:    touch-action:manipulation !important;
+/mnt/data/fullcheck/enhancements.css:6054:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:6060:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:6068:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:6113:   SETTINGS BUTTON — SAME VISUAL LANGUAGE AS HUB/SHARE
+/mnt/data/fullcheck/enhancements.css:6171:   SETTINGS MENU — PORTALLED TO BODY, SO MOBILE HEADER CAN
+/mnt/data/fullcheck/enhancements.css:6182:  overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:6207:   FEED — IMAGE → TITLE → CATEGORY → SHORT TEXT
+/mnt/data/fullcheck/enhancements.css:6210:.feed-card{
+/mnt/data/fullcheck/enhancements.css:6213:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6227:.feed-card:hover,
+/mnt/data/fullcheck/enhancements.css:6228:.feed-card:focus-visible{
+/mnt/data/fullcheck/enhancements.css:6234:.feed-card-media{
+/mnt/data/fullcheck/enhancements.css:6237:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6241:.feed-card-media img{
+/mnt/data/fullcheck/enhancements.css:6251:.feed-card:hover .feed-card-media img{
+/mnt/data/fullcheck/enhancements.css:6255:.feed-card-no-image{
+/mnt/data/fullcheck/enhancements.css:6265:.feed-card-no-image span{
+/mnt/data/fullcheck/enhancements.css:6271:.feed-card-content{
+/mnt/data/fullcheck/enhancements.css:6275:.feed-card-title{
+/mnt/data/fullcheck/enhancements.css:6284:.feed-card-meta{
+/mnt/data/fullcheck/enhancements.css:6294:.feed-card-category{
+/mnt/data/fullcheck/enhancements.css:6305:.feed-card-excerpt{
+/mnt/data/fullcheck/enhancements.css:6313:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6321:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6353:  overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:6381:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6431:  overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:6444:  .feed-card{
+/mnt/data/fullcheck/enhancements.css:6449:  .feed-card-media{
+/mnt/data/fullcheck/enhancements.css:6453:  .feed-card-content{
+/mnt/data/fullcheck/enhancements.css:6457:  .feed-card-title{
+/mnt/data/fullcheck/enhancements.css:6461:  .feed-card-excerpt{
+/mnt/data/fullcheck/enhancements.css:6503:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:6504:  touch-action:manipulation !important;
+/mnt/data/fullcheck/enhancements.css:6522:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:6532:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:6547:   FINAL MOBILE HEADER / DATE ALIGNMENT
+/mnt/data/fullcheck/enhancements.css:6548:   The header is fixed; the feed gets exactly one header-height
+/mnt/data/fullcheck/enhancements.css:6564:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:6573:  main#feed{
+/mnt/data/fullcheck/enhancements.css:6622:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:6657:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:6724:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6752:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6765:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6793:  /* The feed owns no boundary line; the right rail owns the
+/mnt/data/fullcheck/enhancements.css:6794:     feed/right boundary so there can never be a double line. */
+/mnt/data/fullcheck/enhancements.css:6795:  main#feed{
+/mnt/data/fullcheck/enhancements.css:6798:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:6799:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:6807:  /* Keep the navigation/profile content at its existing visual
+/mnt/data/fullcheck/enhancements.css:6819:  /* The feed date row is an internal divider, not the frame line. */
+/mnt/data/fullcheck/enhancements.css:6836:/* ---------------- MOBILE ---------------- */
+/mnt/data/fullcheck/enhancements.css:6850:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:6879:  main#feed{
+/mnt/data/fullcheck/enhancements.css:6916:/* FINAL MOBILE SYMBOL + LINE VISIBILITY FIX */
+/mnt/data/fullcheck/enhancements.css:6918:  .topbar{overflow:visible !important;z-index:2147483500 !important}
+/mnt/data/fullcheck/enhancements.css:6928:    overflow:visible !important;box-sizing:border-box !important;
+/mnt/data/fullcheck/enhancements.css:6956:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:6981:   MOBILE HEADER DIVIDER — REAL HEADER BOTTOM
+/mnt/data/fullcheck/enhancements.css:6988:    top:calc(var(--mobile-header-bottom, 250px) - 1px) !important;
+/mnt/data/fullcheck/enhancements.css:6997:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:7002:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:7039:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:7069:   changing the divider line geometry or mobile sizing. */
+/mnt/data/fullcheck/enhancements.css:7092:   Keep the lower separator that separates navigation from the note. */
+/mnt/data/fullcheck/enhancements.css:7141:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7164:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7197:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7226:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7268:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7305:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7325:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:7426:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7447:   FEED COMPOSER — simplified forum-editor inspired layout
+/mnt/data/fullcheck/enhancements.css:7451:#feed .composer{
+/mnt/data/fullcheck/enhancements.css:7459:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7462:#feed .composer > .avatar{
+/mnt/data/fullcheck/enhancements.css:7466:#feed .composer-body{
+/mnt/data/fullcheck/enhancements.css:7471:#feed #postText{
+/mnt/data/fullcheck/enhancements.css:7488:#feed #postText:focus{
+/mnt/data/fullcheck/enhancements.css:7493:#feed #postText::placeholder{
+/mnt/data/fullcheck/enhancements.css:7497:#feed .composer-tools{
+/mnt/data/fullcheck/enhancements.css:7510:#feed .composer-tools > label{
+/mnt/data/fullcheck/enhancements.css:7524:#feed .composer-tools > label:first-child{
+/mnt/data/fullcheck/enhancements.css:7528:#feed .composer-tools select{
+/mnt/data/fullcheck/enhancements.css:7539:#feed .composer-tools .image-upload{
+/mnt/data/fullcheck/enhancements.css:7543:#feed .composer-tools .image-upload input{
+/mnt/data/fullcheck/enhancements.css:7547:#feed .composer-tools .anonymous-toggle input{
+/mnt/data/fullcheck/enhancements.css:7554:#feed .image-preview{
+/mnt/data/fullcheck/enhancements.css:7558:#feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:7568:#feed #counter{
+/mnt/data/fullcheck/enhancements.css:7573:#feed #postButton{
+/mnt/data/fullcheck/enhancements.css:7581:  #feed .composer{
+/mnt/data/fullcheck/enhancements.css:7586:  #feed #postText{
+/mnt/data/fullcheck/enhancements.css:7591:  #feed .composer-tools{
+/mnt/data/fullcheck/enhancements.css:7597:  #feed .composer-tools > label{
+/mnt/data/fullcheck/enhancements.css:7601:  #feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:7607:   FEED COMPOSER — toolbar áthelyezve a szerkesztő tetejére
+/mnt/data/fullcheck/enhancements.css:7610:#feed .composer{
+/mnt/data/fullcheck/enhancements.css:7614:#feed .composer-tools{
+/mnt/data/fullcheck/enhancements.css:7623:  overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:7627:#feed .composer-tools::-webkit-scrollbar{
+/mnt/data/fullcheck/enhancements.css:7631:#feed .composer-tools > label{
+/mnt/data/fullcheck/enhancements.css:7642:#feed .composer-tools > label:last-child{
+/mnt/data/fullcheck/enhancements.css:7646:#feed .composer-tools select{
+/mnt/data/fullcheck/enhancements.css:7651:#feed #postText{
+/mnt/data/fullcheck/enhancements.css:7657:#feed .image-preview{
+/mnt/data/fullcheck/enhancements.css:7661:#feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:7666:  #feed .composer-tools{
+/mnt/data/fullcheck/enhancements.css:7668:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:7671:  #feed .composer-tools > label{
+/mnt/data/fullcheck/enhancements.css:7675:  #feed #postText{
+/mnt/data/fullcheck/enhancements.css:7689:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7714:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:7728:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:7907:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:7926:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:7970:   MOBILE — feed composer mirrors desktop structure
+/mnt/data/fullcheck/enhancements.css:7973:  #feed .composer{
+/mnt/data/fullcheck/enhancements.css:7977:  #feed .composer-body{
+/mnt/data/fullcheck/enhancements.css:7983:  #feed .composer-tools{
+/mnt/data/fullcheck/enhancements.css:7993:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:7994:    overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:7998:  #feed .composer-tools::-webkit-scrollbar{
+/mnt/data/fullcheck/enhancements.css:8002:  #feed .composer-tools > label{
+/mnt/data/fullcheck/enhancements.css:8009:  #feed #postText{
+/mnt/data/fullcheck/enhancements.css:8019:  #feed .image-preview{
+/mnt/data/fullcheck/enhancements.css:8023:  #feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:8034:  .mobile-alert-icon{
+/mnt/data/fullcheck/enhancements.css:8041:  .mobile-alert-badge{
+/mnt/data/fullcheck/enhancements.css:8060:  .mobile-community-panel{
+/mnt/data/fullcheck/enhancements.css:8069:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8079:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:8083:  .mobile-community-panel.is-open{
+/mnt/data/fullcheck/enhancements.css:8086:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:8089:  .mobile-community-panel-head{
+/mnt/data/fullcheck/enhancements.css:8098:  .mobile-community-panel-head strong{
+/mnt/data/fullcheck/enhancements.css:8104:  .mobile-community-panel-head button{
+/mnt/data/fullcheck/enhancements.css:8115:  .mobile-community-panel-body{
+/mnt/data/fullcheck/enhancements.css:8116:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:8118:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:8122:  .mobile-community-panel .right-rail,
+/mnt/data/fullcheck/enhancements.css:8123:  .mobile-community-panel .rail-info-card,
+/mnt/data/fullcheck/enhancements.css:8124:  .mobile-community-panel .activity-card,
+/mnt/data/fullcheck/enhancements.css:8125:  .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:8129:  .mobile-community-panel .mobile-cloned-rail{
+/mnt/data/fullcheck/enhancements.css:8133:  .mobile-community-panel .rail-info-card,
+/mnt/data/fullcheck/enhancements.css:8134:  .mobile-community-panel .activity-card,
+/mnt/data/fullcheck/enhancements.css:8135:  .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:8141:  .mobile-community-panel .rail-card-title{
+/mnt/data/fullcheck/enhancements.css:8146:  .mobile-community-panel .community-latest-item{
+/mnt/data/fullcheck/enhancements.css:8151:  .mobile-community-panel .activity-stats span{
+/mnt/data/fullcheck/enhancements.css:8155:  .mobile-community-panel .activity-stats strong{
+/mnt/data/fullcheck/enhancements.css:8159:  .mobile-community-panel .share-symbol-grid{
+/mnt/data/fullcheck/enhancements.css:8163:  body.mobile-community-open::after{
+/mnt/data/fullcheck/enhancements.css:8169:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:8205:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:8210:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:8269:  /* Notification is exactly the same selected square as Hub. */
+/mnt/data/fullcheck/enhancements.css:8291:  .mobile-community-panel{
+/mnt/data/fullcheck/enhancements.css:8300:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8308:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:8312:  .mobile-community-panel.is-open{
+/mnt/data/fullcheck/enhancements.css:8315:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:8318:  .mobile-community-panel-head{
+/mnt/data/fullcheck/enhancements.css:8327:  .mobile-community-panel-head strong{
+/mnt/data/fullcheck/enhancements.css:8332:  .mobile-community-panel-head button{
+/mnt/data/fullcheck/enhancements.css:8343:  .mobile-community-panel-body{
+/mnt/data/fullcheck/enhancements.css:8344:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:8347:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:8350:  .mobile-community-panel .mobile-cloned-rail,
+/mnt/data/fullcheck/enhancements.css:8351:  .mobile-community-panel .mobile-cloned-rail .right-rail{
+/mnt/data/fullcheck/enhancements.css:8361:  .mobile-community-panel .rail-info-card,
+/mnt/data/fullcheck/enhancements.css:8362:  .mobile-community-panel .activity-card,
+/mnt/data/fullcheck/enhancements.css:8363:  .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:8368:  body.mobile-community-open::after{
+/mnt/data/fullcheck/enhancements.css:8374:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:8378:/* Desktop: notification island is mobile-only. */
+/mnt/data/fullcheck/enhancements.css:8385:   Same card shell and real inline SVG logos on PC + mobile.
+/mnt/data/fullcheck/enhancements.css:8388:.mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:8390:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8402:.mobile-community-panel .right-share-card::before,
+/mnt/data/fullcheck/enhancements.css:8403:.mobile-community-panel .right-share-card::after{
+/mnt/data/fullcheck/enhancements.css:8409:.mobile-community-panel .right-share-card .rail-card-title{
+/mnt/data/fullcheck/enhancements.css:8417:.mobile-community-panel .right-share-card .share-title-icon{
+/mnt/data/fullcheck/enhancements.css:8427:.mobile-community-panel .right-share-card .share-title-icon svg{
+/mnt/data/fullcheck/enhancements.css:8435:.mobile-community-panel .right-share-card .share-symbol-grid{
+/mnt/data/fullcheck/enhancements.css:8447:.mobile-community-panel .right-share-card .share-symbol-grid button{
+/mnt/data/fullcheck/enhancements.css:8468:.mobile-community-panel .right-share-card .share-symbol-grid button svg{
+/mnt/data/fullcheck/enhancements.css:8482:.mobile-community-panel .right-share-card .share-symbol-grid button[data-share-network="email"] svg,
+/mnt/data/fullcheck/enhancements.css:8483:.mobile-community-panel .right-share-card .share-symbol-grid button[data-share-network="copy"] svg{
+/mnt/data/fullcheck/enhancements.css:8490:.mobile-community-panel .right-share-card .share-symbol-grid button:hover,
+/mnt/data/fullcheck/enhancements.css:8491:.mobile-community-panel .right-share-card .share-symbol-grid button:focus-visible{
+/mnt/data/fullcheck/enhancements.css:8503:  .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:8511:body[data-theme="white"] .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:8517:body[data-theme="white"] .mobile-community-panel .right-share-card .rail-card-title{
+/mnt/data/fullcheck/enhancements.css:8521:body[data-theme="white"] .mobile-community-panel .right-share-card .share-symbol-grid button{
+/mnt/data/fullcheck/enhancements.css:8527:   FEED TEXT EDITOR TOOLBAR
+/mnt/data/fullcheck/enhancements.css:8528:   Restored for desktop + mobile.
+/mnt/data/fullcheck/enhancements.css:8530:#feed .feed-editor-toolbar{
+/mnt/data/fullcheck/enhancements.css:8544:#feed .feed-editor-toolbar button{
+/mnt/data/fullcheck/enhancements.css:8560:#feed .feed-editor-toolbar button:hover,
+/mnt/data/fullcheck/enhancements.css:8561:#feed .feed-editor-toolbar button:focus-visible{
+/mnt/data/fullcheck/enhancements.css:8567:#feed .feed-editor-toolbar button:active{
+/mnt/data/fullcheck/enhancements.css:8571:#feed .feed-editor-toolbar strong{
+/mnt/data/fullcheck/enhancements.css:8575:#feed .feed-editor-toolbar em{
+/mnt/data/fullcheck/enhancements.css:8581:  #feed .feed-editor-toolbar{
+/mnt/data/fullcheck/enhancements.css:8584:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:8588:  #feed .feed-editor-toolbar::-webkit-scrollbar{
+/mnt/data/fullcheck/enhancements.css:8591:  #feed .feed-editor-toolbar button{
+/mnt/data/fullcheck/enhancements.css:8631:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:8635:/* Keep six compact columns on the mobile notification copy. */
+/mnt/data/fullcheck/enhancements.css:8637:  .mobile-community-panel .right-share-card .share-symbol-grid{
+/mnt/data/fullcheck/enhancements.css:8646:   FINAL FEED EDITOR — toolbar is directly UNDER the text box
+/mnt/data/fullcheck/enhancements.css:8648:#feed .composer-body{
+/mnt/data/fullcheck/enhancements.css:8654:#feed #postText{
+/mnt/data/fullcheck/enhancements.css:8658:#feed #feedEditorToolbar{
+/mnt/data/fullcheck/enhancements.css:8673:  overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:8674:  overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8678:#feed #feedEditorToolbar::-webkit-scrollbar{
+/mnt/data/fullcheck/enhancements.css:8682:#feed #feedEditorToolbar button{
+/mnt/data/fullcheck/enhancements.css:8700:#feed #feedEditorToolbar button:hover,
+/mnt/data/fullcheck/enhancements.css:8701:#feed #feedEditorToolbar button:focus-visible{
+/mnt/data/fullcheck/enhancements.css:8733:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8751:#feed .composer-body{
+/mnt/data/fullcheck/enhancements.css:8757:#feed #postText{
+/mnt/data/fullcheck/enhancements.css:8761:#feed #feedEditorToolbar{
+/mnt/data/fullcheck/enhancements.css:8765:#feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:8777:#feed .composer-footer #counter{
+/mnt/data/fullcheck/enhancements.css:8782:#feed .composer-footer #postButton{
+/mnt/data/fullcheck/enhancements.css:8789:  #feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:8792:  #feed .composer-footer #postButton{
+/mnt/data/fullcheck/enhancements.css:8799:   FEED EDITOR TOOLBAR — forum/editor style
+/mnt/data/fullcheck/enhancements.css:8801:#feed #feedEditorToolbar{
+/mnt/data/fullcheck/enhancements.css:8817:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8821:#feed #feedEditorToolbar .editor-tool-group{
+/mnt/data/fullcheck/enhancements.css:8833:#feed #feedEditorToolbar button{
+/mnt/data/fullcheck/enhancements.css:8852:#feed #feedEditorToolbar .editor-tool-group-right button:last-child{
+/mnt/data/fullcheck/enhancements.css:8858:#feed #feedEditorToolbar button:hover,
+/mnt/data/fullcheck/enhancements.css:8859:#feed #feedEditorToolbar button:focus-visible{
+/mnt/data/fullcheck/enhancements.css:8865:#feed #feedEditorToolbar .editor-tool-spacer{
+/mnt/data/fullcheck/enhancements.css:8871:  #feed #feedEditorToolbar{
+/mnt/data/fullcheck/enhancements.css:8874:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:8875:    overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8878:  #feed #feedEditorToolbar::-webkit-scrollbar{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:8879:  #feed #feedEditorToolbar .editor-tool-spacer{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:8880:  #feed #feedEditorToolbar .editor-tool-group-right{
+/mnt/data/fullcheck/enhancements.css:8887:   FEED TOOLBAR CLEANUP — ONE CONTINUOUS BAR, NO BUBBLE GROUPS
+/mnt/data/fullcheck/enhancements.css:8889:#feed #feedEditorToolbar{
+/mnt/data/fullcheck/enhancements.css:8902:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8905:#feed #feedEditorToolbar .editor-tool-group{
+/mnt/data/fullcheck/enhancements.css:8918:#feed #feedEditorToolbar .editor-tool-group + .editor-tool-group{
+/mnt/data/fullcheck/enhancements.css:8924:#feed #feedEditorToolbar button{
+/mnt/data/fullcheck/enhancements.css:8943:#feed #feedEditorToolbar button:hover,
+/mnt/data/fullcheck/enhancements.css:8944:#feed #feedEditorToolbar button:focus-visible{
+/mnt/data/fullcheck/enhancements.css:8950:#feed #feedEditorToolbar .editor-tool-group-right{
+/mnt/data/fullcheck/enhancements.css:8956:#feed #feedEditorToolbar .editor-tool-group-right button:last-child{
+/mnt/data/fullcheck/enhancements.css:8965:  #feed #feedEditorToolbar{
+/mnt/data/fullcheck/enhancements.css:8966:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:8967:    overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:8970:  #feed #feedEditorToolbar::-webkit-scrollbar{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:8971:  #feed #feedEditorToolbar .editor-tool-spacer{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:8972:  #feed #feedEditorToolbar .editor-tool-group-right{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:8981:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:9001:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:9030:   PROFILE CUSTOMIZER — COMPLETE DESKTOP + MOBILE UI
+/mnt/data/fullcheck/enhancements.css:9061:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9113:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9121:.profile-customizer-nav{
+/mnt/data/fullcheck/enhancements.css:9137:.profile-customizer-nav span{
+/mnt/data/fullcheck/enhancements.css:9142:.profile-customizer-nav.active,
+/mnt/data/fullcheck/enhancements.css:9143:.profile-customizer-nav:hover{
+/mnt/data/fullcheck/enhancements.css:9158:  overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:9325:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9342:  overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:9351:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9457:   MOBILE CUSTOMIZER
+/mnt/data/fullcheck/enhancements.css:9477:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:9485:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:9487:  .profile-customizer-nav{
+/mnt/data/fullcheck/enhancements.css:9495:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:9519:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9557:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:9590:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9591:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:9613:   FINAL CLEAN PASS — FEED CONTENT / EDITOR / PROFILE
+/mnt/data/fullcheck/enhancements.css:9617:.feed-card .feed-card-media.feed-card-no-image{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:9618:.feed-card:not(:has(.feed-card-media)) .feed-card-content{padding-top:0 !important;}
+/mnt/data/fullcheck/enhancements.css:9620:.feed-card-excerpt,
+/mnt/data/fullcheck/enhancements.css:9622:  overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:9648:#feed .feed-editor-toolbar{
+/mnt/data/fullcheck/enhancements.css:9654:  overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:9655:  overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9661:#feed .feed-editor-toolbar::-webkit-scrollbar{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:9662:#feed .feed-editor-toolbar .editor-tool-group{
+/mnt/data/fullcheck/enhancements.css:9671:#feed .feed-editor-toolbar .editor-tool-group:last-of-type{border-right:0 !important;}
+/mnt/data/fullcheck/enhancements.css:9672:#feed .feed-editor-toolbar .editor-tool-spacer{flex:1 1 auto !important;min-width:6px !important;}
+/mnt/data/fullcheck/enhancements.css:9673:#feed .feed-editor-toolbar .editor-tool-group-right{margin-left:auto !important;}
+/mnt/data/fullcheck/enhancements.css:9674:#feed .feed-editor-toolbar button{
+/mnt/data/fullcheck/enhancements.css:9683:#feed .feed-editor-toolbar button:hover,
+/mnt/data/fullcheck/enhancements.css:9684:#feed .feed-editor-toolbar button:focus-visible{background:rgba(139,173,204,.11) !important;color:var(--accent) !important;}
+/mnt/data/fullcheck/enhancements.css:9686:.feed-editor-preview-modal{
+/mnt/data/fullcheck/enhancements.css:9695:.feed-editor-preview-modal.open{display:flex !important;}
+/mnt/data/fullcheck/enhancements.css:9696:.feed-editor-preview-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.82);}
+/mnt/data/fullcheck/enhancements.css:9697:.feed-editor-preview-card{
+/mnt/data/fullcheck/enhancements.css:9698:  position:relative;z-index:1;width:min(760px,100%);max-height:80dvh;overflow:auto;
+/mnt/data/fullcheck/enhancements.css:9702:.feed-editor-preview-close{position:absolute;right:12px;top:10px;width:36px;height:36px;border:1px solid #33414b;border-radius:50%;background:#0b1115;color:#d8e1e6;font-size:22px;}
+/mnt/data/fullcheck/enhancements.css:9703:.feed-editor-preview-body{font-size:15px;line-height:1.8;overflow-wrap:anywhere;}
+/mnt/data/fullcheck/enhancements.css:9708:.profile-view-card{min-height:260px !important;overflow:hidden !important;}
+/mnt/data/fullcheck/enhancements.css:9709:.profile-view-identity h2{overflow-wrap:anywhere;}
+/mnt/data/fullcheck/enhancements.css:9710:.profile-view-bio{white-space:pre-wrap;overflow-wrap:anywhere;}
+/mnt/data/fullcheck/enhancements.css:9715:.profile-customizer-dialog{overflow:hidden !important;}
+/mnt/data/fullcheck/enhancements.css:9717:.profile-customizer-content{min-width:0 !important;overflow:auto !important;}
+/mnt/data/fullcheck/enhancements.css:9718:.customizer-image-card{position:relative !important;min-width:0 !important;overflow:hidden !important;}
+/mnt/data/fullcheck/enhancements.css:9720:.customizer-banner-preview{position:relative !important;overflow:hidden !important;flex:none !important;}
+/mnt/data/fullcheck/enhancements.css:9736:  .profile-view-identity p{font-size:11px !important;overflow-wrap:anywhere !important;}
+/mnt/data/fullcheck/enhancements.css:9740:  .profile-customizer-body{display:block !important;overflow:auto !important;}
+/mnt/data/fullcheck/enhancements.css:9741:  .profile-customizer-content{overflow:visible !important;padding:16px !important;}
+/mnt/data/fullcheck/enhancements.css:9748:  .customizer-upload-button{max-width:100% !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+/mnt/data/fullcheck/enhancements.css:9754:.feed-card-actions{
+/mnt/data/fullcheck/enhancements.css:9762:.feed-action{
+/mnt/data/fullcheck/enhancements.css:9775:.feed-action svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/mnt/data/fullcheck/enhancements.css:9776:.feed-action:hover,.feed-action.is-active{color:#9ec7ea;background:rgba(126,177,218,.08)}
+/mnt/data/fullcheck/enhancements.css:9777:.feed-action.is-active[data-post-action="like"]{color:#d99ab4}
+/mnt/data/fullcheck/enhancements.css:9779:.profile-reaction-list .feed-card{margin:0}
+/mnt/data/fullcheck/enhancements.css:9782:  .feed-card-actions{margin:12px 14px 14px;gap:14px}
+/mnt/data/fullcheck/enhancements.css:9783:  .feed-action{font-size:11px}
+/mnt/data/fullcheck/enhancements.css:9784:  .profile-tabs{gap:14px!important;overflow-x:auto;white-space:nowrap;padding-bottom:1px}
+/mnt/data/fullcheck/enhancements.css:9790:   FEED — CLEAN X-LIKE POST HEADER + OPTIONAL TITLE
+/mnt/data/fullcheck/enhancements.css:9827:.feed-card{
+/mnt/data/fullcheck/enhancements.css:9832:.feed-card-content{padding:17px 18px 16px !important;}
+/mnt/data/fullcheck/enhancements.css:9833:.feed-card-author{
+/mnt/data/fullcheck/enhancements.css:9843:.feed-card-author strong{
+/mnt/data/fullcheck/enhancements.css:9848:.feed-card-handle{color:#7e8a90 !important;}
+/mnt/data/fullcheck/enhancements.css:9849:.feed-card-dot{color:#5f6c72 !important;}
+/mnt/data/fullcheck/enhancements.css:9850:.feed-card-author time{color:#7e8a90 !important;}
+/mnt/data/fullcheck/enhancements.css:9851:.feed-card-title{
+/mnt/data/fullcheck/enhancements.css:9859:.feed-card-meta{margin:0 0 9px !important;}
+/mnt/data/fullcheck/enhancements.css:9860:.feed-card-category{
+/mnt/data/fullcheck/enhancements.css:9865:.feed-card-excerpt{
+/mnt/data/fullcheck/enhancements.css:9873:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:9875:.feed-card:not(:has(.feed-card-title)) .feed-card-meta{margin-top:1px !important;}
+/mnt/data/fullcheck/enhancements.css:9876:.feed-card-actions{margin:13px 18px 15px !important;padding-top:11px !important;}
+/mnt/data/fullcheck/enhancements.css:9880:  .feed-card-content{padding:15px 15px 14px !important;}
+/mnt/data/fullcheck/enhancements.css:9881:  .feed-card-author strong{font-size:12px !important;}
+/mnt/data/fullcheck/enhancements.css:9882:  .feed-card-title{font-size:22px !important;}
+/mnt/data/fullcheck/enhancements.css:9883:  .feed-card-excerpt{font-size:14px !important;line-height:1.6 !important;}
+/mnt/data/fullcheck/enhancements.css:9941:  .desktop-category-menu a:hover,.desktop-category-menu a.nav-active{color:#9fc4e7 !important;background:rgba(139,173,204,.07) !important;}
+/mnt/data/fullcheck/enhancements.css:9942:  /* Hide the legacy duplicated navigation structures. */
+/mnt/data/fullcheck/enhancements.css:9943:  .desktop-chat-group,.desktop-sidebar,.sidebar,.nav-group-cseveges{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:9983:/* Keep the mobile header control at the existing right-hand position. */
+/mnt/data/fullcheck/enhancements.css:10008:/* MOBILE FINAL FIX — full-width content instead of desktop grid */
+/mnt/data/fullcheck/enhancements.css:10018:  main#feed{
+/mnt/data/fullcheck/enhancements.css:10030:  #feed > .feed-list,
+/mnt/data/fullcheck/enhancements.css:10031:  #feed > .posts,
+/mnt/data/fullcheck/enhancements.css:10032:  #feed > .loading-copy{
+/mnt/data/fullcheck/enhancements.css:10040:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:10047:  .feed-editor-toolbar,
+/mnt/data/fullcheck/enhancements.css:10051:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:10052:    overflow-y:hidden !important;
+/mnt/data/fullcheck/enhancements.css:10055:  .feed-editor-toolbar::-webkit-scrollbar,
+/mnt/data/fullcheck/enhancements.css:10059:  #feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:10064:  #feed .composer-footer #postButton{
+/mnt/data/fullcheck/enhancements.css:10079:   MOBILE — AI / FLOW STATUS TEXT MUST REMAIN FULLY VISIBLE
+/mnt/data/fullcheck/enhancements.css:10082:  #feed > .feed-list,
+/mnt/data/fullcheck/enhancements.css:10083:  #feed > .feed-list .loading-copy{
+/mnt/data/fullcheck/enhancements.css:10088:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10091:  #feed > .feed-list .loading-copy{
+/mnt/data/fullcheck/enhancements.css:10098:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:10100:    text-overflow:clip !important;
+/mnt/data/fullcheck/enhancements.css:10107:/* Final mobile tuning — AI / flow status copy should stay compact and readable. */
+/mnt/data/fullcheck/enhancements.css:10109:  #feed > .feed-list .loading-copy{
+/mnt/data/fullcheck/enhancements.css:10139:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10142:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:10156:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10157:    text-overflow:clip !important;
+/mnt/data/fullcheck/enhancements.css:10158:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:10212:/* ---------- Desktop rail: Hub → Profil → Kedvelések → Mentések → Előzmények → Kategória ---------- */
+/mnt/data/fullcheck/enhancements.css:10218:#desktopLikedNav,
+/mnt/data/fullcheck/enhancements.css:10219:#desktopSavedNav{display:flex;align-items:center;gap:10px;}
+/mnt/data/fullcheck/enhancements.css:10272:   FINAL INTERACTION POLISH — desktop navigation + right rail
+/mnt/data/fullcheck/enhancements.css:10275:  /* Keep the left navigation rigidly stacked and make every icon visually heavier. */
+/mnt/data/fullcheck/enhancements.css:10307:  /* Strong, consistent navigation icon weight. */
+/mnt/data/fullcheck/enhancements.css:10342:  /* Every desktop navigation control gets the same small hover movement. */
+/mnt/data/fullcheck/enhancements.css:10351:  /* Right-hand cards behave like the navigation controls: subtle lift, no gradient. */
+/mnt/data/fullcheck/enhancements.css:10415:  /* Any ordinary action button in the desktop content gets the same tiny feedback. */
+/mnt/data/fullcheck/enhancements.css:10424:   FINAL MOBILE DOCK + AI FOOTER POSITION / HEART SIZE
+/mnt/data/fullcheck/enhancements.css:10506:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10509:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:10523:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10524:    text-overflow:clip !important;
+/mnt/data/fullcheck/enhancements.css:10525:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:10537:  main#feed{
+/mnt/data/fullcheck/enhancements.css:10577:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10591:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:10613:  overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:10639:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:10640:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:10730:   FINAL FEED SEPARATION — POSTS MUST NEVER TOUCH / OVERLAP COMPOSER
+/mnt/data/fullcheck/enhancements.css:10733:#feed > .composer{
+/mnt/data/fullcheck/enhancements.css:10741:#feed > .feed-list{
+/mnt/data/fullcheck/enhancements.css:10754:#feed > .feed-list > .post:first-child{
+/mnt/data/fullcheck/enhancements.css:10758:#feed > .feed-list > .loading-copy:first-child{
+/mnt/data/fullcheck/enhancements.css:10763:  #feed > .feed-list{
+/mnt/data/fullcheck/enhancements.css:10775:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:10799:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10802:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:10815:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:10816:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:10825:  main#feed, #feed, .layout{
+/mnt/data/fullcheck/enhancements.css:10829:  /* Keep the mobile dock visible while panels are open. The panel sits above it. */
+/mnt/data/fullcheck/enhancements.css:10854:   FINAL MOBILE DOCK POSITION / BOTTOM ARTIFACT CLEANUP
+/mnt/data/fullcheck/enhancements.css:10863:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:10881:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:10909:/* Login request feedback */
+/mnt/data/fullcheck/enhancements.css:10923:  pointer-events: none;
+/mnt/data/fullcheck/enhancements.css:10987:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11011:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:11013:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:11026:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:11027:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:11052:   CLEAN FEED EDITOR TOOLBAR — only requested tools
+/mnt/data/fullcheck/enhancements.css:11054:#feed .feed-editor-toolbar .editor-tool-group-right,
+/mnt/data/fullcheck/enhancements.css:11055:#feed .feed-editor-toolbar .editor-tool-spacer,
+/mnt/data/fullcheck/enhancements.css:11056:#feed .feed-editor-toolbar .editor-tool-group-right ~ *{
+/mnt/data/fullcheck/enhancements.css:11059:#feed .feed-editor-toolbar{
+/mnt/data/fullcheck/enhancements.css:11063:  overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:11064:  overflow-y:visible !important;
+/mnt/data/fullcheck/enhancements.css:11067:#feed .feed-editor-toolbar .editor-tool-group{
+/mnt/data/fullcheck/enhancements.css:11072:#feed .feed-editor-toolbar button{
+/mnt/data/fullcheck/enhancements.css:11079:#feed .feed-editor-toolbar .editor-font-select{
+/mnt/data/fullcheck/enhancements.css:11084:#feed .feed-editor-toolbar #editorFontFormat{
+/mnt/data/fullcheck/enhancements.css:11095:#feed .feed-editor-toolbar #editorFontFormat:focus{
+/mnt/data/fullcheck/enhancements.css:11104:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11133:.feed-card-full-text .ev-font-sans,.post-reader-body .ev-font-sans{font-family:Manrope,Arial,sans-serif;}
+/mnt/data/fullcheck/enhancements.css:11134:.feed-card-full-text .ev-font-serif,.post-reader-body .ev-font-serif{font-family:Georgia,"Times New Roman",serif;}
+/mnt/data/fullcheck/enhancements.css:11135:.feed-card-full-text .ev-font-mono,.post-reader-body .ev-font-mono{font-family:"DM Mono",monospace;}
+/mnt/data/fullcheck/enhancements.css:11136:.feed-card-full-text .ev-font-display,.post-reader-body .ev-font-display{font-family:"Playfair Display",Georgia,serif;}
+/mnt/data/fullcheck/enhancements.css:11139:  #feed .feed-editor-toolbar #editorFontFormat{min-width:104px !important;}
+/mnt/data/fullcheck/enhancements.css:11146:#feed .feed-rich-editor{
+/mnt/data/fullcheck/enhancements.css:11150:  overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:11163:#feed .feed-rich-editor:empty::before{
+/mnt/data/fullcheck/enhancements.css:11167:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:11169:#feed .feed-rich-editor:focus{
+/mnt/data/fullcheck/enhancements.css:11173:#feed .feed-rich-editor strong,
+/mnt/data/fullcheck/enhancements.css:11174:#feed .feed-rich-editor b,
+/mnt/data/fullcheck/enhancements.css:11175:#feed .feed-rich-editor span[style*="font-weight"]{font-weight:800 !important;}
+/mnt/data/fullcheck/enhancements.css:11176:#feed .feed-rich-editor em,
+/mnt/data/fullcheck/enhancements.css:11177:#feed .feed-rich-editor i,
+/mnt/data/fullcheck/enhancements.css:11178:#feed .feed-rich-editor span[style*=\"font-style: italic\"],
+/mnt/data/fullcheck/enhancements.css:11179:#feed .feed-rich-editor span[style*=\"font-style:italic\"]{font-style:italic !important;}
+/mnt/data/fullcheck/enhancements.css:11180:#feed .feed-rich-editor u{text-decoration:underline !important;}
+/mnt/data/fullcheck/enhancements.css:11181:#feed .feed-rich-editor s{text-decoration:line-through !important;}
+/mnt/data/fullcheck/enhancements.css:11182:#feed .feed-rich-editor ul{margin:6px 0 6px 24px !important;padding-left:20px !important;}
+/mnt/data/fullcheck/enhancements.css:11183:#feed .feed-rich-editor li{margin:2px 0 !important;}
+/mnt/data/fullcheck/enhancements.css:11184:#feed .feed-rich-editor .ev-font-sans{font-family:Manrope,Arial,sans-serif !important;}
+/mnt/data/fullcheck/enhancements.css:11185:#feed .feed-rich-editor .ev-font-serif{font-family:"Playfair Display",Georgia,serif !important;}
+/mnt/data/fullcheck/enhancements.css:11186:#feed .feed-rich-editor .ev-font-mono{font-family:"DM Mono",ui-monospace,monospace !important;}
+/mnt/data/fullcheck/enhancements.css:11187:#feed .feed-rich-editor .ev-font-display{font-family:"Playfair Display",Georgia,serif !important;}
+/mnt/data/fullcheck/enhancements.css:11189:#feed .feed-editor-toolbar .editor-tool-spacer{
+/mnt/data/fullcheck/enhancements.css:11194:#feed .feed-editor-toolbar .editor-tool-group-right{
+/mnt/data/fullcheck/enhancements.css:11200:#feed .feed-editor-toolbar .editor-tool-group-right ~ *{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11201:#feed .feed-editor-toolbar #editorFontFormat{
+/mnt/data/fullcheck/enhancements.css:11206:  #feed .feed-rich-editor{
+/mnt/data/fullcheck/enhancements.css:11211:  #feed .feed-editor-toolbar{
+/mnt/data/fullcheck/enhancements.css:11214:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:11216:  #feed .feed-editor-toolbar .editor-tool-spacer{min-width:18px !important;}
+/mnt/data/fullcheck/enhancements.css:11217:  #feed .feed-editor-toolbar .editor-tool-group-right{margin-left:auto !important;}
+/mnt/data/fullcheck/enhancements.css:11218:  #feed .feed-editor-toolbar #editorFontFormat{min-width:112px !important;}
+/mnt/data/fullcheck/enhancements.css:11223:#feed #feedEditorToolbar .editor-action-icon{
+/mnt/data/fullcheck/enhancements.css:11229:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:11231:#feed #feedEditorToolbar button[data-editor-action]{
+/mnt/data/fullcheck/enhancements.css:11237:#feed #feedEditorToolbar button[data-editor-action] strong,
+/mnt/data/fullcheck/enhancements.css:11238:#feed #feedEditorToolbar button[data-editor-action] em,
+/mnt/data/fullcheck/enhancements.css:11239:#feed #feedEditorToolbar button[data-editor-action] u,
+/mnt/data/fullcheck/enhancements.css:11240:#feed #feedEditorToolbar button[data-editor-action] s{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11241:#feed #feedEditorToolbar .editor-font-select{
+/mnt/data/fullcheck/enhancements.css:11248:#feed #postText{
+/mnt/data/fullcheck/enhancements.css:11259:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11260:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:11264:#feed #feedEditorToolbar button[data-editor-action].is-active{
+/mnt/data/fullcheck/enhancements.css:11270:#feed #feedEditorToolbar button[data-editor-action].is-active .editor-action-icon{
+/mnt/data/fullcheck/enhancements.css:11273:#feed #feedEditorToolbar button[data-editor-action][aria-pressed="true"]{
+/mnt/data/fullcheck/enhancements.css:11277:/* FINAL ITALIC FIX — make italic semantic and visible on desktop + mobile. */
+/mnt/data/fullcheck/enhancements.css:11278:#feed #postTextEditor em,
+/mnt/data/fullcheck/enhancements.css:11279:#feed #postTextEditor i,
+/mnt/data/fullcheck/enhancements.css:11280:#feed #postTextEditor span[style*="font-style: italic"],
+/mnt/data/fullcheck/enhancements.css:11281:#feed #postTextEditor span[style*="font-style:italic"],
+/mnt/data/fullcheck/enhancements.css:11282:#feed #postTextEditor span[style*="font-style: oblique"],
+/mnt/data/fullcheck/enhancements.css:11283:#feed #postTextEditor span[style*="font-style:oblique"]{
+/mnt/data/fullcheck/enhancements.css:11287:#feed .feed-card-full-text em,
+/mnt/data/fullcheck/enhancements.css:11288:#feed .feed-card-full-text i,
+/mnt/data/fullcheck/enhancements.css:11289:#feed .post-reader-body em,
+/mnt/data/fullcheck/enhancements.css:11290:#feed .post-reader-body i{
+/mnt/data/fullcheck/enhancements.css:11302:  pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:11349:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11350:    text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:11414:.feed-card-actions{position:relative;}
+/mnt/data/fullcheck/enhancements.css:11415:.feed-share-wrap{position:relative;margin-left:auto;display:inline-flex;align-items:center;}
+/mnt/data/fullcheck/enhancements.css:11416:.feed-share-trigger{margin-left:auto;}
+/mnt/data/fullcheck/enhancements.css:11417:.feed-share-trigger svg{width:17px;height:17px;fill:none;stroke:currentColor;}
+/mnt/data/fullcheck/enhancements.css:11418:.feed-share-menu{
+/mnt/data/fullcheck/enhancements.css:11432:.feed-share-menu[hidden]{display:none!important;}
+/mnt/data/fullcheck/enhancements.css:11433:.feed-share-menu button{
+/mnt/data/fullcheck/enhancements.css:11446:.feed-share-menu button:hover{background:rgba(126,183,230,.10);color:#a9d2f0;transform:translateX(2px);}
+/mnt/data/fullcheck/enhancements.css:11448:  .feed-share-menu{position:fixed;right:14px;bottom:84px;width:min(220px,calc(100vw - 28px));}
+/mnt/data/fullcheck/enhancements.css:11449:  .feed-share-menu button{min-height:38px;font-size:13px;}
+/mnt/data/fullcheck/enhancements.css:11450:  .feed-share-trigger span{display:none;}
+/mnt/data/fullcheck/enhancements.css:11463:  overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11464:  overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:11512:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:11535:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:11539:   applied inline by app.js and therefore survives desktop/mobile layouts. */
+/mnt/data/fullcheck/enhancements.css:11637:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:11667:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11673:   FINAL FEED POST PASS — X-LIKE HEADER + INLINE EXPANSION
+/mnt/data/fullcheck/enhancements.css:11675:.feed-card{
+/mnt/data/fullcheck/enhancements.css:11678:.feed-card-content{padding:15px 18px 0 !important;}
+/mnt/data/fullcheck/enhancements.css:11679:.feed-card-author{
+/mnt/data/fullcheck/enhancements.css:11687:.feed-card-avatar{
+/mnt/data/fullcheck/enhancements.css:11693:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11701:.feed-card-avatar img{width:100% !important;height:100% !important;object-fit:cover !important;display:block !important;}
+/mnt/data/fullcheck/enhancements.css:11702:.feed-card-avatar-fallback{font-size:17px !important;}
+/mnt/data/fullcheck/enhancements.css:11703:.feed-card-author-copy{min-width:0 !important;display:flex !important;flex-direction:column !important;gap:2px !important;}
+/mnt/data/fullcheck/enhancements.css:11704:.feed-card-author-line{display:flex !important;align-items:baseline !important;gap:7px !important;min-width:0 !important;flex-wrap:wrap !important;}
+/mnt/data/fullcheck/enhancements.css:11705:.feed-card-author strong{font-size:14px !important;font-weight:800 !important;color:#eef2f4 !important;}
+/mnt/data/fullcheck/enhancements.css:11706:.feed-card-handle{font-size:12px !important;color:#7e8a90 !important;overflow-wrap:anywhere !important;}
+/mnt/data/fullcheck/enhancements.css:11707:.feed-card-author-time{font-size:11px !important;color:#748087 !important;}
+/mnt/data/fullcheck/enhancements.css:11708:.feed-card-author-time time{color:inherit !important;}
+/mnt/data/fullcheck/enhancements.css:11709:.feed-card-title{margin:0 0 9px !important;}
+/mnt/data/fullcheck/enhancements.css:11710:.feed-card-meta{margin:0 0 10px !important;}
+/mnt/data/fullcheck/enhancements.css:11711:.feed-card-body-preview,
+/mnt/data/fullcheck/enhancements.css:11712:.feed-card-full-text{
+/mnt/data/fullcheck/enhancements.css:11715:  overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:11717:.feed-card-body-preview{display:block !important;}
+/mnt/data/fullcheck/enhancements.css:11718:.feed-card-full-text[hidden],.feed-card-body-preview[hidden]{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11719:.feed-card-full-text{margin:0 !important;}
+/mnt/data/fullcheck/enhancements.css:11720:.feed-card-full-text p{margin:0 0 10px !important;}
+/mnt/data/fullcheck/enhancements.css:11721:.feed-card-full-text ul{margin:8px 0 8px 22px !important;padding:0 !important;}
+/mnt/data/fullcheck/enhancements.css:11722:.feed-card-full-text img{max-width:100% !important;height:auto !important;}
+/mnt/data/fullcheck/enhancements.css:11723:.feed-card-media{margin:14px -18px 0 !important;width:calc(100% + 36px) !important;aspect-ratio:16/9 !important;}
+/mnt/data/fullcheck/enhancements.css:11724:.feed-card:not(.is-expanded) .feed-card-media{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11725:.feed-card.is-expanded .feed-card-body-preview{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11726:.feed-card.is-expanded .feed-card-full-text{display:block !important;}
+/mnt/data/fullcheck/enhancements.css:11727:.feed-card-actions{
+/mnt/data/fullcheck/enhancements.css:11736:.feed-action{background:transparent !important;color:#8e9aa0 !important;}
+/mnt/data/fullcheck/enhancements.css:11737:.feed-action:hover,.feed-action:focus-visible{background:rgba(126,177,218,.08) !important;color:#a9d2f0 !important;}
+/mnt/data/fullcheck/enhancements.css:11738:.feed-action.is-active[data-post-action="like"]{color:#d99ab4 !important;}
+/mnt/data/fullcheck/enhancements.css:11739:.feed-share-trigger svg{width:19px !important;height:19px !important;}
+/mnt/data/fullcheck/enhancements.css:11740:.feed-share-trigger span{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11744:body.post-reader-open{overflow:auto !important;}
+/mnt/data/fullcheck/enhancements.css:11746:/* The fixed mobile dock must never cover the last post. */
+/mnt/data/fullcheck/enhancements.css:11747:#feed,
+/mnt/data/fullcheck/enhancements.css:11748:#feedList,
+/mnt/data/fullcheck/enhancements.css:11749:.feed-list,
+/mnt/data/fullcheck/enhancements.css:11750:main#feed{
+/mnt/data/fullcheck/enhancements.css:11755:  .feed-card{border-radius:16px !important;margin-bottom:14px !important;}
+/mnt/data/fullcheck/enhancements.css:11756:  .feed-card-content{padding:14px 15px 0 !important;}
+/mnt/data/fullcheck/enhancements.css:11757:  .feed-card-author{gap:10px !important;margin-bottom:12px !important;}
+/mnt/data/fullcheck/enhancements.css:11758:  .feed-card-avatar{width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;}
+/mnt/data/fullcheck/enhancements.css:11759:  .feed-card-author strong{font-size:13px !important;}
+/mnt/data/fullcheck/enhancements.css:11760:  .feed-card-handle{font-size:11px !important;}
+/mnt/data/fullcheck/enhancements.css:11761:  .feed-card-author-time{font-size:10px !important;}
+/mnt/data/fullcheck/enhancements.css:11762:  .feed-card-title{font-size:22px !important;}
+/mnt/data/fullcheck/enhancements.css:11763:  .feed-card-body-preview,.feed-card-full-text{font-size:15px !important;line-height:1.62 !important;}
+/mnt/data/fullcheck/enhancements.css:11764:  .feed-card-media{margin-left:-15px !important;margin-right:-15px !important;width:calc(100% + 30px) !important;}
+/mnt/data/fullcheck/enhancements.css:11765:  .feed-card-actions{margin:12px 15px 14px !important;gap:14px !important;}
+/mnt/data/fullcheck/enhancements.css:11766:  #feed,
+/mnt/data/fullcheck/enhancements.css:11767:  #feedList,
+/mnt/data/fullcheck/enhancements.css:11768:  .feed-list,
+/mnt/data/fullcheck/enhancements.css:11769:  main#feed{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px)) !important;}
+/mnt/data/fullcheck/enhancements.css:11773:   FINAL POST SHARE CONTROL — X-like share icon + native mobile sheet
+/mnt/data/fullcheck/enhancements.css:11775:.feed-share-wrap{
+/mnt/data/fullcheck/enhancements.css:11782:.feed-share-trigger{
+/mnt/data/fullcheck/enhancements.css:11795:.feed-share-trigger svg{
+/mnt/data/fullcheck/enhancements.css:11801:.feed-share-trigger span{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11802:.feed-share-trigger:active{transform:scale(.96);}
+/mnt/data/fullcheck/enhancements.css:11805:  .feed-card-actions{
+/mnt/data/fullcheck/enhancements.css:11810:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:11812:  .feed-share-wrap{
+/mnt/data/fullcheck/enhancements.css:11817:  .feed-share-trigger{
+/mnt/data/fullcheck/enhancements.css:11824:  /* The native share sheet is opened directly from the icon on mobile. */
+/mnt/data/fullcheck/enhancements.css:11825:  .feed-share-menu{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:11832:.feed-card-content{padding:0 !important;}
+/mnt/data/fullcheck/enhancements.css:11833:.feed-card-author{
+/mnt/data/fullcheck/enhancements.css:11844:.feed-card-author-copy{flex:1 1 auto !important;min-width:0 !important;}
+/mnt/data/fullcheck/enhancements.css:11845:.feed-card-author-line{display:block !important;}
+/mnt/data/fullcheck/enhancements.css:11846:.feed-card-author strong{display:block !important;font-size:14px !important;line-height:1.2 !important;}
+/mnt/data/fullcheck/enhancements.css:11847:.feed-card-author-subline{
+/mnt/data/fullcheck/enhancements.css:11857:.feed-card-real-name{color:#c3cdd1 !important;}
+/mnt/data/fullcheck/enhancements.css:11858:.feed-card-handle,.feed-card-hashtags{color:#7f8d93 !important;}
+/mnt/data/fullcheck/enhancements.css:11859:.feed-card-hashtags{overflow-wrap:anywhere !important;}
+/mnt/data/fullcheck/enhancements.css:11860:.feed-card-author-date{
+/mnt/data/fullcheck/enhancements.css:11870:.feed-card-title,
+/mnt/data/fullcheck/enhancements.css:11871:.feed-card-meta,
+/mnt/data/fullcheck/enhancements.css:11872:.feed-card-body-preview,
+/mnt/data/fullcheck/enhancements.css:11873:.feed-card-full-text,
+/mnt/data/fullcheck/enhancements.css:11874:.feed-card-media{margin-left:18px !important;margin-right:18px !important;}
+/mnt/data/fullcheck/enhancements.css:11875:.feed-card-title{margin-top:18px !important;}
+/mnt/data/fullcheck/enhancements.css:11876:.feed-card-meta{margin-top:0 !important;}
+/mnt/data/fullcheck/enhancements.css:11877:.feed-card-media{width:calc(100% - 36px) !important;}
+/mnt/data/fullcheck/enhancements.css:11880:  .feed-card-author{min-height:70px !important;padding:11px 15px !important;border-radius:16px 16px 0 0 !important;}
+/mnt/data/fullcheck/enhancements.css:11881:  .feed-card-avatar{width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;}
+/mnt/data/fullcheck/enhancements.css:11882:  .feed-card-author strong{font-size:13px !important;}
+/mnt/data/fullcheck/enhancements.css:11883:  .feed-card-author-subline{font-size:10px !important;gap:3px 6px !important;}
+/mnt/data/fullcheck/enhancements.css:11884:  .feed-card-author-date{font-size:9px !important;max-width:116px !important;white-space:normal !important;}
+/mnt/data/fullcheck/enhancements.css:11885:  .feed-card-title,
+/mnt/data/fullcheck/enhancements.css:11886:  .feed-card-meta,
+/mnt/data/fullcheck/enhancements.css:11887:  .feed-card-body-preview,
+/mnt/data/fullcheck/enhancements.css:11888:  .feed-card-full-text,
+/mnt/data/fullcheck/enhancements.css:11889:  .feed-card-media{margin-left:15px !important;margin-right:15px !important;}
+/mnt/data/fullcheck/enhancements.css:11890:  .feed-card-media{width:calc(100% - 30px) !important;}
+/mnt/data/fullcheck/enhancements.css:11894:   FINAL HUB NAV — CSEVEGÉS KÖZVETLENÜL A HUB ALATT
+/mnt/data/fullcheck/enhancements.css:11897:  .desktop-rail-actions #desktopMessageNav{
+/mnt/data/fullcheck/enhancements.css:11901:  .desktop-rail-actions #desktopProfileNav{order:3 !important;}
+/mnt/data/fullcheck/enhancements.css:11902:  .desktop-rail-actions #desktopLikedNav{order:4 !important;}
+/mnt/data/fullcheck/enhancements.css:11903:  .desktop-rail-actions #desktopSavedNav{order:5 !important;}
+/mnt/data/fullcheck/enhancements.css:11904:  .desktop-rail-actions #desktopHistoryNav{order:6 !important;}
+/mnt/data/fullcheck/enhancements.css:11934:  overflow:hidden;
+/mnt/data/fullcheck/enhancements.css:11935:  text-overflow:ellipsis;
+/mnt/data/fullcheck/enhancements.css:11946:.feed-card-author-copy{
+/mnt/data/fullcheck/enhancements.css:11951:.feed-card-author-line{
+/mnt/data/fullcheck/enhancements.css:11955:.feed-card-author strong{
+/mnt/data/fullcheck/enhancements.css:11956:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11957:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:11960:.feed-card-author-subline{
+/mnt/data/fullcheck/enhancements.css:11963:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11965:.feed-card-handle{
+/mnt/data/fullcheck/enhancements.css:11967:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11968:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:11971:.feed-card-hashtags{
+/mnt/data/fullcheck/enhancements.css:11974:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:11975:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:11977:.feed-card-author-date{
+/mnt/data/fullcheck/enhancements.css:11982:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:11989:  .feed-card-author{
+/mnt/data/fullcheck/enhancements.css:11993:  .feed-card-author-copy{
+/mnt/data/fullcheck/enhancements.css:11998:  .feed-card-author-date{
+/mnt/data/fullcheck/enhancements.css:12008:   FRIENDLY PRIVATE MESSAGES — FINAL MOBILE/CHAT UX
+/mnt/data/fullcheck/enhancements.css:12085:  overflow:hidden !important;background:#172126 !important;color:#9fc4e5 !important;
+/mnt/data/fullcheck/enhancements.css:12090:.messages-view .message-contact-copy strong{font-size:13px !important;line-height:1.2 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+/mnt/data/fullcheck/enhancements.css:12091:.messages-view .message-contact-copy small{font-size:10px !important;color:#738188 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+/mnt/data/fullcheck/enhancements.css:12103:  display:grid !important;place-items:center !important;overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12108:.messages-view .message-chat-title-wrap h2{white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+/mnt/data/fullcheck/enhancements.css:12109:.messages-view .message-chat-title-wrap small{display:block !important;margin-top:3px !important;color:#68767c !important;font:500 9px/1.2 "DM Mono",monospace !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+/mnt/data/fullcheck/enhancements.css:12158:  .messages-view .messages-layout{position:relative !important;display:block !important;height:calc(100dvh - 66px) !important;overflow:hidden !important;}
+/mnt/data/fullcheck/enhancements.css:12161:  .messages-view .message-contacts{padding:14px 14px calc(18px + env(safe-area-inset-bottom,0px)) !important;border:0 !important;overflow-y:auto !important;overflow-x:hidden !important;background:#000 !important;}
+/mnt/data/fullcheck/enhancements.css:12162:  .messages-view .message-contacts-list{display:block !important;width:100% !important;min-width:0 !important;overflow:visible !important;}
+/mnt/data/fullcheck/enhancements.css:12187:   MOBILE COMPOSER FINAL ALIGNMENT
+/mnt/data/fullcheck/enhancements.css:12192:  #feed .composer-footer{
+/mnt/data/fullcheck/enhancements.css:12197:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:12200:  #feed .composer-footer-actions{
+/mnt/data/fullcheck/enhancements.css:12209:  #feed .composer-footer #postButton{
+/mnt/data/fullcheck/enhancements.css:12222:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12228:  #feed .feed-editor-toolbar{
+/mnt/data/fullcheck/enhancements.css:12233:  #feed .feed-editor-toolbar .editor-font-select{
+/mnt/data/fullcheck/enhancements.css:12239:  #feed .feed-editor-toolbar #editorFontFormat{
+/mnt/data/fullcheck/enhancements.css:12248:   MOBILE NOTIFICATION / COMMUNITY PANEL — IMAGE BOUNDS
+/mnt/data/fullcheck/enhancements.css:12252:  .mobile-community-panel,
+/mnt/data/fullcheck/enhancements.css:12253:  .mobile-community-panel-body,
+/mnt/data/fullcheck/enhancements.css:12254:  .mobile-community-panel .mobile-cloned-rail,
+/mnt/data/fullcheck/enhancements.css:12255:  .mobile-community-panel .rail-info-card,
+/mnt/data/fullcheck/enhancements.css:12256:  .mobile-community-panel .activity-card,
+/mnt/data/fullcheck/enhancements.css:12257:  .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:12261:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12266:  .mobile-community-panel img{
+/mnt/data/fullcheck/enhancements.css:12277:  .mobile-community-panel .community-avatar,
+/mnt/data/fullcheck/enhancements.css:12278:  .mobile-community-panel .community-avatar img,
+/mnt/data/fullcheck/enhancements.css:12279:  .mobile-community-panel .avatar,
+/mnt/data/fullcheck/enhancements.css:12280:  .mobile-community-panel .avatar img,
+/mnt/data/fullcheck/enhancements.css:12281:  .mobile-community-panel .message-contact-avatar,
+/mnt/data/fullcheck/enhancements.css:12282:  .mobile-community-panel .message-contact-avatar img,
+/mnt/data/fullcheck/enhancements.css:12283:  .mobile-community-panel .feed-card-avatar,
+/mnt/data/fullcheck/enhancements.css:12284:  .mobile-community-panel .feed-card-avatar img{
+/mnt/data/fullcheck/enhancements.css:12296:  .mobile-community-panel .post-image,
+/mnt/data/fullcheck/enhancements.css:12297:  .mobile-community-panel .post-media,
+/mnt/data/fullcheck/enhancements.css:12298:  .mobile-community-panel .feed-card-image,
+/mnt/data/fullcheck/enhancements.css:12299:  .mobile-community-panel .post-content img,
+/mnt/data/fullcheck/enhancements.css:12300:  .mobile-community-panel .community-latest-item img:not(.community-avatar img){
+/mnt/data/fullcheck/enhancements.css:12309:/* FINAL MOBILE PROFILE ACTION ALIGNMENT
+/mnt/data/fullcheck/enhancements.css:12343:   PROFILE COVER IMAGE - MOBILE/UPLOAD LIMITS
+/mnt/data/fullcheck/enhancements.css:12345:.customizer-banner-card{min-width:0!important;overflow:hidden!important;}
+/mnt/data/fullcheck/enhancements.css:12346:.customizer-banner-preview{width:100%!important;max-width:100%!important;aspect-ratio:3 / 1!important;height:auto!important;min-height:120px!important;max-height:260px!important;overflow:hidden!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;}
+/mnt/data/fullcheck/enhancements.css:12348:.customizer-live-banner,.profile-view-cover{max-width:100%!important;overflow:hidden!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;}
+/mnt/data/fullcheck/enhancements.css:12352:  .customizer-banner-card .customizer-image-card-copy{min-width:0!important;overflow:hidden!important;}
+/mnt/data/fullcheck/enhancements.css:12353:  .customizer-banner-card .customizer-upload-button{max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important;}
+/mnt/data/fullcheck/enhancements.css:12359:   One clean speech-bubble icon for desktop + mobile.
+/mnt/data/fullcheck/enhancements.css:12527:/* Mobile: keep the header close button and make the composer one clean row. */
+/mnt/data/fullcheck/enhancements.css:12604:   DESKTOP CHAT — FEED PANEL / TOGGLE
+/mnt/data/fullcheck/enhancements.css:12607:  /* Keep the conversation surface inside the central feed column.
+/mnt/data/fullcheck/enhancements.css:12618:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12631:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12649:  /* Mobile keeps the existing full-screen chat experience. */
+/mnt/data/fullcheck/enhancements.css:12661:   FINAL — DESKTOP CHAT LIVES INSIDE THE FEED COLUMN
+/mnt/data/fullcheck/enhancements.css:12664:  main#feed{
+/mnt/data/fullcheck/enhancements.css:12666:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:12667:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12671:  /* The JS mounts #messagesView into #feed while open. */
+/mnt/data/fullcheck/enhancements.css:12672:  main#feed > .messages-view.open,
+/mnt/data/fullcheck/enhancements.css:12673:  main#feed > .messages-view[aria-hidden="false"]{
+/mnt/data/fullcheck/enhancements.css:12685:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12691:  main#feed > .messages-view.open .messages-view-inner,
+/mnt/data/fullcheck/enhancements.css:12692:  main#feed > .messages-view[aria-hidden="false"] .messages-view-inner{
+/mnt/data/fullcheck/enhancements.css:12697:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12701:  main#feed > .messages-view.open .messages-view-header,
+/mnt/data/fullcheck/enhancements.css:12702:  main#feed > .messages-view[aria-hidden="false"] .messages-view-header{
+/mnt/data/fullcheck/enhancements.css:12706:  main#feed > .messages-view.open .messages-layout,
+/mnt/data/fullcheck/enhancements.css:12707:  main#feed > .messages-view[aria-hidden="false"] .messages-layout{
+/mnt/data/fullcheck/enhancements.css:12715:  main#feed > .messages-view{
+/mnt/data/fullcheck/enhancements.css:12721:   FINAL — DESKTOP PROFILE / LIKES / SAVED LIVE IN FEED COLUMN
+/mnt/data/fullcheck/enhancements.css:12724:  main#feed > .profile-view.open,
+/mnt/data/fullcheck/enhancements.css:12725:  main#feed > .profile-view[aria-hidden="false"]{
+/mnt/data/fullcheck/enhancements.css:12736:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12737:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:12742:  main#feed > .profile-view.open .profile-view-inner,
+/mnt/data/fullcheck/enhancements.css:12743:  main#feed > .profile-view[aria-hidden="false"] .profile-view-inner{
+/mnt/data/fullcheck/enhancements.css:12750:  main#feed > .profile-view .profile-view-header{
+/mnt/data/fullcheck/enhancements.css:12756:  main#feed > .profile-view{position:fixed !important;}
+/mnt/data/fullcheck/enhancements.css:12759:/* Desktop: Profile, Kedvelések and Mentések use only the feed column. */
+/mnt/data/fullcheck/enhancements.css:12761:  main#feed > .profile-view.open,main#feed > .profile-view[aria-hidden="false"]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;max-width:none!important;margin:0!important;padding:0!important;z-index:1000!important;display:block!important;overflow-x:hidden!important;overflow-y:auto!important;background:#000!important;border:0!important;box-shadow:none!important}
+/mnt/data/fullcheck/enhancements.css:12762:  main#feed > .profile-view.open .profile-view-inner,main#feed > .profile-view[aria-hidden="false"] .profile-view-inner{width:100%!important;min-height:100%!important;margin:0!important;padding:0 24px 48px!important;box-sizing:border-box!important}
+/mnt/data/fullcheck/enhancements.css:12763:  main#feed > .profile-view .profile-view-header{top:0!important;padding-top:18px!important}
+/mnt/data/fullcheck/enhancements.css:12773:  pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:12785:  overflow:auto;
+/mnt/data/fullcheck/enhancements.css:12805:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:12814:/* FINAL DESKTOP NAV ACTIVE STATE
+/mnt/data/fullcheck/enhancements.css:12815:   Every selected desktop item uses exactly the same gradient shell as Hub. */
+/mnt/data/fullcheck/enhancements.css:12833:   EVERLIGHT — DESKTOP NAV ACTIVE STATE HARD OVERRIDE
+/mnt/data/fullcheck/enhancements.css:12834:   The selected item must always look exactly like Hub.
+/mnt/data/fullcheck/enhancements.css:12835:   This is intentionally the LAST desktop-nav rule so hover/theme
+/mnt/data/fullcheck/enhancements.css:12867:   EVERLIGHT — CANONICAL DESKTOP NAV ACTIVE STATE
+/mnt/data/fullcheck/enhancements.css:12868:   One source of truth. Selected items must look exactly like Hub.
+/mnt/data/fullcheck/enhancements.css:12900:/* FINAL DESKTOP NAV INTERACTION RESET — one clickable layer, one active style. */
+/mnt/data/fullcheck/enhancements.css:12906:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:12961:  /* Shared sheet geometry — deliberately matches .mobile-community-panel. */
+/mnt/data/fullcheck/enhancements.css:12978:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:12991:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:12993:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13009:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:13015:   FINAL MOBILE NAV TOGGLE — one consistent interaction model
+/mnt/data/fullcheck/enhancements.css:13024:   MOBILE FINAL — NOTIFICATION / CHAT / PROFILE SHEETS
+/mnt/data/fullcheck/enhancements.css:13032:  /* All three mobile views use the same long, floating sheet style. */
+/mnt/data/fullcheck/enhancements.css:13037:  .mobile-community-panel.is-open{
+/mnt/data/fullcheck/enhancements.css:13049:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13058:  .mobile-community-panel-body{
+/mnt/data/fullcheck/enhancements.css:13062:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:13063:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13070:  #mobileCommunityClose{
+/mnt/data/fullcheck/enhancements.css:13076:  .mobile-community-panel-head{
+/mnt/data/fullcheck/enhancements.css:13088:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13099:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13113:  body.mobile-community-open .site-footer{
+/mnt/data/fullcheck/enhancements.css:13119:/* MOBILE FINAL PATCH — notification/chat/profile sheet alignment + dock state */
+/mnt/data/fullcheck/enhancements.css:13121:  /* Every mobile sheet gets the same long, scrollable panel geometry. */
+/mnt/data/fullcheck/enhancements.css:13126:  .mobile-community-panel.is-open{
+/mnt/data/fullcheck/enhancements.css:13134:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13151:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13164:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13174:    overflow:auto !important;
+/mnt/data/fullcheck/enhancements.css:13175:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13183:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13196:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13197:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13198:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13200:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:13210:  #closeMessagesView, #closeProfileView, #mobileCommunityClose{
+/mnt/data/fullcheck/enhancements.css:13217:/* MOBILE DEFINITIVE SHEET FIX
+/mnt/data/fullcheck/enhancements.css:13218:   - dock state is controlled only by setMobileDockActive()
+/mnt/data/fullcheck/enhancements.css:13232:  .mobile-community-panel.is-open{
+/mnt/data/fullcheck/enhancements.css:13241:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13243:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:13259:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13260:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:13270:  /* Do not slide the chat pane off-screen on the mobile sheet.
+/mnt/data/fullcheck/enhancements.css:13278:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13289:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13290:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13293:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13294:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:13305:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13318:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13319:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13320:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13321:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:13339:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13340:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13341:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:13344:  #closeMessagesView,#closeProfileView,#mobileCommunityClose{ display:none !important; }
+/mnt/data/fullcheck/enhancements.css:13348:/* Mobile chat: unauthenticated users see only a compact sign-in notice.
+/mnt/data/fullcheck/enhancements.css:13384:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:13413:  /* The mobile dock is always visible and owns the open/close state. */
+/mnt/data/fullcheck/enhancements.css:13427:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13440:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13449:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13469:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13478:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13479:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13480:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13482:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:13492:  #closeMessagesView,#closeProfileView,#mobileCommunityClose{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:13500:  .messages-view .dm-list{min-height:220px !important;overflow:auto !important;}
+/mnt/data/fullcheck/enhancements.css:13504:   CHAT LAYOUT FINAL — one spacious surface on desktop + mobile
+/mnt/data/fullcheck/enhancements.css:13510:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13527:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13528:  text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:13536:  overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:13537:  overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13538:  -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:13539:  touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:13651:   No nested text bubble; desktop and mobile share the same layout.
+/mnt/data/fullcheck/enhancements.css:13654:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13682:  overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:13743:   explicitly occupy the full feed width instead of the second
+/mnt/data/fullcheck/enhancements.css:13747:  main#feed > .messages-view.open .messages-layout,
+/mnt/data/fullcheck/enhancements.css:13748:  main#feed > .messages-view[aria-hidden="false"] .messages-layout{
+/mnt/data/fullcheck/enhancements.css:13757:  main#feed > .messages-view.open .message-chat,
+/mnt/data/fullcheck/enhancements.css:13758:  main#feed > .messages-view[aria-hidden="false"] .message-chat{
+/mnt/data/fullcheck/enhancements.css:13765:  main#feed > .messages-view.open .dm-list,
+/mnt/data/fullcheck/enhancements.css:13766:  main#feed > .messages-view[aria-hidden="false"] .dm-list{
+/mnt/data/fullcheck/enhancements.css:13772:  main#feed > .messages-view .messages-close{
+/mnt/data/fullcheck/enhancements.css:13779:/* Feed post streak badge — same visual language as Available Stars. */
+/mnt/data/fullcheck/enhancements.css:13780:.feed-card-avatar-wrap{
+/mnt/data/fullcheck/enhancements.css:13786:.feed-card-avatar-wrap .feed-card-avatar{
+/mnt/data/fullcheck/enhancements.css:13790:.feed-card-streak{
+/mnt/data/fullcheck/enhancements.css:13811:  .feed-card-streak{right:-7px;bottom:-5px;min-width:27px;height:19px;}
+/mnt/data/fullcheck/enhancements.css:13833:   DESKTOP VIEW REPLACEMENT — Hub/feed must disappear completely
+/mnt/data/fullcheck/enhancements.css:13835:   The opened view is mounted inside #feed, so hide every other
+/mnt/data/fullcheck/enhancements.css:13839:  body.messages-view-open main#feed > *:not(#messagesView),
+/mnt/data/fullcheck/enhancements.css:13840:  body.profile-view-open main#feed > *:not(#profileView){
+/mnt/data/fullcheck/enhancements.css:13844:  body.messages-view-open main#feed,
+/mnt/data/fullcheck/enhancements.css:13845:  body.profile-view-open main#feed{
+/mnt/data/fullcheck/enhancements.css:13847:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13850:  body.messages-view-open main#feed > #messagesView,
+/mnt/data/fullcheck/enhancements.css:13851:  body.profile-view-open main#feed > #profileView{
+/mnt/data/fullcheck/enhancements.css:13859:  body.messages-view-open main#feed > #messagesView .messages-view-inner,
+/mnt/data/fullcheck/enhancements.css:13860:  body.profile-view-open main#feed > #profileView .profile-view-inner{
+/mnt/data/fullcheck/enhancements.css:13868:   MOBILE EVERLIGHT SHARE SHEET — DOM PREVIEW, NO GENERATED IMAGE
+/mnt/data/fullcheck/enhancements.css:13871:  body.mobile-share-open{overflow:hidden !important;touch-action:none}
+/mnt/data/fullcheck/enhancements.css:13872:  .mobile-post-share-sheet{
+/mnt/data/fullcheck/enhancements.css:13874:    pointer-events:none;opacity:0;transition:opacity .2s ease;
+/mnt/data/fullcheck/enhancements.css:13876:  .mobile-post-share-sheet.is-open{pointer-events:auto;opacity:1}
+/mnt/data/fullcheck/enhancements.css:13877:  .mobile-post-share-backdrop{
+/mnt/data/fullcheck/enhancements.css:13881:  .mobile-post-share-panel{
+/mnt/data/fullcheck/enhancements.css:13882:    position:relative;width:100%;max-height:92dvh;overflow:auto;overscroll-behavior:contain;
+/mnt/data/fullcheck/enhancements.css:13889:  .mobile-post-share-sheet.is-open .mobile-post-share-panel{transform:translateY(0)}
+/mnt/data/fullcheck/enhancements.css:13890:  .mobile-post-share-grabber{width:42px;height:4px;border-radius:999px;background:#566168;margin:2px auto 12px}
+/mnt/data/fullcheck/enhancements.css:13891:  .mobile-post-share-header{display:flex;align-items:center;justify-content:space-between;padding:0 2px 12px}
+/mnt/data/fullcheck/enhancements.css:13892:  .mobile-post-share-header h2{margin:0;font:800 20px/1.2 Manrope,Arial,sans-serif;color:#f2f4f4}
+/mnt/data/fullcheck/enhancements.css:13893:  .mobile-post-share-close{
+/mnt/data/fullcheck/enhancements.css:13897:  .mobile-post-share-preview{
+/mnt/data/fullcheck/enhancements.css:13900:  .mobile-post-share-preview>.feed-card{
+/mnt/data/fullcheck/enhancements.css:13903:    overflow:hidden !important;background:#06090b !important;
+/mnt/data/fullcheck/enhancements.css:13906:  .mobile-post-share-preview>.feed-card .feed-card-content{padding:18px !important}
+/mnt/data/fullcheck/enhancements.css:13907:  .mobile-post-share-preview>.feed-card .feed-card-author{margin-bottom:15px !important}
+/mnt/data/fullcheck/enhancements.css:13908:  .mobile-post-share-preview>.feed-card .feed-card-title{font-size:25px !important;line-height:1.18 !important;margin:0 0 12px !important}
+/mnt/data/fullcheck/enhancements.css:13909:  .mobile-post-share-preview>.feed-card .feed-card-body-preview[hidden]{display:none !important}
+/mnt/data/fullcheck/enhancements.css:13910:  .mobile-post-share-preview>.feed-card .feed-card-full-text{display:block !important;color:#d3d9db !important;font-size:15px !important;line-height:1.65 !important}
+/mnt/data/fullcheck/enhancements.css:13911:  .mobile-post-share-preview>.feed-card .feed-card-meta{margin:0 0 12px !important}
+/mnt/data/fullcheck/enhancements.css:13912:  .mobile-post-share-preview>.feed-card .feed-card-media{margin-top:14px !important;border-radius:16px !important;overflow:hidden !important}
+/mnt/data/fullcheck/enhancements.css:13913:  .mobile-post-share-heading{font:700 12px/1.2 "DM Mono",monospace;color:#8badcc;letter-spacing:.08em;text-transform:uppercase;margin:2px 4px 10px}
+/mnt/data/fullcheck/enhancements.css:13914:  .mobile-post-share-options{display:grid;gap:8px}
+/mnt/data/fullcheck/enhancements.css:13915:  .mobile-post-share-option{
+/mnt/data/fullcheck/enhancements.css:13920:  .mobile-post-share-option:active{transform:scale(.985);background:#171e22}
+/mnt/data/fullcheck/enhancements.css:13921:  .mobile-post-share-option-icon{
+/mnt/data/fullcheck/enhancements.css:13925:  .mobile-post-share-option-icon.friends{background:#193022;color:#9ee7ad}
+/mnt/data/fullcheck/enhancements.css:13926:  .mobile-post-share-option-icon.message{background:#25203a;color:#c7b8ff}
+/mnt/data/fullcheck/enhancements.css:13927:  .mobile-post-share-option-icon.link{background:#252a2d;color:#c8d0d3}
+/mnt/data/fullcheck/enhancements.css:13928:  .mobile-post-share-option strong{display:block;font-size:14px;line-height:1.25}
+/mnt/data/fullcheck/enhancements.css:13929:  .mobile-post-share-option small{display:block;margin-top:3px;color:#7f8b90;font-size:10px;line-height:1.35}
+/mnt/data/fullcheck/enhancements.css:13930:  .mobile-post-share-option>b{font-size:25px;font-weight:400;color:#667278;text-align:right}
+/mnt/data/fullcheck/enhancements.css:13931:  .mobile-post-share-info{
+/mnt/data/fullcheck/enhancements.css:13935:  .mobile-post-share-info>span{font-size:16px;line-height:1.2}
+/mnt/data/fullcheck/enhancements.css:13936:  .mobile-post-share-info strong{display:block;font-size:11px;color:#9fc4e7}
+/mnt/data/fullcheck/enhancements.css:13937:  .mobile-post-share-info small{display:block;margin-top:3px;color:#758186;font-size:9px;line-height:1.45}
+/mnt/data/fullcheck/enhancements.css:13944:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13959:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13975:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:13981:.feed-card-comments{
+/mnt/data/fullcheck/enhancements.css:13986:.feed-comments-head{
+/mnt/data/fullcheck/enhancements.css:13994:.feed-comments-head span{
+/mnt/data/fullcheck/enhancements.css:13998:.feed-comments-open-button{
+/mnt/data/fullcheck/enhancements.css:14008:.feed-comments-open-button:hover{border-color:#8badcc !important;background:rgba(24,40,48,.95) !important;}
+/mnt/data/fullcheck/enhancements.css:14009:.feed-comments-open-button:focus-visible{outline:2px solid #8badcc !important;outline-offset:2px !important;}
+/mnt/data/fullcheck/enhancements.css:14010:.feed-comments-body[hidden]{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:14011:.feed-comments-list{
+/mnt/data/fullcheck/enhancements.css:14016:  overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:14019:.feed-comment{
+/mnt/data/fullcheck/enhancements.css:14025:.feed-comment-avatar{
+/mnt/data/fullcheck/enhancements.css:14031:  overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14039:.feed-comment-avatar img{
+/mnt/data/fullcheck/enhancements.css:14047:.feed-comment-content{
+/mnt/data/fullcheck/enhancements.css:14055:.feed-comment-author{
+/mnt/data/fullcheck/enhancements.css:14062:.feed-comment-author strong{color:#e9eef0 !important;font-size:12px !important;}
+/mnt/data/fullcheck/enhancements.css:14063:.feed-comment-author span{color:#7e8b92 !important;font-size:10px !important;overflow-wrap:anywhere !important;}
+/mnt/data/fullcheck/enhancements.css:14064:.feed-comment-author time{margin-left:auto !important;color:#68767d !important;font-size:9px !important;}
+/mnt/data/fullcheck/enhancements.css:14065:.feed-comment-body{
+/mnt/data/fullcheck/enhancements.css:14070:  overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:14073:.feed-comments-loading,.feed-comments-empty,.feed-comments-login{
+/mnt/data/fullcheck/enhancements.css:14078:.feed-comments-login{
+/mnt/data/fullcheck/enhancements.css:14084:.feed-comment-form{
+/mnt/data/fullcheck/enhancements.css:14090:.feed-comment-form input{
+/mnt/data/fullcheck/enhancements.css:14102:.feed-comment-form input:focus{border-color:#8badcc !important;}
+/mnt/data/fullcheck/enhancements.css:14103:.feed-comment-form button{
+/mnt/data/fullcheck/enhancements.css:14114:.feed-comment-form button:disabled{opacity:.55 !important;cursor:wait !important;}
+/mnt/data/fullcheck/enhancements.css:14116:  .feed-card-comments{margin:0 15px 14px !important;}
+/mnt/data/fullcheck/enhancements.css:14117:  .feed-comments-list{max-height:320px !important;}
+/mnt/data/fullcheck/enhancements.css:14118:  .feed-comment-author time{margin-left:0 !important;}
+/mnt/data/fullcheck/enhancements.css:14123:.notification-list { display:grid; gap:8px; max-height:280px; overflow:auto; }
+/mnt/data/fullcheck/enhancements.css:14126:.notification-avatar { width:34px; height:34px; border-radius:50%; overflow:hidden; display:grid; place-items:center; background:#1b2a30; color:#9fc6e8; font-weight:700; }
+/mnt/data/fullcheck/enhancements.css:14129:.notification-copy strong, .notification-copy span { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+/mnt/data/fullcheck/enhancements.css:14141:  overflow:hidden !important; position:relative !important; display:block !important;
+/mnt/data/fullcheck/enhancements.css:14153:   MOBILE LOGIN — FINAL INTERACTION FIX
+/mnt/data/fullcheck/enhancements.css:14169:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:14170:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:14176:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:14177:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:14178:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:14184:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:14185:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:14193:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:14194:    touch-action:manipulation !important;
+/mnt/data/fullcheck/enhancements.css:14222:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:14237:    overflow-wrap:anywhere !important;
+/mnt/data/fullcheck/enhancements.css:14281:   MOBILE COMMUNITY PANEL — FULL DESKTOP RIGHT RAIL
+/mnt/data/fullcheck/enhancements.css:14287:  .mobile-community-panel{
+/mnt/data/fullcheck/enhancements.css:14295:  .mobile-community-panel-head{
+/mnt/data/fullcheck/enhancements.css:14300:  .mobile-community-panel-body{
+/mnt/data/fullcheck/enhancements.css:14304:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:14305:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14307:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:14312:  .mobile-community-panel .mobile-cloned-rail{
+/mnt/data/fullcheck/enhancements.css:14318:  .mobile-community-panel .rail-info-card,
+/mnt/data/fullcheck/enhancements.css:14319:  .mobile-community-panel .activity-card,
+/mnt/data/fullcheck/enhancements.css:14320:  .mobile-community-panel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:14329:  /* Never hide the actual live values on the mobile copy. */
+/mnt/data/fullcheck/enhancements.css:14330:  .mobile-community-panel #activityStats,
+/mnt/data/fullcheck/enhancements.css:14331:  .mobile-community-panel #onlineFaces,
+/mnt/data/fullcheck/enhancements.css:14332:  .mobile-community-panel #communityLatest{
+/mnt/data/fullcheck/enhancements.css:14338:  .mobile-community-panel .activity-stats{
+/mnt/data/fullcheck/enhancements.css:14345:  .mobile-community-panel .activity-stats > div{
+/mnt/data/fullcheck/enhancements.css:14349:  .mobile-community-panel .activity-stats span{
+/mnt/data/fullcheck/enhancements.css:14354:  .mobile-community-panel .activity-stats strong{
+/mnt/data/fullcheck/enhancements.css:14360:  .mobile-community-panel .faces{
+/mnt/data/fullcheck/enhancements.css:14367:  .mobile-community-panel .everlight-online-user{
+/mnt/data/fullcheck/enhancements.css:14371:  .mobile-community-panel .community-latest-list{
+/mnt/data/fullcheck/enhancements.css:14376:  .mobile-community-panel .community-latest-item{
+/mnt/data/fullcheck/enhancements.css:14381:  .mobile-community-panel .right-share-card .share-symbol-grid{
+/mnt/data/fullcheck/enhancements.css:14391:   EVERLIGHT CLEAN MOBILE UI — SINGLE AUTHORITATIVE DOCK
+/mnt/data/fullcheck/enhancements.css:14396:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14401:  /* The nav is a simple full-width lower bar, not a floating island. */
+/mnt/data/fullcheck/enhancements.css:14402:  #mobileDock.mobile-dock,
+/mnt/data/fullcheck/enhancements.css:14403:  .mobile-dock{
+/mnt/data/fullcheck/enhancements.css:14424:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14428:  .mobile-dock-item,
+/mnt/data/fullcheck/enhancements.css:14429:  #mobileDock .mobile-dock-item{
+/mnt/data/fullcheck/enhancements.css:14446:  .mobile-dock-item + .mobile-dock-item{
+/mnt/data/fullcheck/enhancements.css:14450:  .mobile-dock-item small{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:14452:  .mobile-dock-item.active{
+/mnt/data/fullcheck/enhancements.css:14458:  #mobileDock .rail-action-icon{
+/mnt/data/fullcheck/enhancements.css:14468:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:14471:  #mobileDock .rail-action-icon::before,
+/mnt/data/fullcheck/enhancements.css:14472:  #mobileDock .rail-action-icon::after{
+/mnt/data/fullcheck/enhancements.css:14478:  #mobileDock .mobile-island-alert,
+/mnt/data/fullcheck/enhancements.css:14479:  #mobileDock .mobile-menu-item{
+/mnt/data/fullcheck/enhancements.css:14492:  #mobileDock .mobile-menu-icon{
+/mnt/data/fullcheck/enhancements.css:14500:  #mobileDock .mobile-menu-icon i{
+/mnt/data/fullcheck/enhancements.css:14508:  #mobileDock .mobile-island-alert.is-open,
+/mnt/data/fullcheck/enhancements.css:14509:  #mobileDock .mobile-island-alert[aria-expanded="true"]{
+/mnt/data/fullcheck/enhancements.css:14516:  /* AI footer sits below the nav and above the iPhone home indicator. */
+/mnt/data/fullcheck/enhancements.css:14533:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:14543:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14544:    text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:14549:  #feed,.layout{padding-bottom:120px !important;}
+/mnt/data/fullcheck/enhancements.css:14551:  /* Community sheet fills the available mobile viewport, like the desktop rail. */
+/mnt/data/fullcheck/enhancements.css:14552:  #mobileCommunityPanel{
+/mnt/data/fullcheck/enhancements.css:14558:    overflow:hidden auto !important;
+/mnt/data/fullcheck/enhancements.css:14559:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:14568:  #mobileCommunityPanelBody{
+/mnt/data/fullcheck/enhancements.css:14573:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:14576:  #mobileCommunityPanel .mobile-cloned-rail{
+/mnt/data/fullcheck/enhancements.css:14586:  #mobileCommunityPanel .right-rail{
+/mnt/data/fullcheck/enhancements.css:14595:  #mobileCommunityPanel .rail-info-card,
+/mnt/data/fullcheck/enhancements.css:14596:  #mobileCommunityPanel .activity-card,
+/mnt/data/fullcheck/enhancements.css:14597:  #mobileCommunityPanel .right-share-card{
+/mnt/data/fullcheck/enhancements.css:14604:  #mobileCommunityPanel .share-symbol-grid{
+/mnt/data/fullcheck/enhancements.css:14610:   FINAL MOBILE BOTTOM BAR — AUTHORITATIVE OVERRIDE
+/mnt/data/fullcheck/enhancements.css:14616:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14619:  #mobileDock.mobile-dock,
+/mnt/data/fullcheck/enhancements.css:14620:  body #mobileDock.mobile-dock{
+/mnt/data/fullcheck/enhancements.css:14640:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:14644:  #mobileDock .mobile-dock-item,
+/mnt/data/fullcheck/enhancements.css:14645:  #mobileDock .mobile-island-alert,
+/mnt/data/fullcheck/enhancements.css:14646:  #mobileDock .mobile-menu-item{
+/mnt/data/fullcheck/enhancements.css:14666:  #mobileDock .mobile-dock-item + .mobile-dock-item{
+/mnt/data/fullcheck/enhancements.css:14670:  #mobileDock .mobile-dock-item.active{
+/mnt/data/fullcheck/enhancements.css:14675:  #mobileDock .mobile-dock-item small{display:none !important;}
+/mnt/data/fullcheck/enhancements.css:14678:  #mobileDock .rail-action-icon{
+/mnt/data/fullcheck/enhancements.css:14688:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:14691:  #mobileDock .rail-icon-home::before{
+/mnt/data/fullcheck/enhancements.css:14703:  #mobileDock .rail-icon-home::after{
+/mnt/data/fullcheck/enhancements.css:14716:  #mobileDock .rail-icon-chat::before{
+/mnt/data/fullcheck/enhancements.css:14727:  #mobileDock .rail-icon-chat::after{
+/mnt/data/fullcheck/enhancements.css:14741:  #mobileDock .rail-icon-profile::before{
+/mnt/data/fullcheck/enhancements.css:14752:  #mobileDock .rail-icon-profile::after{
+/mnt/data/fullcheck/enhancements.css:14765:  #mobileDock .mobile-menu-icon{
+/mnt/data/fullcheck/enhancements.css:14774:  #mobileDock .mobile-menu-icon i{
+/mnt/data/fullcheck/enhancements.css:14787:  #mobileDock .mobile-island-alert,
+/mnt/data/fullcheck/enhancements.css:14788:  #mobileDock .mobile-island-alert.is-open,
+/mnt/data/fullcheck/enhancements.css:14789:  #mobileDock .mobile-island-alert[aria-expanded="true"]{
+/mnt/data/fullcheck/enhancements.css:14814:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14816:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:14834:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14835:    text-overflow:ellipsis !important;
+/mnt/data/fullcheck/enhancements.css:14839:  #feed,
+/mnt/data/fullcheck/enhancements.css:14846:  #mobileDock.mobile-dock,
+/mnt/data/fullcheck/enhancements.css:14847:  body #mobileDock.mobile-dock{
+/mnt/data/fullcheck/enhancements.css:14854:  #mobileDock .mobile-dock-item,
+/mnt/data/fullcheck/enhancements.css:14855:  #mobileDock .mobile-island-alert,
+/mnt/data/fullcheck/enhancements.css:14856:  #mobileDock .mobile-menu-item{
+/mnt/data/fullcheck/enhancements.css:14861:  #mobileDock .rail-action-icon{transform:scale(.9) !important;}
+/mnt/data/fullcheck/enhancements.css:14862:  #mobileDock .mobile-menu-icon{transform:scale(.92) !important;}
+/mnt/data/fullcheck/enhancements.css:14863:  #feed,.layout{padding-bottom:82px !important;}
+/mnt/data/fullcheck/enhancements.css:14867:   MOBILE DOCK FINAL POSITION — KEEP DOCK + AI TOGETHER
+/mnt/data/fullcheck/enhancements.css:14871:  #mobileDock.mobile-dock,
+/mnt/data/fullcheck/enhancements.css:14872:  body #mobileDock.mobile-dock{
+/mnt/data/fullcheck/enhancements.css:14893:  #mobileDock.mobile-dock,
+/mnt/data/fullcheck/enhancements.css:14894:  body #mobileDock.mobile-dock{
+/mnt/data/fullcheck/enhancements.css:14919:  main#feed{
+/mnt/data/fullcheck/enhancements.css:14930:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:14968:  main#feed{
+/mnt/data/fullcheck/enhancements.css:14990:/* MOBILE COMMUNITY PANEL — FINAL INTERACTION FIX
+/mnt/data/fullcheck/enhancements.css:14994:  #mobileCommunityPanel{
+/mnt/data/fullcheck/enhancements.css:14995:    pointer-events:none !important;
+/mnt/data/fullcheck/enhancements.css:14996:    touch-action:none !important;
+/mnt/data/fullcheck/enhancements.css:14998:  #mobileCommunityPanel.is-open{
+/mnt/data/fullcheck/enhancements.css:14999:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:15000:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:15001:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:15003:  #mobileCommunityPanelBody{
+/mnt/data/fullcheck/enhancements.css:15007:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:15008:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:15009:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:15010:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:15012:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:15014:  #mobileCommunityPanel .mobile-cloned-rail{
+/mnt/data/fullcheck/enhancements.css:15015:    pointer-events:auto !important;
+/mnt/data/fullcheck/enhancements.css:15016:    touch-action:auto !important;
+/mnt/data/fullcheck/enhancements.css:15055:.daily-thought-bubbles{display:flex !important;gap:10px !important;overflow-x:auto !important;overflow-y:hidden !important;scrollbar-width:none !important;touch-action:pan-x !important;padding:2px 1px 4px !important;}
+/mnt/data/fullcheck/enhancements.css:15057:.daily-thought-bubble{flex:0 0 118px !important;height:118px !important;position:relative !important;border:1px solid #2b3b42 !important;border-radius:34px !important;background:#0b1114 !important;overflow:hidden !important;cursor:pointer !important;box-shadow:0 4px 16px rgba(0,0,0,.16) !important;}
+/mnt/data/fullcheck/enhancements.css:15058:.daily-thought-bubble::before{content:"";position:absolute;inset:5px;border:1px solid rgba(143,185,218,.18);border-radius:30px;pointer-events:none;}
+/mnt/data/fullcheck/enhancements.css:15059:.daily-thought-bubble-avatar{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;overflow:hidden;border:1px solid #36515f;background:#111a1e;display:grid;place-items:center;color:#9fc4e5;font:700 13px/1 Manrope,sans-serif;}
+/mnt/data/fullcheck/enhancements.css:15062:.daily-thought-bubble-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dfe4e5;font:700 9px/1.1 Manrope,sans-serif;}
+/mnt/data/fullcheck/enhancements.css:15063:.daily-thought-bubble-text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:3px;color:#849196;font:500 8px/1.3 Manrope,sans-serif;}
+/mnt/data/fullcheck/enhancements.css:15067:  .messages-view .messages-view-inner{overflow:hidden !important;}
+/mnt/data/fullcheck/enhancements.css:15084:   PASSWORD RESET / PASSWORD HINT — FINAL MOBILE + DESKTOP
+/mnt/data/fullcheck/enhancements.css:15098:   FINAL FIX — MOBILE FEED SCROLL + REAL DAILY THOUGHT BUBBLES
+/mnt/data/fullcheck/enhancements.css:15104:    overflow-x:hidden !important;
+/mnt/data/fullcheck/enhancements.css:15105:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:15106:    -webkit-overflow-scrolling:touch !important;
+/mnt/data/fullcheck/enhancements.css:15107:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:15110:  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open){
+/mnt/data/fullcheck/enhancements.css:15111:    overflow-y:auto !important;
+/mnt/data/fullcheck/enhancements.css:15119:  main#feed{
+/mnt/data/fullcheck/enhancements.css:15122:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:15123:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:15126:  #feedList,
+/mnt/data/fullcheck/enhancements.css:15127:  .feed-list{
+/mnt/data/fullcheck/enhancements.css:15130:    overflow:visible !important;
+/mnt/data/fullcheck/enhancements.css:15131:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:15134:  .feed-card,
+/mnt/data/fullcheck/enhancements.css:15135:  .feed-card *{
+/mnt/data/fullcheck/enhancements.css:15136:    touch-action:pan-y !important;
+/mnt/data/fullcheck/enhancements.css:15139:  /* Daily thoughts are not feed posts: they are small bubbles above avatars. */
+/mnt/data/fullcheck/enhancements.css:15155:    overflow-x:auto !important;
+/mnt/data/fullcheck/enhancements.css:15156:    overflow-y:visible !important;
+/mnt/data/fullcheck/enhancements.css:15160:    touch-action:pan-x !important;
+/mnt/data/fullcheck/enhancements.css:15190:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:15214:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:15231:    overflow:hidden !important;
+/mnt/data/fullcheck/enhancements.css:15232:    text-overflow:ellipsis !important;
+/mnt/data/fullcheck/app.js:19:let currentView = "hub";
+/mnt/data/fullcheck/app.js:509:    // Give immediate visual feedback while the authentication request is running.
+/mnt/data/fullcheck/app.js:729:   SAFE MARKDOWN / FEED EDITOR RENDERING
+/mnt/data/fullcheck/app.js:810:    ? `<span class="feed-card-streak" title="${postStreak} napos üzenet streak" aria-label="${postStreak} napos üzenet streak">🔥${escapeHtml(String(postStreak))}</span>`
+/mnt/data/fullcheck/app.js:814:    ? `<div class="feed-card-avatar feed-card-avatar-fallback" aria-hidden="true">✦</div>`
+/mnt/data/fullcheck/app.js:815:    : `<div class="feed-card-avatar-wrap">${post.avatar
+/mnt/data/fullcheck/app.js:816:      ? `<div class="feed-card-avatar"><img src="${escapeHtml(post.avatar)}" alt="" loading="lazy"></div>`
+/mnt/data/fullcheck/app.js:817:      : `<div class="feed-card-avatar" aria-hidden="true">${escapeHtml((accountName.charAt(0) || "?").toUpperCase())}</div>`}${streakMarkup}</div>`;
+/mnt/data/fullcheck/app.js:820:    ? `<div class="feed-card-media"><img class="post-image" src="${escapeHtml(post.image)}" alt="Megosztott kép" loading="lazy"></div>`
+/mnt/data/fullcheck/app.js:824:    ? `<h2 class="feed-card-title">${escapeHtml(postTitle)}</h2>`
+/mnt/data/fullcheck/app.js:829:      class="post feed-card"
+/mnt/data/fullcheck/app.js:834:      <div class="feed-card-content">
+/mnt/data/fullcheck/app.js:835:        <header class="feed-card-author">
+/mnt/data/fullcheck/app.js:837:          <div class="feed-card-author-copy">
+/mnt/data/fullcheck/app.js:838:            <div class="feed-card-author-line">
+/mnt/data/fullcheck/app.js:841:            <div class="feed-card-author-subline">
+/mnt/data/fullcheck/app.js:842:              ${accountUsername ? `<span class="feed-card-handle">${escapeHtml(accountUsername)}</span>` : ""}
+/mnt/data/fullcheck/app.js:843:              ${hashtags.length ? `<span class="feed-card-hashtags">${escapeHtml(hashtags.join(" "))}</span>` : ""}
+/mnt/data/fullcheck/app.js:846:          <time class="feed-card-author-date" datetime="${escapeHtml(String(post.created_at || ""))}">${escapeHtml(dateTimeLabel)}</time>
+/mnt/data/fullcheck/app.js:851:        <div class="feed-card-meta">
+/mnt/data/fullcheck/app.js:852:          <span class="feed-card-category">${escapeHtml(category)}</span>
+/mnt/data/fullcheck/app.js:855:        <div class="feed-card-body-preview" data-post-preview>${markdownToSafeHtml(visibleExcerpt)}</div>
+/mnt/data/fullcheck/app.js:856:        <div class="feed-card-full-text" hidden data-full-body>${markdownToSafeHtml(fullBody)}</div>
+/mnt/data/fullcheck/app.js:860:      <footer class="feed-card-actions" aria-label="Bejegyzés műveletei">
+/mnt/data/fullcheck/app.js:861:        <button type="button" class="feed-action${post.liked ? " is-active" : ""}" data-post-action="like" data-post-id="${escapeHtml(String(post.id || ""))}" aria-label="Kedvelés" aria-pressed="${post.liked ? "true" : "false"}">
+/mnt/data/fullcheck/app.js:865:        <button type="button" class="feed-action${post.saved ? " is-active" : ""}" data-post-action="save" data-post-id="${escapeHtml(String(post.id || ""))}" aria-label="Mentés" aria-pressed="${post.saved ? "true" : "false"}">
+/mnt/data/fullcheck/app.js:870:        <button type="button" class="feed-action feed-edit-trigger" data-post-edit="${escapeHtml(String(post.id || ""))}" aria-label="Bejegyzés szerkesztése" title="Szerkesztés">
+/mnt/data/fullcheck/app.js:875:        <button type="button" class="feed-action feed-comments-toggle" data-comments-toggle data-post-id="${escapeHtml(String(post.id || ""))}" aria-label="Hozzászólások be- vagy kikapcsolása" aria-pressed="${post.comments_enabled === false || Number(post.comments_enabled) === 0 ? "false" : "true"}" title="Hozzászólások ${post.comments_enabled === false || Number(post.comments_enabled) === 0 ? "bekapcsolása" : "kikapcsolása"}">
+/mnt/data/fullcheck/app.js:879:        <div class="feed-share-wrap">
+/mnt/data/fullcheck/app.js:880:          <button type="button" class="feed-action feed-share-trigger" data-post-share-toggle aria-label="Bejegyzés megosztása" aria-expanded="false">
+/mnt/data/fullcheck/app.js:884:          <div class="feed-share-menu" data-post-share-menu hidden role="menu" aria-label="Bejegyzés megosztása">
+/mnt/data/fullcheck/app.js:899:      <section class="feed-card-comments feed-comments-disabled" data-comments-section data-post-id="${escapeHtml(String(post.id || ""))}">
+/mnt/data/fullcheck/app.js:900:        <div class="feed-comments-head">
+/mnt/data/fullcheck/app.js:905:      <section class="feed-card-comments" data-comments-section data-post-id="${escapeHtml(String(post.id || ""))}" data-comments-open="false">
+/mnt/data/fullcheck/app.js:906:        <div class="feed-comments-head">
+/mnt/data/fullcheck/app.js:909:          <button type="button" class="feed-comments-open-button" data-comments-open-toggle aria-expanded="false" aria-label="Hozzászólások megnyitása">Megnyitás</button>
+/mnt/data/fullcheck/app.js:911:        <div class="feed-comments-body" data-comments-body hidden>
+/mnt/data/fullcheck/app.js:912:          <div class="feed-comments-list" data-comments-list>
+/mnt/data/fullcheck/app.js:913:            <span class="feed-comments-loading">Hozzászólások betöltése…</span>
+/mnt/data/fullcheck/app.js:916:            ? `<form class="feed-comment-form" data-comment-form data-post-id="${escapeHtml(String(post.id || ""))}">
+/mnt/data/fullcheck/app.js:920:            : `<div class="feed-comments-login">A hozzászóláshoz jelentkezz be a Profilban.</div>`}
+/mnt/data/fullcheck/app.js:934:  return `<article class="feed-comment" data-comment-id="${escapeHtml(String(comment.id || ''))}">
+/mnt/data/fullcheck/app.js:935:    <div class="feed-comment-avatar">${avatar}</div>
+/mnt/data/fullcheck/app.js:936:    <div class="feed-comment-content">
+/mnt/data/fullcheck/app.js:937:      <div class="feed-comment-author"><strong>${escapeHtml(displayName)}</strong>${username ? `<span>${escapeHtml(username)}</span>` : ''}<time>${escapeHtml(date)}</time></div>
+/mnt/data/fullcheck/app.js:938:      <div class="feed-comment-body">${escapeHtml(comment.body || '')}</div>
+/mnt/data/fullcheck/app.js:956:        : '<span class="feed-comments-empty">Még nincs hozzászólás.</span>';
+/mnt/data/fullcheck/app.js:961:    if (list) list.innerHTML = '<span class="feed-comments-empty">A hozzászólások most nem érhetők el.</span>';
+/mnt/data/fullcheck/app.js:973:   FEED CARD — INLINE EXPANSION (NO MODAL)
+/mnt/data/fullcheck/app.js:999:    event.target.closest(".feed-card-comments")
+/mnt/data/fullcheck/app.js:1002:  const card = event.target.closest(".feed-card");
+/mnt/data/fullcheck/app.js:1017:  const card = event.target.closest(".feed-card");
+/mnt/data/fullcheck/app.js:1027:   FEED REACTIONS
+/mnt/data/fullcheck/app.js:1034:  const title = card?.querySelector(".feed-card-title")?.textContent.trim() ||
+/mnt/data/fullcheck/app.js:1035:    card?.querySelector(".feed-card-category")?.textContent.trim() || "Everlight bejegyzés";
+/mnt/data/fullcheck/app.js:1037:    card?.querySelector(".feed-card-body-preview")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1038:  const accountName = card?.querySelector(".feed-card-author-line strong")?.textContent.trim() || "Névtelen";
+/mnt/data/fullcheck/app.js:1039:  const realName = card?.querySelector(".feed-card-real-name")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1040:  const handle = card?.querySelector(".feed-card-handle")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1041:  const hashtags = card?.querySelector(".feed-card-hashtags")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1042:  const date = card?.querySelector(".feed-card-author-date")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1043:  const category = card?.querySelector(".feed-card-category")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1044:  const streakText = card?.querySelector(".feed-card-streak")?.textContent.trim() || "";
+/mnt/data/fullcheck/app.js:1046:  const avatar = card?.querySelector(".feed-card-avatar img")?.currentSrc || card?.querySelector(".feed-card-avatar img")?.src || "";
+/mnt/data/fullcheck/app.js:1223:    if (navigator.clipboard?.writeText) {
+/mnt/data/fullcheck/app.js:1224:      await navigator.clipboard.writeText(data.url);
+/mnt/data/fullcheck/app.js:1250:      if (navigator.share) {
+/mnt/data/fullcheck/app.js:1253:        if (shareFile && navigator.canShare?.({ files: [shareFile] })) {
+/mnt/data/fullcheck/app.js:1254:          await navigator.share({
+/mnt/data/fullcheck/app.js:1261:          await navigator.share({ title: data.title, text: data.text, url: data.url });
+/mnt/data/fullcheck/app.js:1286:   MOBILE POST SHARE SHEET — REAL DOM PREVIEW
+/mnt/data/fullcheck/app.js:1288:function closeMobilePostShareSheet() {
+/mnt/data/fullcheck/app.js:1289:  const sheet = document.getElementById("mobilePostShareSheet");
+/mnt/data/fullcheck/app.js:1293:  document.body.classList.remove("mobile-share-open");
+/mnt/data/fullcheck/app.js:1297:function openMobilePostShareSheet(card) {
+/mnt/data/fullcheck/app.js:1299:  closeMobilePostShareSheet();
+/mnt/data/fullcheck/app.js:1305:  clone.querySelectorAll("[data-post-action], [data-post-share-toggle], [data-post-share-menu], .feed-card-actions").forEach((el) => el.remove());
+/mnt/data/fullcheck/app.js:1312:  sheet.id = "mobilePostShareSheet";
+/mnt/data/fullcheck/app.js:1313:  sheet.className = "mobile-post-share-sheet";
+/mnt/data/fullcheck/app.js:1316:    <div class="mobile-post-share-backdrop" data-share-close></div>
+/mnt/data/fullcheck/app.js:1317:    <section class="mobile-post-share-panel" role="dialog" aria-modal="true" aria-labelledby="mobilePostShareTitle">
+/mnt/data/fullcheck/app.js:1318:      <div class="mobile-post-share-grabber" aria-hidden="true"></div>
+/mnt/data/fullcheck/app.js:1319:      <header class="mobile-post-share-header">
+/mnt/data/fullcheck/app.js:1320:        <h2 id="mobilePostShareTitle">Megosztás</h2>
+/mnt/data/fullcheck/app.js:1321:        <button type="button" class="mobile-post-share-close" data-share-close aria-label="Bezárás">×</button>
+/mnt/data/fullcheck/app.js:1323:      <div class="mobile-post-share-preview" aria-label="Bejegyzés előnézete"></div>
+/mnt/data/fullcheck/app.js:1324:      <div class="mobile-post-share-heading">Megosztás hová?</div>
+/mnt/data/fullcheck/app.js:1325:      <div class="mobile-post-share-options">
+/mnt/data/fullcheck/app.js:1326:        <button type="button" class="mobile-post-share-option" data-share-destination="story">
+/mnt/data/fullcheck/app.js:1327:          <span class="mobile-post-share-option-icon story">✦</span>
+/mnt/data/fullcheck/app.js:1331:        <button type="button" class="mobile-post-share-option" data-share-destination="close-friends">
+/mnt/data/fullcheck/app.js:1332:          <span class="mobile-post-share-option-icon friends">★</span>
+/mnt/data/fullcheck/app.js:1336:        <button type="button" class="mobile-post-share-option" data-share-destination="message">
+/mnt/data/fullcheck/app.js:1337:          <span class="mobile-post-share-option-icon message">➤</span>
+/mnt/data/fullcheck/app.js:1341:        <button type="button" class="mobile-post-share-option" data-share-destination="copy">
+/mnt/data/fullcheck/app.js:1342:          <span class="mobile-post-share-option-icon link">↗</span>
+/mnt/data/fullcheck/app.js:1347:      <div class="mobile-post-share-info">
+/mnt/data/fullcheck/app.js:1355:  sheet.querySelector(".mobile-post-share-preview")?.appendChild(clone);
+/mnt/data/fullcheck/app.js:1356:  document.body.classList.add("mobile-share-open");
+/mnt/data/fullcheck/app.js:1365:      closeMobilePostShareSheet();
+/mnt/data/fullcheck/app.js:1374:      closeMobilePostShareSheet();
+/mnt/data/fullcheck/app.js:1386:        if (navigator.share) {
+/mnt/data/fullcheck/app.js:1391:            if (shareFile && navigator.canShare?.({ files: [shareFile] })) {
+/mnt/data/fullcheck/app.js:1392:              await navigator.share({
+/mnt/data/fullcheck/app.js:1401:              await navigator.share({
+/mnt/data/fullcheck/app.js:1409:            await navigator.share({
+/mnt/data/fullcheck/app.js:1421:      closeMobilePostShareSheet();
+/mnt/data/fullcheck/app.js:1427:      closeMobilePostShareSheet();
+/mnt/data/fullcheck/app.js:1439:    const card = toggle.closest(".feed-card");
+/mnt/data/fullcheck/app.js:1442:    // Mobile: use an in-page Everlight share sheet. The preview is the real
+/mnt/data/fullcheck/app.js:1444:    // spacing, radius, background and metadata stay identical to the feed.
+/mnt/data/fullcheck/app.js:1446:      openMobilePostShareSheet(card);
+/mnt/data/fullcheck/app.js:1451:    const wrap = toggle.closest(".feed-share-wrap");
+/mnt/data/fullcheck/app.js:1457:      other.closest(".feed-share-wrap")?.querySelector("[data-post-share-toggle]")?.setAttribute("aria-expanded", "false");
+/mnt/data/fullcheck/app.js:1468:    const card = shareItem.closest(".feed-card");
+/mnt/data/fullcheck/app.js:1477:  if (!event.target.closest(".feed-share-wrap")) {
+/mnt/data/fullcheck/app.js:1554:    const card = button.closest('.feed-card');
+/mnt/data/fullcheck/app.js:1559:          section.outerHTML = `<section class="feed-card-comments" data-comments-section data-post-id="${escapeHtml(String(postId))}" data-comments-open="false">
+/mnt/data/fullcheck/app.js:1560:            <div class="feed-comments-head"><strong>Hozzászólások</strong><span data-comment-count>0</span><button type="button" class="feed-comments-open-button" data-comments-open-toggle aria-expanded="false" aria-label="Hozzászólások megnyitása">Megnyitás</button></div>
+/mnt/data/fullcheck/app.js:1561:            <div class="feed-comments-body" data-comments-body hidden>
+/mnt/data/fullcheck/app.js:1562:              <div class="feed-comments-list" data-comments-list><span class="feed-comments-loading">Hozzászólások betöltése…</span></div>
+/mnt/data/fullcheck/app.js:1563:              <form class="feed-comment-form" data-comment-form data-post-id="${escapeHtml(String(postId))}"><input type="text" name="body" maxlength="1000" autocomplete="off" placeholder="Írj egy hozzászólást…" aria-label="Hozzászólás írása"><button type="submit" aria-label="Hozzászólás küldése">↑</button></form>
+/mnt/data/fullcheck/app.js:1569:          section.outerHTML = `<section class="feed-card-comments feed-comments-disabled" data-comments-section data-post-id="${escapeHtml(String(postId))}"><div class="feed-comments-head"><strong>Hozzászólások</strong><span>Kikapcsolva</span></div></section>`;
+/mnt/data/fullcheck/app.js:1612:      const empty = list.querySelector('.feed-comments-empty, .feed-comments-loading');
+/mnt/data/fullcheck/app.js:1644:    const feedList =
+/mnt/data/fullcheck/app.js:1645:      $("#feedList");
+/mnt/data/fullcheck/app.js:1647:    if (!feedList) {
+/mnt/data/fullcheck/app.js:1652:    feedList.innerHTML =
+/mnt/data/fullcheck/app.js:1670:    const feedList =
+/mnt/data/fullcheck/app.js:1671:      $("#feedList");
+/mnt/data/fullcheck/app.js:1673:    if (!feedList) {
+/mnt/data/fullcheck/app.js:1677:    feedList.innerHTML = `
+/mnt/data/fullcheck/app.js:1750:   mint a fő feed. Kattintásra a legújabb helyi bejegyzés nyílik meg. */
+/mnt/data/fullcheck/app.js:1758:  const card = document.querySelector(`.feed-card[data-post-id="${CSS.escape(postId)}"]`);
+/mnt/data/fullcheck/app.js:1793:    // Keep the visible zero values if the public stats endpoint is temporarily unavailable.
+/mnt/data/fullcheck/app.js:2041:   FEED RICH EDITOR TOOLBAR
+/mnt/data/fullcheck/app.js:2046:  const toolbar = document.getElementById("feedEditorToolbar");
+/mnt/data/fullcheck/app.js:2106:    try { localStorage.setItem('everlight-feed-draft', storage.value); } catch {}
+/mnt/data/fullcheck/app.js:2252:      // Robust italic toggle.  Mobile Safari/Chrome can report execCommand('italic')
+/mnt/data/fullcheck/app.js:2381:  const savedDraft = localStorage.getItem('everlight-feed-draft');
+/mnt/data/fullcheck/app.js:2509:      const feedList = $("#feedList");
+/mnt/data/fullcheck/app.js:2510:      if (feedList) {
+/mnt/data/fullcheck/app.js:2511:        const oldCard = feedList.querySelector(`[data-post-id="${CSS.escape(String(post.id))}"]`);
+/mnt/data/fullcheck/app.js:2515:          feedList.insertAdjacentHTML("afterbegin", renderPost(post));
+/mnt/data/fullcheck/app.js:3270:  mountProfileInFeed();
+/mnt/data/fullcheck/app.js:3271:  window.__closeMobileCommunity?.();
+/mnt/data/fullcheck/app.js:3274:  setMobileDockActive("profile");
+/mnt/data/fullcheck/app.js:3335:  setMobileDockActive(
+/mnt/data/fullcheck/app.js:3336:    "hub"
+/mnt/data/fullcheck/app.js:3338:  window.__syncDesktopNav?.("hub");
+/mnt/data/fullcheck/app.js:3400:   DESKTOP LEFT PROFILE NAV
+/mnt/data/fullcheck/app.js:3409:const leftProfileNav = $("#leftProfileNav");
+/mnt/data/fullcheck/app.js:3410:if (leftProfileNav) {
+/mnt/data/fullcheck/app.js:3411:  leftProfileNav.addEventListener("click", (event) => {
+/mnt/data/fullcheck/app.js:3422:function handleAccountNavigation() {
+/mnt/data/fullcheck/app.js:3451:   MOBILE DOCK ACTIVE STATE
+/mnt/data/fullcheck/app.js:3454:function setMobileDockActive(view) {
+/mnt/data/fullcheck/app.js:3455:  const items = document.querySelectorAll("#mobileDock .mobile-dock-item");
+/mnt/data/fullcheck/app.js:3461:  const target = document.querySelector(`#mobileDock .mobile-dock-item[data-view="${view}"]`);
+/mnt/data/fullcheck/app.js:3467:  const menu = document.getElementById("mobileCommunityAlert");
+/mnt/data/fullcheck/app.js:3476:   HUB VIEW
+/mnt/data/fullcheck/app.js:3479:function openHubView() {
+/mnt/data/fullcheck/app.js:3486:  setMobileDockActive(
+/mnt/data/fullcheck/app.js:3487:    "hub"
+/mnt/data/fullcheck/app.js:3496:  const feed =
+/mnt/data/fullcheck/app.js:3497:    $("#feed");
+/mnt/data/fullcheck/app.js:3499:  if (feed) {
+/mnt/data/fullcheck/app.js:3501:    feed.scrollIntoView({
+/mnt/data/fullcheck/app.js:3510:   MOBILE HUB
+/mnt/data/fullcheck/app.js:3513:const mobileHubNav =
+/mnt/data/fullcheck/app.js:3514:  $("#mobileHubNav");
+/mnt/data/fullcheck/app.js:3516:if (mobileHubNav) {
+/mnt/data/fullcheck/app.js:3518:  mobileHubNav.addEventListener(
+/mnt/data/fullcheck/app.js:3524:      openHubView();
+/mnt/data/fullcheck/app.js:3530:   MOBILE CHAT / PROFILE TOGGLE
+/mnt/data/fullcheck/app.js:3534:const mobileMessageNav = $("#mobileMessageNav");
+/mnt/data/fullcheck/app.js:3535:if (mobileMessageNav) {
+/mnt/data/fullcheck/app.js:3536:  mobileMessageNav.addEventListener("click", (event) => {
+/mnt/data/fullcheck/app.js:3543:      setMobileDockActive("hub");
+/mnt/data/fullcheck/app.js:3546:      setMobileDockActive("messages");
+/mnt/data/fullcheck/app.js:3551:const mobileProfileNav = $("#mobileProfileNav");
+/mnt/data/fullcheck/app.js:3552:if (mobileProfileNav) {
+/mnt/data/fullcheck/app.js:3553:  mobileProfileNav.addEventListener("click", (event) => {
+/mnt/data/fullcheck/app.js:3560:      setMobileDockActive("hub");
+/mnt/data/fullcheck/app.js:3563:      setMobileDockActive("profile");
+/mnt/data/fullcheck/app.js:3728:function mountMessagesInFeed() {
+/mnt/data/fullcheck/app.js:3730:  const feed = document.getElementById("feed");
+/mnt/data/fullcheck/app.js:3731:  if (!messagesView || !feed || !isDesktopLayout()) return;
+/mnt/data/fullcheck/app.js:3732:  if (messagesView.parentElement !== feed) {
+/mnt/data/fullcheck/app.js:3733:    feed.appendChild(messagesView);
+/mnt/data/fullcheck/app.js:3741:function mountProfileInFeed() {
+/mnt/data/fullcheck/app.js:3742:  const view=document.getElementById("profileView"), feed=document.getElementById("feed");
+/mnt/data/fullcheck/app.js:3743:  if (view && feed && isDesktopLayout() && view.parentElement !== feed) feed.appendChild(view);
+/mnt/data/fullcheck/app.js:3780:  // Desktopon a chat a feed oszlopába kerül, mobilon marad teljes nézet.
+/mnt/data/fullcheck/app.js:3781:  mountMessagesInFeed();
+/mnt/data/fullcheck/app.js:3783:  window.__closeMobileCommunity?.();
+/mnt/data/fullcheck/app.js:3800:  setMobileDockActive(
+/mnt/data/fullcheck/app.js:3803:  window.__syncDesktopNav?.("messages");
+/mnt/data/fullcheck/app.js:3812:  const isMobileMessages = window.matchMedia("(max-width: 660px)").matches;
+/mnt/data/fullcheck/app.js:3912:    setMobileDockActive("hub");
+/mnt/data/fullcheck/app.js:3914:  window.__syncDesktopNav?.("hub");
+/mnt/data/fullcheck/app.js:3962:const leftMessageNav =
+/mnt/data/fullcheck/app.js:3963:  $("#leftMessageNav");
+/mnt/data/fullcheck/app.js:3965:if (leftMessageNav) {
+/mnt/data/fullcheck/app.js:3967:  leftMessageNav.addEventListener(
+/mnt/data/fullcheck/app.js:4453:   MOBILE / FRIENDLY CHAT CONTROLS
+/mnt/data/fullcheck/app.js:4500:function closeMobileChat() {
+/mnt/data/fullcheck/app.js:4515:  closeMobileChat();
+/mnt/data/fullcheck/app.js:4517:messageChatBack?.addEventListener("click", closeMobileChat);
+/mnt/data/fullcheck/app.js:4978:  "serviceWorker" in navigator
+/mnt/data/fullcheck/app.js:4985:      navigator.serviceWorker
+/mnt/data/fullcheck/app.js:5147:   INITIAL MOBILE DOCK STATE
+/mnt/data/fullcheck/app.js:5150:setMobileDockActive(
+/mnt/data/fullcheck/app.js:5151:  "hub"
+/mnt/data/fullcheck/app.js:5435:            class="profile-customizer-nav active"
+/mnt/data/fullcheck/app.js:5444:            class="profile-customizer-nav"
+/mnt/data/fullcheck/app.js:5453:            class="profile-customizer-nav"
+/mnt/data/fullcheck/app.js:6356:      const nav =
+/mnt/data/fullcheck/app.js:6361:      if (nav) {
+/mnt/data/fullcheck/app.js:6365:            ".profile-customizer-nav"
+/mnt/data/fullcheck/app.js:6374:        nav.classList.add("active");
+/mnt/data/fullcheck/app.js:6378:            nav.dataset.customizerScroll
+/mnt/data/fullcheck/app.js:6453:   V6 — MOBILE / FULLSCREEN ESCAPE + BACK BEHAVIOUR
+/mnt/data/fullcheck/app.js:6477:/* On mobile browsers, Back should close the current Everlight view first. */
+/mnt/data/fullcheck/app.js:6498:/* Legacy desktop navigation controller removed. See desktop-nav-controller.js. */
+/mnt/data/fullcheck/app.js:6507:    "desktopHubNav",
+/mnt/data/fullcheck/app.js:6508:    "desktopMessageNav",
+/mnt/data/fullcheck/app.js:6509:    "desktopProfileNav",
+/mnt/data/fullcheck/app.js:6510:    "desktopLikedNav",
+/mnt/data/fullcheck/app.js:6511:    "desktopSavedNav",
+/mnt/data/fullcheck/app.js:6512:    "desktopHistoryNav",
+/mnt/data/fullcheck/app.js:6534:    setActive("desktopMessageNav");
+/mnt/data/fullcheck/app.js:6547:      main: "desktopProfileNav",
+/mnt/data/fullcheck/app.js:6548:      liked: "desktopLikedNav",
+/mnt/data/fullcheck/app.js:6549:      saved: "desktopSavedNav",
+/mnt/data/fullcheck/app.js:6550:      history: "desktopHistoryNav"
+/mnt/data/fullcheck/app.js:6552:    setActive(map[section] || "desktopProfileNav");
+/mnt/data/fullcheck/app.js:6566:  bindButton("desktopHubNav", () => {
+/mnt/data/fullcheck/app.js:6567:    const alreadyHub = window.__activeDesktopRail === "desktopHubNav" &&
+/mnt/data/fullcheck/app.js:6569:    if (alreadyHub) return;
+/mnt/data/fullcheck/app.js:6575:    if (typeof openHubView === "function") openHubView();
+/mnt/data/fullcheck/app.js:6576:    setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6579:  bindButton("desktopMessageNav", () => {
+/mnt/data/fullcheck/app.js:6580:    const active = window.__activeDesktopRail === "desktopMessageNav";
+/mnt/data/fullcheck/app.js:6583:      setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6590:  bindButton("desktopProfileNav", () => {
+/mnt/data/fullcheck/app.js:6591:    const active = window.__activeDesktopRail === "desktopProfileNav";
+/mnt/data/fullcheck/app.js:6594:      setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6601:  bindButton("desktopLikedNav", () => {
+/mnt/data/fullcheck/app.js:6602:    const active = window.__activeDesktopRail === "desktopLikedNav";
+/mnt/data/fullcheck/app.js:6605:      setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6612:  bindButton("desktopSavedNav", () => {
+/mnt/data/fullcheck/app.js:6613:    const active = window.__activeDesktopRail === "desktopSavedNav";
+/mnt/data/fullcheck/app.js:6616:      setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6623:  bindButton("desktopHistoryNav", () => {
+/mnt/data/fullcheck/app.js:6624:    const active = window.__activeDesktopRail === "desktopHistoryNav";
+/mnt/data/fullcheck/app.js:6627:      setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6642:      setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6651:  window.__syncDesktopNav = (view = "hub") => {
+/mnt/data/fullcheck/app.js:6653:      hub: "desktopHubNav",
+/mnt/data/fullcheck/app.js:6654:      messages: "desktopMessageNav",
+/mnt/data/fullcheck/app.js:6655:      profile: "desktopProfileNav",
+/mnt/data/fullcheck/app.js:6656:      "profile-liked": "desktopLikedNav",
+/mnt/data/fullcheck/app.js:6657:      "profile-saved": "desktopSavedNav",
+/mnt/data/fullcheck/app.js:6658:      "profile-history": "desktopHistoryNav",
+/mnt/data/fullcheck/app.js:6659:      history: "desktopHistoryNav",
+/mnt/data/fullcheck/app.js:6662:    setActive(map[view] || "desktopHubNav");
+/mnt/data/fullcheck/app.js:6665:  setActive("desktopHubNav");
+/mnt/data/fullcheck/app.js:6669:   FINAL MOBILE COMMUNITY / NOTIFICATION SHEET
+/mnt/data/fullcheck/app.js:6673:(function initMobileCommunitySheet(){
+/mnt/data/fullcheck/app.js:6674:  const alertButton = document.getElementById("mobileCommunityAlert");
+/mnt/data/fullcheck/app.js:6675:  const panel = document.getElementById("mobileCommunityPanel");
+/mnt/data/fullcheck/app.js:6676:  const closeButton = document.getElementById("mobileCommunityClose");
+/mnt/data/fullcheck/app.js:6677:  const panelBody = document.getElementById("mobileCommunityPanelBody");
+/mnt/data/fullcheck/app.js:6683:    clone.classList.add("mobile-cloned-rail");
+/mnt/data/fullcheck/app.js:6686:    // desktop rail and can make the mobile panel appear frozen.
+/mnt/data/fullcheck/app.js:6693:    // mobile. Keep the mobile sheet synchronized with the live desktop rail.
+/mnt/data/fullcheck/app.js:6694:    const syncMobileRail = () => {
+/mnt/data/fullcheck/app.js:6700:    syncMobileRail();
+/mnt/data/fullcheck/app.js:6703:      window.requestAnimationFrame(syncMobileRail);
+/mnt/data/fullcheck/app.js:6712:    window.__mobileCommunityRailObserver = railObserver;
+/mnt/data/fullcheck/app.js:6721:    document.body.classList.remove("mobile-community-open");
+/mnt/data/fullcheck/app.js:6722:    setMobileDockActive("hub");
+/mnt/data/fullcheck/app.js:6727:    // before copying it into the mobile panel. This prevents stale/empty
+/mnt/data/fullcheck/app.js:6750:    document.body.classList.add("mobile-community-open");
+/mnt/data/fullcheck/app.js:6751:    setMobileDockActive("menu");
+/mnt/data/fullcheck/app.js:6755:  window.__closeMobileCommunity = closeCommunity;
+/mnt/data/fullcheck/app.js:6777:    if (event.target.closest?.(".mobile-dock-item")) return;
+/mnt/data/fullcheck/app.js:6782:/* Mobile dock cleanup: primary handlers above own these buttons.
+/mnt/data/fullcheck/index.html:83:      <nav class="desktop-rail-actions" aria-label="Fő navigáció">
+/mnt/data/fullcheck/index.html:84:      <a href="#feed" data-rail-view="hub" class="desktop-rail-action active" id="desktopHubNav">
+/mnt/data/fullcheck/index.html:85:        <span class="rail-action-icon rail-icon-home" aria-hidden="true"></span><span>Hub</span>
+/mnt/data/fullcheck/index.html:87:      <button type="button" data-rail-view="messages" class="desktop-rail-action" id="desktopMessageNav" aria-label="Csevegés" title="Csevegés">
+/mnt/data/fullcheck/index.html:90:      <button type="button" data-rail-view="profile" class="desktop-rail-action" id="desktopProfileNav">
+/mnt/data/fullcheck/index.html:93:      <button type="button" data-rail-view="profile-liked" class="desktop-rail-action" id="desktopLikedNav">
+/mnt/data/fullcheck/index.html:96:      <button type="button" data-rail-view="profile-saved" class="desktop-rail-action" id="desktopSavedNav">
+/mnt/data/fullcheck/index.html:99:      <a href="#feed" class="desktop-rail-action" id="desktopHistoryNav" aria-label="Előzmények">
+/mnt/data/fullcheck/index.html:108:          <a class="nav-active" href="#feed">Gondolat</a>
+/mnt/data/fullcheck/index.html:109:          <a href="#feed">Történet</a>
+/mnt/data/fullcheck/index.html:110:          <a href="#feed">Idézet</a>
+/mnt/data/fullcheck/index.html:111:          <a href="#feed">Élet</a>
+/mnt/data/fullcheck/index.html:114:    </nav>
+/mnt/data/fullcheck/index.html:117:    <main id="feed">
+/mnt/data/fullcheck/index.html:156:          <div id="postTextEditor" class="feed-rich-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Ossz meg egy gondolatot, történetet vagy idézetet…"></div>
+/mnt/data/fullcheck/index.html:158:          <div class="feed-editor-toolbar" id="feedEditorToolbar" role="toolbar" aria-label="Szövegszerkesztő eszköztár">
+/mnt/data/fullcheck/index.html:203:      <div class="feed-list" id="feedList">
+/mnt/data/fullcheck/index.html:443:            <nav class="profile-tabs" aria-label="Profil szekciók">
+/mnt/data/fullcheck/index.html:448:            </nav>
+/mnt/data/fullcheck/index.html:474:  <nav class="mobile-dock" id="mobileDock" aria-label="Mobil navigáció">
+/mnt/data/fullcheck/index.html:475:    <a class="mobile-dock-item active" id="mobileHubNav" data-view="hub" href="#feed" aria-label="Hub" title="Hub">
+/mnt/data/fullcheck/index.html:477:      <small>Hub</small>
+/mnt/data/fullcheck/index.html:479:    <button class="mobile-dock-item" id="mobileMessageNav" data-view="messages" type="button" aria-label="Csevegés" title="Csevegés">
+/mnt/data/fullcheck/index.html:483:    <button class="mobile-dock-item" id="mobileProfileNav" data-view="profile" type="button" aria-label="Profil" title="Profil">
+/mnt/data/fullcheck/index.html:487:    <button class="mobile-island-alert mobile-menu-item" id="mobileCommunityAlert" data-view="menu" type="button" aria-label="Menü" aria-expanded="false" aria-controls="mobileCommunityPanel" title="Menü">
+/mnt/data/fullcheck/index.html:488:      <span class="mobile-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+/mnt/data/fullcheck/index.html:490:  </nav>
+/mnt/data/fullcheck/index.html:492:  <section class="mobile-community-panel" id="mobileCommunityPanel" aria-hidden="true">
+/mnt/data/fullcheck/index.html:493:    <div class="mobile-community-panel-head">
+/mnt/data/fullcheck/index.html:495:      <button id="mobileCommunityClose" type="button" aria-label="Bezárás">×</button>
+/mnt/data/fullcheck/index.html:497:    <div class="mobile-community-panel-body" id="mobileCommunityPanelBody"></div>
+/mnt/data/fullcheck/index.html:549:  <script src="app.js?v=20260820-clean-mobile-ui-v2"></script>
+/mnt/data/fullcheck/theme.js:58:/* Mobile style switch: keep its menu above header layers and inside viewport. */
+/mnt/data/fullcheck/theme.js:82:    // Portal the menu to body so fixed/mobile header layers cannot clip it.
+/mnt/data/fullcheck/desktop-nav-controller.js:1:/* Everlight desktop navigation — one small, stable controller. */
+/mnt/data/fullcheck/desktop-nav-controller.js:3:  const nav = document.querySelector('.desktop-rail-actions');
+/mnt/data/fullcheck/desktop-nav-controller.js:4:  if (!nav) return;
+/mnt/data/fullcheck/desktop-nav-controller.js:6:  const buttons = () => [...nav.querySelectorAll('[data-rail-view]')];
+/mnt/data/fullcheck/desktop-nav-controller.js:8:  let activeView = 'hub';
+/mnt/data/fullcheck/desktop-nav-controller.js:65:  function sync(view = 'hub') {
+/mnt/data/fullcheck/desktop-nav-controller.js:66:    activeView = view || 'hub';
+/mnt/data/fullcheck/desktop-nav-controller.js:72:    window.__everlightDesktopNavView = activeView;
+/mnt/data/fullcheck/desktop-nav-controller.js:98:    // Keep the view inside the feed on desktop.
+/mnt/data/fullcheck/desktop-nav-controller.js:100:    const feed = document.getElementById('feed');
+/mnt/data/fullcheck/desktop-nav-controller.js:101:    if (view && feed && window.matchMedia('(min-width: 961px)').matches && view.parentElement !== feed) {
+/mnt/data/fullcheck/desktop-nav-controller.js:102:      feed.appendChild(view);
+/mnt/data/fullcheck/desktop-nav-controller.js:117:    const feed = document.getElementById('feed');
+/mnt/data/fullcheck/desktop-nav-controller.js:118:    if (view && feed && window.matchMedia('(min-width: 961px)').matches && view.parentElement !== feed) {
+/mnt/data/fullcheck/desktop-nav-controller.js:119:      feed.appendChild(view);
+/mnt/data/fullcheck/desktop-nav-controller.js:130:    if (view === 'hub') {
+/mnt/data/fullcheck/desktop-nav-controller.js:136:      sync('hub');
+/mnt/data/fullcheck/desktop-nav-controller.js:143:        sync('hub');
+/mnt/data/fullcheck/desktop-nav-controller.js:163:      sync('hub');
+/mnt/data/fullcheck/desktop-nav-controller.js:174:  nav.addEventListener('click', (event) => {
+/mnt/data/fullcheck/desktop-nav-controller.js:176:    if (!target || !nav.contains(target)) return;
+/mnt/data/fullcheck/desktop-nav-controller.js:178:    activate(target.dataset.railView || 'hub');
+/mnt/data/fullcheck/desktop-nav-controller.js:190:      sync(next ? 'category' : 'hub');
+/mnt/data/fullcheck/desktop-nav-controller.js:194:  window.__syncDesktopNav = sync;
+/mnt/data/fullcheck/desktop-nav-controller.js:195:  window.__everlightDesktopNavActivate = activate;
+/mnt/data/fullcheck/desktop-nav-controller.js:196:  sync('hub');

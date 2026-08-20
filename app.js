@@ -3497,11 +3497,14 @@ function openHubView() {
     $("#feed");
 
   if (feed) {
-
-    feed.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    if (window.matchMedia("(max-width: 660px)").matches) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      feed.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
   }
 }
 

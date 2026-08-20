@@ -15234,3 +15234,260 @@ main#feed{
     font:600 7px/1 Manrope,sans-serif !important;
   }
 }
+
+/* =========================================================
+   MOBILE HUB SCROLL — AUTHORITATIVE FINAL FIX
+   Hub uses the document viewport as the scroll container.
+   Chat/Profile/Community keep their own scroll containers.
+   ========================================================= */
+@media (max-width:660px){
+  html, body{
+    width:100% !important;
+    height:auto !important;
+    min-height:100% !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    touch-action:pan-y !important;
+  }
+
+  body{
+    position:static !important;
+    inset:auto !important;
+  }
+
+  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open){
+    overflow-y:auto !important;
+    touch-action:pan-y !important;
+  }
+
+  .layout{
+    width:100% !important;
+    height:auto !important;
+    min-height:calc(100dvh - 64px) !important;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
+    overflow:visible !important;
+  }
+
+  main#feed{
+    width:100% !important;
+    height:auto !important;
+    min-height:calc(100dvh - 64px) !important;
+    overflow:visible !important;
+    overflow-y:visible !important;
+    touch-action:pan-y !important;
+    padding-bottom:calc(110px + env(safe-area-inset-bottom,0px)) !important;
+  }
+
+  #feed > .feed-list,
+  #feedList,
+  .feed-list{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    touch-action:pan-y !important;
+  }
+
+  #feed > .feed-list > *,
+  #feedList > *,
+  .feed-list > *{
+    touch-action:pan-y !important;
+  }
+
+  /* Do not let the bottom dock become a scrolling/dragging surface. */
+  #mobileDock{
+    touch-action:none !important;
+  }
+
+  /* Full-screen views deliberately own their scrolling. */
+  body.messages-view-open,
+  body.profile-view-open,
+  body.mobile-share-open{
+    overflow:hidden !important;
+  }
+}
+
+/* =========================================================
+   EVERLIGHT — DESKTOP/TABLET SEPARATION HARD OVERRIDE
+   Desktop is selected by a real mouse/trackpad as well as by width.
+   This prevents browser zoom / narrow desktop windows from accidentally
+   receiving the mobile dock and mobile layout.
+   ========================================================= */
+@media (hover: hover) and (pointer: fine){
+  html, body{
+    width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:100% !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    touch-action:auto !important;
+  }
+
+  /* Never show mobile-only navigation on a mouse/trackpad device. */
+  #mobileDock,
+  body #mobileDock.mobile-dock,
+  .mobile-dock,
+  #mobileCommunityPanel,
+  .mobile-community-panel{
+    display:none !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+
+  /* Restore the real desktop three-column shell even when browser zoom
+     makes the CSS viewport narrower than the mobile breakpoint. */
+  .layout{
+    display:grid !important;
+    width:100% !important;
+    max-width:1480px !important;
+    margin:0 auto !important;
+    grid-template-columns:210px minmax(0,700px) 290px !important;
+    min-height:calc(100vh - 72px) !important;
+    height:auto !important;
+    padding:0 !important;
+    overflow:visible !important;
+  }
+
+  .left-rail,
+  .right-rail{
+    display:block !important;
+    min-width:0 !important;
+  }
+
+  .left-rail{
+    border-right:1px solid var(--line) !important;
+    padding:48px 28px !important;
+    flex-direction:column !important;
+  }
+
+  .right-rail{
+    border-left:1px solid var(--line) !important;
+    padding:48px 30px !important;
+    overflow-x:hidden !important;
+  }
+
+  main#feed{
+    display:block !important;
+    width:auto !important;
+    min-width:0 !important;
+    min-height:calc(100vh - 72px) !important;
+    height:auto !important;
+    padding:38px 46px 80px !important;
+    overflow:visible !important;
+    touch-action:auto !important;
+  }
+
+  #feed > .feed-list,
+  #feedList,
+  .feed-list{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    touch-action:auto !important;
+  }
+
+  /* Undo mobile-only compact composer sizing. */
+  .composer{
+    padding:17px !important;
+    border-radius:12px !important;
+  }
+
+  .composer-tools{
+    gap:12px !important;
+  }
+
+  .post{
+    padding:24px 2px !important;
+  }
+
+  /* Restore normal desktop header geometry. */
+  .topbar{
+    height:72px !important;
+    min-height:72px !important;
+    padding:0 clamp(16px,3vw,42px) !important;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
+  }
+
+  .topbar .domain{
+    display:flex !important;
+    max-width:100% !important;
+    font-size:10px !important;
+  }
+
+  .topbar .header-logo{
+    justify-self:center !important;
+    height:52px !important;
+  }
+
+  .topbar .header-logo-image{
+    width:29px !important;
+    height:29px !important;
+    min-width:29px !important;
+    min-height:29px !important;
+  }
+
+  .topbar .logo-word{
+    font-size:24px !important;
+  }
+
+  .topbar .hub-nav{
+    display:flex !important;
+  }
+
+  .topbar .hub-nav-item{
+    display:block !important;
+  }
+
+  .topbar .account-wrap{
+    display:block !important;
+  }
+
+  .site-footer{
+    position:static !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    padding:14px 15px !important;
+    display:block !important;
+    background:transparent !important;
+    border-top:1px solid var(--line) !important;
+    z-index:auto !important;
+    pointer-events:auto !important;
+  }
+
+  .site-footer p{
+    width:auto !important;
+    max-width:none !important;
+    margin:0 !important;
+    font:8px "DM Mono" !important;
+    transform:none !important;
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+  }
+
+  /* Desktop overlays remain desktop panels, never mobile full-screen UI. */
+  .messages-view.open,
+  .messages-view[aria-hidden="false"],
+  .profile-view.open,
+  .profile-view[aria-hidden="false"]{
+    display:block !important;
+  }
+}
+
+/* A normal desktop viewport must always win over the mobile breakpoint. */
+@media (min-width:661px){
+  #mobileDock,
+  .mobile-dock,
+  #mobileCommunityPanel,
+  .mobile-community-panel{
+    display:none !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+}
