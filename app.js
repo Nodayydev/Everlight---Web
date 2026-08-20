@@ -207,7 +207,6 @@ function setAccount(user) {
     ...normalizedUser
   };
   document.body.classList.add("everlight-authenticated");
-  if (typeof startNotificationPolling === "function") startNotificationPolling();
 
   profileImageData =
     user.avatar || "";
@@ -3169,22 +3168,6 @@ async function loadProfileReactions(section = "liked") {
   }
 }
 
-async function loadProfileHistory() {
-  const container = document.getElementById("profileHistoryList");
-  if (!container || !currentUser) return;
-  container.hidden = false;
-  container.innerHTML = `<p class="profile-reaction-loading">Betöltés…</p>`;
-  try {
-    const data = await api("/api/profile/history");
-    const posts = data.posts || [];
-    container.innerHTML = posts.length
-      ? posts.map(renderPost).join("")
-      : `<p class="profile-reaction-empty">Még nincs saját bejegyzésed.</p>`;
-  } catch (error) {
-    container.innerHTML = `<p class="profile-reaction-empty">${escapeHtml(error.message)}</p>`;
-  }
-}
-
 function activateProfileSection(section = "main") {
   activeProfileSection = section;
   document.querySelectorAll("[data-profile-reaction-tab]").forEach(node => {
@@ -3192,13 +3175,10 @@ function activateProfileSection(section = "main") {
   });
   const main = document.querySelector(".profile-main-only");
   const reactions = document.getElementById("profileReactionList");
-  const history = document.getElementById("profileHistoryList");
   if (main) main.hidden = section !== "main";
   if (reactions) reactions.hidden = !(section === "liked" || section === "saved");
-  if (history) history.hidden = section !== "history";
   if (!currentUser) return;
   if (section === "liked" || section === "saved") loadProfileReactions(section);
-  if (section === "history") loadProfileHistory();
 }
 
 document.addEventListener("click", (event) => {
@@ -3547,15 +3527,37 @@ const mobileCommunityAlert = $("#mobileCommunityAlert");
 const mobileCommunityPanel = $("#mobileCommunityPanel");
 const mobileCommunityClose = $("#mobileCommunityClose");
 
+function syncMobileCommunityRail() {
+  const target = document.getElementById("mobileCommunityRail");
+  const source = document.querySelector(".right-rail");
+  if (!target || !source) return;
+
+  target.innerHTML = "";
+  source.querySelectorAll(":scope > section").forEach((section) => {
+    const clone = section.cloneNode(true);
+    clone.removeAttribute("id");
+    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
+    target.appendChild(clone);
+  });
+}
+
 function setMobileCommunityPanel(open) {
   if (!mobileCommunityPanel) return;
   mobileCommunityPanel.classList.toggle("is-open", open);
   mobileCommunityPanel.setAttribute("aria-hidden", open ? "false" : "true");
   mobileCommunityAlert?.classList.toggle("is-open", open);
   mobileCommunityAlert?.setAttribute("aria-expanded", open ? "true" : "false");
-  if (open) {
-    loadInAppNotifications({ markRead: true });
-  }
+  if (open) syncMobileCommunityRail();
+}
+
+// Keep the mobile copy of the desktop right rail current without duplicating
+// application state or maintaining a second set of widgets by hand.
+const rightRailForMobile = document.querySelector(".right-rail");
+if (rightRailForMobile && typeof MutationObserver !== "undefined") {
+  const mobileRailObserver = new MutationObserver(() => {
+    if (mobileCommunityPanel?.classList.contains("is-open")) syncMobileCommunityRail();
+  });
+  mobileRailObserver.observe(rightRailForMobile, { childList: true, subtree: true, characterData: true });
 }
 
 mobileCommunityAlert?.addEventListener("click", (event) => {
@@ -4773,110 +4775,6 @@ if (notificationButton) {
   );
 }
 
-
-/* =========================================================
-   IN-APP NOTIFICATIONS
-   ========================================================= */
-
-let notificationPollTimer = null;
-let lastNotificationIds = new Set();
-let notificationsInitialized = false;
-
-function formatNotificationTime(value) {
-  if (!value) return "";
-  try {
-    return new Date(value).toLocaleString("hu-HU", {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-  } catch { return ""; }
-}
-
-function renderNotificationTargets(notifications, unread) {
-  document.querySelectorAll(".notification-list").forEach((list) => {
-    if (!currentUser) {
-      list.innerHTML = `<div class="notification-empty">Jelentkezz be a Profilban az értesítésekhez.</div>`;
-      return;
-    }
-    if (!notifications.length) {
-      list.innerHTML = "";
-      return;
-    }
-    list.innerHTML = notifications.map((item) => {
-      const avatar = item.actor_avatar
-        ? `<img src="${escapeHtml(item.actor_avatar)}" alt="">`
-        : escapeHtml((item.actor_name || item.actor_username || "?").charAt(0).toUpperCase());
-      return `
-        <button type="button" class="notification-item ${Number(item.is_read) ? "" : "unread"}"
-          data-notification-target="${escapeHtml(item.target || "")}" data-notification-id="${escapeHtml(String(item.id))}">
-          <span class="notification-avatar">${avatar}</span>
-          <span class="notification-copy">
-            <strong>${escapeHtml(item.title || "Értesítés")}</strong>
-            <span>${escapeHtml(item.actor_name || item.actor_username || "Valaki")} · ${escapeHtml(item.body || "")}</span>
-            <small class="notification-time">${escapeHtml(formatNotificationTime(item.created_at))}</small>
-          </span>
-        </button>`;
-    }).join("");
-  });
-}
-
-async function loadInAppNotifications({ markRead = false } = {}) {
-  if (!currentUser) {
-    renderNotificationTargets([], 0);
-    return;
-  }
-  try {
-    const data = await api("/api/notifications");
-    const notifications = data.notifications || [];
-    const fresh = notifications.filter((n) => !lastNotificationIds.has(String(n.id)) && !Number(n.is_read));
-    if (notificationsInitialized && fresh.length && document.visibilityState !== "visible" && "Notification" in window && Notification.permission === "granted") {
-      fresh.slice(0, 3).forEach((n) => {
-        try { new Notification(n.title || "Everlight", { body: `${n.actor_name || n.actor_username || "Valaki"}: ${n.body || "Új üzenet"}` }); } catch {}
-      });
-    }
-    lastNotificationIds = new Set(notifications.map((n) => String(n.id)));
-    renderNotificationTargets(notifications, data.unread);
-    notificationsInitialized = true;
-    if (markRead && Number(data.unread || 0) > 0) {
-      await api("/api/notifications/read", { method: "POST", body: JSON.stringify({}) });
-      notifications.forEach((n) => { n.is_read = 1; });
-      renderNotificationTargets(notifications, 0);
-    }
-  } catch (error) {
-    console.warn("Értesítések betöltése sikertelen:", error.message);
-  }
-}
-
-function startNotificationPolling() {
-  if (notificationPollTimer) clearInterval(notificationPollTimer);
-  loadInAppNotifications();
-  notificationPollTimer = setInterval(() => loadInAppNotifications(), 5000);
-}
-
-
-
-document.addEventListener("click", async (event) => {
-  const item = event.target.closest?.(".notification-item");
-  if (!item) return;
-  event.preventDefault();
-  const target = item.dataset.notificationTarget || "";
-  await loadInAppNotifications({ markRead: true });
-  if (target.startsWith("/messages/")) {
-    const recipient = decodeURIComponent(target.slice("/messages/".length));
-    const input = document.getElementById("dmRecipient");
-    if (input) input.value = recipient;
-    openMessages();
-    document.getElementById("messagesView")?.classList.add("chat-open");
-    await loadMessages();
-  }
-});
-
-window.addEventListener("everlight:auth", () => startNotificationPolling());
-
-/* A jelenlegi app auth eseménytől függetlenül is elindítjuk, ha már be van jelentkezve. */
-if (currentUser) startNotificationPolling();
 
 /* =========================================================
    SERVICE WORKER
@@ -6510,174 +6408,6 @@ window.addEventListener("popstate", () => {
 
 
 /* Legacy desktop navigation controller removed. See desktop-nav-controller.js. */
-
-/* =========================================================
-   DESKTOP RAIL — SINGLE DIRECT BUTTON CONTROLLER
-   Uses the original buttons directly; no cloning, capture,
-   stopImmediatePropagation or external controller is needed.
-   ========================================================= */
-(() => {
-  const ids = [
-    "desktopHubNav",
-    "desktopMessageNav",
-    "desktopProfileNav",
-    "desktopLikedNav",
-    "desktopSavedNav",
-    "desktopHistoryNav",
-    "desktopCategoryToggle"
-  ];
-
-  const setActive = (id) => {
-    ids.forEach((key) => {
-      const el = document.getElementById(key);
-      if (!el) return;
-      el.classList.toggle("active", key === id);
-    });
-    window.__activeDesktopRail = id;
-  };
-
-  const isOpen = (id) => !!document.getElementById(id)?.classList.contains("open");
-
-  const closeViews = () => {
-    if (isOpen("messagesView") && typeof closeMessages === "function") closeMessages();
-    if (isOpen("profileView") && typeof closeProfileView === "function") closeProfileView();
-  };
-
-  const openMessagesDesktop = () => {
-    if (typeof openMessages === "function") openMessages();
-    setActive("desktopMessageNav");
-  };
-
-  const openProfileDesktop = (section = "main") => {
-    if (typeof openProtectedView === "function") {
-      openProtectedView(section === "main" ? "profile" : section);
-    } else if (typeof openProfileView === "function") {
-      openProfileView();
-      if (typeof activateProfileSection === "function" && currentUser) {
-        activateProfileSection(section);
-      }
-    }
-    const map = {
-      main: "desktopProfileNav",
-      liked: "desktopLikedNav",
-      saved: "desktopSavedNav",
-      history: "desktopHistoryNav"
-    };
-    setActive(map[section] || "desktopProfileNav");
-  };
-
-  const bindButton = (id, handler) => {
-    const el = document.getElementById(id);
-    if (!el || el.dataset.cleanRailBound === "1") return;
-    el.dataset.cleanRailBound = "1";
-    el.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      handler(event);
-    });
-  };
-
-  bindButton("desktopHubNav", () => {
-    const alreadyHub = window.__activeDesktopRail === "desktopHubNav" &&
-      !isOpen("messagesView") && !isOpen("profileView");
-    if (alreadyHub) return;
-    closeViews();
-    const menu = document.getElementById("desktopCategoryMenu");
-    const cat = document.getElementById("desktopCategoryToggle");
-    if (menu) menu.hidden = true;
-    cat?.setAttribute("aria-expanded", "false");
-    if (typeof openHubView === "function") openHubView();
-    setActive("desktopHubNav");
-  });
-
-  bindButton("desktopMessageNav", () => {
-    const active = window.__activeDesktopRail === "desktopMessageNav";
-    if (active && isOpen("messagesView")) {
-      closeMessages();
-      setActive("desktopHubNav");
-      return;
-    }
-    closeViews();
-    openMessagesDesktop();
-  });
-
-  bindButton("desktopProfileNav", () => {
-    const active = window.__activeDesktopRail === "desktopProfileNav";
-    if (active && isOpen("profileView") && (typeof activeProfileSection === "undefined" || activeProfileSection === "main")) {
-      closeProfileView();
-      setActive("desktopHubNav");
-      return;
-    }
-    closeViews();
-    openProfileDesktop("main");
-  });
-
-  bindButton("desktopLikedNav", () => {
-    const active = window.__activeDesktopRail === "desktopLikedNav";
-    if (active && isOpen("profileView") && activeProfileSection === "liked") {
-      closeProfileView();
-      setActive("desktopHubNav");
-      return;
-    }
-    closeViews();
-    openProfileDesktop("liked");
-  });
-
-  bindButton("desktopSavedNav", () => {
-    const active = window.__activeDesktopRail === "desktopSavedNav";
-    if (active && isOpen("profileView") && activeProfileSection === "saved") {
-      closeProfileView();
-      setActive("desktopHubNav");
-      return;
-    }
-    closeViews();
-    openProfileDesktop("saved");
-  });
-
-  bindButton("desktopHistoryNav", () => {
-    const active = window.__activeDesktopRail === "desktopHistoryNav";
-    if (active && isOpen("profileView") && activeProfileSection === "history") {
-      closeProfileView();
-      setActive("desktopHubNav");
-      return;
-    }
-    closeViews();
-    openProfileDesktop("history");
-  });
-
-  bindButton("desktopCategoryToggle", () => {
-    const toggle = document.getElementById("desktopCategoryToggle");
-    const menu = document.getElementById("desktopCategoryMenu");
-    if (!toggle || !menu) return;
-    const expanded = toggle.getAttribute("aria-expanded") === "true";
-    if (expanded) {
-      toggle.setAttribute("aria-expanded", "false");
-      menu.hidden = true;
-      setActive("desktopHubNav");
-      return;
-    }
-    closeViews();
-    toggle.setAttribute("aria-expanded", "true");
-    menu.hidden = false;
-    setActive("desktopCategoryToggle");
-  });
-
-  window.__syncDesktopNav = (view = "hub") => {
-    const map = {
-      hub: "desktopHubNav",
-      messages: "desktopMessageNav",
-      profile: "desktopProfileNav",
-      "profile-liked": "desktopLikedNav",
-      "profile-saved": "desktopSavedNav",
-      "profile-history": "desktopHistoryNav",
-      history: "desktopHistoryNav",
-      category: "desktopCategoryToggle"
-    };
-    setActive(map[view] || "desktopHubNav");
-  };
-
-  setActive("desktopHubNav");
-})();
 
 /* =========================================================
    FINAL MOBILE COMMUNITY / NOTIFICATION SHEET

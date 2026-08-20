@@ -96,9 +96,6 @@
       <button type="button" data-rail-view="profile-saved" class="desktop-rail-action" id="desktopSavedNav">
         <span class="rail-action-icon rail-icon-save" aria-hidden="true"></span><span>Mentések</span>
       </button>
-      <a href="#feed" class="desktop-rail-action" id="desktopHistoryNav" aria-label="Előzmények">
-        <span class="rail-action-icon rail-icon-history" aria-hidden="true"></span><span>Előzmények</span>
-      </a>
       <section class="desktop-category-panel" aria-label="Kategóriák">
         <button type="button" class="desktop-category-toggle desktop-rail-action" id="desktopCategoryToggle" aria-expanded="false">
           <span class="category-toggle-left"><span class="rail-action-icon rail-icon-category" aria-hidden="true"></span><span>Kategória</span></span>
@@ -421,6 +418,14 @@
                 </button>
               </div>
             </div>
+
+            <nav class="profile-tabs" aria-label="Profil tartalmai">
+              <button type="button" data-profile-reaction-tab="main" class="active">Profil</button>
+              <button type="button" data-profile-reaction-tab="liked">Kedvelések</button>
+              <button type="button" data-profile-reaction-tab="saved">Mentések</button>
+            </nav>
+            <div id="profileReactionList" class="profile-reaction-list" hidden></div>
+
 <div class="profile-main-only">
               <div class="profile-section profile-about-section">
                 <span class="profile-section-title">BEMUTATKOZÁS</span>
@@ -462,11 +467,11 @@
 
   <section class="mobile-community-panel" id="mobileCommunityPanel" aria-hidden="true">
     <div class="mobile-community-panel-head">
-      <strong>Értesítések</strong>
+      <strong>Everlight közösség</strong>
       <button id="mobileCommunityClose" type="button" aria-label="Bezárás">×</button>
     </div>
     <div class="mobile-community-panel-body" id="mobileCommunityPanelBody">
-      <div class="notification-list" id="mobileNotificationList" aria-live="polite"></div>
+      <div class="mobile-cloned-rail" id="mobileCommunityRail" aria-label="Közösségi információk"></div>
     </div>
   </section>
 
