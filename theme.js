@@ -345,19 +345,23 @@
   var toggle = document.getElementById("headerLookToggle");
   var menu = document.getElementById("headerLookMenu");
   if (!toggle || !menu) return;
+
+  function setOpen(open) {
+    menu.hidden = !open;
+    menu.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.classList.toggle("look-menu-open", open);
+  }
+
   toggle.addEventListener("click", function(event){
     event.preventDefault();
     event.stopPropagation();
-    var open = menu.hidden;
-    menu.hidden = !open;
-    toggle.setAttribute("aria-expanded", open ? "true" : "false");
-  });
+    setOpen(menu.hidden || !menu.classList.contains("is-open"));
+  }, true);
+
   document.addEventListener("click", function(event){
-    if (!event.target.closest(".header-look-menu-wrap")) {
-      menu.hidden = true;
-      toggle.setAttribute("aria-expanded", "false");
-    }
-  });
+    if (!event.target.closest(".header-look-menu-wrap")) setOpen(false);
+  }, true);
 })();
 
 

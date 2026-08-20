@@ -265,6 +265,13 @@ function setAccount(user) {
   currentUser = {
     ...normalizedUser
   };
+  try {
+    localStorage.setItem("everlight-user", JSON.stringify({
+      ...currentUser,
+      avatar: currentUser.avatar ? "[avatar]" : "",
+      cover: currentUser.cover ? "[cover]" : ""
+    }));
+  } catch (_) {}
   document.body.classList.add("everlight-authenticated");
   if (typeof startNotificationPolling === "function") startNotificationPolling();
 
@@ -5263,6 +5270,10 @@ async function restoreSession() {
   syncAuthenticatedShell();
 
   try {
+    const cached = localStorage.getItem("everlight-user");
+    if (cached && !currentUser) {
+      try { setAccount(JSON.parse(cached)); } catch (_) {}
+    }
     const { user } = await api('/api/auth/me');
     if (!user) throw new Error('A felhasználó nem található.');
 
@@ -5270,14 +5281,19 @@ async function restoreSession() {
     updateProfileView(user);
     return user;
   } catch (error) {
-    localStorage.removeItem('everlight-token');
-    token = '';
-    currentUser = null;
-    document.body.classList.remove('everlight-authenticated');
-    profileImageData = '';
-    coverImageData = '';
-    showProfileLoginState();
-    return null;
+    const message = String(error.message || "");
+    const authFailed = /token|jogosulatlan|unauthor|érvénytelen|nem található|jelszó/i.test(message);
+    if (authFailed) {
+      localStorage.removeItem('everlight-token');
+      localStorage.removeItem('everlight-user');
+      token = '';
+      currentUser = null;
+      document.body.classList.remove('everlight-authenticated');
+      profileImageData = '';
+      coverImageData = '';
+      showProfileLoginState();
+    }
+    return currentUser;
   }
 }
 
@@ -6394,6 +6410,8 @@ async function saveProfileSecurity() {
 function bindProfileCustomizer(
   modal
 ) {
+  bindPasswordReveal(modal);
+  bindPasswordPair("customizerNewPassword", "customizerNewPasswordConfirm", "customizerPasswordMatch");
 
   modal.addEventListener(
     "input",
@@ -7170,4 +7188,69 @@ document.getElementById("dailyThoughts")?.addEventListener("click", (event) => {
   }
   const author = thought.getAttribute("data-author");
   if (author) openDailyThoughtPreview(author);
+});
+
+(function markStandalone() {
+  const standalone = window.matchMedia("(display-mode: standalone)").matches
+    || window.navigator.standalone === true;
+  document.documentElement.classList.toggle("everlight-standalone", standalone);
+})();
+
+
+function bindPasswordReveal(root = document) {
+  root.querySelectorAll("input[type='password'], input[data-password-field]").forEach((input) => {
+    if (input.dataset.revealBound) return;
+    input.dataset.revealBound = "1";
+    const wrap = document.createElement("span");
+    wrap.className = "password-field-wrap";
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "password-reveal";
+    btn.setAttribute("aria-label", "Jelszó megjelenítése");
+    btn.textContent = "👁";
+    btn.addEventListener("click", () => {
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      btn.classList.toggle("is-on", show);
+      btn.setAttribute("aria-label", show ? "Jelszó elrejtése" : "Jelszó megjelenítése");
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+function bindPasswordPair(aId, bId, statusId) {
+  const a = document.getElementById(aId);
+  const b = document.getElementById(bId);
+  const status = document.getElementById(statusId);
+  if (!a || !b) return;
+  const update = () => {
+    if (!status) return;
+    if (!a.value && !b.value) {
+      status.textContent = "";
+      status.className = "password-match-status";
+      return;
+    }
+    if (!b.value) {
+      status.textContent = "Írd be még egyszer a jelszót.";
+      status.className = "password-match-status is-pending";
+      return;
+    }
+    if (a.value === b.value) {
+      status.textContent = "✓ A két jelszó egyezik.";
+      status.className = "password-match-status is-ok";
+    } else {
+      status.textContent = "✗ A két jelszó nem egyezik.";
+      status.className = "password-match-status is-bad";
+    }
+  };
+  a.addEventListener("input", update);
+  b.addEventListener("input", update);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  bindPasswordReveal(document);
+  bindPasswordPair("profileLoginPassword", "profileLoginPasswordConfirm", "profileLoginPasswordMatch");
+  bindPasswordPair("messageLoginPassword", "messageLoginPasswordConfirm", "messageLoginPasswordMatch");
 });

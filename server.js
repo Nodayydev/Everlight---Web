@@ -571,6 +571,17 @@ async function createSchema() {
   `);
 
   await dbRun(`
+
+    CREATE TABLE IF NOT EXISTS everlight_daily_thoughts (
+      user_id BIGINT UNSIGNED NOT NULL,
+      body VARCHAR(140) NOT NULL,
+      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (user_id),
+      CONSTRAINT fk_daily_thoughts_user FOREIGN KEY (user_id) REFERENCES everlight_users(id) ON DELETE CASCADE
+    )
+  `);
+
+  await db.query(`
     CREATE TABLE IF NOT EXISTS everlight_notifications (
       id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
       user_id BIGINT UNSIGNED NOT NULL,
@@ -2083,6 +2094,55 @@ app.get('/api/message-users', auth, async (req, res, next) => {
 /* =========================================================
    MESSAGES — CONTACTS / CONVERSATIONS
    ========================================================= */
+
+
+app.get('/api/daily-thoughts', optionalAuth, async (req, res, next) => {
+  try {
+    const users = await dbAll(`
+      SELECT
+        u.id,
+        u.username,
+        u.display_name,
+        u.avatar,
+        u.name_color,
+        COALESCE((
+          SELECT MAX(ms.current_streak)
+          FROM everlight_message_streaks ms
+          WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
+        ), 0) AS message_streak,
+        t.body AS thought,
+        t.created_at AS thought_at
+      FROM everlight_users u
+      LEFT JOIN everlight_daily_thoughts t
+        ON t.user_id = u.id
+       AND t.created_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 24 HOUR)
+      WHERE u.username <> 'anonymous#0000'
+      ORDER BY message_streak DESC, u.last_seen DESC
+      LIMIT 50
+    `);
+    return res.json({ users: users || [] });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/daily-thoughts', auth, async (req, res, next) => {
+  try {
+    const body = clean(req.body.body || req.body.thought || '', 140);
+    if (body.length < 2) {
+      return res.status(400).json({ error: 'Írj legalább 2 karaktert.' });
+    }
+    await dbRun(`
+      INSERT INTO everlight_daily_thoughts (user_id, body, created_at)
+      VALUES (?, ?, UTC_TIMESTAMP())
+      ON DUPLICATE KEY UPDATE body = VALUES(body), created_at = UTC_TIMESTAMP()
+    `, [req.userId, body]);
+    return res.json({ ok: true, thought: body });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 app.get(
   '/api/messages',
