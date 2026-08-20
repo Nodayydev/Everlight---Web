@@ -425,10 +425,14 @@
             <nav class="profile-tabs" aria-label="Profil szekciók">
               <button type="button" class="active" data-profile-reaction-tab="main">Fő</button>
               <button type="button" data-profile-reaction-tab="liked">
-                <span class="profile-tab-like-icon" aria-hidden="true"></span><span>Kedvelések</span>
+                <span class="profile-tab-icon profile-tab-like-icon" aria-hidden="true"></span><span>Kedvelések</span>
               </button>
-              <button type="button" data-profile-reaction-tab="saved">▱ Mentettek</button>
-              <button type="button" data-profile-reaction-tab="history">◫ Előzmények</button>
+              <button type="button" data-profile-reaction-tab="saved">
+                <span class="profile-tab-icon profile-tab-saved-icon" aria-hidden="true"></span><span>Mentettek</span>
+              </button>
+              <button type="button" data-profile-reaction-tab="history">
+                <span class="profile-tab-icon profile-tab-history-icon" aria-hidden="true"></span><span>Előzmények</span>
+              </button>
             </nav>
 
             <div id="profileReactionList" class="profile-reaction-list" hidden></div>
@@ -478,7 +482,9 @@
       <strong>Értesítések</strong>
       <button id="mobileCommunityClose" type="button" aria-label="Bezárás">×</button>
     </div>
-    <div class="mobile-community-panel-body" id="mobileCommunityPanelBody"></div>
+    <div class="mobile-community-panel-body" id="mobileCommunityPanelBody">
+      <div class="notification-list" id="mobileNotificationList" aria-live="polite"></div>
+    </div>
   </section>
 
   <footer class="site-footer">

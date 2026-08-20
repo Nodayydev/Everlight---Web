@@ -3400,11 +3400,7 @@ if (profileView) {
    DESKTOP LEFT PROFILE NAV
    ========================================================= */
 
-function openProfileReactionSection(section) {
-  pendingAuthTarget = section;
-  openProfileView();
-  if (currentUser) activateProfileSection(section);
-}
+
 
 const leftProfileNav = $("#leftProfileNav");
 if (leftProfileNav) {
@@ -3419,29 +3415,7 @@ if (leftProfileNav) {
    HEADER ACCOUNT → PROFILE VIEW
    ========================================================= */
 
-function handleAccountNavigation() {
 
-  if (!currentUser) {
-
-    if (token) {
-      openProfileView();
-      return;
-    }
-
-    openProfileView();
-
-    return;
-  }
-
-
-  /*
-   * Bejelentkezve a Fiók már nem
-   * egy kis lenyíló ablakot jelent,
-   * hanem a teljes profilnézetet.
-   */
-
-  openProfileView();
-}
 
 
 
@@ -4645,27 +4619,7 @@ document.addEventListener(
    PREVENT BACKGROUND SCROLL
    ========================================================= */
 
-function updateViewScrollLock() {
 
-  const messagesOpen =
-    $("#messagesView")?.classList.contains(
-      "open"
-    );
-
-  const profileOpen =
-    $("#profileView")?.classList.contains(
-      "open"
-    );
-
-
-  document.body.classList.toggle(
-    "view-is-open",
-    Boolean(
-      messagesOpen ||
-      profileOpen
-    )
-  );
-}
 /* =========================================================
    PWA INSTALL
    ========================================================= */
@@ -4864,12 +4818,7 @@ function startNotificationPolling() {
   notificationPollTimer = setInterval(() => loadInAppNotifications(), 5000);
 }
 
-function stopNotificationPolling() {
-  if (notificationPollTimer) clearInterval(notificationPollTimer);
-  notificationPollTimer = null;
-  lastNotificationIds = new Set();
-  notificationsInitialized = false;
-}
+
 
 document.addEventListener("click", async (event) => {
   const item = event.target.closest?.(".notification-item");
@@ -5263,31 +5212,7 @@ function customizerValue(id, fallback = "") {
 }
 
 
-function syncCustomizerToProfileFields() {
 
-  const map = {
-    customizerDisplayName: "displayName",
-    customizerBio: "profileBio",
-    customizerStatus: "profileStatus",
-    customizerPronouns: "pronouns",
-    customizerLocation: "profileLocation",
-    customizerWebsite: "profileWebsite",
-    customizerNameColor: "nameColor",
-    customizerProfileColor: "profileColor"
-  };
-
-  Object.entries(map).forEach(
-    ([sourceId, targetId]) => {
-
-      const source = $(`#${sourceId}`);
-      const target = $(`#${targetId}`);
-
-      if (source && target) {
-        target.value = source.value;
-      }
-    }
-  );
-}
 
 
 function buildProfileCustomizer() {
@@ -5377,6 +5302,15 @@ function buildProfileCustomizer() {
           >
             <span>▣</span>
             Képek
+          </button>
+
+          <button
+            type="button"
+            class="profile-customizer-nav"
+            data-customizer-scroll="customizerSecuritySection"
+          >
+            <span class="customizer-nav-icon customizer-security-icon" aria-hidden="true"></span>
+            Biztonság
           </button>
 
           <div class="profile-customizer-sidebar-note">
@@ -5539,6 +5473,60 @@ function buildProfileCustomizer() {
                 <button type="button" class="customizer-format-toggle" data-name-format="underline" aria-pressed="false" title="Aláhúzás"><u>U</u></button>
                 <button type="button" class="customizer-format-toggle" data-name-format="strike" aria-pressed="false" title="Áthúzás"><s>S</s></button>
               </div>
+            </div>
+
+          </section>
+
+
+          <section
+            id="customizerSecuritySection"
+            class="profile-customizer-section"
+          >
+
+            <div class="profile-customizer-section-title">
+              <div>
+                <strong>Biztonság</strong>
+                <span>Jelszavad módosítása.</span>
+              </div>
+            </div>
+
+            <div class="customizer-password-card">
+              <div class="customizer-password-copy">
+                <strong>Új jelszó</strong>
+                <span>Bejelentkezett állapotban nincs szükség a régi jelszóra.</span>
+              </div>
+
+              <label class="customizer-field customizer-field-full">
+                <span>Új jelszó</span>
+                <input
+                  id="customizerNewPassword"
+                  type="password"
+                  minlength="6"
+                  autocomplete="new-password"
+                  placeholder="Legalább 6 karakter"
+                >
+              </label>
+
+              <label class="customizer-field customizer-field-full">
+                <span>Új jelszó újra</span>
+                <input
+                  id="customizerNewPasswordConfirm"
+                  type="password"
+                  minlength="6"
+                  autocomplete="new-password"
+                  placeholder="Írd be újra az új jelszót"
+                >
+              </label>
+
+              <p class="customizer-password-status" id="customizerPasswordStatus" role="status" aria-live="polite"></p>
+
+              <button
+                type="button"
+                class="profile-customizer-save customizer-password-button"
+                id="customizerPasswordSave"
+              >
+                Jelszó módosítása
+              </button>
             </div>
 
           </section>
@@ -6146,6 +6134,62 @@ async function saveProfileCustomizer() {
 }
 
 
+
+async function changeProfilePassword() {
+  if (!requireLogin()) return;
+
+  const passwordInput = $("#customizerNewPassword");
+  const confirmInput = $("#customizerNewPasswordConfirm");
+  const status = $("#customizerPasswordStatus");
+  const button = $("#customizerPasswordSave");
+
+  const password = passwordInput?.value || "";
+  const confirmPassword = confirmInput?.value || "";
+
+  if (password.length < 6) {
+    if (status) status.textContent = "Az új jelszónak legalább 6 karakteresnek kell lennie.";
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    if (status) status.textContent = "A két jelszó nem egyezik.";
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Mentés…";
+  }
+  if (status) status.textContent = "";
+
+  try {
+    await api("/api/auth/change-password", {
+      method: "POST",
+      body: JSON.stringify({
+        password,
+        confirmPassword
+      })
+    });
+
+    passwordInput.value = "";
+    confirmInput.value = "";
+
+    if (status) {
+      status.textContent = "A jelszó sikeresen megváltozott.";
+    }
+  } catch (error) {
+    if (status) {
+      status.textContent = error.message || "Nem sikerült megváltoztatni a jelszót.";
+    }
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Jelszó módosítása";
+    }
+  }
+}
+
+
 function bindProfileCustomizer(
   modal
 ) {
@@ -6307,6 +6351,17 @@ function bindProfileCustomizer(
           });
         }
 
+        return;
+      }
+
+
+      const passwordSave =
+        event.target.closest(
+          "#customizerPasswordSave"
+        );
+
+      if (passwordSave) {
+        changeProfilePassword();
         return;
       }
 
@@ -6592,68 +6647,6 @@ window.addEventListener("popstate", () => {
    The right-side community content is presented in the same
    floating sheet pattern as Csevegés and Profil.
    ========================================================= */
-(function initMobileCommunitySheet(){
-  const alertButton = document.getElementById("mobileCommunityAlert");
-  const panel = document.getElementById("mobileCommunityPanel");
-  const closeButton = document.getElementById("mobileCommunityClose");
-  const panelBody = document.getElementById("mobileCommunityPanelBody");
-  if (!alertButton || !panel || !panelBody) return;
-
-  const source = document.querySelector(".right-rail");
-  if (source && !panelBody.dataset.ready) {
-    const clone = source.cloneNode(true);
-    clone.classList.add("mobile-cloned-rail");
-    panelBody.innerHTML = "";
-    panelBody.appendChild(clone);
-    panelBody.dataset.ready = "1";
-  }
-
-  const closeCommunity = () => {
-    panel.classList.remove("is-open");
-    panel.setAttribute("aria-hidden", "true");
-    alertButton.classList.remove("is-open");
-    alertButton.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("mobile-community-open");
-    setMobileDockActive("hub");
-  };
-
-  const openCommunity = () => {
-    closeMessages();
-    closeProfileView();
-    panel.classList.add("is-open");
-    panel.setAttribute("aria-hidden", "false");
-    alertButton.classList.add("is-open");
-    alertButton.setAttribute("aria-expanded", "true");
-    document.body.classList.add("mobile-community-open");
-    setMobileDockActive("menu");
-  };
-
-  window.__closeMobileCommunity = closeCommunity;
-
-  alertButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    if (panel.classList.contains("is-open")) closeCommunity();
-    else openCommunity();
-  });
-
-  closeButton?.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    closeCommunity();
-  });
-
-  panel.addEventListener("click", (event) => {
-    if (event.target === panel) closeCommunity();
-  });
-
-  document.addEventListener("click", (event) => {
-    if (!panel.classList.contains("is-open")) return;
-    if (panel.contains(event.target) || alertButton.contains(event.target)) return;
-    if (event.target.closest?.(".mobile-dock-item")) return;
-    closeCommunity();
-  }, true);
-})();
 
 /* Mobile dock cleanup: primary handlers above own these buttons.
    Do not add secondary click handlers here; they can reset the active

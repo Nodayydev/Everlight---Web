@@ -777,6 +777,48 @@ app.post('/api/auth/reset-password', async (req, res, next) => {
    LOGIN / REGISTER
    ========================================================= */
 
+
+app.post(
+  '/api/auth/change-password',
+  auth,
+  async (req, res, next) => {
+    try {
+      const password = String(req.body.password || '');
+      const confirmPassword = String(req.body.confirmPassword || '');
+
+      if (password.length < 6) {
+        return res.status(400).json({
+          error: 'Az új jelszónak legalább 6 karakteresnek kell lennie.'
+        });
+      }
+
+      if (password !== confirmPassword) {
+        return res.status(400).json({
+          error: 'A két jelszó nem egyezik.'
+        });
+      }
+
+      const hash = await bcrypt.hash(password, 12);
+
+      await dbRun(
+        `
+          UPDATE everlight_users
+          SET password_hash = ?
+          WHERE id = ?
+        `,
+        [hash, req.userId]
+      );
+
+      return res.json({
+        ok: true,
+        message: 'A jelszó sikeresen megváltozott.'
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
 app.post(
   '/api/auth/enter',
   async (req, res, next) => {
