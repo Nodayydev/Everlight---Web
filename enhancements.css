@@ -17879,3 +17879,50 @@ body.sun-mode .topbar .domain .domain-mode-light {
     z-index: 5000 !important;
   }
 }
+
+
+/* =========================================================
+   FORCE DOCK ABOVE PROFILE + MESSAGES
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .mobile-bottom-chrome,
+  html body.messages-view-open .mobile-bottom-chrome,
+  html body.profile-view-open .mobile-bottom-chrome,
+  html body.profile-customizer-open .mobile-bottom-chrome {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 2147483646 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+
+  html body .mobile-bottom-chrome #mobileDock,
+  html body.messages-view-open .mobile-bottom-chrome #mobileDock,
+  html body.profile-view-open .mobile-bottom-chrome #mobileDock,
+  html body.messages-view-open #mobileDock,
+  html body.profile-view-open #mobileDock {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    height: 56px !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  html body.messages-view-open .site-footer,
+  html body.profile-view-open .site-footer {
+    display: none !important;
+  }
+
+  .messages-view.open,
+  .profile-view.open {
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 300 !important;
+  }
+}

@@ -3752,7 +3752,6 @@ async function loadDailyThoughts() {
   const track = document.getElementById("dailyThoughtsTrack");
   if (!track) return;
 
-  const ownName = currentUser ? getDisplayName(currentUser) : "A tiéd";
   const ownAvatar = currentUser?.avatar
     ? `<img src="${escapeHtml(currentUser.avatar)}" alt="">`
     : "+";
@@ -3766,31 +3765,39 @@ async function loadDailyThoughts() {
   `;
 
   try {
-    const data = await api("/api/posts");
-    const posts = data.posts || data || [];
-    const seen = new Set();
-    const thoughts = [];
+    const [onlineData, postsData] = await Promise.all([
+      api("/api/online").catch(() => ({ users: [] })),
+      api("/api/posts").catch(() => ({ posts: [] }))
+    ]);
+    const users = onlineData.users || [];
+    const posts = postsData.posts || postsData || [];
+    const todayKey = new Date().toDateString();
+    const thoughtByUser = new Map();
     for (const post of posts) {
-      const key = post.username || post.displayName || post.id;
-      if (!key || seen.has(key)) continue;
-      if (currentUser && post.username === currentUser.username) continue;
-      seen.add(key);
-      const text = String(post.title || post.body || "").replace(/\s+/g, " ").trim();
+      const name = post.username;
+      if (!name || thoughtByUser.has(name)) continue;
+      const created = post.createdAt || post.created_at || post.time || "";
+      const when = created ? new Date(created) : null;
+      if (when && !Number.isNaN(when.getTime()) && when.toDateString() !== todayKey) continue;
+      const text = String(post.body || post.title || "").replace(/\s+/g, " ").trim();
       if (!text) continue;
-      thoughts.push(post);
-      if (thoughts.length >= 8) break;
+      thoughtByUser.set(name, text);
     }
 
-    items += thoughts.map((post) => {
-      const name = (post.displayName || post.username || "✦").split("#")[0];
-      const snippet = String(post.title || post.body || "").replace(/\s+/g, " ").trim().slice(0, 42);
-      const avatar = post.avatar
-        ? `<img src="${escapeHtml(post.avatar)}" alt="">`
+    const ranked = users
+      .filter((user) => !currentUser || user.username !== currentUser.username)
+      .sort((a, b) => Number(b.message_streak || 0) - Number(a.message_streak || 0));
+
+    items += ranked.slice(0, 10).map((user) => {
+      const name = (user.display_name || user.username || "✦").split("#")[0];
+      const thought = thoughtByUser.get(user.username) || "";
+      const avatar = user.avatar
+        ? `<img src="${escapeHtml(user.avatar)}" alt="">`
         : escapeHtml((name || "✦").charAt(0));
-      const streak = Number(post.messageStreak || post.message_streak || 0);
+      const streak = Number(user.message_streak || 0);
       return `
-        <button type="button" class="daily-thought" data-author="${escapeHtml(post.username || "")}">
-          <span class="daily-thought-bubble">${escapeHtml(snippet)}${snippet.length >= 42 ? "…" : ""}</span>
+        <button type="button" class="daily-thought" data-author="${escapeHtml(user.username || "")}">
+          ${thought ? `<span class="daily-thought-bubble">${escapeHtml(thought.slice(0, 42))}${thought.length > 42 ? "…" : ""}</span>` : ""}
           <span class="daily-thought-avatar">${avatar}</span>
           <small>${escapeHtml(name)}</small>
           ${streak > 0 ? `<span class="daily-thought-streak">🔥 ${streak}</span>` : ""}
