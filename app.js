@@ -20,6 +20,7 @@ let currentView = "hub";
 let activeProfileSection = "main";
 let pendingAuthTarget = null;
 let editingPostId = null;
+let replyToMessage = null;
 const postCache = new Map();
 
 
@@ -3764,6 +3765,8 @@ function openMessages() {
     }
     if (sendButton) sendButton.disabled = true;
     if (composeNewButton) composeNewButton.disabled = true;
+    const deleteConversationButton = document.getElementById("deleteConversationButton");
+    if (deleteConversationButton) deleteConversationButton.hidden = true;
   } else {
     if (authGate) {
       authGate.hidden = true;
@@ -4047,6 +4050,11 @@ async function loadMessages() {
         : ""}`;
     }
 
+    const deleteConversationButton = document.getElementById("deleteConversationButton");
+    if (deleteConversationButton) {
+      deleteConversationButton.hidden = !currentUser || !recipient;
+    }
+
     const dmHandle = $("#dmHandle");
     if (dmHandle) {
       const username = getUsername(user) || recipient;
@@ -4139,43 +4147,38 @@ async function loadMessages() {
                 : "";
 
 
+            const replyPreview = message.reply_to_id
+              ? `
+                <div class="chat-reply-quote">
+                  <strong>Válasz erre</strong>
+                  <span>${escapeHtml(message.reply_sender_name || message.reply_sender_username || "Üzenet")}</span>
+                  <p>${escapeHtml(message.reply_body || "")}</p>
+                </div>`
+              : "";
+
+            const ownActions = ownMessage
+              ? `
+                <div class="chat-message-actions">
+                  <button type="button" data-message-action="edit" data-message-id="${message.id}" aria-label="Üzenet módosítása">Módosítás</button>
+                  <button type="button" data-message-action="delete" data-message-id="${message.id}" aria-label="Üzenet törlése">Törlés</button>
+                </div>`
+              : "";
+
             return `
               <article
-                class="
-                  chat-message
-                  ${
-                    ownMessage
-                      ? "chat-message-own"
-                      : "chat-message-other"
-                  }
-                "
+                class="chat-message ${ownMessage ? "chat-message-own" : "chat-message-other"}"
+                data-message-id="${message.id}"
               >
-
                 <div class="chat-message-meta">
-
-                  <strong>
-                    ${escapeHtml(
-                      sender
-                    )}
-                  </strong>
-
-                  <time>
-                    ${escapeHtml(
-                      messageTime
-                    )}
-                  </time>
-
+                  <strong>${escapeHtml(sender)}</strong>
+                  <time>${escapeHtml(messageTime)}${message.edited_at ? " · módosítva" : ""}</time>
                 </div>
-
-
-                <div class="chat-bubble">
-
-                  ${escapeHtml(
-                    message.body
-                  )}
-
+                ${replyPreview}
+                <div class="chat-bubble">${escapeHtml(message.body)}</div>
+                <div class="chat-message-toolbar">
+                  <button type="button" data-message-action="reply" data-message-id="${message.id}" aria-label="Válasz az üzenetre">Válasz</button>
+                  ${ownActions}
                 </div>
-
               </article>
             `;
           }
@@ -4370,6 +4373,115 @@ if (messageContactsList) {
   );
 }
 
+
+/* =========================================================
+   MESSAGE ACTIONS — REPLY / EDIT / DELETE
+   ========================================================= */
+
+function clearMessageReply() {
+  replyToMessage = null;
+  const preview = document.getElementById("messageReplyPreview");
+  if (preview) {
+    preview.hidden = true;
+    preview.innerHTML = "";
+  }
+}
+
+function setMessageReply(message) {
+  replyToMessage = {
+    id: Number(message.id),
+    sender: message.sender_name || message.sender_username || "Üzenet",
+    body: message.body || ""
+  };
+  const preview = document.getElementById("messageReplyPreview");
+  if (preview) {
+    preview.hidden = false;
+    preview.innerHTML = `
+      <div>
+        <strong>Válasz: ${escapeHtml(replyToMessage.sender)}</strong>
+        <span>${escapeHtml(replyToMessage.body)}</span>
+      </div>
+      <button type="button" id="cancelMessageReply" aria-label="Válasz megszakítása">×</button>
+    `;
+    preview.querySelector("#cancelMessageReply")?.addEventListener("click", clearMessageReply);
+  }
+  document.getElementById("dmBody")?.focus();
+}
+
+document.getElementById("dmList")?.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-message-action]");
+  if (!button) return;
+  const id = Number(button.dataset.messageId);
+  if (!id) return;
+
+  const article = button.closest("[data-message-id]");
+  const action = button.dataset.messageAction;
+
+  if (action === "reply") {
+    const message = {
+      id,
+      sender_name: article?.querySelector(".chat-message-meta strong")?.textContent || "Üzenet",
+      body: article?.querySelector(".chat-bubble")?.textContent || ""
+    };
+    setMessageReply(message);
+    return;
+  }
+
+  if (action === "edit") {
+    if (!currentUser) return;
+    const bubble = article?.querySelector(".chat-bubble");
+    const currentBody = bubble?.textContent || "";
+    const nextBody = window.prompt("Üzenet módosítása:", currentBody);
+    if (nextBody === null || !nextBody.trim() || nextBody.trim() === currentBody.trim()) return;
+
+    try {
+      await api(`/api/messages/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ body: nextBody.trim() })
+      });
+      await loadMessages();
+      await loadMessageContacts();
+    } catch (error) {
+      notify(error.message);
+    }
+    return;
+  }
+
+  if (action === "delete") {
+    if (!window.confirm("Biztosan törlöd ezt az üzenetet?")) return;
+    try {
+      await api(`/api/messages/${id}`, { method: "DELETE" });
+      if (replyToMessage?.id === id) clearMessageReply();
+      await loadMessages();
+      await loadMessageContacts();
+    } catch (error) {
+      notify(error.message);
+    }
+  }
+});
+
+document.getElementById("deleteConversationButton")?.addEventListener("click", async () => {
+  const recipient = document.getElementById("dmRecipient")?.value.trim();
+  if (!recipient || !currentUser) return;
+  if (!window.confirm(`Biztosan törlöd a teljes beszélgetést ${recipient} felhasználóval?`)) return;
+
+  try {
+    await api(`/api/messages/conversation/${encodeURIComponent(recipient)}`, { method: "DELETE" });
+    clearMessageReply();
+    const dmList = document.getElementById("dmList");
+    if (dmList) {
+      dmList.innerHTML = `
+        <div class="chat-empty">
+          <div class="chat-empty-icon">✦</div>
+          <strong>A beszélgetés törölve.</strong>
+          <p>Új üzenettel újraindíthatod a beszélgetést.</p>
+        </div>`;
+    }
+    await loadMessageContacts();
+  } catch (error) {
+    notify(error.message);
+  }
+});
 
 /* =========================================================
    MOBILE / FRIENDLY CHAT CONTROLS
@@ -4570,6 +4682,7 @@ if (messageForm) {
           bodyInput.value =
             "";
         }
+        clearMessageReply();
 
 
         await loadMessages();

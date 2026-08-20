@@ -335,6 +335,9 @@
               <h2 id="dmTitle">Válassz egy beszélgetést</h2>
               <small id="dmHandle">Kezdj el egy új beszélgetést</small>
             </div>
+            <div class="message-chat-actions">
+              <button id="deleteConversationButton" type="button" class="chat-header-action" hidden aria-label="Beszélgetés törlése" title="Beszélgetés törlése">⌫</button>
+            </div>
           </header>
           <div id="dmList" class="dm-list">
             <div class="chat-welcome">
@@ -349,6 +352,7 @@
               <datalist id="messageUserOptions"></datalist>
               <button id="cancelNewMessage" type="button" aria-label="Új üzenet megszakítása">×</button>
             </div>
+            <div id="messageReplyPreview" class="message-reply-preview" hidden></div>
             <div class="message-compose-row">
               <button id="composeNewButton" class="compose-new-button" type="button" aria-label="Új beszélgetés">＋</button>
               <input id="dmBody" type="text" placeholder="Írj egy üzenetet…" autocomplete="off" required>

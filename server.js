@@ -550,14 +550,30 @@ async function createSchema() {
       sender_id BIGINT UNSIGNED NOT NULL,
       recipient_id BIGINT UNSIGNED NOT NULL,
       body TEXT NOT NULL,
+      reply_to_id BIGINT UNSIGNED NULL,
+      edited_at DATETIME NULL,
       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id),
+      KEY idx_messages_reply (reply_to_id),
       KEY idx_messages_sender (sender_id, created_at),
       KEY idx_messages_recipient (recipient_id, created_at),
       CONSTRAINT fk_messages_sender FOREIGN KEY (sender_id) REFERENCES everlight_users(id) ON DELETE CASCADE,
-      CONSTRAINT fk_messages_recipient FOREIGN KEY (recipient_id) REFERENCES everlight_users(id) ON DELETE CASCADE
+      CONSTRAINT fk_messages_recipient FOREIGN KEY (recipient_id) REFERENCES everlight_users(id) ON DELETE CASCADE,
+      CONSTRAINT fk_messages_reply FOREIGN KEY (reply_to_id) REFERENCES everlight_messages(id) ON DELETE SET NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   `);
+
+  // Régi adatbázisok frissítése: az ALTER-ek idempotensen, hibát elnyelve futnak.
+  for (const sql of [
+    `ALTER TABLE everlight_messages ADD COLUMN reply_to_id BIGINT UNSIGNED NULL`,
+    `ALTER TABLE everlight_messages ADD COLUMN edited_at DATETIME NULL`,
+    `ALTER TABLE everlight_messages ADD KEY idx_messages_reply (reply_to_id)`,
+    `ALTER TABLE everlight_messages ADD CONSTRAINT fk_messages_reply FOREIGN KEY (reply_to_id) REFERENCES everlight_messages(id) ON DELETE SET NULL`
+  ]) {
+    try { await dbRun(sql); } catch (error) {
+      if (!/duplicate|exists/i.test(String(error?.message || ''))) throw error;
+    }
+  }
 
   await dbRun(`
     CREATE TABLE IF NOT EXISTS everlight_notifications (
@@ -2138,19 +2154,16 @@ app.get(
         await dbAll(
           `
             SELECT
-
               m.*,
-
-              s.username
-                AS sender_username,
-
-              s.display_name
-                AS sender_name
-
+              s.username AS sender_username,
+              s.display_name AS sender_name,
+              r.body AS reply_body,
+              rs.username AS reply_sender_username,
+              rs.display_name AS reply_sender_name
             FROM everlight_messages m
-
-            JOIN everlight_users s
-              ON s.id = m.sender_id
+            JOIN everlight_users s ON s.id = m.sender_id
+            LEFT JOIN everlight_messages r ON r.id = m.reply_to_id
+            LEFT JOIN everlight_users rs ON rs.id = r.sender_id
 
             WHERE
 
@@ -2212,6 +2225,7 @@ app.post(
           req.body.body,
           1000
         );
+      const replyToId = Number(req.body.reply_to_id || 0);
 
       if (!body) {
         return res
@@ -2267,20 +2281,35 @@ app.post(
           });
       }
 
+      let replyMessage = null;
+      if (replyToId > 0) {
+        replyMessage = await dbGet(
+          `SELECT id, sender_id, recipient_id FROM everlight_messages WHERE id = ? LIMIT 1`,
+          [replyToId]
+        );
+        if (!replyMessage ||
+            !((replyMessage.sender_id === req.userId && replyMessage.recipient_id === other.id) ||
+              (replyMessage.sender_id === other.id && replyMessage.recipient_id === req.userId))) {
+          return res.status(400).json({ error: 'A válaszolt üzenet nem tartozik ehhez a beszélgetéshez.' });
+        }
+      }
+
       const result =
         await dbRun(
           `
             INSERT INTO everlight_messages (
               sender_id,
               recipient_id,
-              body
+              body,
+              reply_to_id
             )
-            VALUES (?, ?, ?)
+            VALUES (?, ?, ?, ?)
           `,
           [
             req.userId,
             other.id,
-            body
+            body,
+            replyToId > 0 ? replyToId : null
           ]
         );
 
@@ -2319,6 +2348,83 @@ app.post(
     }
   }
 );
+
+
+/* =========================================================
+   MESSAGES — EDIT / DELETE / REPLY / CONVERSATION DELETE
+   ========================================================= */
+
+app.patch('/api/messages/:id', auth, async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const body = clean(req.body.body, 1000);
+    if (!Number.isInteger(id) || id <= 0 || !body) {
+      return res.status(400).json({ error: 'Érvénytelen üzenet.' });
+    }
+
+    const message = await dbGet(
+      `SELECT id, sender_id FROM everlight_messages WHERE id = ? LIMIT 1`,
+      [id]
+    );
+    if (!message) return res.status(404).json({ error: 'Az üzenet nem található.' });
+    if (message.sender_id !== req.userId) {
+      return res.status(403).json({ error: 'Csak a saját üzenetedet módosíthatod.' });
+    }
+
+    await dbRun(
+      `UPDATE everlight_messages SET body = ?, edited_at = CURRENT_TIMESTAMP WHERE id = ?`,
+      [body, id]
+    );
+    return res.json({ ok: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/api/messages/:id', auth, async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id) || id <= 0) {
+      return res.status(400).json({ error: 'Érvénytelen üzenet.' });
+    }
+
+    const message = await dbGet(
+      `SELECT id, sender_id FROM everlight_messages WHERE id = ? LIMIT 1`,
+      [id]
+    );
+    if (!message) return res.status(404).json({ error: 'Az üzenet nem található.' });
+    if (message.sender_id !== req.userId) {
+      return res.status(403).json({ error: 'Csak a saját üzenetedet törölheted.' });
+    }
+
+    await dbRun(`DELETE FROM everlight_messages WHERE id = ?`, [id]);
+    return res.json({ ok: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/api/messages/conversation/:username', auth, async (req, res, next) => {
+  try {
+    const username = clean(req.params.username, 30).toLowerCase();
+    const other = await dbGet(
+      `SELECT id FROM everlight_users WHERE username = ? LIMIT 1`,
+      [username]
+    );
+    if (!other) return res.status(404).json({ error: 'A felhasználó nem található.' });
+
+    await dbRun(
+      `DELETE FROM everlight_messages
+       WHERE (sender_id = ? AND recipient_id = ?)
+          OR (sender_id = ? AND recipient_id = ?)`,
+      [req.userId, other.id, other.id, req.userId]
+    );
+
+    return res.json({ ok: true });
+  } catch (error) {
+    next(error);
+  }
+});
 
 /* =========================================================
    ERROR HANDLER
