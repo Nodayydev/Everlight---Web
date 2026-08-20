@@ -17335,3 +17335,123 @@ body.sun-mode .topbar .domain .domain-mode-light {
     background: transparent !important;
   }
 }
+
+
+/* =========================================================
+   UNIFIED MOBILE BOTTOM CHROME — dock + AI one piece
+   ========================================================= */
+.mobile-bottom-chrome {
+  display: none;
+}
+
+@media (max-width: 660px) {
+  .mobile-bottom-chrome {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 0 env(safe-area-inset-bottom, 0px) !important;
+    background: #07090b !important;
+    border-top: 1px solid #1c2428 !important;
+    z-index: 4000 !important;
+    box-shadow: none !important;
+    gap: 0 !important;
+  }
+
+  html body #mobileDock,
+  html body nav.mobile-dock,
+  .mobile-bottom-chrome .mobile-dock {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .mobile-ai-caption {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 12px 8px !important;
+    text-align: center !important;
+    font: 500 7.5px/1.25 "DM Mono", ui-monospace, monospace !important;
+    color: #6d7679 !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  html body .site-footer {
+    display: none !important;
+  }
+
+  main#feed {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+@media (min-width: 661px) {
+  .mobile-bottom-chrome,
+  .mobile-ai-caption {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE DATE / CLOCK — balanced, full-width, centered
+   ========================================================= */
+@media (max-width: 660px) {
+  main#feed .time-lockup,
+  .time-lockup {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 10px 16px 6px !important;
+    padding: 10px 14px !important;
+    border: 1px solid rgba(139, 173, 204, .16) !important;
+    border-radius: 14px !important;
+    background: #080b0c !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .time-lockup #mainDate,
+  .time-lockup span {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+    font: 500 11px/1.2 "DM Mono", ui-monospace, monospace !important;
+    color: #9aa7ab !important;
+    flex: 1 1 auto !important;
+  }
+
+  .time-lockup #mainClock,
+  .time-lockup strong {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: right !important;
+    font: 600 13px/1.2 "DM Mono", ui-monospace, monospace !important;
+    color: #8badcc !important;
+    flex: 0 0 auto !important;
+  }
+}
