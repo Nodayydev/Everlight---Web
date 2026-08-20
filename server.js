@@ -306,6 +306,15 @@ function safeUser(user) {
     website:
       user.website || '',
 
+    email:
+      user.email || '',
+
+    hasEmail:
+      Boolean(user.email),
+
+    hasPasswordHint:
+      Boolean(user.password_hint),
+
     messageStreak:
       Number(user.message_streak || 0)
   };
@@ -609,7 +618,8 @@ async function createSchema() {
     ['pronouns', 'ALTER TABLE everlight_users ADD COLUMN pronouns VARCHAR(60) NULL'],
     ['location', 'ALTER TABLE everlight_users ADD COLUMN location VARCHAR(120) NULL'],
     ['website', 'ALTER TABLE everlight_users ADD COLUMN website VARCHAR(255) NULL'],
-    ['last_seen', 'ALTER TABLE everlight_users ADD COLUMN last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP']
+    ['last_seen', 'ALTER TABLE everlight_users ADD COLUMN last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP'],
+    ['password_hint', 'ALTER TABLE everlight_users ADD COLUMN password_hint VARCHAR(120) NULL']
   ];
 
   const columns = await dbAll(`
@@ -812,6 +822,12 @@ app.post(
           254
         ) || null;
 
+      const passwordHint =
+        clean(
+          req.body.passwordHint || req.body.password_hint,
+          120
+        );
+
       if (
         !validUsername(username)
       ) {
@@ -850,6 +866,18 @@ app.post(
        */
 
       if (!user) {
+        const passwordConfirm = String(req.body.passwordConfirm || '');
+        if (passwordConfirm && passwordConfirm !== password) {
+          return res.status(400).json({
+            error: 'A két jelszó nem egyezik.'
+          });
+        }
+        if (passwordHint.length < 4) {
+          return res.status(400).json({
+            error: 'Adj meg egy legalább 4 karakteres jelszó-emlékeztetőt.'
+          });
+        }
+
         const hash =
           await bcrypt.hash(
             password,
@@ -869,9 +897,10 @@ app.post(
                 display_name,
                 name_color,
                 profile_color,
-                status
+                status,
+                password_hint
               )
-              VALUES (?, ?, ?, ?, ?, ?, ?)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `,
             [
               username,
@@ -880,7 +909,8 @@ app.post(
               defaultName,
               '#67e7dd',
               '#273638',
-              '✦ Elérhető'
+              '✦ Elérhető',
+              passwordHint || null
             ]
           );
 
@@ -910,6 +940,14 @@ app.post(
           );
 
           user.email = email;
+        }
+
+        if (passwordHint && !user.password_hint) {
+          await dbRun(
+            `UPDATE everlight_users SET password_hint = ? WHERE id = ?`,
+            [passwordHint, user.id]
+          );
+          user.password_hint = passwordHint;
         }
 
         const passwordOk =
@@ -2060,6 +2098,14 @@ app.get(
             u.avatar,
             u.name_color,
             MAX(m.created_at) AS last_message_at,
+            (
+              SELECT m2.body
+              FROM everlight_messages m2
+              WHERE (m2.sender_id = ? AND m2.recipient_id = u.id)
+                 OR (m2.sender_id = u.id AND m2.recipient_id = ?)
+              ORDER BY m2.created_at DESC
+              LIMIT 1
+            ) AS last_body,
             COALESCE((
               SELECT ms.current_streak
               FROM everlight_message_streaks ms
@@ -2080,7 +2126,7 @@ app.get(
           ORDER BY last_message_at DESC
           LIMIT 50
         `,
-        [req.userId, req.userId, req.userId, req.userId, req.userId]
+        [req.userId, req.userId, req.userId, req.userId, req.userId, req.userId, req.userId]
       );
 
       return res.json({
@@ -2339,6 +2385,93 @@ app.post(
     }
   }
 );
+
+/* =========================================================
+   PROFILE — PASSWORD CHANGE (logged in, no old password)
+   ========================================================= */
+
+app.post('/api/profile/password', auth, async (req, res, next) => {
+  try {
+    const password = String(req.body.password || '');
+    const confirm = String(req.body.confirm || req.body.passwordConfirm || '');
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Az új jelszó legalább 6 karakter legyen.' });
+    }
+    if (confirm && password !== confirm) {
+      return res.status(400).json({ error: 'A két jelszó nem egyezik.' });
+    }
+
+    const user = await dbGet(`SELECT id, email, password_hint FROM everlight_users WHERE id = ? LIMIT 1`, [req.userId]);
+    if (!user) return res.status(401).json({ error: 'A fiók nem található.' });
+
+    const hint = clean(req.body.passwordHint || req.body.password_hint, 120);
+    if (!user.email && !user.password_hint && hint.length < 4) {
+      return res.status(400).json({ error: 'E-mail nélkül adj meg egy jelszó-emlékeztetőt is.' });
+    }
+
+    const hash = await bcrypt.hash(password, 12);
+    if (hint) {
+      await dbRun(`UPDATE everlight_users SET password_hash = ?, password_hint = ? WHERE id = ?`, [hash, hint, req.userId]);
+    } else {
+      await dbRun(`UPDATE everlight_users SET password_hash = ? WHERE id = ?`, [hash, req.userId]);
+    }
+
+    return res.json({ ok: true, message: 'A jelszó megváltozott.' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/profile/security', auth, async (req, res, next) => {
+  try {
+    const email = clean(req.body.email, 254).toLowerCase() || null;
+    const hint = clean(req.body.passwordHint || req.body.password_hint, 120);
+    const user = await dbGet(`SELECT id, email, password_hint FROM everlight_users WHERE id = ? LIMIT 1`, [req.userId]);
+    if (!user) return res.status(401).json({ error: 'A fiók nem található.' });
+
+    const nextEmail = email || user.email || null;
+    const nextHint = hint || user.password_hint || null;
+    if (!nextEmail && !nextHint) {
+      return res.status(400).json({ error: 'Adj meg e-mail címet vagy jelszó-emlékeztetőt.' });
+    }
+
+    await dbRun(
+      `UPDATE everlight_users SET email = ?, password_hint = ? WHERE id = ?`,
+      [nextEmail, nextHint, req.userId]
+    );
+    return res.json({ ok: true, email: nextEmail || '', hasPasswordHint: Boolean(nextHint) });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/auth/reset-with-hint', async (req, res, next) => {
+  try {
+    const username = clean(req.body.username, 30);
+    const hint = clean(req.body.passwordHint || req.body.password_hint, 120);
+    const password = String(req.body.password || '');
+    if (!username || hint.length < 4) {
+      return res.status(400).json({ error: 'Add meg a nevet és a jelszó-emlékeztetőt.' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Az új jelszó legalább 6 karakter legyen.' });
+    }
+
+    const user = await dbGet(
+      `SELECT id, password_hint FROM everlight_users WHERE LOWER(username) = ? LIMIT 1`,
+      [username.toLowerCase()]
+    );
+    if (!user || !user.password_hint || String(user.password_hint).trim().toLowerCase() !== hint.toLowerCase()) {
+      return res.status(400).json({ error: 'A név vagy az emlékeztető nem egyezik.' });
+    }
+
+    const hash = await bcrypt.hash(password, 12);
+    await dbRun(`UPDATE everlight_users SET password_hash = ? WHERE id = ?`, [hash, user.id]);
+    return res.json({ ok: true, message: 'A jelszó megváltozott. Most már beléphetsz.' });
+  } catch (error) {
+    next(error);
+  }
+});
 
 /* =========================================================
    ERROR HANDLER

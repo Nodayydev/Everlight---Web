@@ -51,6 +51,22 @@ function notify(_message) {
    HTML ESCAPE
    ========================================================= */
 
+function formatChatTime(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const now = new Date();
+  const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const startThat = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const diffDays = Math.round((startToday - startThat) / 86400000);
+  if (diffDays <= 0) {
+    return date.toLocaleTimeString("hu-HU", { hour: "2-digit", minute: "2-digit" });
+  }
+  if (diffDays === 1) return "Tegnap";
+  if (diffDays < 7) return `${diffDays} napja`;
+  return date.toLocaleDateString("hu-HU", { month: "short", day: "numeric" });
+}
+
 function escapeHtml(text = "") {
   const node = document.createElement("div");
 
@@ -558,13 +574,23 @@ if (profileLoginForm) {
     }
 
     try {
+      const password = $("#profileLoginPassword")?.value || "";
+      const passwordConfirm = $("#profileLoginPasswordConfirm")?.value || "";
+      const passwordHint = $("#profileLoginHint")?.value.trim() || "";
+      if (password !== passwordConfirm) {
+        throw new Error("A két jelszó nem egyezik.");
+      }
+      if (passwordHint.length < 4) {
+        throw new Error("Adj meg egy legalább 4 karakteres jelszó-emlékeztetőt.");
+      }
       const data = await api("/api/auth/enter", {
         method: "POST",
         body: JSON.stringify({
           username: $("#profileLoginName")?.value.trim() || "",
           email: $("#profileLoginEmail")?.value.trim() || "",
-          password: $("#profileLoginPassword")?.value || "",
-          passwordHint: $("#profileLoginHint")?.value.trim() || ""
+          password,
+          passwordConfirm,
+          passwordHint
         })
       });
 
@@ -612,13 +638,23 @@ if (messageLoginForm) {
       submitButton.textContent = "Belépés…";
     }
     try {
+      const password = $("#messageLoginPassword")?.value || "";
+      const passwordConfirm = $("#messageLoginPasswordConfirm")?.value || "";
+      const passwordHint = $("#messageLoginHint")?.value.trim() || "";
+      if (password !== passwordConfirm) {
+        throw new Error("A két jelszó nem egyezik.");
+      }
+      if (passwordHint.length < 4) {
+        throw new Error("Adj meg egy legalább 4 karakteres jelszó-emlékeztetőt.");
+      }
       const data = await api("/api/auth/enter", {
         method: "POST",
         body: JSON.stringify({
           username: $("#messageLoginName")?.value.trim() || "",
           email: $("#messageLoginEmail")?.value.trim() || "",
-          password: $("#messageLoginPassword")?.value || "",
-          passwordHint: $("#messageLoginHint")?.value.trim() || ""
+          password,
+          passwordConfirm,
+          passwordHint
         })
       });
       token = data.token;
@@ -3660,7 +3696,10 @@ async function loadMessageContacts() {
       return;
     }
 
-    contactsList.innerHTML = contacts.map((user) => `
+    contactsList.innerHTML = contacts.map((user) => {
+      const preview = String(user.last_body || user.lastBody || "").replace(/\s+/g, " ").trim();
+      const when = formatChatTime(user.last_message_at || user.lastMessageAt);
+      return `
       <button
         type="button"
         class="message-contact"
@@ -3673,13 +3712,15 @@ async function loadMessageContacts() {
         </span>
         <span class="message-contact-copy">
           <strong>${escapeHtml(getDisplayName(user))}</strong>
-          <small>@${escapeHtml(user.username)}</small>
+          <small>${escapeHtml(preview || "@" + user.username)}</small>
         </span>
+        <span class="message-contact-meta">${escapeHtml(when)}</span>
         ${Number(user.message_streak || 0) > 0
           ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(user.message_streak))}</span>`
           : ""}
       </button>
-    `).join("");
+    `;
+    }).join("");
 
     filterMessageContacts();
 
@@ -3745,6 +3786,62 @@ function restoreMessagesHome() {
   }
 }
 
+async function loadDailyThoughts() {
+  const track = document.getElementById("dailyThoughtsTrack");
+  if (!track) return;
+
+  const ownName = currentUser ? getDisplayName(currentUser) : "A tiéd";
+  const ownAvatar = currentUser?.avatar
+    ? `<img src="${escapeHtml(currentUser.avatar)}" alt="">`
+    : "+";
+
+  let items = `
+    <button type="button" class="daily-thought own" id="dailyThoughtOwn">
+      <span class="daily-thought-bubble">Írd meg a mai gondolatod.</span>
+      <span class="daily-thought-avatar">${ownAvatar}</span>
+      <small>A tiéd</small>
+    </button>
+  `;
+
+  try {
+    const data = await api("/api/posts");
+    const posts = data.posts || data || [];
+    const seen = new Set();
+    const thoughts = [];
+    for (const post of posts) {
+      const key = post.username || post.displayName || post.id;
+      if (!key || seen.has(key)) continue;
+      if (currentUser && post.username === currentUser.username) continue;
+      seen.add(key);
+      const text = String(post.title || post.body || "").replace(/\s+/g, " ").trim();
+      if (!text) continue;
+      thoughts.push(post);
+      if (thoughts.length >= 8) break;
+    }
+
+    items += thoughts.map((post) => {
+      const name = (post.displayName || post.username || "✦").split("#")[0];
+      const snippet = String(post.title || post.body || "").replace(/\s+/g, " ").trim().slice(0, 42);
+      const avatar = post.avatar
+        ? `<img src="${escapeHtml(post.avatar)}" alt="">`
+        : escapeHtml((name || "✦").charAt(0));
+      const streak = Number(post.messageStreak || post.message_streak || 0);
+      return `
+        <button type="button" class="daily-thought" data-author="${escapeHtml(post.username || "")}">
+          <span class="daily-thought-bubble">${escapeHtml(snippet)}${snippet.length >= 42 ? "…" : ""}</span>
+          <span class="daily-thought-avatar">${avatar}</span>
+          <small>${escapeHtml(name)}</small>
+          ${streak > 0 ? `<span class="daily-thought-streak">🔥 ${streak}</span>` : ""}
+        </button>
+      `;
+    }).join("");
+  } catch {
+    /* keep own tile */
+  }
+
+  track.innerHTML = items;
+}
+
 function openMessages() {
 
   const messagesView =
@@ -3786,6 +3883,7 @@ function openMessages() {
     "messages"
   );
   window.__syncDesktopNav?.("messages");
+  loadDailyThoughts();
 
   const authGate = $("#messageAuthGate");
   const contacts = $(".message-contacts");
@@ -6385,6 +6483,47 @@ function bindProfileCustomizer(
         return;
       }
 
+      if (event.target.closest("#customizerSaveSecurity")) {
+        event.preventDefault();
+        const status = $("#customizerSecurityStatus");
+        const password = $("#customizerNewPassword")?.value || "";
+        const confirm = $("#customizerNewPasswordConfirm")?.value || "";
+        const hint = $("#customizerPasswordHint")?.value.trim() || "";
+        const email = $("#customizerEmail")?.value.trim() || "";
+        const show = (msg) => { if (status) status.textContent = msg; };
+        if (password && password.length < 6) {
+          show("A jelszó legalább 6 karakter legyen.");
+          return;
+        }
+        if (password && password !== confirm) {
+          show("A két új jelszó nem egyezik.");
+          return;
+        }
+        if (!email && hint.length < 4) {
+          show("E-mail nélkül adj meg egy jelszó-emlékeztetőt.");
+          return;
+        }
+        show("Mentés…");
+        Promise.resolve()
+          .then(async () => {
+            await api("/api/profile/security", {
+              method: "POST",
+              body: JSON.stringify({ email, passwordHint: hint })
+            });
+            if (password) {
+              await api("/api/profile/password", {
+                method: "POST",
+                body: JSON.stringify({ password, passwordHint: hint })
+              });
+            }
+            show("Mentve.");
+            if ($("#customizerNewPassword")) $("#customizerNewPassword").value = "";
+            if ($("#customizerNewPasswordConfirm")) $("#customizerNewPasswordConfirm").value = "";
+          })
+          .catch((error) => show(error.message || "A mentés nem sikerült."));
+        return;
+      }
+
       const close =
         event.target.closest(
           "[data-customizer-close]"
@@ -6974,3 +7113,20 @@ if (initialResetToken) {
     }
   });
 })();
+
+
+document.getElementById("dailyThoughts")?.addEventListener("click", (event) => {
+  const thought = event.target.closest(".daily-thought");
+  if (!thought) return;
+  if (thought.id === "dailyThoughtOwn" || thought.classList.contains("own")) {
+    const btn = document.getElementById("newMessageButton") || document.getElementById("composeNewButton");
+    btn?.click();
+    return;
+  }
+  const author = thought.getAttribute("data-author");
+  if (author) {
+    const recipient = document.getElementById("dmRecipient");
+    if (recipient) recipient.value = author;
+    document.querySelector(`.message-contact[data-recipient="${CSS.escape(author)}"]`)?.click();
+  }
+});

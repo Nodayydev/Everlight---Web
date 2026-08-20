@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-rail-fix">
-  <link rel="stylesheet" href="enhancements.css?v=20260820-date-bar">
+  <link rel="stylesheet" href="enhancements.css?v=20260820-thought-streak">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -299,11 +299,18 @@
         </div>
         <button id="closeMessagesView" class="messages-close" type="button" aria-label="Üzenetek bezárása" tabindex="-1" aria-hidden="true">×</button>
       </header>
+      <section class="daily-thoughts" id="dailyThoughts" aria-label="Napi gondolatok">
+        <div class="daily-thoughts-head">
+          <strong>✦ Napi gondolatok</strong>
+          <button type="button" id="dailyThoughtsAll">Összes megtekintése →</button>
+        </div>
+        <div class="daily-thoughts-track" id="dailyThoughtsTrack"></div>
+      </section>
       <div class="messages-layout">
         <aside class="message-contacts">
           <div class="message-contacts-head">
             <div>
-              <div class="message-contacts-title">Beszélgetések</div>
+              <div class="message-contacts-title">Chat / Beszélgetések</div>
               <p>Válassz egy beszélgetést</p>
             </div>
             <button id="newMessageButton" class="new-message-button" type="button">＋ Új</button>
@@ -332,8 +339,11 @@
               <label>Jelszó
                 <input id="messageLoginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
               </label>
-              <label>Jelszó-emlékeztető <span class="profile-field-optional">(e-mail nélkül kötelező)</span>
-                <input id="messageLoginHint" type="text" maxlength="120" placeholder="első belépéshez / e-mail nélkül" autocomplete="off">
+              <label>Jelszó újra
+                <input id="messageLoginPasswordConfirm" type="password" placeholder="írd be még egyszer" autocomplete="new-password" required>
+              </label>
+              <label>Jelszó-emlékeztető
+                <input id="messageLoginHint" type="text" maxlength="120" placeholder="pl. kutyám neve" autocomplete="off" required>
               </label>
               <button class="primary" type="submit">Belépés</button>
             </form>
@@ -401,8 +411,11 @@
             <label>Jelszó
               <input id="profileLoginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
             </label>
-            <label>Jelszó-emlékeztető <span class="profile-field-optional">(e-mail nélkül kötelező)</span>
-              <input id="profileLoginHint" type="text" maxlength="120" placeholder="első belépéshez / e-mail nélkül" autocomplete="off">
+            <label>Jelszó újra
+              <input id="profileLoginPasswordConfirm" type="password" placeholder="írd be még egyszer" autocomplete="new-password" required>
+            </label>
+            <label>Jelszó-emlékeztető
+              <input id="profileLoginHint" type="text" maxlength="120" placeholder="pl. kutyám neve" autocomplete="off" required>
             </label>
             <button class="primary" type="submit">Belépés</button>
           </form>
@@ -564,7 +577,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260820-mobile-final"></script>
+  <script src="app.js?v=20260820-auth-fields"></script>
   <script src="theme.js?v=20260820-mobile-final"></script>
 </body>
 </html>
