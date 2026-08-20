@@ -125,10 +125,29 @@
       localStorage.setItem(storageKey,JSON.stringify(state));
     }
 
+    function isDesktop(){
+      return window.matchMedia("(min-width: 961px)").matches;
+    }
+
+    function applyRail(collapsed){
+      document.body.classList.toggle("right-rail-collapsed", collapsed);
+      toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      toggle.classList.toggle("is-open", !collapsed);
+      toggle.setAttribute("aria-label", collapsed ? "Jobb panel megnyitása" : "Jobb panel bezárása");
+      toggle.setAttribute("title", collapsed ? "Jobb panel" : "Jobb panel elrejtése");
+      try { localStorage.setItem("everlight-right-rail-collapsed", collapsed ? "1" : "0"); } catch (err) {}
+      open = false;
+      render();
+    }
+
     function toggleMenu(e){
       if(e){
         e.preventDefault();
         e.stopPropagation();
+      }
+      if(isDesktop()){
+        applyRail(!document.body.classList.contains("right-rail-collapsed"));
+        return;
       }
       open=!open;
       render();
@@ -138,6 +157,10 @@
     var cleanToggle=toggle.cloneNode(true);
     toggle.parentNode.replaceChild(cleanToggle,toggle);
     toggle=cleanToggle;
+
+    if(isDesktop()){
+      applyRail(localStorage.getItem("everlight-right-rail-collapsed") === "1");
+    }
 
     toggle.addEventListener("click",function(e){
       if(touchHandled){
@@ -314,5 +337,25 @@
       return;
     }
     alert("A böngészőben add hozzá az asztalhoz / telepítsd az Everlightot. Az ikon az icon.svg.");
+  });
+})();
+
+
+(function(){
+  var toggle = document.getElementById("headerLookToggle");
+  var menu = document.getElementById("headerLookMenu");
+  if (!toggle || !menu) return;
+  toggle.addEventListener("click", function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    var open = menu.hidden;
+    menu.hidden = !open;
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.addEventListener("click", function(event){
+    if (!event.target.closest(".header-look-menu-wrap")) {
+      menu.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+    }
   });
 })();
