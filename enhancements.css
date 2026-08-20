@@ -15853,3 +15853,48 @@ main#feed{
     touch-action:pan-y !important;
   }
 }
+
+
+/* =========================================================
+   FINAL MOBILE SAFE-AREA POSITION — ISLAND AT HOME INDICATOR
+   The iPhone visual viewport ends above the home-indicator safe area.
+   Move the dock/footer into that safe-area region so there is no large
+   black gap underneath them.
+   ========================================================= */
+@media (max-width:660px){
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(-1 * env(safe-area-inset-bottom, 0px)) !important;
+    margin-bottom:0 !important;
+  }
+
+  .site-footer{
+    bottom:calc(-1 * env(safe-area-inset-bottom, 0px)) !important;
+    height:18px !important;
+    min-height:18px !important;
+    padding:0 8px !important;
+    background:transparent !important;
+  }
+
+  .site-footer p{
+    margin:0 !important;
+    font-size:6px !important;
+    line-height:1 !important;
+  }
+
+  /* Keep content clear of the lowered dock while allowing the dock
+     and AI line to sit directly above the iPhone home indicator. */
+  main{
+    padding-bottom:calc(110px + env(safe-area-inset-bottom,0px)) !important;
+  }
+}
+
+@media (max-width:390px){
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(-1 * env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .site-footer{
+    bottom:calc(-1 * env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
