@@ -5,9 +5,10 @@
 @media (max-width: 660px) {
   /* The profile screen owns the viewport. The normal bottom dock must not
      sit on top of profile content or its buttons. */
+  /* Dock stays visible over profile/messages — navigation must remain reachable. */
   body:has(.profile-view[aria-hidden="false"]) .mobile-dock,
   body:has(.profile-view:not([aria-hidden="true"])) .mobile-dock {
-    display: none !important;
+    display: grid !important;
   }
 
   body:has(.profile-view[aria-hidden="false"]) {
@@ -752,7 +753,9 @@ body{
   }
 
   /* Fullscreen messages own the screen; do not let the global dock overlap it. */
-  body.messages-view-open .mobile-dock,
+  body.messages-view-open .mobile-dock{
+    display:grid !important;
+  }
   body.messages-view-open .site-footer{
     display:none !important;
   }
@@ -1002,7 +1005,9 @@ body{
   /* On fullscreen screens there is no dock or AI footer. */
   body.messages-view-open .mobile-dock,
   body.profile-view-open .mobile-dock,
-  body.profile-customizer-open .mobile-dock,
+  body.profile-customizer-open .mobile-dock{
+    display:grid !important;
+  }
   body.messages-view-open .site-footer,
   body.profile-view-open .site-footer,
   body.profile-customizer-open .site-footer{
@@ -1350,7 +1355,9 @@ body{
     place-items:center !important;
   }
 
-  body.messages-view-open .mobile-dock,
+  body.messages-view-open .mobile-dock{
+    display:grid !important;
+  }
   body.messages-view-open .site-footer{
     display:none !important;
   }
@@ -1753,10 +1760,11 @@ body.sun-mode .topbar .header-logo .logo-word{
     margin:0 !important;
   }
 
-  /* Remove the old mobile footer/dock from fullscreen views. */
   body.messages-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock{
+    display:grid !important;
+  }
   body.messages-view-open .site-footer,
-  body.profile-view-open .mobile-dock,
   body.profile-view-open .site-footer,
   body.profile-customizer-open .mobile-dock,
   body.profile-customizer-open .site-footer{
@@ -2093,9 +2101,10 @@ body .phone-card .install-button{
     background:#000 !important;
   }
 
-  /* No global dock/footer on fullscreen view. */
   body.messages-view-open .mobile-dock,
-  body.profile-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock{
+    display:grid !important;
+  }
   body.messages-view-open .site-footer,
   body.profile-view-open .site-footer{
     display:none !important;
@@ -3378,7 +3387,7 @@ body{
   /* Never show the bottom dock/footer while a fullscreen view is open. */
   body.messages-view-open #mobileDock,
   body.profile-view-open #mobileDock{
-    display:none !important;
+    display:grid !important;
   }
 
   body.messages-view-open .site-footer,
@@ -3521,9 +3530,13 @@ body{
   }
 
   body.messages-view-open .topbar,
-  body.profile-view-open .topbar,
+  body.profile-view-open .topbar{
+    display:grid !important;
+  }
   body.messages-view-open #mobileDock,
-  body.profile-view-open #mobileDock,
+  body.profile-view-open #mobileDock{
+    display:grid !important;
+  }
   body.messages-view-open .site-footer,
   body.profile-view-open .site-footer{
     display:none !important;
@@ -17924,5 +17937,104 @@ body.sun-mode .topbar .domain .domain-mode-light {
   .profile-view.open {
     bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
     z-index: 300 !important;
+  }
+}
+
+
+/* =========================================================
+   CLEAN MOBILE NAV — dock always reachable
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .mobile-bottom-chrome,
+  html body.messages-view-open .mobile-bottom-chrome,
+  html body.profile-view-open .mobile-bottom-chrome,
+  html body.profile-customizer-open .mobile-bottom-chrome,
+  html body:has(.profile-view[aria-hidden="false"]) .mobile-bottom-chrome {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    z-index: 2147483646 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    background: #07090b !important;
+  }
+
+  html body #mobileDock,
+  html body .mobile-bottom-chrome #mobileDock,
+  html body.messages-view-open #mobileDock,
+  html body.profile-view-open #mobileDock,
+  html body.messages-view-open .mobile-dock,
+  html body.profile-view-open .mobile-dock,
+  html body.messages-view-open .mobile-bottom-chrome #mobileDock,
+  html body.profile-view-open .mobile-bottom-chrome #mobileDock {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+  }
+
+  /* Sheets leave room for dock + AI caption */
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"],
+  html body .profile-view.open,
+  html body .profile-view[aria-hidden="false"] {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 64px !important;
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    inset: auto 0 calc(92px + env(safe-area-inset-bottom, 0px)) 0 !important;
+    z-index: 400 !important;
+    border-radius: 0 !important;
+    background: #000 !important;
+    overflow: auto !important;
+    pointer-events: auto !important;
+  }
+
+  /* Contacts list visible on mobile (not slid away) */
+  html body .messages-view .message-contacts {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+  html body .messages-view .message-chat {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+  html body .messages-view.chat-open .message-contacts {
+    display: none !important;
+  }
+  html body .messages-view.chat-open .message-chat {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    min-height: 50vh !important;
+  }
+  html body .messages-view .messages-layout {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
   }
 }

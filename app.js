@@ -3812,45 +3812,18 @@ async function loadDailyThoughts() {
 }
 
 function openMessages() {
+  const messagesView = $("#messagesView");
+  if (!messagesView) return;
 
-  const messagesView =
-    $("#messagesView");
-
-  if (!messagesView) {
-    return;
-  }
-
-
-  /*
-   * Profilnézet bezárása,
-   * hogy egyszerre csak egy teljes nézet legyen nyitva.
-   */
-
-  closeProfileView();
-
-  // Desktopon a chat a feed oszlopába kerül, mobilon marad teljes nézet.
+  closeProfileView({ syncDock: false });
   mountMessagesInFeed();
-
   window.__closeMobileCommunity?.();
 
-  messagesView.classList.add(
-    "open"
-  );
-
-  messagesView.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body.classList.add(
-    "messages-view-open"
-  );
-
-
-  setMobileDockActive(
-    "messages"
-  );
+  messagesView.classList.add("open");
+  messagesView.setAttribute("aria-hidden", "false");
+  messagesView.classList.remove("chat-open");
+  document.body.classList.add("messages-view-open");
+  setMobileDockActive("messages");
   window.__syncDesktopNav?.("messages");
   loadDailyThoughts();
 
@@ -3861,31 +3834,21 @@ function openMessages() {
   const dmBody = $("#dmBody");
   const sendButton = $(".message-send-button");
   const composeNewButton = $("#composeNewButton");
-  const isMobileMessages = window.matchMedia("(max-width: 660px)").matches;
+
+  if (authGate) {
+    authGate.hidden = true;
+    authGate.setAttribute("aria-hidden", "true");
+  }
+  if (contacts) {
+    contacts.hidden = false;
+    contacts.style.display = "";
+  }
+  if (chat) {
+    chat.hidden = false;
+    chat.style.display = "";
+  }
 
   if (!currentUser) {
-    // A Csevegés soha nem tartalmaz külön bejelentkezési űrlapot.
-    // A teljes bejelentkezés kizárólag a Profil nézetben történik.
-    if (authGate) {
-      authGate.hidden = true;
-      authGate.setAttribute("aria-hidden", "true");
-    }
-    if (contacts) contacts.hidden = true;
-    if (chat) chat.hidden = false;
-    messagesView.classList.add("chat-open");
-    if (dmList) {
-      dmList.innerHTML = `
-        <div class="chat-login-required">
-          <div class="chat-welcome-icon">✦</div>
-          <strong>Bejelentkezés szükséges</strong>
-          <p>Az üzenetek küldéséhez jelentkezz be a Profilban.</p>
-          <div class="chat-demo-preview" aria-label="Tesztbeszélgetés előnézete">
-            <div class="chat-demo-label">TESZT BESZÉLGETÉS</div>
-            <div class="chat-demo-message">Szia! Így fog kinézni egy privát üzenetváltás.</div>
-            <div class="chat-demo-message chat-demo-message-me">A teljes beszélgetéshez jelentkezz be.</div>
-          </div>
-        </div>`;
-    }
     if (dmBody) {
       dmBody.value = "";
       dmBody.disabled = true;
@@ -3893,13 +3856,16 @@ function openMessages() {
     }
     if (sendButton) sendButton.disabled = true;
     if (composeNewButton) composeNewButton.disabled = true;
-  } else {
-    if (authGate) {
-      authGate.hidden = true;
-      authGate.setAttribute("aria-hidden", "true");
+    const list = $("#messageContactsList");
+    if (list) {
+      list.innerHTML = `
+        <div class="chat-login-required">
+          <div class="chat-welcome-icon">✦</div>
+          <strong>Bejelentkezés szükséges</strong>
+          <p>Az üzenetekhez jelentkezz be a Profilban. A Hub gombbal bármikor visszaléphetsz.</p>
+        </div>`;
     }
-    if (contacts) contacts.hidden = false;
-    if (chat) chat.hidden = false;
+  } else {
     if (dmBody) {
       dmBody.disabled = false;
       dmBody.placeholder = "Írj egy üzenetet…";
@@ -3909,22 +3875,9 @@ function openMessages() {
     loadMessageContacts();
   }
 
-  /*
-   * Ha már van címzett, rögtön betöltjük
-   * a hozzá tartozó beszélgetést.
-   */
-
-  if (
-    $("#dmRecipient")?.value.trim()
-  ) {
-
+  if ($("#dmRecipient")?.value.trim()) {
     loadMessages();
-    document.getElementById("messagesView")?.classList.add("chat-open");
-  } else if (window.matchMedia("(max-width: 660px)").matches) {
-    // Mobilon a Csevegés maga a megnyitott panel; ne csússzon ki jobbra.
-    document.getElementById("messagesView")?.classList.add("chat-open");
-  } else {
-    document.getElementById("messagesView")?.classList.remove("chat-open");
+    messagesView.classList.add("chat-open");
   }
 }
 
