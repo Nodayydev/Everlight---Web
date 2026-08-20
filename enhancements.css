@@ -16670,3 +16670,220 @@ body.sun-mode .footer-mode-btn[data-accent="sun"].is-active,
     padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE DOCK — glow on icon only, not the whole cell
+   ========================================================= */
+@media (max-width: 660px) {
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-island-alert,
+  .mobile-dock .mobile-dock-item {
+    background: transparent !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
+
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-island-alert.is-open,
+  #mobileDock .mobile-dock-item:hover,
+  #mobileDock .mobile-dock-item:focus,
+  #mobileDock .mobile-dock-item:focus-visible {
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  #mobileDock .mobile-dock-item .rail-action-icon,
+  #mobileDock .mobile-dock-item .mobile-menu-icon {
+    color: #6f7b80 !important;
+    opacity: .78 !important;
+    filter: none !important;
+  }
+
+  #mobileDock .mobile-dock-item.active .rail-action-icon,
+  #mobileDock .mobile-island-alert.is-open .mobile-menu-icon {
+    color: #8badcc !important;
+    opacity: 1 !important;
+    filter:
+      drop-shadow(0 0 5px rgba(139, 173, 204, .65))
+      drop-shadow(0 0 10px rgba(139, 173, 204, .28)) !important;
+  }
+
+  #mobileDock .mobile-dock-item.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 8px !important;
+    width: 4px !important;
+    height: 4px !important;
+    margin-left: -2px !important;
+    border-radius: 50% !important;
+    background: #8badcc !important;
+    box-shadow: 0 0 6px rgba(139, 173, 204, .8) !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE DOCK 1:1 MATCH TO SCREENSHOT
+   ========================================================= */
+@media (max-width: 660px) {
+  #mobileDock,
+  nav.mobile-dock,
+  .mobile-dock {
+    background: #07090b !important;
+    border-top: 1px solid #1c2428 !important;
+    border-bottom: 0 !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    bottom: calc(30px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-island-alert {
+    background: transparent !important;
+    border: 0 !important;
+    border-left: 0 !important;
+    box-shadow: none !important;
+    position: relative !important;
+  }
+
+  #mobileDock .mobile-dock-item + .mobile-dock-item::before,
+  #mobileDock .mobile-dock-item + .mobile-island-alert::before,
+  #mobileDock .mobile-island-alert::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 14px !important;
+    bottom: 14px !important;
+    width: 1px !important;
+    background: #243033 !important;
+    display: block !important;
+  }
+
+  #mobileDock .mobile-dock-item .rail-action-icon,
+  #mobileDock .mobile-menu-icon {
+    width: 22px !important;
+    height: 22px !important;
+    color: #8d9699 !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-island-alert.is-open {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #mobileDock .mobile-dock-item.active .rail-action-icon {
+    color: #8badcc !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  #mobileDock .mobile-dock-item.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 9px !important;
+    width: 4px !important;
+    height: 4px !important;
+    margin-left: -2px !important;
+    border-radius: 50% !important;
+    background: #8badcc !important;
+    box-shadow: none !important;
+  }
+
+  .site-footer {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    background: #000 !important;
+  }
+
+  .site-footer p {
+    font: 500 8px/1.2 "DM Mono", ui-monospace, monospace !important;
+    color: #6d7679 !important;
+  }
+}
+
+
+/* =========================================================
+   DOMAIN DOT — FORCE PULSE (fixes static override)
+   ========================================================= */
+@keyframes everlight-domain-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+    box-shadow: 0 0 2px rgba(130, 185, 232, 0.35);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+    box-shadow:
+      0 0 4px rgba(130, 185, 232, 0.95),
+      0 0 10px rgba(130, 185, 232, 0.55);
+  }
+}
+
+@keyframes everlight-domain-pulse-sun {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+    box-shadow: 0 0 2px rgba(242, 196, 92, 0.35);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+    box-shadow:
+      0 0 4px rgba(242, 196, 92, 0.95),
+      0 0 10px rgba(242, 196, 92, 0.55);
+  }
+}
+
+.topbar .domain .domain-mode-light,
+header.topbar .domain .domain-mode-light {
+  display: block !important;
+  visibility: visible !important;
+  width: 8px !important;
+  height: 8px !important;
+  min-width: 8px !important;
+  min-height: 8px !important;
+  border-radius: 50% !important;
+  background: #82b9e8 !important;
+  margin: 0 7px 0 0 !important;
+  flex: 0 0 8px !important;
+  animation: everlight-domain-pulse 1.6s ease-in-out infinite !important;
+  animation-play-state: running !important;
+  transform-origin: center !important;
+  will-change: opacity, transform, box-shadow !important;
+}
+
+body.sun-mode .topbar .domain .domain-mode-light,
+body.sun-mode header.topbar .domain .domain-mode-light {
+  background: #f2c45c !important;
+  animation-name: everlight-domain-pulse-sun !important;
+}
+
+@media (max-width: 660px) {
+  .topbar .domain .domain-mode-light,
+  header.topbar .domain .domain-mode-light {
+    width: 7px !important;
+    height: 7px !important;
+    min-width: 7px !important;
+    min-height: 7px !important;
+    flex: 0 0 7px !important;
+    margin-right: 6px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar .domain .domain-mode-light,
+  header.topbar .domain .domain-mode-light {
+    animation: everlight-domain-pulse 1.6s ease-in-out infinite !important;
+    animation-play-state: running !important;
+  }
+}
