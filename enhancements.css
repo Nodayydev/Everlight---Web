@@ -15348,3 +15348,121 @@ main#feed{
     font-size:6.5px !important;
   }
 }
+
+/* =========================================================
+   EVERLIGHT — jobb sáv tényleges javítás
+   FONTOS: az enhancements.css UTÁN kell betölteni.
+
+   index.html-be, a enhancements.css sor alá:
+   <link rel="stylesheet" href="right-rail-fix.css">
+   ========================================================= */
+
+@media (min-width: 961px) {
+  .layout {
+    width: min(1480px, calc(100vw - 32px)) !important;
+    max-width: 1480px !important;
+    overflow: visible !important;
+    grid-template-columns:
+      minmax(160px, 210px)
+      minmax(0, 1fr)
+      minmax(260px, 34vw) !important;
+    column-gap: 0 !important;
+  }
+
+  main#feed {
+    max-width: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-inline: clamp(16px, 2vw, 36px) !important;
+  }
+
+  .left-rail,
+  .right-rail {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-width: 0 !important;
+  }
+
+  .right-rail {
+    padding: 22px clamp(12px, 1.4vw, 22px) 28px !important;
+  }
+
+  .right-rail .rail-info-card,
+  .right-rail .activity-card,
+  .right-rail .right-share-card,
+  #everlightOnlineCard,
+  #everlightCommunityCard {
+    overflow: visible !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #everlightOnlineCard .faces,
+  #onlineFaces,
+  .faces {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    margin: 10px 0 0 !important;
+    min-height: 40px !important;
+    overflow: visible !important;
+  }
+
+  .faces .avatar,
+  #onlineFaces .avatar,
+  #everlightOnlineCard .everlight-online-user {
+    margin: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .activity-stats {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 8px 12px !important;
+  }
+
+  .activity-stats > div {
+    display: contents !important;
+  }
+
+  .activity-stats span,
+  .activity-stats strong {
+    min-width: 0 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+
+  .share-symbol-grid {
+    grid-template-columns: repeat(auto-fit, minmax(28px, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .share-symbol-grid button {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1280px) {
+  .layout {
+    width: calc(100vw - 24px) !important;
+    max-width: none !important;
+    grid-template-columns:
+      168px
+      minmax(0, 1fr)
+      minmax(240px, 280px) !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .layout {
+    grid-template-columns:
+      220px
+      minmax(0, 1fr)
+      minmax(300px, 380px) !important;
+  }
+}
+
