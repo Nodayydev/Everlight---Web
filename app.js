@@ -3565,9 +3565,14 @@ function setMobileDockActive(view) {
    ========================================================= */
 
 function openHubView() {
+  window.__closeMobileCommunity?.();
   closeMessages({ syncDock: false });
   closeProfileView({ syncDock: false });
-  document.body.classList.remove("messages-view-open", "profile-view-open");
+  document.body.classList.remove(
+    "messages-view-open",
+    "profile-view-open",
+    "mobile-community-open"
+  );
   setMobileDockActive("hub");
   window.__syncDesktopNav?.("hub");
   const feed = $("#feed");
@@ -6849,7 +6854,14 @@ window.addEventListener("popstate", () => {
   document.addEventListener("click", (event) => {
     if (!panel.classList.contains("is-open")) return;
     if (panel.contains(event.target) || alertButton.contains(event.target)) return;
-    if (event.target.closest?.(".mobile-dock-item")) return;
+    const dockItem = event.target.closest?.(".mobile-dock-item, #mobileHubNav, #mobileMessageNav, #mobileProfileNav");
+    if (dockItem) {
+      const view = dockItem.getAttribute("data-view") || (dockItem.id === "mobileHubNav" ? "hub" : "");
+      if (view === "hub" || view === "messages" || view === "profile") {
+        closeCommunity();
+      }
+      return;
+    }
     closeCommunity();
   }, true);
 })();
