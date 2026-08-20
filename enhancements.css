@@ -16019,3 +16019,69 @@ body.sun-mode .footer-mode-btn[data-accent="sun"].is-active,
     z-index:20 !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE HEADER LOOK CONTROLS — not in AI footer
+   ========================================================= */
+.header-look-controls{
+  display:none;
+}
+.topbar-theme-toggle,
+.topbar .theme-split-switch,
+.theme-split-switch,
+#themeToggle,
+.settings-section-title,
+.settings-options[aria-label="Stílus"]{
+  display:none !important;
+}
+
+@media (max-width:660px){
+  .header-look-controls{
+    display:flex !important;
+    grid-column:3 !important;
+    grid-row:1 !important;
+    justify-self:end !important;
+    align-items:center !important;
+    gap:5px !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    z-index:40 !important;
+  }
+  .topbar .settings-picker{
+    display:none !important;
+  }
+  .topbar{
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1.4fr) !important;
+  }
+  .site-footer .footer-modes,
+  .site-footer .footer-install-button{
+    display:none !important;
+  }
+  .site-footer{
+    bottom:calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+    justify-content:center !important;
+  }
+  .header-look-controls .footer-mode-btn{
+    min-height:22px !important;
+    padding:0 6px !important;
+    font-size:8px !important;
+  }
+  .header-install-button{
+    min-width:28px !important;
+    width:28px !important;
+    height:28px !important;
+    min-height:28px !important;
+    padding:0 !important;
+    justify-content:center !important;
+  }
+  .header-install-button span{
+    display:none !important;
+  }
+}
+
+@media (min-width:661px){
+  .header-look-controls{
+    display:none !important;
+  }
+}

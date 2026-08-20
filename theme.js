@@ -296,6 +296,7 @@
     return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
   }
 
+  document.getElementById("headerInstallButton")?.addEventListener("click", function(){ document.getElementById("installAppButton")?.click(); });
   document.getElementById("installAppButton")?.addEventListener("click", async function(){
     if (isStandalone()) {
       alert("Az Everlight már az asztalon van.");
