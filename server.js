@@ -33,7 +33,9 @@ const dbConfig = {
   waitForConnections: true,
   connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 5),
   queueLimit: 0,
-  charset: 'utf8mb4'
+  charset: 'utf8mb4',
+  // Keep DATETIME comparisons consistent with UTC_TIMESTAMP() usage.
+  timezone: 'Z'
 };
 
 const missingDb = ['DB_HOST','DB_USER','DB_PASSWORD','DB_NAME']
@@ -670,7 +672,7 @@ async function touch(id) {
       UPDATE everlight_users
 
       SET last_seen =
-        CURRENT_TIMESTAMP
+        UTC_TIMESTAMP()
 
       WHERE id = ?
     `,
@@ -2103,7 +2105,16 @@ app.get(
         clean(
           req.params.username,
           30
-        ).toLowerCase();
+        );
+
+      if (!username) {
+        return res
+          .status(400)
+          .json({
+            error:
+              'Érvénytelen felhasználónév.'
+          });
+      }
 
       const other =
         await dbGet(
@@ -2120,9 +2131,9 @@ app.get(
 
             FROM everlight_users
 
-            WHERE username = ?
+            WHERE LOWER(username) = ?
           `,
-          [username]
+          [username.toLowerCase()]
         );
 
       if (!other) {
@@ -2226,16 +2237,25 @@ app.post(
         clean(
           req.params.username,
           30
-        ).toLowerCase();
+        );
+
+      if (!username) {
+        return res
+          .status(400)
+          .json({
+            error:
+              'Érvénytelen felhasználónév.'
+          });
+      }
 
       const other =
         await dbGet(
           `
             SELECT id, username
             FROM everlight_users
-            WHERE username = ?
+            WHERE LOWER(username) = ?
           `,
-          [username]
+          [username.toLowerCase()]
         );
 
       if (!other) {
