@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="enhancements.css?v=20260820-mobile-bottom-final2">
+  <link rel="stylesheet" href="enhancements.css?v=20260818-final-clean-2">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -282,24 +282,79 @@
   <section class="messages-view" id="messagesView" aria-hidden="true">
     <div class="messages-view-inner">
       <header class="messages-view-header">
-        <div><p class="eyebrow">ÜZENETEK</p><h1>Privát tér</h1></div>
+        <div>
+          <p class="eyebrow">ÜZENETEK</p>
+          <h1>Privát tér</h1>
+        </div>
+        <button id="closeMessagesView" class="messages-close" type="button" aria-label="Üzenetek bezárása" tabindex="-1" aria-hidden="true">×</button>
       </header>
-      <div class="private-space">
-        <section class="daily-thoughts-panel" aria-label="Napi gondolatok">
-          <div class="private-section-head"><div><p class="eyebrow">NAPI GONDOLATOK</p><h2>Napi gondolatok</h2></div><button id="dailyThoughtButton" class="private-action" type="button">＋ Saját</button></div>
-          <div id="dailyThoughtsList" class="daily-thoughts-list"><p class="loading-copy">Napi gondolatok betöltése…</p></div>
-        </section>
-        <section class="chat-section" aria-label="Csevegés">
-          <div class="private-section-head"><div><p class="eyebrow">CSEVEGÉS</p><h2>Beszélgetések</h2></div><button id="newMessageButton" class="private-action" type="button">＋ Új</button></div>
-          <label class="message-search" for="messageSearch"><span aria-hidden="true">⌕</span><input id="messageSearch" type="search" placeholder="Keresés a beszélgetések között…" autocomplete="off"></label>
-          <div class="messages-layout">
-            <aside class="message-contacts"><div id="messageContactsList" class="message-contacts-list"><p class="loading-copy">Beszélgetések betöltése…</p></div></aside>
-            <section class="message-chat">
-              <header class="message-chat-header"><button id="messageChatBack" class="message-chat-back" type="button" aria-label="Vissza">‹</button><span class="message-chat-avatar" id="dmAvatar" aria-hidden="true">✉</span><div class="message-chat-title-wrap"><span>PRIVÁT ÜZENET</span><h2 id="dmTitle">Válassz egy beszélgetést</h2><small id="dmHandle">Kezdj el egy új beszélgetést</small></div></header>
-              <div id="dmList" class="dm-list"><div class="chat-welcome"><div class="chat-welcome-icon">✦</div><strong>Üzenetek</strong><p>Válassz egy beszélgetést, vagy indíts újat.</p></div></div>
-              <form class="message-compose" id="messageForm"><div class="new-message-recipient" id="newMessageRecipientWrap" hidden><input id="dmRecipient" type="text" placeholder="Címzett: név#1234" autocomplete="off" list="messageUserOptions"><datalist id="messageUserOptions"></datalist><button id="cancelNewMessage" type="button" aria-label="Megszakítás">×</button></div><div class="message-compose-row"><button id="composeNewButton" class="compose-new-button" type="button" aria-label="Új beszélgetés">＋</button><input id="dmBody" type="text" placeholder="Írj egy üzenetet…" autocomplete="off" required><button class="message-send-button" type="submit" aria-label="Küldés">↑</button></div></form>
-            </section>
+      <div class="messages-layout">
+        <aside class="message-contacts">
+          <div class="message-contacts-head">
+            <div>
+              <div class="message-contacts-title">Beszélgetések</div>
+              <p>Válassz egy beszélgetést</p>
+            </div>
+            <button id="newMessageButton" class="new-message-button" type="button">＋ Új</button>
           </div>
+          <label class="message-search" for="messageSearch">
+            <span aria-hidden="true">⌕</span>
+            <input id="messageSearch" type="search" placeholder="Keresés a beszélgetések között…" autocomplete="off">
+          </label>
+          <div id="messageContactsList" class="message-contacts-list">
+            <p class="loading-copy">Válassz egy beszélgetést.</p>
+          </div>
+        </aside>
+        <section class="message-auth-gate" id="messageAuthGate" hidden aria-hidden="true">
+          <div class="profile-login-card">
+            <div class="profile-login-icon">◉</div>
+            <p class="eyebrow">EVERLIGHT FIÓK</p>
+            <h2>Jelentkezz be az üzenetekhez.</h2>
+            <p>Bejelentkezés után megjelennek a beszélgetéseid, és azonnal tudsz privát üzenetet küldeni.</p>
+            <form id="messageLoginForm" class="profile-login-form">
+              <label>Név
+                <input id="messageLoginName" type="text" placeholder="nodayy#0614" autocomplete="username" required>
+              </label>
+              <label>E-mail <span class="profile-field-optional">(opcionális)</span>
+                <input id="messageLoginEmail" type="email" placeholder="hello@pelda.hu" autocomplete="email">
+              </label>
+              <label>Jelszó
+                <input id="messageLoginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
+              </label>
+              <button class="primary" type="submit">Belépés</button>
+            </form>
+            <p class="message-login-error" role="alert" aria-live="polite"></p>
+          </div>
+        </section>
+        <section class="message-chat">
+          <header class="message-chat-header">
+            <button id="messageChatBack" class="message-chat-back" type="button" aria-label="Vissza a beszélgetésekhez">‹</button>
+            <span class="message-chat-avatar" id="dmAvatar" aria-hidden="true">✉</span>
+            <div class="message-chat-title-wrap">
+              <span>PRIVÁT ÜZENET</span>
+              <h2 id="dmTitle">Válassz egy beszélgetést</h2>
+              <small id="dmHandle">Kezdj el egy új beszélgetést</small>
+            </div>
+          </header>
+          <div id="dmList" class="dm-list">
+            <div class="chat-welcome">
+              <div class="chat-welcome-icon">✦</div>
+              <strong>Üzenetek</strong>
+              <p>Válassz egy beszélgetést, vagy indíts újat az <b>＋ Új</b> gombbal.</p>
+            </div>
+          </div>
+          <form class="message-compose" id="messageForm">
+            <div class="new-message-recipient" id="newMessageRecipientWrap" hidden>
+              <input id="dmRecipient" type="text" placeholder="Címzett: név#1234" autocomplete="off" list="messageUserOptions">
+              <datalist id="messageUserOptions"></datalist>
+              <button id="cancelNewMessage" type="button" aria-label="Új üzenet megszakítása">×</button>
+            </div>
+            <div class="message-compose-row">
+              <button id="composeNewButton" class="compose-new-button" type="button" aria-label="Új beszélgetés">＋</button>
+              <input id="dmBody" type="text" placeholder="Írj egy üzenetet…" autocomplete="off" required>
+              <button class="message-send-button" type="submit" aria-label="Üzenet küldése">↑</button>
+            </div>
+          </form>
         </section>
       </div>
     </div>
@@ -418,9 +473,9 @@
     </button>
   </nav>
 
-  <section class="mobile-community-panel" id="mobileCommunityPanel" aria-hidden="true" aria-label="Értesítések és oldalmenü">
+  <section class="mobile-community-panel" id="mobileCommunityPanel" aria-hidden="true">
     <div class="mobile-community-panel-head">
-      <strong>Értesítések</strong>
+      <strong>Közösség</strong>
       <button id="mobileCommunityClose" type="button" aria-label="Bezárás">×</button>
     </div>
     <div class="mobile-community-panel-body" id="mobileCommunityPanelBody"></div>
@@ -459,7 +514,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260820-mobile-bottom-final2"></script>
+  <script src="app.js?v=20260819-mobile-bottom-final"></script>
   <script src="theme.js"></script>
 </body>
 </html>

@@ -3567,33 +3567,6 @@ if (mobileProfileNav) {
 
 
 /* =========================================================
-   PRIVATE SPACE — DAILY THOUGHTS
-   ========================================================= */
-async function loadDailyThoughts() {
-  const box = $('#dailyThoughtsList'); if (!box) return;
-  try {
-    const data = await api('/api/daily-thoughts'); const thoughts=data.thoughts||[];
-    box.innerHTML = thoughts.length ? thoughts.map(t => {
-      const name=getDisplayName(t)||t.username; const streak=Number(t.message_streak||0);
-      return `<button class="daily-thought-item" type="button" data-thought-id="${escapeHtml(String(t.id))}" data-thought-body="${escapeHtml(t.body)}">
-        <span class="daily-thought-bubble">${escapeHtml(t.body)}</span>
-        <span class="daily-thought-avatar">${t.avatar?`<img src="${escapeHtml(t.avatar)}" alt="">`:escapeHtml((name||'?').charAt(0).toUpperCase())}</span>
-        <strong>${escapeHtml(name)}</strong>${streak?`<small>🔥${streak}</small>`:''}
-      </button>`;
-    }).join('') : '<p class="private-empty">Még nincs napi gondolat.</p>';
-  } catch(e){ box.innerHTML='<p class="private-empty">A napi gondolatok most nem tölthetők be.</p>'; }
-}
-
-function openDailyThoughtComposer(){
-  if(!currentUser){ requireLogin(); return; }
-  const body=prompt('Mi jár ma a fejedben?'); if(body===null) return;
-  const value=body.trim(); if(!value) return;
-  api('/api/daily-thoughts',{method:'POST',body:JSON.stringify({body:value})}).then(loadDailyThoughts).catch(e=>notify(e.message));
-}
-
-const dailyThoughtButton=$('#dailyThoughtButton'); dailyThoughtButton?.addEventListener('click',openDailyThoughtComposer);
-
-/* =========================================================
    MESSAGES / CHAT
    ========================================================= */
 
@@ -4196,13 +4169,11 @@ async function loadMessages() {
 
 
                 <div class="chat-bubble">
-                  ${message.reply_to_id ? `<div class="chat-reply-ref">↪ Válasz egy üzenetre</div>` : ''}
-                  ${escapeHtml(message.body)}
-                  ${message.edited_at ? `<small class="chat-edited">módosítva</small>` : ''}
-                </div>
-                <div class="chat-message-actions">
-                  <button type="button" data-message-reply="${message.id}">↩</button>
-                  ${ownMessage ? `<button type="button" data-message-edit="${message.id}">✎</button><button type="button" data-message-delete="${message.id}">⌫</button>` : ''}
+
+                  ${escapeHtml(
+                    message.body
+                  )}
+
                 </div>
 
               </article>
@@ -4516,7 +4487,6 @@ if (dmRecipient) {
    MESSAGE FORM
    ========================================================= */
 
-let replyToMessageId = null;
 const messageForm =
   $("#messageForm");
 
@@ -4587,18 +4557,23 @@ if (messageForm) {
           {
             method: "POST",
 
-            body: JSON.stringify({ body, replyToId: replyToMessageId })
+            body:
+              JSON.stringify({
+                body
+              })
           }
         );
 
 
-        if (bodyInput) bodyInput.value = "";
-        replyToMessageId = null;
+        if (bodyInput) {
+
+          bodyInput.value =
+            "";
+        }
 
 
         await loadMessages();
         await loadMessageContacts();
-    await loadDailyThoughts();
 
         notify(
           "Üzenet elküldve."
@@ -4615,17 +4590,6 @@ if (messageForm) {
   );
 }
 
-
-document.addEventListener('click', async (event) => {
-  const reply=event.target.closest('[data-message-reply]');
-  const edit=event.target.closest('[data-message-edit]');
-  const del=event.target.closest('[data-message-delete]');
-  const conversationDelete=event.target.closest('[data-delete-conversation]');
-  if (reply) { replyToMessageId=Number(reply.dataset.messageReply)||null; const input=$('#dmBody'); if(input){input.placeholder='Válasz az üzenetre…'; input.focus();} return; }
-  if (edit) { const id=edit.dataset.messageEdit; const bubble=edit.closest('.chat-message')?.querySelector('.chat-bubble'); const text=bubble?.innerText.replace(/módosítva$/,'').trim(); const value=prompt('Üzenet módosítása:',text); if(value?.trim()) { await api(`/api/messages/${encodeURIComponent(id)}`,{method:'PUT',body:JSON.stringify({body:value.trim()})}); await loadMessages(); } return; }
-  if (del) { if(!confirm('Biztosan törlöd ezt az üzenetet?')) return; await api(`/api/messages/${encodeURIComponent(del.dataset.messageDelete)}`,{method:'DELETE'}); await loadMessages(); return; }
-  if (conversationDelete) { if(!confirm('Biztosan törlöd ezt a beszélgetést?')) return; await api(`/api/messages/conversation/${encodeURIComponent(conversationDelete.dataset.deleteConversation)}`,{method:'DELETE'}); await loadMessageContacts(); closeMobileChat(); }
-});
 
 /* =========================================================
    ESCAPE KEY
@@ -6625,9 +6589,8 @@ window.addEventListener("popstate", () => {
 
 /* =========================================================
    FINAL MOBILE COMMUNITY / NOTIFICATION SHEET
-   The mobile menu is a real notification sheet. It must not
-   clone the desktop right rail, because that rail contains
-   community/stats cards rather than the user's notifications.
+   The right-side community content is presented in the same
+   floating sheet pattern as Csevegés and Profil.
    ========================================================= */
 (function initMobileCommunitySheet(){
   const alertButton = document.getElementById("mobileCommunityAlert");
@@ -6636,18 +6599,35 @@ window.addEventListener("popstate", () => {
   const panelBody = document.getElementById("mobileCommunityPanelBody");
   if (!alertButton || !panel || !panelBody) return;
 
-  // Build the notification list once. The existing notification
-  // renderer will fill this element with real /api/notifications data.
-  if (!panelBody.querySelector(".mobile-notification-content")) {
-    panelBody.innerHTML = `
-      <section class="mobile-notification-content" aria-label="Értesítések">
-        <div class="mobile-notification-summary">
-          <span class="eyebrow">ÉRTESÍTÉSEK</span>
-          <strong>Legfrissebb értesítések</strong>
-        </div>
-        <div class="notification-list" role="list" aria-live="polite"></div>
-      </section>
-    `;
+  const source = document.querySelector(".right-rail");
+  if (source && !panelBody.dataset.ready) {
+    const clone = source.cloneNode(true);
+    clone.classList.add("mobile-cloned-rail");
+    panelBody.innerHTML = "";
+    panelBody.appendChild(clone);
+
+    // The right rail is populated asynchronously (latest post, online users,
+    // statistics, etc.).  A one-time clone would therefore stay empty on
+    // mobile. Keep the mobile sheet synchronized with the live desktop rail.
+    const syncMobileRail = () => {
+      if (!panelBody.contains(clone)) return;
+      clone.innerHTML = source.innerHTML;
+    };
+
+    syncMobileRail();
+
+    const railObserver = new MutationObserver(() => {
+      window.requestAnimationFrame(syncMobileRail);
+    });
+    railObserver.observe(source, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+      attributes: true
+    });
+
+    window.__mobileCommunityRailObserver = railObserver;
+    panelBody.dataset.ready = "1";
   }
 
   const closeCommunity = () => {
@@ -6659,7 +6639,24 @@ window.addEventListener("popstate", () => {
     setMobileDockActive("hub");
   };
 
-  const openCommunity = async () => {
+  const syncCommunityRailNow = async () => {
+    // Refresh the same public data sources used by the desktop right rail
+    // before copying it into the mobile panel. This prevents stale/empty
+    // placeholders from being shown on phones.
+    try {
+      await Promise.allSettled([
+        typeof loadCommunityLatest === "function" ? loadCommunityLatest() : Promise.resolve(),
+        typeof loadOnline === "function" ? loadOnline() : Promise.resolve(),
+        typeof loadStats === "function" ? loadStats() : Promise.resolve()
+      ]);
+    } catch {}
+
+    if (source && panelBody.contains(clone)) {
+      clone.innerHTML = source.innerHTML;
+    }
+  };
+
+  const openCommunity = () => {
     closeMessages();
     closeProfileView();
     panel.classList.add("is-open");
@@ -6668,9 +6665,7 @@ window.addEventListener("popstate", () => {
     alertButton.setAttribute("aria-expanded", "true");
     document.body.classList.add("mobile-community-open");
     setMobileDockActive("menu");
-
-    // Refresh immediately instead of waiting for the 5-second poll.
-    await loadInAppNotifications();
+    void syncCommunityRailNow();
   };
 
   window.__closeMobileCommunity = closeCommunity;
@@ -6679,7 +6674,7 @@ window.addEventListener("popstate", () => {
     event.preventDefault();
     event.stopPropagation();
     if (panel.classList.contains("is-open")) closeCommunity();
-    else void openCommunity();
+    else openCommunity();
   });
 
   closeButton?.addEventListener("click", (event) => {

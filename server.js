@@ -560,19 +560,6 @@ async function createSchema() {
   `);
 
   await dbRun(`
-    CREATE TABLE IF NOT EXISTS everlight_daily_thoughts (
-      id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-      user_id BIGINT UNSIGNED NOT NULL,
-      body VARCHAR(180) NOT NULL,
-      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      PRIMARY KEY (id),
-      UNIQUE KEY uniq_daily_thought_user (user_id),
-      KEY idx_daily_thought_created (created_at),
-      CONSTRAINT fk_daily_thought_user FOREIGN KEY (user_id) REFERENCES everlight_users(id) ON DELETE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  `);
-
-  await dbRun(`
     CREATE TABLE IF NOT EXISTS everlight_notifications (
       id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
       user_id BIGINT UNSIGNED NOT NULL,
@@ -620,9 +607,7 @@ async function createSchema() {
     ['pronouns', 'ALTER TABLE everlight_users ADD COLUMN pronouns VARCHAR(60) NULL'],
     ['location', 'ALTER TABLE everlight_users ADD COLUMN location VARCHAR(120) NULL'],
     ['website', 'ALTER TABLE everlight_users ADD COLUMN website VARCHAR(255) NULL'],
-    ['last_seen', 'ALTER TABLE everlight_users ADD COLUMN last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP'],
-    ['message_reply_id', 'ALTER TABLE everlight_messages ADD COLUMN reply_to_id BIGINT UNSIGNED NULL'],
-    ['message_edited_at', 'ALTER TABLE everlight_messages ADD COLUMN edited_at DATETIME NULL']
+    ['last_seen', 'ALTER TABLE everlight_users ADD COLUMN last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP']
   ];
 
   const columns = await dbAll(`
@@ -2286,10 +2271,17 @@ app.post(
         await dbRun(
           `
             INSERT INTO everlight_messages (
-              sender_id, recipient_id, body, reply_to_id
-            ) VALUES (?, ?, ?, ?)
+              sender_id,
+              recipient_id,
+              body
+            )
+            VALUES (?, ?, ?)
           `,
-          [req.userId, other.id, body, Number(req.body.replyToId || 0) || null]
+          [
+            req.userId,
+            other.id,
+            body
+          ]
         );
 
       await dbRun(
