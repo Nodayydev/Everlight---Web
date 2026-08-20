@@ -15565,3 +15565,93 @@ main#feed{
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE ÉRTESÍTÉSEK — streak + legutóbbi lista finomítás
+   ========================================================= */
+@media (max-width: 660px) {
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-user {
+    overflow: visible !important;
+    width: 48px !important;
+    height: 48px !important;
+    flex-basis: 48px !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-avatar {
+    overflow: visible !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-avatar img,
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-avatar-fallback {
+    overflow: hidden !important;
+    border-radius: 50% !important;
+    clip-path: circle(50% at 50% 50%) !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-streak {
+    right: -6px !important;
+    bottom: -8px !important;
+    min-width: 28px !important;
+    height: 20px !important;
+    padding: 0 5px !important;
+    font: 700 11px/20px Manrope, sans-serif !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,.45) !important;
+    z-index: 5 !important;
+  }
+
+  .mobile-community-panel #mobile-communityLatest,
+  .mobile-community-panel .community-latest-list,
+  .mobile-community-panel .everlight-community-summary {
+    min-width: 0 !important;
+  }
+
+  .mobile-community-panel .community-latest-item {
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: 58px !important;
+    padding: 8px 4px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(139,173,204,.12) !important;
+    border-radius: 0 !important;
+  }
+
+  .mobile-community-panel .community-latest-item:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .mobile-community-panel .community-latest-item .avatar,
+  .mobile-community-panel .community-latest-item img {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+
+  .mobile-community-panel .community-latest-item strong {
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    color: #edf1f1 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .mobile-community-panel .community-latest-item span,
+  .mobile-community-panel .community-latest-item small {
+    display: block !important;
+    margin-top: 3px !important;
+    font-size: 11px !important;
+    color: #8badcc !important;
+  }
+}
