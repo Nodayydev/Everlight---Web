@@ -5460,6 +5460,15 @@ function buildProfileCustomizer() {
             Képek
           </button>
 
+          <button
+            type="button"
+            class="profile-customizer-nav"
+            data-customizer-scroll="customizerSecuritySection"
+          >
+            <span>⌘</span>
+            Biztonság
+          </button>
+
           <div class="profile-customizer-sidebar-note">
             A változtatások mentés után mindenhol
             frissülnek.
@@ -5689,6 +5698,34 @@ function buildProfileCustomizer() {
 
               </div>
 
+            </div>
+
+          </section>
+
+
+          <section
+            id="customizerSecuritySection"
+            class="profile-customizer-section customizer-security-section"
+          >
+
+            <div class="profile-customizer-section-title">
+              <div>
+                <strong>Jelszó módosítása</strong>
+                <span>Bejelentkezve közvetlenül beállíthatsz új jelszót, a régi megadása nélkül.</span>
+              </div>
+            </div>
+
+            <div class="customizer-password-card">
+              <label class="customizer-field customizer-field-full">
+                <span>Új jelszó</span>
+                <input id="customizerNewPassword" type="password" minlength="6" autocomplete="new-password" placeholder="Legalább 6 karakter">
+              </label>
+              <label class="customizer-field customizer-field-full">
+                <span>Új jelszó újra</span>
+                <input id="customizerNewPasswordConfirm" type="password" minlength="6" autocomplete="new-password" placeholder="Írd be még egyszer">
+              </label>
+              <p class="customizer-password-status" id="customizerPasswordStatus" role="status" aria-live="polite"></p>
+              <button type="button" class="secondary customizer-password-save" id="customizerPasswordSave">Jelszó módosítása</button>
             </div>
 
           </section>
@@ -6164,6 +6201,43 @@ function closeProfileCustomizer() {
 }
 
 
+async function changePasswordFromCustomizer() {
+  if (!requireLogin()) return;
+
+  const passwordInput = $("#customizerNewPassword");
+  const confirmInput = $("#customizerNewPasswordConfirm");
+  const status = $("#customizerPasswordStatus");
+  const button = $("#customizerPasswordSave");
+  const password = passwordInput?.value || "";
+  const confirmPassword = confirmInput?.value || "";
+
+  if (password.length < 6) {
+    if (status) status.textContent = "Az új jelszó legalább 6 karakter legyen.";
+    return;
+  }
+  if (password !== confirmPassword) {
+    if (status) status.textContent = "A két új jelszó nem egyezik.";
+    return;
+  }
+
+  if (button) { button.disabled = true; button.textContent = "Mentés…"; }
+  if (status) status.textContent = "";
+  try {
+    const data = await api("/api/auth/change-password", {
+      method: "POST",
+      body: JSON.stringify({ password, confirmPassword })
+    });
+    if (passwordInput) passwordInput.value = "";
+    if (confirmInput) confirmInput.value = "";
+    if (status) status.textContent = data.message || "A jelszavad sikeresen megváltozott.";
+  } catch (error) {
+    if (status) status.textContent = error?.message || "A jelszó módosítása nem sikerült.";
+  } finally {
+    if (button) { button.disabled = false; button.textContent = "Jelszó módosítása"; }
+  }
+}
+
+
 async function saveProfileCustomizer() {
   if (!requireLogin()) return;
 
@@ -6388,6 +6462,17 @@ function bindProfileCustomizer(
           });
         }
 
+        return;
+      }
+
+
+      const passwordSave =
+        event.target.closest(
+          "#customizerPasswordSave"
+        );
+
+      if (passwordSave) {
+        changePasswordFromCustomizer();
         return;
       }
 
@@ -6963,3 +7048,73 @@ const initialResetToken = new URLSearchParams(window.location.search).get("reset
 if (initialResetToken) {
   window.addEventListener("DOMContentLoaded", () => openPasswordResetModal(initialResetToken));
 }
+
+
+/* =========================================================
+   CLEAN MOBILE NAVIGATION CONTROLLER
+   Removes conflicting legacy dock listeners by replacing the
+   three primary buttons with fresh nodes. Menu button keeps
+   the dedicated community-sheet handler above.
+   ========================================================= */
+(function cleanMobileNavigation(){
+  function run(){
+    const bind = (id, handler) => {
+      const old = document.getElementById(id);
+      if (!old || old.dataset.cleanMobileBound === '1') return;
+      const fresh = old.cloneNode(true);
+      fresh.dataset.cleanMobileBound = '1';
+      old.replaceWith(fresh);
+      fresh.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        handler(event);
+      });
+      fresh.addEventListener('pointerup', (event) => {
+        if (event.pointerType === 'touch') {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
+      return fresh;
+    };
+
+    bind('mobileHubNav', () => {
+      closeMessages();
+      closeProfileView();
+      window.__closeMobileCommunity?.();
+      document.body.classList.remove('mobile-community-open','messages-view-open','profile-view-open','mobile-share-open');
+      setMobileDockActive('hub');
+      document.documentElement.style.overflowY = '';
+      document.body.style.overflowY = '';
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    });
+
+    bind('mobileMessageNav', () => {
+      const view = document.getElementById('messagesView');
+      if (view?.classList.contains('open')) {
+        closeMessages();
+        setMobileDockActive('hub');
+      } else {
+        window.__closeMobileCommunity?.();
+        openProfileView && closeProfileView();
+        openMessages();
+        setMobileDockActive('messages');
+      }
+    });
+
+    bind('mobileProfileNav', () => {
+      const view = document.getElementById('profileView');
+      if (view?.classList.contains('open')) {
+        closeProfileView();
+        setMobileDockActive('hub');
+      } else {
+        window.__closeMobileCommunity?.();
+        closeMessages();
+        openProfileView();
+        setMobileDockActive('profile');
+      }
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, {once:true});
+  else run();
+})();

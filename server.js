@@ -1062,6 +1062,57 @@ app.get(
 );
 
 /* =========================================================
+   AUTHENTICATED PASSWORD CHANGE
+   ========================================================= */
+
+app.post('/api/auth/change-password', auth, async (req, res, next) => {
+  try {
+    const password = String(req.body?.password || '');
+    const confirmPassword = String(req.body?.confirmPassword || '');
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        error: 'Az új jelszó legalább 6 karakter legyen.'
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        error: 'A két új jelszó nem egyezik.'
+      });
+    }
+
+    const user = await dbGet(
+      `SELECT id FROM everlight_users WHERE id = ? LIMIT 1`,
+      [req.userId]
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: 'A felhasználó nem található.' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    await dbRun(
+      `UPDATE everlight_users SET password_hash = ? WHERE id = ?`,
+      [passwordHash, req.userId]
+    );
+
+    // A korábbi e-mailes reset tokenek ne maradjanak használhatók a jelszócsere után.
+    await dbRun(
+      `DELETE FROM everlight_password_resets WHERE user_id = ?`,
+      [req.userId]
+    );
+
+    return res.json({
+      success: true,
+      message: 'A jelszavad sikeresen megváltozott.'
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+/* =========================================================
    PROFILE UPDATE
    ========================================================= */
 

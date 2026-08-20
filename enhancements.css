@@ -12945,836 +12945,6 @@ main#feed{
 }
 
 
-@media (max-width:660px){
-  
-  
-
-  /* The top header also stays in place, like the notification sheet. */
-  body.messages-view-open .topbar,
-  body.profile-view-open .topbar{
-    display:grid !important;
-    visibility:visible !important;
-    opacity:1 !important;
-    z-index:50 !important;
-  }
-
-  /* Shared sheet geometry — deliberately matches .mobile-community-panel. */
-  .messages-view.open,
-  .messages-view[aria-hidden="false"],
-  .profile-view.open,
-  .profile-view[aria-hidden="false"]{
-    position:fixed !important;
-    left:12px !important;
-    right:12px !important;
-    top:auto !important;
-    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
-    width:auto !important;
-    height:auto !important;
-    min-height:0 !important;
-    max-width:none !important;
-    max-height:min(64vh,520px) !important;
-    margin:0 !important;
-    padding:0 !important;
-    overflow:hidden !important;
-    border:1px solid rgba(139,173,204,.20) !important;
-    border-radius:16px !important;
-    background:linear-gradient(145deg,rgba(20,27,33,.985),rgba(12,18,23,.99)) !important;
-    box-shadow:0 18px 45px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.035) !important;
-    z-index:2147482990 !important;
-  }
-
-  .messages-view-inner,
-  .profile-view-inner{
-    width:100% !important;
-    min-height:0 !important;
-    max-height:min(64vh,520px) !important;
-    overflow:auto !important;
-    background:transparent !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-
-  .messages-view-header,
-  .profile-view-header{
-    position:sticky !important;
-    top:0 !important;
-    z-index:5 !important;
-    background:rgba(14,20,24,.96) !important;
-    backdrop-filter:blur(14px) !important;
-    -webkit-backdrop-filter:blur(14px) !important;
-  }
-
-  /* Do not use full-screen body locking for sheet views. */
-  body.messages-view-open,
-  body.profile-view-open{
-    overflow:auto !important;
-    height:auto !important;
-  }
-}
-
-/* =========================================================
-   FINAL MOBILE NAV TOGGLE — one consistent interaction model
-   ========================================================= */
-@media (max-width:660px){
-  
-
-  
-}
-
-/* =========================================================
-   MOBILE FINAL — NOTIFICATION / CHAT / PROFILE SHEETS
-   One consistent floating panel; dock stays visible.
-   ========================================================= */
-@media (max-width:660px){
-  
-
-  
-
-  /* All three mobile views use the same long, floating sheet style. */
-  .messages-view.open,
-  .messages-view[aria-hidden="false"],
-  .profile-view.open,
-  .profile-view[aria-hidden="false"],
-  .mobile-community-panel.is-open{
-    position:fixed !important;
-    left:12px !important;
-    right:12px !important;
-    top:calc(64px + env(safe-area-inset-top,0px)) !important;
-    bottom:calc(102px + env(safe-area-inset-bottom,0px)) !important;
-    inset-inline:12px !important;
-    width:auto !important;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    border-radius:20px !important;
-    overflow:hidden !important;
-    background:#050707 !important;
-    border:1px solid #20292a !important;
-    box-shadow:0 18px 55px rgba(0,0,0,.62) !important;
-    z-index:2147483000 !important;
-  }
-
-  .messages-view-inner,
-  .profile-view-inner,
-  .mobile-community-panel-body{
-    min-height:0 !important;
-    height:100% !important;
-    max-height:none !important;
-    overflow:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-    overscroll-behavior:contain !important;
-  }
-
-  /* Remove built-in top-right X buttons; dock button is the only toggle. */
-  #closeMessagesView,
-  #closeProfileView,
-  #mobileCommunityClose{
-    display:none !important;
-  }
-
-  .messages-view-header,
-  .profile-view-header,
-  .mobile-community-panel-head{
-    position:sticky !important;
-    top:0 !important;
-    z-index:20 !important;
-    background:#050707 !important;
-    backdrop-filter:blur(10px) !important;
-  }
-
-  .messages-layout{
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow:hidden !important;
-  }
-
-  .message-chat{
-    min-height:0 !important;
-    height:auto !important;
-  }
-
-  .dm-list{
-    min-height:180px !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-  }
-
-  .message-compose{
-    position:sticky !important;
-    bottom:0 !important;
-    z-index:15 !important;
-  }
-
-  /* The dock must remain visible under every sheet. */
-  
-
-  body.messages-view-open .site-footer,
-  body.profile-view-open .site-footer,
-  body.mobile-community-open .site-footer{
-    display:none !important;
-  }
-}
-
-
-/* MOBILE FINAL PATCH — notification/chat/profile sheet alignment + dock state */
-@media (max-width:660px){
-  /* Every mobile sheet gets the same long, scrollable panel geometry. */
-  .messages-view.open,
-  .messages-view[aria-hidden="false"],
-  .profile-view.open,
-  .profile-view[aria-hidden="false"],
-  .mobile-community-panel.is-open{
-    left:12px !important;
-    right:12px !important;
-    top:calc(64px + env(safe-area-inset-top,0px)) !important;
-    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
-    width:auto !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow:hidden !important;
-  }
-
-  /* The dock uses a real data-view on every item, including Ertesítések/Menü. */
-  
-
-  
-
-  /* Keep the island above sheets and always interactive. */
-  
-
-  /* Make the chat one self-contained, vertically movable area. */
-  .messages-view-inner{
-    height:100% !important;
-    min-height:0 !important;
-    display:flex !important;
-    flex-direction:column !important;
-    overflow:hidden !important;
-  }
-
-  .messages-view-header{
-    flex:0 0 auto !important;
-  }
-
-  .messages-layout{
-    display:flex !important;
-    flex:1 1 auto !important;
-    flex-direction:column !important;
-    min-height:0 !important;
-    height:auto !important;
-    overflow:hidden !important;
-  }
-
-  .message-contacts{
-    display:none !important;
-  }
-
-  .message-auth-gate{
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    overflow:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-
-  .message-chat{
-    display:flex !important;
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    height:auto !important;
-    overflow:hidden !important;
-    flex-direction:column !important;
-  }
-
-  .message-chat-header{
-    flex:0 0 auto !important;
-  }
-
-  .dm-list{
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    -webkit-overflow-scrolling:touch !important;
-    overscroll-behavior:contain !important;
-    touch-action:pan-y !important;
-  }
-
-  .message-compose{
-    flex:0 0 auto !important;
-    position:relative !important;
-    bottom:auto !important;
-  }
-
-  /* Remove all embedded close controls: dock button is the only toggle. */
-  #closeMessagesView, #closeProfileView, #mobileCommunityClose{
-    display:none !important;
-  }
-}
-
-
-
-/* MOBILE DEFINITIVE SHEET FIX
-   - dock state is controlled only by setMobileDockActive()
-   - Csevegés is a single self-contained sheet, never an inner window
-   - contacts/chat panes scroll independently without translating the outer sheet
-*/
-@media (max-width:660px){
-  
-
-  
-  
-  
-
-  /* All three sheets share one geometry. */
-  .messages-view.open, .messages-view[aria-hidden="false"],
-  .profile-view.open, .profile-view[aria-hidden="false"],
-  .mobile-community-panel.is-open{
-    position:fixed !important;
-    left:12px !important; right:12px !important;
-    top:calc(64px + env(safe-area-inset-top,0px)) !important;
-    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
-    width:auto !important; height:auto !important;
-    max-width:none !important; max-height:none !important;
-    margin:0 !important;
-    border-radius:20px !important;
-    overflow:hidden !important;
-    z-index:2147483640 !important;
-    touch-action:auto !important;
-  }
-
-  .messages-view.open, .messages-view[aria-hidden="false"]{
-    display:flex !important;
-    flex-direction:column !important;
-    background:#050707 !important;
-  }
-
-  .messages-view-inner{
-    display:flex !important;
-    flex-direction:column !important;
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    height:100% !important;
-    max-height:none !important;
-    overflow:hidden !important;
-    touch-action:auto !important;
-  }
-
-  .messages-view-header{
-    flex:0 0 auto !important;
-    position:relative !important;
-    height:62px !important;
-    min-height:62px !important;
-  }
-
-  /* Do not slide the chat pane off-screen on the mobile sheet.
-     The list is the primary view; when chat-open is active, chat fills it. */
-  .messages-view .messages-layout{
-    display:flex !important;
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow:hidden !important;
-    position:relative !important;
-  }
-
-  .messages-view .message-contacts{
-    position:relative !important;
-    inset:auto !important;
-    flex:1 1 auto !important;
-    width:100% !important;
-    height:100% !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    transform:none !important;
-    transition:none !important;
-    -webkit-overflow-scrolling:touch !important;
-    touch-action:pan-y !important;
-  }
-
-  .messages-view .message-chat{
-    position:absolute !important;
-    inset:0 !important;
-    display:grid !important;
-    grid-template-rows:auto minmax(0,1fr) auto !important;
-    width:100% !important;
-    height:100% !important;
-    max-height:none !important;
-    overflow:hidden !important;
-    transform:translateX(100%) !important;
-    transition:transform .2s ease !important;
-    z-index:5 !important;
-    background:#050707 !important;
-  }
-  .messages-view.chat-open .message-chat{ transform:translateX(0) !important; }
-  .messages-view.chat-open .message-contacts{ opacity:1 !important; }
-
-  .messages-view .dm-list{
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    -webkit-overflow-scrolling:touch !important;
-    touch-action:pan-y !important;
-    overscroll-behavior:contain !important;
-  }
-
-  .messages-view .message-compose{
-    position:relative !important;
-    flex:0 0 auto !important;
-    bottom:auto !important;
-    z-index:10 !important;
-    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px)) !important;
-  }
-
-  .messages-view .message-chat-back{ display:grid !important; place-items:center !important; }
-
-  /* Login gate also scrolls normally and is never trapped by an outer window. */
-  .messages-view .message-auth-gate{
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-    touch-action:pan-y !important;
-  }
-
-  #closeMessagesView,#closeProfileView,#mobileCommunityClose{ display:none !important; }
-}
-
-
-/* Mobile chat: unauthenticated users see only a compact sign-in notice.
-   Authentication itself remains in the Profile view. */
-@media (max-width:660px){
-  .chat-login-required{
-    min-height:220px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    padding:28px 24px;
-    text-align:center;
-    color:var(--text, #e9eeee);
-  }
-  .chat-login-required .chat-welcome-icon{
-    margin-bottom:4px;
-  }
-  .chat-login-required strong{
-    font-size:20px;
-  }
-  .chat-login-required p{
-    margin:0;
-    max-width:330px;
-    color:var(--muted, #9ca9ad);
-    line-height:1.55;
-  }
-  .messages-view .message-chat{
-    transform:translateX(0) !important;
-  }
-  .messages-view.chat-open .message-chat{
-    transform:translateX(0) !important;
-  }
-  .messages-view .message-chat[hidden]{
-    display:none !important;
-  }
-  .messages-view .message-chat{
-    touch-action:auto !important;
-  }
-}
-
-/* =========================================================
-   FINAL CHAT CLEANUP
-   One chat surface only. The chat never contains the Profile
-   login form and never slides behind another pane.
-   ========================================================= */
-.message-auth-gate[hidden]{display:none !important;}
-.chat-login-required{
-  min-height:220px;
-  width:min(520px,100%);
-  margin:auto;
-  padding:28px 24px;
-  box-sizing:border-box;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  text-align:center;
-  color:var(--text,#e9eeee);
-}
-.chat-login-required .chat-welcome-icon{font-size:22px;line-height:1;margin-bottom:4px;color:var(--accent,#9fc8e8);}
-.chat-login-required strong{font:700 20px/1.25 "Manrope",Arial,sans-serif;color:#e8eeee;}
-.chat-login-required p{margin:0;max-width:420px;color:#89959a;line-height:1.55;}
-
-@media (max-width:660px){
-  /* The mobile dock is always visible and owns the open/close state. */
-  
-
-  /* Csevegés is one sheet, not a sheet containing another sliding window. */
-  .messages-view.open,
-  .messages-view[aria-hidden="false"]{
-    left:12px !important;
-    right:12px !important;
-    top:calc(64px + env(safe-area-inset-top,0px)) !important;
-    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
-    width:auto !important;
-    height:auto !important;
-    max-width:none !important;
-    max-height:none !important;
-    overflow:hidden !important;
-    display:flex !important;
-    flex-direction:column !important;
-    background:#050707 !important;
-    transform:none !important;
-  }
-
-  .messages-view.open .messages-view-inner,
-  .messages-view[aria-hidden="false"] .messages-view-inner{
-    display:flex !important;
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    height:100% !important;
-    overflow:hidden !important;
-  }
-
-  .messages-view .messages-layout{
-    display:flex !important;
-    flex:1 1 auto !important;
-    flex-direction:column !important;
-    min-height:0 !important;
-    height:auto !important;
-    overflow:hidden !important;
-    position:relative !important;
-  }
-
-  .messages-view .message-auth-gate{display:none !important;}
-  .messages-view .message-contacts{display:none !important;}
-
-  .messages-view .message-chat,
-  .messages-view.chat-open .message-chat{
-    position:relative !important;
-    inset:auto !important;
-    display:grid !important;
-    grid-template-rows:auto minmax(0,1fr) auto !important;
-    flex:1 1 auto !important;
-    width:100% !important;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    transform:none !important;
-    transition:none !important;
-    overflow:hidden !important;
-    z-index:1 !important;
-    background:#050707 !important;
-  }
-
-  .messages-view .dm-list{
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    -webkit-overflow-scrolling:touch !important;
-    overscroll-behavior:contain !important;
-    touch-action:pan-y !important;
-  }
-
-  .messages-view .message-compose{
-    position:relative !important;
-    flex:0 0 auto !important;
-    bottom:auto !important;
-    z-index:2 !important;
-  }
-
-  #closeMessagesView,#closeProfileView,#mobileCommunityClose{display:none !important;}
-}
-
-@media (min-width:661px){
-  /* Desktop uses the same compact notice instead of duplicating the Profile login form. */
-  .message-auth-gate{display:none !important;}
-  .messages-view .message-chat{display:flex !important;}
-  .messages-view .message-contacts{display:none !important;}
-  .messages-view .dm-list{min-height:220px !important;overflow:auto !important;}
-}
-
-/* =========================================================
-   CHAT LAYOUT FINAL — one spacious surface on desktop + mobile
-   ========================================================= */
-.messages-view .message-chat{
-  min-width:0 !important;
-  min-height:0 !important;
-  width:100% !important;
-  overflow:hidden !important;
-}
-.messages-view .message-chat-header{
-  flex:0 0 auto !important;
-  min-height:92px !important;
-  padding:22px 28px !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:18px !important;
-  box-sizing:border-box !important;
-}
-.messages-view .message-chat-title-wrap{
-  min-width:0 !important;
-  flex:1 1 auto !important;
-}
-.messages-view .message-chat-title-wrap h2{
-  white-space:nowrap !important;
-  overflow:hidden !important;
-  text-overflow:ellipsis !important;
-}
-.messages-view .dm-list{
-  flex:1 1 auto !important;
-  min-height:0 !important;
-  width:100% !important;
-  box-sizing:border-box !important;
-  padding:30px clamp(20px,4vw,48px) !important;
-  overflow-y:auto !important;
-  overflow-x:hidden !important;
-  -webkit-overflow-scrolling:touch !important;
-  touch-action:pan-y !important;
-}
-.messages-view .chat-login-required{
-  width:min(620px,100%) !important;
-  min-height:320px !important;
-  margin:0 auto !important;
-  padding:56px 28px !important;
-  box-sizing:border-box !important;
-  border:1px solid var(--line) !important;
-  border-radius:18px !important;
-  background:#080b0c !important;
-}
-.messages-view .chat-login-required strong{
-  font-size:clamp(22px,3vw,30px) !important;
-}
-.messages-view .chat-login-required p{
-  max-width:520px !important;
-  font-size:14px !important;
-}
-.messages-view .message-compose{
-  flex:0 0 auto !important;
-  width:100% !important;
-  min-height:72px !important;
-  padding:14px 20px !important;
-  box-sizing:border-box !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:10px !important;
-}
-.messages-view .message-compose-row{
-  width:100% !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:10px !important;
-}
-.messages-view .message-compose-row #dmBody{
-  flex:1 1 auto !important;
-  min-width:0 !important;
-}
-.messages-view #messageChatBack{
-  display:none !important;
-}
-
-@media (max-width:660px){
-  .messages-view .message-chat-header{
-    min-height:94px !important;
-    padding:18px 20px !important;
-    gap:14px !important;
-  }
-  .messages-view .message-chat-header h2{
-    font-size:22px !important;
-  }
-  .messages-view .message-chat-header small{
-    font-size:11px !important;
-  }
-  .messages-view .dm-list{
-    padding:24px 16px !important;
-  }
-  .messages-view .chat-login-required{
-    width:100% !important;
-    min-height:360px !important;
-    padding:48px 22px !important;
-    border-radius:16px !important;
-  }
-  .messages-view .chat-login-required strong{
-    font-size:24px !important;
-  }
-  .messages-view .chat-login-required p{
-    font-size:14px !important;
-    line-height:1.6 !important;
-  }
-  .messages-view .message-compose{
-    min-height:76px !important;
-    padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px)) !important;
-  }
-}
-
-.chat-demo-preview{
-  width:min(520px,100%);
-  margin-top:24px;
-  padding-top:20px;
-  border-top:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-  text-align:left;
-}
-.chat-demo-label{font:9px "DM Mono";letter-spacing:.12em;color:var(--accent);}
-.chat-demo-message{
-  max-width:86%;
-  padding:11px 14px;
-  border:1px solid var(--line);
-  border-radius:12px 12px 12px 4px;
-  background:#0d1112;
-  color:#d9dfdd;
-  font-size:12px;
-  line-height:1.5;
-}
-.chat-demo-message-me{
-  align-self:flex-end;
-  border-radius:12px 12px 4px 12px;
-  background:var(--accent-soft);
-  border-color:var(--accent-border);
-}
-@media(max-width:660px){
-  .chat-demo-preview{width:100%;margin-top:20px;}
-  .chat-demo-message{font-size:12px;}
-}
-
-
-/* =========================================================
-   ONLINE USERS — AVATARS DIRECTLY IN THE CARD
-   No nested text bubble; desktop and mobile share the same layout.
-   ========================================================= */
-#everlightOnlineCard{
-  overflow:hidden !important;
-}
-#everlightOnlineCard .everlight-online-summary{
-  display:none !important;
-}
-#everlightOnlineCard .faces{
-  display:flex !important;
-  align-items:center !important;
-  flex-wrap:wrap !important;
-  gap:10px !important;
-  margin:14px 0 0 !important;
-  padding:0 !important;
-  min-height:30px !important;
-}
-#everlightOnlineCard .everlight-online-user{
-  display:block !important;
-  flex:0 0 38px !important;
-  width:38px !important;
-  height:38px !important;
-  margin:0 !important;
-  padding:0 !important;
-}
-#everlightOnlineCard .everlight-online-avatar{
-  position:relative !important;
-  display:block !important;
-  width:38px !important;
-  height:38px !important;
-  border-radius:50% !important;
-  overflow:visible !important;
-  background:#18242c !important;
-  border:2px solid #000 !important;
-  box-sizing:border-box !important;
-}
-#everlightOnlineCard .everlight-online-avatar img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
-  border-radius:50% !important;
-}
-#everlightOnlineCard .everlight-online-avatar-fallback{
-  width:100% !important;
-  height:100% !important;
-  display:grid !important;
-  place-items:center !important;
-  color:#8fb8da !important;
-  font-size:13px !important;
-}
-#everlightOnlineCard .everlight-online-avatar i{
-  position:absolute !important;
-  right:-2px !important;
-  bottom:-1px !important;
-  width:9px !important;
-  height:9px !important;
-  border-radius:50% !important;
-  background:#72d8d0 !important;
-  border:2px solid #000 !important;
-  box-sizing:content-box !important;
-}
-#everlightOnlineCard .everlight-online-name{
-  display:none !important;
-}
-#everlightOnlineCard .everlight-online-empty{
-  display:inline-grid !important;
-  place-items:center !important;
-  width:38px !important;
-  height:38px !important;
-  border-radius:50% !important;
-  border:1px solid rgba(139,173,204,.28) !important;
-  color:#8fb8da !important;
-  font-size:14px !important;
-}
-@media(max-width:760px){
-  #everlightOnlineCard .faces{
-    gap:11px !important;
-    margin-top:14px !important;
-  }
-  #everlightOnlineCard .everlight-online-user,
-  #everlightOnlineCard .everlight-online-avatar,
-  #everlightOnlineCard .everlight-online-empty{
-    width:42px !important;
-    height:42px !important;
-    flex-basis:42px !important;
-  }
-}
-
-/* =========================================================
-   CHAT — DESKTOP FINAL WIDTH FIX
-   The contacts column is hidden on desktop, so the chat must
-   explicitly occupy the full feed width instead of the second
-   column of the old 280px + 1fr grid.
-   ========================================================= */
-@media (min-width: 961px){
-  main#feed > .messages-view.open .messages-layout,
-  main#feed > .messages-view[aria-hidden="false"] .messages-layout{
-    display:grid !important;
-    grid-template-columns:minmax(0,1fr) !important;
-    width:100% !important;
-    max-width:none !important;
-    min-width:0 !important;
-    margin:0 !important;
-  }
-
-  main#feed > .messages-view.open .message-chat,
-  main#feed > .messages-view[aria-hidden="false"] .message-chat{
-    grid-column:1 / -1 !important;
-    width:100% !important;
-    min-width:0 !important;
-    max-width:none !important;
-  }
-
-  main#feed > .messages-view.open .dm-list,
-  main#feed > .messages-view[aria-hidden="false"] .dm-list{
-    width:100% !important;
-    min-width:0 !important;
-  }
-
-  /* The chat is closed only by pressing Csevegés again. */
-  main#feed > .messages-view .messages-close{
-    display:none !important;
-  }
-}
-
-
 
 /* Feed post streak badge — same visual language as Available Stars. */
 .feed-card-avatar-wrap{
@@ -14161,6 +13331,7 @@ main#feed{
   min-height:0 !important;
 }
 .profile-login-error:empty{display:none !important;}
+
 @media (max-width:660px){
   .profile-view.open .profile-login-state,
   .profile-view[aria-hidden="false"] .profile-login-state{
@@ -14200,822 +13371,6 @@ main#feed{
 }
 
 
-@media (max-width:660px){
-  
-
-  .site-footer{
-    position:fixed !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:calc(0px + env(safe-area-inset-bottom, 0px)) !important;
-    width:100% !important;
-    height:auto !important;
-    min-height:0 !important;
-    margin:0 !important;
-    padding:0 10px !important;
-    background:transparent !important;
-    background-image:none !important;
-    border:0 !important;
-    box-shadow:none !important;
-    text-align:center !important;
-    z-index:2147482999 !important;
-    pointer-events:none !important;
-  }
-
-  .site-footer p{
-    display:inline-block !important;
-    width:auto !important;
-    max-width:calc(100vw - 20px) !important;
-    margin:0 auto !important;
-    padding:3px 9px !important;
-    background:#000 !important;
-    border-radius:6px !important;
-    color:#65716f !important;
-    font:500 7px/1.25 "DM Mono",monospace !important;
-    letter-spacing:.018em !important;
-    white-space:normal !important;
-    overflow-wrap:anywhere !important;
-    word-break:normal !important;
-    text-align:center !important;
-    text-shadow:none !important;
-  }
-}
-
-@media (max-width:390px){
-  
-
-  .site-footer{
-    bottom:calc(0px + env(safe-area-inset-bottom, 0px)) !important;
-    padding-left:8px !important;
-    padding-right:8px !important;
-  }
-
-  .site-footer p{
-    max-width:calc(100vw - 16px) !important;
-    padding:3px 7px !important;
-    font-size:6.5px !important;
-  }
-}
-
-
-@media (max-width:660px){
-  
-
-  
-
-  
-
-  .site-footer{
-    bottom:calc(8px + env(safe-area-inset-bottom,0px)) !important;
-  }
-}
-
-@media (max-width:390px){
-  
-
-  
-}
-
-
-/* =========================================================
-   MOBILE COMMUNITY PANEL — FULL DESKTOP RIGHT RAIL
-   The three-line dock action opens the complete right rail:
-   latest posts, available stars, live statistics and sharing.
-   Data is refreshed from the real public endpoints when opened.
-   ========================================================= */
-@media (max-width:660px){
-  .mobile-community-panel{
-    left:10px !important;
-    right:10px !important;
-    bottom:calc(98px + env(safe-area-inset-bottom,0px)) !important;
-    max-height:calc(100dvh - 116px - env(safe-area-inset-bottom,0px)) !important;
-    border-radius:18px !important;
-  }
-
-  .mobile-community-panel-head{
-    min-height:58px !important;
-    padding:12px 15px !important;
-  }
-
-  .mobile-community-panel-body{
-    flex:1 1 auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    overscroll-behavior:contain !important;
-    -webkit-overflow-scrolling:touch !important;
-    scrollbar-width:thin !important;
-    padding:10px !important;
-  }
-
-  .mobile-community-panel .mobile-cloned-rail{
-    display:block !important;
-    width:100% !important;
-    min-height:0 !important;
-  }
-
-  .mobile-community-panel .rail-info-card,
-  .mobile-community-panel .activity-card,
-  .mobile-community-panel .right-share-card{
-    display:block !important;
-    width:100% !important;
-    min-height:0 !important;
-    margin:0 0 10px !important;
-    padding:15px !important;
-    box-sizing:border-box !important;
-  }
-
-  /* Never hide the actual live values on the mobile copy. */
-  .mobile-community-panel #activityStats,
-  .mobile-community-panel #onlineFaces,
-  .mobile-community-panel #communityLatest{
-    display:block !important;
-    visibility:visible !important;
-    opacity:1 !important;
-  }
-
-  .mobile-community-panel .activity-stats{
-    display:grid !important;
-    grid-template-columns:1fr auto !important;
-    gap:7px 16px !important;
-    align-items:center !important;
-  }
-
-  .mobile-community-panel .activity-stats > div{
-    display:contents !important;
-  }
-
-  .mobile-community-panel .activity-stats span{
-    color:#89949a !important;
-    font-size:12px !important;
-  }
-
-  .mobile-community-panel .activity-stats strong{
-    color:#e8edf0 !important;
-    font:700 13px/1.2 "DM Mono",monospace !important;
-    text-align:right !important;
-  }
-
-  .mobile-community-panel .faces{
-    display:flex !important;
-    flex-wrap:wrap !important;
-    gap:7px !important;
-    margin-top:10px !important;
-  }
-
-  .mobile-community-panel .everlight-online-user{
-    flex:0 0 auto !important;
-  }
-
-  .mobile-community-panel .community-latest-list{
-    display:grid !important;
-    gap:8px !important;
-  }
-
-  .mobile-community-panel .community-latest-item{
-    width:100% !important;
-    box-sizing:border-box !important;
-  }
-
-  .mobile-community-panel .right-share-card .share-symbol-grid{
-    display:grid !important;
-    grid-template-columns:repeat(3,minmax(0,44px)) !important;
-    justify-content:start !important;
-    gap:8px !important;
-  }
-}
-
-
-/* =========================================================
-   EVERLIGHT CLEAN MOBILE UI — SINGLE AUTHORITATIVE DOCK
-   Removes the legacy floating island and uses one predictable layout.
-   ========================================================= */
-@media (max-width:660px){
-  html,body{
-    overflow-x:hidden !important;
-    padding:0 !important;
-    margin:0 !important;
-  }
-
-  /* The nav is a simple full-width lower bar, not a floating island. */
-  #mobileDock.mobile-dock,
-  .mobile-dock{
-    position:fixed !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:calc(env(safe-area-inset-bottom,0px) + 36px) !important;
-    width:100% !important;
-    max-width:none !important;
-    height:68px !important;
-    min-height:68px !important;
-    margin:0 !important;
-    padding:6px 18px 4px !important;
-    box-sizing:border-box !important;
-    display:grid !important;
-    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-    align-items:stretch !important;
-    gap:0 !important;
-    background:rgba(0,0,0,.98) !important;
-    border:0 !important;
-    border-top:1px solid rgba(139,173,204,.18) !important;
-    border-radius:0 !important;
-    box-shadow:none !important;
-    overflow:hidden !important;
-    z-index:4500 !important;
-  }
-
-  .mobile-dock-item,
-  #mobileDock .mobile-dock-item{
-    position:relative !important;
-    min-width:0 !important;
-    height:58px !important;
-    margin:0 !important;
-    padding:0 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    border:0 !important;
-    border-radius:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    color:#cfd6d8 !important;
-    text-decoration:none !important;
-  }
-
-  .mobile-dock-item + .mobile-dock-item{
-    border-left:1px solid rgba(139,173,204,.14) !important;
-  }
-
-  .mobile-dock-item small{display:none !important;}
-
-  .mobile-dock-item.active{
-    color:var(--accent,#8BADCC) !important;
-    background:rgba(139,173,204,.07) !important;
-    border-radius:0 !important;
-  }
-
-  #mobileDock .rail-action-icon{
-    position:relative !important;
-    display:block !important;
-    width:32px !important;
-    height:32px !important;
-    min-width:32px !important;
-    min-height:32px !important;
-    color:currentColor !important;
-    visibility:visible !important;
-    opacity:1 !important;
-    overflow:visible !important;
-  }
-
-  #mobileDock .rail-action-icon::before,
-  #mobileDock .rail-action-icon::after{
-    visibility:visible !important;
-    opacity:1 !important;
-  }
-
-  /* Last button: menu, never a floating island. */
-  #mobileDock .mobile-island-alert,
-  #mobileDock .mobile-menu-item{
-    width:auto !important;
-    min-width:0 !important;
-    height:58px !important;
-    padding:0 !important;
-    border:0 !important;
-    border-left:1px solid rgba(139,173,204,.14) !important;
-    border-radius:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    color:#cfd6d8 !important;
-  }
-
-  #mobileDock .mobile-menu-icon{
-    width:32px !important;
-    height:24px !important;
-    display:flex !important;
-    flex-direction:column !important;
-    justify-content:space-between !important;
-    align-items:stretch !important;
-  }
-  #mobileDock .mobile-menu-icon i{
-    display:block !important;
-    width:100% !important;
-    height:2px !important;
-    border-radius:2px !important;
-    background:currentColor !important;
-    box-shadow:none !important;
-  }
-  #mobileDock .mobile-island-alert.is-open,
-  #mobileDock .mobile-island-alert[aria-expanded="true"]{
-    color:var(--accent,#8BADCC) !important;
-    background:rgba(139,173,204,.07) !important;
-    border-radius:0 !important;
-    box-shadow:none !important;
-  }
-
-  /* AI footer sits below the nav and above the iPhone home indicator. */
-  .site-footer{
-    position:fixed !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    width:100% !important;
-    height:calc(env(safe-area-inset-bottom,0px) + 30px) !important;
-    min-height:calc(env(safe-area-inset-bottom,0px) + 30px) !important;
-    box-sizing:border-box !important;
-    padding:5px 12px calc(env(safe-area-inset-bottom,0px) + 4px) !important;
-    display:flex !important;
-    align-items:flex-start !important;
-    justify-content:center !important;
-    background:#000 !important;
-    border:0 !important;
-    z-index:4400 !important;
-    pointer-events:none !important;
-  }
-
-  .site-footer p{
-    margin:0 !important;
-    font:7px/1.25 'DM Mono',monospace !important;
-    letter-spacing:.02em !important;
-    color:#59635f !important;
-    text-align:center !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-    max-width:96vw !important;
-  }
-
-  /* Content has enough room to remain above the bottom bar. */
-  #feed,.layout{padding-bottom:120px !important;}
-
-  /* Community sheet fills the available mobile viewport, like the desktop rail. */
-  #mobileCommunityPanel{
-    position:fixed !important;
-    inset:64px 0 calc(env(safe-area-inset-bottom,0px) + 30px) 0 !important;
-    width:auto !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow:hidden auto !important;
-    -webkit-overflow-scrolling:touch !important;
-    overscroll-behavior:contain !important;
-    background:#000 !important;
-    border:0 !important;
-    border-radius:0 !important;
-    box-shadow:none !important;
-    z-index:4405 !important;
-  }
-
-  #mobileCommunityPanelBody{
-    width:100% !important;
-    min-height:100% !important;
-    box-sizing:border-box !important;
-    padding:14px 18px 24px !important;
-    overflow:visible !important;
-  }
-
-  #mobileCommunityPanel .mobile-cloned-rail{
-    display:block !important;
-    width:100% !important;
-    max-width:none !important;
-    border:0 !important;
-    padding:0 !important;
-    margin:0 !important;
-    background:transparent !important;
-  }
-
-  #mobileCommunityPanel .right-rail{
-    display:block !important;
-    width:100% !important;
-    max-width:none !important;
-    padding:0 !important;
-    margin:0 !important;
-    border:0 !important;
-  }
-
-  #mobileCommunityPanel .rail-info-card,
-  #mobileCommunityPanel .activity-card,
-  #mobileCommunityPanel .right-share-card{
-    width:100% !important;
-    margin:0 0 14px !important;
-    padding:18px !important;
-    box-sizing:border-box !important;
-  }
-
-  #mobileCommunityPanel .share-symbol-grid{
-    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
-  }
-}
-
-/* =========================================================
-   FINAL MOBILE BOTTOM BAR — AUTHORITATIVE OVERRIDE
-   One compact dock + AI text directly underneath.
-   No floating island, no oversized black tray.
-   ========================================================= */
-@media (max-width:660px){
-  html,body{
-    overflow-x:hidden !important;
-  }
-
-  #mobileDock.mobile-dock,
-  body #mobileDock.mobile-dock{
-    position:fixed !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px) !important;
-    width:100vw !important;
-    height:46px !important;
-    min-height:46px !important;
-    max-height:46px !important;
-    margin:0 !important;
-    padding:0 12px !important;
-    display:grid !important;
-    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-    align-items:stretch !important;
-    gap:0 !important;
-    background:#000 !important;
-    border:0 !important;
-    border-top:1px solid rgba(139,173,204,.16) !important;
-    border-radius:0 !important;
-    box-shadow:none !important;
-    overflow:visible !important;
-    z-index:4500 !important;
-  }
-
-  #mobileDock .mobile-dock-item,
-  #mobileDock .mobile-island-alert,
-  #mobileDock .mobile-menu-item{
-    position:relative !important;
-    width:100% !important;
-    min-width:0 !important;
-    height:46px !important;
-    min-height:46px !important;
-    max-height:46px !important;
-    margin:0 !important;
-    padding:0 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    border:0 !important;
-    border-radius:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    color:#d9dfe0 !important;
-    -webkit-tap-highlight-color:transparent !important;
-  }
-
-  #mobileDock .mobile-dock-item + .mobile-dock-item{
-    border-left:1px solid rgba(139,173,204,.12) !important;
-  }
-
-  #mobileDock .mobile-dock-item.active{
-    color:#8BADCC !important;
-    background:transparent !important;
-  }
-
-  #mobileDock .mobile-dock-item small{display:none !important;}
-
-  /* Force all three line icons to remain visible and consistent. */
-  #mobileDock .rail-action-icon{
-    position:relative !important;
-    display:block !important;
-    width:30px !important;
-    height:30px !important;
-    min-width:30px !important;
-    min-height:30px !important;
-    color:currentColor !important;
-    opacity:1 !important;
-    visibility:visible !important;
-    overflow:visible !important;
-  }
-
-  #mobileDock .rail-icon-home::before{
-    content:"" !important;
-    position:absolute !important;
-    left:6px !important;
-    top:11px !important;
-    width:17px !important;
-    height:14px !important;
-    border:2.4px solid currentColor !important;
-    border-top:0 !important;
-    border-radius:2px !important;
-    box-sizing:border-box !important;
-  }
-  #mobileDock .rail-icon-home::after{
-    content:"" !important;
-    position:absolute !important;
-    left:7px !important;
-    top:5px !important;
-    width:15px !important;
-    height:15px !important;
-    border-left:2.4px solid currentColor !important;
-    border-top:2.4px solid currentColor !important;
-    transform:rotate(45deg) !important;
-    box-sizing:border-box !important;
-  }
-
-  #mobileDock .rail-icon-chat::before{
-    content:"" !important;
-    position:absolute !important;
-    left:4px !important;
-    top:5px !important;
-    width:22px !important;
-    height:17px !important;
-    border:2.4px solid currentColor !important;
-    border-radius:50% !important;
-    box-sizing:border-box !important;
-  }
-  #mobileDock .rail-icon-chat::after{
-    content:"" !important;
-    position:absolute !important;
-    left:20px !important;
-    top:18px !important;
-    width:7px !important;
-    height:7px !important;
-    border-left:2.4px solid currentColor !important;
-    border-bottom:2.4px solid currentColor !important;
-    border-radius:0 0 0 2px !important;
-    transform:skewY(-28deg) !important;
-    box-sizing:border-box !important;
-  }
-
-  #mobileDock .rail-icon-profile::before{
-    content:"" !important;
-    position:absolute !important;
-    left:10px !important;
-    top:3px !important;
-    width:10px !important;
-    height:10px !important;
-    border:2.4px solid currentColor !important;
-    border-radius:50% !important;
-    box-sizing:border-box !important;
-  }
-  #mobileDock .rail-icon-profile::after{
-    content:"" !important;
-    position:absolute !important;
-    left:5px !important;
-    top:17px !important;
-    width:20px !important;
-    height:12px !important;
-    border:2.4px solid currentColor !important;
-    border-bottom:0 !important;
-    border-radius:13px 13px 0 0 !important;
-    box-sizing:border-box !important;
-  }
-
-  #mobileDock .mobile-menu-icon{
-    position:relative !important;
-    display:flex !important;
-    flex-direction:column !important;
-    justify-content:center !important;
-    gap:6px !important;
-    width:30px !important;
-    height:30px !important;
-  }
-  #mobileDock .mobile-menu-icon i{
-    display:block !important;
-    width:30px !important;
-    height:2.5px !important;
-    margin:0 !important;
-    padding:0 !important;
-    border:0 !important;
-    border-radius:3px !important;
-    background:currentColor !important;
-    box-shadow:none !important;
-  }
-
-  /* Absolutely no floating-island appearance. */
-  #mobileDock .mobile-island-alert,
-  #mobileDock .mobile-island-alert.is-open,
-  #mobileDock .mobile-island-alert[aria-expanded="true"]{
-    border-radius:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-  }
-
-  /* Small AI line immediately below the dock, with only the safe-area gap. */
-  body .site-footer{
-    position:fixed !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    width:100vw !important;
-    height:calc(18px + env(safe-area-inset-bottom,0px)) !important;
-    min-height:calc(18px + env(safe-area-inset-bottom,0px)) !important;
-    max-height:calc(18px + env(safe-area-inset-bottom,0px)) !important;
-    margin:0 !important;
-    padding:6px 8px calc(env(safe-area-inset-bottom,0px) + 1px) !important;
-    display:flex !important;
-    align-items:flex-start !important;
-    justify-content:center !important;
-    box-sizing:border-box !important;
-    background:#000 !important;
-    border:0 !important;
-    box-shadow:none !important;
-    overflow:hidden !important;
-    z-index:4400 !important;
-    pointer-events:none !important;
-  }
-
-  body .site-footer p{
-    display:block !important;
-    width:auto !important;
-    max-width:96vw !important;
-    margin:0 !important;
-    padding:0 !important;
-    color:#59635f !important;
-    background:transparent !important;
-    border:0 !important;
-    border-radius:0 !important;
-    font:6px/1.2 "DM Mono",monospace !important;
-    transform:translateY(2px) !important;
-    letter-spacing:.02em !important;
-    text-align:center !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-  }
-
-  /* Do not reserve a huge artificial black area for the old island. */
-  #feed,
-  .layout{
-    padding-bottom:96px !important;
-  }
-}
-
-@media (max-width:390px){
-  #mobileDock.mobile-dock,
-  body #mobileDock.mobile-dock{
-    bottom:calc(env(safe-area-inset-bottom,0px) + 18px) !important;
-    height:44px !important;
-    min-height:44px !important;
-    max-height:44px !important;
-    padding:0 8px !important;
-  }
-  #mobileDock .mobile-dock-item,
-  #mobileDock .mobile-island-alert,
-  #mobileDock .mobile-menu-item{
-    height:44px !important;
-    min-height:44px !important;
-    max-height:44px !important;
-  }
-  #mobileDock .rail-action-icon{transform:scale(.9) !important;}
-  #mobileDock .mobile-menu-icon{transform:scale(.92) !important;}
-  #feed,.layout{padding-bottom:82px !important;}
-}
-
-/* =========================================================
-   MOBILE DOCK FINAL POSITION — KEEP DOCK + AI TOGETHER
-   The black tray must not create a large empty area.
-   ========================================================= */
-@media (max-width:660px){
-  #mobileDock.mobile-dock,
-  body #mobileDock.mobile-dock{
-    bottom:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
-  }
-
-  body .site-footer{
-    bottom:0 !important;
-    height:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
-    min-height:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
-    max-height:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
-    padding:0 8px env(safe-area-inset-bottom,0px) !important;
-    align-items:flex-start !important;
-  }
-
-  body .site-footer p{
-    transform:translateY(-1px) !important;
-    font-size:6px !important;
-    line-height:1 !important;
-  }
-}
-
-@media (max-width:390px){
-  #mobileDock.mobile-dock,
-  body #mobileDock.mobile-dock{
-    bottom:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
-  }
-}
-
-/* =========================================================
-   LAPTOP / SMALL DESKTOP — KEEP THE RIGHT RAIL USABLE
-   The previous fixed 220 + 760 + 300 grid was wider than
-   many laptop viewports, causing the right rail to collapse/
-   become partially hidden. Keep all three desktop columns
-   inside the available viewport while preserving the rail.
-   ========================================================= */
-@media (min-width: 961px) and (max-width: 1299px){
-  .layout{
-    width:100% !important;
-    max-width:none !important;
-    grid-template-columns:180px minmax(0,1fr) 250px !important;
-  }
-
-  .left-rail{
-    min-width:0 !important;
-    padding-left:18px !important;
-    padding-right:18px !important;
-  }
-
-  main#feed{
-    min-width:0 !important;
-    padding-left:28px !important;
-    padding-right:28px !important;
-  }
-
-  .right-rail{
-    min-width:0 !important;
-    width:100% !important;
-    padding-left:12px !important;
-    padding-right:12px !important;
-    overflow-x:hidden !important;
-  }
-
-  .right-rail > .rail-info-card,
-  .right-rail > .activity-card,
-  .right-rail > .right-share-card,
-  .right-rail > #everlightCommunityCard,
-  .right-rail > #everlightOnlineCard{
-    min-width:0 !important;
-    width:100% !important;
-    max-width:100% !important;
-    box-sizing:border-box !important;
-  }
-
-  .right-rail .share-symbol-grid{
-    width:100% !important;
-    max-width:100% !important;
-    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
-    gap:5px !important;
-  }
-
-  .right-rail .share-symbol-grid button{
-    min-width:0 !important;
-    width:100% !important;
-    aspect-ratio:1 / 1 !important;
-  }
-}
-
-@media (min-width: 961px) and (max-width: 1080px){
-  .layout{
-    grid-template-columns:170px minmax(0,1fr) 235px !important;
-  }
-
-  .left-rail{
-    padding-left:14px !important;
-    padding-right:14px !important;
-  }
-
-  main#feed{
-    padding-left:22px !important;
-    padding-right:22px !important;
-  }
-
-  .right-rail{
-    padding-left:10px !important;
-    padding-right:10px !important;
-  }
-
-  .right-rail .rail-card-title,
-  .right-rail .rail-card-title > span{
-    font-size:14px !important;
-  }
-
-  .right-rail .community-latest-item{
-    min-width:0 !important;
-    padding:9px !important;
-  }
-}
-
-
-/* MOBILE COMMUNITY PANEL — FINAL INTERACTION FIX
-   Keep the full right-rail sheet independently scrollable and clickable.
-   The panel must never inherit the desktop rail's interaction constraints. */
-@media (max-width:660px){
-  #mobileCommunityPanel{
-    pointer-events:none !important;
-    touch-action:none !important;
-  }
-  #mobileCommunityPanel.is-open{
-    pointer-events:auto !important;
-    touch-action:pan-y !important;
-    overflow:hidden !important;
-  }
-  #mobileCommunityPanelBody{
-    height:calc(100% - 58px) !important;
-    max-height:calc(100% - 58px) !important;
-    min-height:0 !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    touch-action:pan-y !important;
-    -webkit-overflow-scrolling:touch !important;
-    overscroll-behavior-y:contain !important;
-    pointer-events:auto !important;
-  }
-  #mobileCommunityPanel .mobile-cloned-rail{
-    pointer-events:auto !important;
-    touch-action:auto !important;
-  }
-}
 
 /* =========================================================
    DAILY THOUGHTS — CHAT / PRIVATE SPACE
@@ -15098,396 +13453,211 @@ main#feed{
    FINAL FIX — MOBILE FEED SCROLL + REAL DAILY THOUGHT BUBBLES
    ========================================================= */
 @media (max-width:660px){
-  html, body{
-    height:auto !important;
-    min-height:100% !important;
-    overflow-x:hidden !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-    touch-action:pan-y !important;
-  }
 
-  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open){
-    overflow-y:auto !important;
-  }
 
-  .layout{
-    min-height:auto !important;
-    height:auto !important;
-  }
-
-  main#feed{
-    min-height:calc(100dvh - 64px) !important;
-    height:auto !important;
-    overflow:visible !important;
-    touch-action:pan-y !important;
-  }
-
-  #feedList,
-  .feed-list{
-    height:auto !important;
-    max-height:none !important;
-    overflow:visible !important;
-    touch-action:pan-y !important;
-  }
-
-  .feed-card,
-  .feed-card *{
-    touch-action:pan-y !important;
-  }
-
-  /* Daily thoughts are not feed posts: they are small bubbles above avatars. */
-  .daily-thoughts-strip{
-    background:transparent !important;
-    border:0 !important;
-    padding:10px 8px 14px !important;
-  }
-  .daily-thoughts-strip-head{
-    margin:0 4px 10px !important;
-  }
-  .daily-thoughts-strip-head strong{
-    font-size:12px !important;
-  }
-  .daily-thought-bubbles{
-    display:flex !important;
-    align-items:flex-end !important;
-    gap:14px !important;
-    overflow-x:auto !important;
-    overflow-y:visible !important;
-    padding:34px 8px 4px !important;
-    min-height:94px !important;
-    scrollbar-width:none !important;
-    touch-action:pan-x !important;
-  }
-  .daily-thought-bubbles::-webkit-scrollbar{display:none !important;}
-  .daily-thought-person{
-    position:relative !important;
-    flex:0 0 54px !important;
-    width:54px !important;
-    min-width:54px !important;
-    height:64px !important;
-    display:flex !important;
-    align-items:center !important;
-    flex-direction:column !important;
-  }
-  .daily-thought-bubble{
-    position:absolute !important;
-    left:50% !important;
-    bottom:42px !important;
-    transform:translateX(-50%) !important;
-    width:max-content !important;
-    max-width:128px !important;
-    min-width:0 !important;
-    height:auto !important;
-    padding:7px 9px !important;
-    border:1px solid #31424a !important;
-    border-radius:12px !important;
-    background:#0b1114 !important;
-    color:#dce4e5 !important;
-    font:500 8px/1.25 Manrope,sans-serif !important;
-    text-align:center !important;
-    box-shadow:0 5px 14px rgba(0,0,0,.28) !important;
-    overflow:hidden !important;
-    white-space:normal !important;
-    display:-webkit-box !important;
-    -webkit-line-clamp:2 !important;
-    -webkit-box-orient:vertical !important;
-  }
-  .daily-thought-bubble::after{
-    content:"" !important;
-    position:absolute !important;
-    left:50% !important;
-    bottom:-5px !important;
-    width:9px !important;
-    height:9px !important;
-    background:#0b1114 !important;
-    border-right:1px solid #31424a !important;
-    border-bottom:1px solid #31424a !important;
-    transform:translateX(-50%) rotate(45deg) !important;
-  }
-  .daily-thought-person-avatar{
-    position:absolute !important;
-    bottom:7px !important;
-    width:40px !important;
-    height:40px !important;
-    border-radius:50% !important;
-    overflow:hidden !important;
-    border:2px solid #11181b !important;
-    background:#121a1e !important;
-    display:grid !important;
-    place-items:center !important;
-    color:#9fc4e5 !important;
-    font:700 11px/1 Manrope,sans-serif !important;
-  }
-  .daily-thought-person-avatar img{
-    width:100% !important;height:100% !important;object-fit:cover !important;display:block !important;
-  }
-  .daily-thought-person-name{
-    position:absolute !important;
-    bottom:-6px !important;
-    width:70px !important;
-    text-align:center !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-    color:#8d9a9f !important;
-    font:600 7px/1 Manrope,sans-serif !important;
-  }
-}
 
 /* =========================================================
-   MOBILE HUB SCROLL — AUTHORITATIVE FINAL FIX
-   Hub uses the document viewport as the scroll container.
-   Chat/Profile/Community keep their own scroll containers.
+   EVERLIGHT CLEAN RESPONSIVE SYSTEM
+   One mobile dock, one mobile sheet model, one desktop model.
    ========================================================= */
+
+/* Desktop baseline stays independent from mobile UI. */
+@media (min-width: 961px), (hover:hover) and (pointer:fine){
+  #mobileDock,
+  #mobileCommunityPanel,
+  .mobile-community-panel{display:none !important;visibility:hidden !important;pointer-events:none !important;}
+  html,body{width:100% !important;min-width:0 !important;height:auto !important;min-height:100% !important;overflow-x:hidden !important;overflow-y:auto !important;touch-action:auto !important;}
+  .layout{display:grid !important;width:100% !important;max-width:1480px !important;margin:0 auto !important;grid-template-columns:minmax(190px,210px) minmax(0,1fr) minmax(260px,300px) !important;min-height:calc(100vh - 72px) !important;height:auto !important;overflow:visible !important;}
+  .left-rail,.right-rail{display:block !important;min-width:0 !important;}
+  .left-rail{border-right:1px solid var(--line) !important;padding:48px 24px !important;}
+  .right-rail{border-left:1px solid var(--line) !important;padding:38px 22px !important;overflow:visible !important;}
+  main#feed{display:block !important;width:auto !important;min-width:0 !important;min-height:calc(100vh - 72px) !important;height:auto !important;padding:38px 34px 80px !important;overflow:visible !important;touch-action:auto !important;}
+  #feedList,.feed-list{height:auto !important;min-height:0 !important;max-height:none !important;overflow:visible !important;}
+  .site-footer{position:static !important;width:auto !important;height:auto !important;min-height:0 !important;padding:14px 15px !important;background:transparent !important;border-top:1px solid var(--line) !important;pointer-events:auto !important;}
+  .site-footer p{white-space:normal !important;overflow:visible !important;text-overflow:clip !important;transform:none !important;}
+  .right-rail .rail-info-card,.right-rail .activity-card,.right-rail .right-share-card{width:100% !important;min-width:0 !important;box-sizing:border-box !important;}
+  .messages-view.open,.profile-view.open{display:block !important;}
+  body.messages-view-open main#feed > *:not(#messagesView),
+  body.profile-view-open main#feed > *:not(#profileView){display:none !important;}
+  body.messages-view-open main#feed > #messagesView,
+  body.profile-view-open main#feed > #profileView{display:block !important;width:100% !important;max-width:none !important;min-width:0 !important;margin:0 !important;}
+  main#feed > #messagesView .messages-layout{grid-template-columns:minmax(0,1fr) !important;}
+  main#feed > #messagesView .message-chat{grid-column:1 !important;width:100% !important;}
+}
+
+@media (max-width: 960px) and (hover:hover) and (pointer:fine){
+  /* Narrow laptop: desktop UI, never mobile dock. */
+  .layout{grid-template-columns:minmax(175px,200px) minmax(0,1fr) minmax(235px,265px) !important;}
+  .left-rail{padding-inline:18px !important;}
+  .right-rail{padding-inline:16px !important;}
+  main#feed{padding-inline:24px !important;}
+  .right-rail .rail-info-card,.right-rail .activity-card,.right-rail .right-share-card{font-size:.96em !important;}
+}
+
 @media (max-width:660px){
-  html, body{
-    width:100% !important;
-    height:auto !important;
-    min-height:100% !important;
-    overflow-x:hidden !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-    touch-action:pan-y !important;
-  }
+  /* Never lock the Hub. The document itself is the feed scroller. */
+  html,body{width:100% !important;height:auto !important;min-height:100% !important;overflow-x:hidden !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch !important;touch-action:pan-y !important;position:static !important;inset:auto !important;}
+  body.messages-view-open,body.profile-view-open,body.mobile-share-open{overflow:hidden !important;touch-action:none !important;}
+  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open):not(.mobile-community-open){overflow-y:auto !important;touch-action:pan-y !important;}
+  .layout{display:block !important;width:100% !important;min-height:auto !important;height:auto !important;overflow:visible !important;padding:0 !important;}
+  .left-rail,.right-rail{display:none !important;}
+  main#feed{display:block !important;width:100% !important;min-height:calc(100dvh - 64px) !important;height:auto !important;padding:24px 14px calc(84px + env(safe-area-inset-bottom,0px)) !important;overflow:visible !important;touch-action:pan-y !important;}
+  #feedList,.feed-list{height:auto !important;min-height:0 !important;max-height:none !important;overflow:visible !important;touch-action:pan-y !important;}
+  #feedList > *,#feedList .feed-card,.feed-card{touch-action:pan-y !important;}
 
-  body{
-    position:static !important;
-    inset:auto !important;
+  /* Clean bottom dock: one layer only, small and low. */
+  #mobileDock.mobile-dock{
+    position:fixed !important;
+    left:0 !important;right:0 !important;bottom:env(safe-area-inset-bottom,0px) !important;
+    width:100% !important;height:54px !important;min-height:54px !important;
+    margin:0 !important;padding:0 !important;box-sizing:border-box !important;
+    display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    align-items:stretch !important;overflow:hidden !important;
+    background:#050707 !important;border-top:1px solid #202729 !important;
+    border-radius:0 !important;box-shadow:none !important;
+    z-index:7000 !important;touch-action:none !important;
   }
+  #mobileDock .mobile-dock-item,#mobileDock .mobile-island-alert{
+    position:relative !important;display:grid !important;place-items:center !important;
+    width:auto !important;height:54px !important;min-width:0 !important;min-height:54px !important;
+    margin:0 !important;padding:0 !important;border:0 !important;border-right:1px solid #202729 !important;
+    border-radius:0 !important;background:transparent !important;box-shadow:none !important;
+    color:#dbe3e5 !important;pointer-events:auto !important;touch-action:manipulation !important;
+  }
+  #mobileDock .mobile-dock-item:last-child{border-right:0 !important;}
+  #mobileDock .mobile-dock-item small{display:none !important;}
+  #mobileDock .mobile-dock-item.active{background:#0c1317 !important;box-shadow:inset 0 0 0 1px rgba(139,173,204,.18) !important;}
+  #mobileDock .mobile-dock-item.active .rail-action-icon,#mobileDock .mobile-island-alert.is-open .mobile-menu-icon{color:#8badcc !important;}
+  #mobileDock .rail-action-icon{display:block !important;width:28px !important;height:28px !important;transform:none !important;}
+  #mobileDock .rail-icon-home{width:24px !important;height:24px !important;}
+  #mobileDock .rail-icon-chat{width:25px !important;height:20px !important;}
+  #mobileDock .rail-icon-profile{width:24px !important;height:28px !important;}
+  #mobileDock .mobile-menu-icon{display:flex !important;flex-direction:column !important;gap:5px !important;width:28px !important;height:22px !important;justify-content:center !important;}
+  #mobileDock .mobile-menu-icon i{display:block !important;height:2px !important;width:100% !important;background:currentColor !important;border-radius:99px !important;}
 
-  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open){
-    overflow-y:auto !important;
-    touch-action:pan-y !important;
-  }
+  /* AI line sits directly under the dock, inside the safe area. */
+  body > .site-footer{position:fixed !important;left:0 !important;right:0 !important;bottom:calc(0px + env(safe-area-inset-bottom,0px) + 54px) !important;width:100% !important;height:20px !important;min-height:20px !important;padding:0 8px !important;display:flex !important;align-items:center !important;justify-content:center !important;background:#000 !important;border:0 !important;z-index:6999 !important;pointer-events:none !important;}
+  body > .site-footer p{margin:0 !important;width:100% !important;max-width:100% !important;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important;text-align:center !important;font:6px/1 "DM Mono",monospace !important;color:#4f5957 !important;letter-spacing:.025em !important;}
 
-  .layout{
-    width:100% !important;
-    height:auto !important;
-    min-height:calc(100dvh - 64px) !important;
-    padding-top:0 !important;
-    padding-bottom:0 !important;
-    overflow:visible !important;
-  }
+  /* Mobile sheets are real fixed panels with their own vertical scroller. */
+  .messages-view.open,.messages-view[aria-hidden="false"],.profile-view.open,.profile-view[aria-hidden="false"],#mobileCommunityPanel.is-open{
+    position:fixed !important;left:10px !important;right:10px !important;top:calc(64px + env(safe-area-inset-top,0px)) !important;
+    bottom:calc(78px + env(safe-area-inset-bottom,0px)) !important;width:auto !important;height:auto !important;max-height:none !important;
+    margin:0 !important;padding:0 !important;border:1px solid #20292a !important;border-radius:18px !important;background:#050707 !important;
+    overflow:hidden !important;z-index:8000 !important;box-shadow:0 18px 55px rgba(0,0,0,.62) !important;}
+  .messages-view-inner,.profile-view-inner,#mobileCommunityPanelBody{height:100% !important;min-height:0 !important;max-height:none !important;overflow-y:auto !important;overflow-x:hidden !important;-webkit-overflow-scrolling:touch !important;overscroll-behavior:contain !important;touch-action:pan-y !important;}
+  .messages-view-header,.profile-view-header,#mobileCommunityPanel .mobile-community-panel-head{position:sticky !important;top:0 !important;z-index:20 !important;background:#050707 !important;}
+  #closeMessagesView,#closeProfileView,#mobileCommunityClose{display:none !important;}
+  .messages-layout{display:flex !important;flex-direction:column !important;height:auto !important;min-height:0 !important;overflow:visible !important;}
+  .message-contacts{display:none !important;}
+  .message-chat{display:flex !important;flex-direction:column !important;min-height:0 !important;height:auto !important;overflow:visible !important;}
+  .dm-list{flex:0 0 auto !important;min-height:220px !important;max-height:calc(100vh - 230px) !important;overflow-y:auto !important;overflow-x:hidden !important;-webkit-overflow-scrolling:touch !important;touch-action:pan-y !important;}
+  .message-compose{position:sticky !important;bottom:0 !important;z-index:25 !important;background:#050707 !important;}
 
-  main#feed{
-    width:100% !important;
-    height:auto !important;
-    min-height:calc(100dvh - 64px) !important;
-    overflow:visible !important;
-    overflow-y:visible !important;
-    touch-action:pan-y !important;
-    padding-bottom:calc(110px + env(safe-area-inset-bottom,0px)) !important;
-  }
+  /* Daily thoughts: bubbles above avatar, not feed cards. */
+  .daily-thoughts-strip{background:transparent !important;border:0 !important;padding:10px 8px 14px !important;}
+  .daily-thoughts-strip-head strong{font-size:12px !important;}
+  .daily-thought-bubbles{display:flex !important;align-items:flex-end !important;gap:14px !important;overflow-x:auto !important;overflow-y:visible !important;min-height:94px !important;padding:34px 8px 4px !important;scrollbar-width:none !important;touch-action:pan-x !important;}
+  .daily-thought-bubble{flex:0 0 auto !important;width:104px !important;height:auto !important;min-height:0 !important;position:absolute !important;left:50% !important;bottom:42px !important;transform:translateX(-50%) !important;padding:7px 9px !important;border:1px solid #31424a !important;border-radius:12px !important;background:#0b1114 !important;box-shadow:0 5px 14px rgba(0,0,0,.28) !important;}
+  .daily-thought-person{position:relative !important;flex:0 0 54px !important;width:54px !important;height:64px !important;display:flex !important;align-items:center !important;}
+  .daily-thought-person-avatar{position:absolute !important;bottom:7px !important;width:40px !important;height:40px !important;border-radius:50% !important;overflow:hidden !important;}
 
-  #feed > .feed-list,
-  #feedList,
-  .feed-list{
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    overflow:visible !important;
-    touch-action:pan-y !important;
-  }
+  /* Mobile community panel contains the full desktop right rail. */
+  #mobileCommunityPanel{pointer-events:none !important;}
+  #mobileCommunityPanel.is-open{pointer-events:auto !important;}
+  #mobileCommunityPanelBody{height:calc(100% - 56px) !important;max-height:calc(100% - 56px) !important;padding:0 !important;}
+  #mobileCommunityPanelBody .mobile-cloned-rail{display:block !important;width:100% !important;min-width:0 !important;padding:12px !important;box-sizing:border-box !important;}
+  #mobileCommunityPanelBody .mobile-cloned-rail .rail-info-card,
+  #mobileCommunityPanelBody .mobile-cloned-rail .activity-card,
+  #mobileCommunityPanelBody .mobile-cloned-rail .right-share-card{width:100% !important;min-width:0 !important;box-sizing:border-box !important;}
+}
 
-  #feed > .feed-list > *,
-  #feedList > *,
-  .feed-list > *{
-    touch-action:pan-y !important;
-  }
-
-  /* Do not let the bottom dock become a scrolling/dragging surface. */
-  #mobileDock{
-    touch-action:none !important;
-  }
-
-  /* Full-screen views deliberately own their scrolling. */
-  body.messages-view-open,
-  body.profile-view-open,
-  body.mobile-share-open{
-    overflow:hidden !important;
-  }
+@media (max-width:390px){
+  #mobileDock.mobile-dock{height:50px !important;min-height:50px !important;}
+  #mobileDock .mobile-dock-item,#mobileDock .mobile-island-alert{height:50px !important;min-height:50px !important;}
+  body > .site-footer{bottom:calc(env(safe-area-inset-bottom,0px) + 50px) !important;height:18px !important;min-height:18px !important;}
+  main#feed{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px)) !important;}
+  .messages-view.open,.profile-view.open,#mobileCommunityPanel.is-open{left:8px !important;right:8px !important;bottom:calc(72px + env(safe-area-inset-bottom,0px)) !important;}
 }
 
 /* =========================================================
-   EVERLIGHT — DESKTOP/TABLET SEPARATION HARD OVERRIDE
-   Desktop is selected by a real mouse/trackpad as well as by width.
-   This prevents browser zoom / narrow desktop windows from accidentally
-   receiving the mobile dock and mobile layout.
+   FINAL DESKTOP FEED SCROLLER
+   Only the center Hub feed scrolls on desktop. The document
+   itself stays locked so desktop navigation/rails do not move.
    ========================================================= */
-@media (hover: hover) and (pointer: fine){
-  html, body{
-    width:100% !important;
-    min-width:0 !important;
-    height:auto !important;
-    min-height:100% !important;
-    overflow-x:hidden !important;
-    overflow-y:auto !important;
-    touch-action:auto !important;
+@media (min-width: 661px) and (hover: hover) and (pointer: fine) {
+  html, body {
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden !important;
   }
 
-  /* Never show mobile-only navigation on a mouse/trackpad device. */
-  #mobileDock,
-  body #mobileDock.mobile-dock,
-  .mobile-dock,
-  #mobileCommunityPanel,
-  .mobile-community-panel{
-    display:none !important;
-    visibility:hidden !important;
-    pointer-events:none !important;
+  .topbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
   }
 
-  /* Restore the real desktop three-column shell even when browser zoom
-     makes the CSS viewport narrower than the mobile breakpoint. */
-  .layout{
-    display:grid !important;
-    width:100% !important;
-    max-width:1480px !important;
-    margin:0 auto !important;
-    grid-template-columns:210px minmax(0,700px) 290px !important;
-    min-height:calc(100vh - 72px) !important;
-    height:auto !important;
-    padding:0 !important;
-    overflow:visible !important;
+  .layout {
+    height: 100dvh !important;
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 72px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
 
-  .left-rail,
-  .right-rail{
-    display:block !important;
-    min-width:0 !important;
+  .layout > .left-rail,
+  .layout > .right-rail {
+    min-height: 0 !important;
+    height: calc(100dvh - 72px) !important;
+    overflow: hidden !important;
   }
 
-  .left-rail{
-    border-right:1px solid var(--line) !important;
-    padding:48px 28px !important;
-    flex-direction:column !important;
+  main#feed {
+    height: calc(100dvh - 72px) !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-gutter: stable !important;
   }
 
-  .right-rail{
-    border-left:1px solid var(--line) !important;
-    padding:48px 30px !important;
-    overflow-x:hidden !important;
-  }
-
-  main#feed{
-    display:block !important;
-    width:auto !important;
-    min-width:0 !important;
-    min-height:calc(100vh - 72px) !important;
-    height:auto !important;
-    padding:38px 46px 80px !important;
-    overflow:visible !important;
-    touch-action:auto !important;
-  }
-
-  #feed > .feed-list,
-  #feedList,
-  .feed-list{
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    overflow:visible !important;
-    touch-action:auto !important;
-  }
-
-  /* Undo mobile-only compact composer sizing. */
-  .composer{
-    padding:17px !important;
-    border-radius:12px !important;
-  }
-
-  .composer-tools{
-    gap:12px !important;
-  }
-
-  .post{
-    padding:24px 2px !important;
-  }
-
-  /* Restore normal desktop header geometry. */
-  .topbar{
-    height:72px !important;
-    min-height:72px !important;
-    padding:0 clamp(16px,3vw,42px) !important;
-    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
-  }
-
-  .topbar .domain{
-    display:flex !important;
-    max-width:100% !important;
-    font-size:10px !important;
-  }
-
-  .topbar .header-logo{
-    justify-self:center !important;
-    height:52px !important;
-  }
-
-  .topbar .header-logo-image{
-    width:29px !important;
-    height:29px !important;
-    min-width:29px !important;
-    min-height:29px !important;
-  }
-
-  .topbar .logo-word{
-    font-size:24px !important;
-  }
-
-  .topbar .hub-nav{
-    display:flex !important;
-  }
-
-  .topbar .hub-nav-item{
-    display:block !important;
-  }
-
-  .topbar .account-wrap{
-    display:block !important;
-  }
-
-  .site-footer{
-    position:static !important;
-    width:auto !important;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    padding:14px 15px !important;
-    display:block !important;
-    background:transparent !important;
-    border-top:1px solid var(--line) !important;
-    z-index:auto !important;
-    pointer-events:auto !important;
-  }
-
-  .site-footer p{
-    width:auto !important;
-    max-width:none !important;
-    margin:0 !important;
-    font:8px "DM Mono" !important;
-    transform:none !important;
-    white-space:normal !important;
-    overflow:visible !important;
-    text-overflow:clip !important;
-  }
-
-  /* Desktop overlays remain desktop panels, never mobile full-screen UI. */
+  /* Fullscreen profile/messages keep their own scrolling; they are not
+     allowed to make the desktop document scroll. */
   .messages-view.open,
-  .messages-view[aria-hidden="false"],
   .profile-view.open,
-  .profile-view[aria-hidden="false"]{
-    display:block !important;
+  .profile-customizer.open {
+    overflow: hidden !important;
+  }
+
+  .messages-view-inner,
+  .profile-view-inner,
+  .profile-customizer-content {
+    overscroll-behavior: contain !important;
   }
 }
 
-/* A normal desktop viewport must always win over the mobile breakpoint. */
-@media (min-width:661px){
-  #mobileDock,
-  .mobile-dock,
-  #mobileCommunityPanel,
-  .mobile-community-panel{
-    display:none !important;
-    visibility:hidden !important;
-    pointer-events:none !important;
-  }
+/* Password section inside the existing profile customizer. */
+.customizer-password-card {
+  border: 1px solid var(--accent-border, rgba(139,173,204,.28));
+  border-radius: 14px;
+  background: rgba(139,173,204,.05);
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.customizer-password-status {
+  min-height: 20px;
+  margin: 0;
+  color: var(--muted, #7d8785);
+  font-size: 12px;
+}
+
+.customizer-password-save {
+  justify-self: start;
 }
