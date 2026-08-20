@@ -459,6 +459,21 @@ async function createSchema() {
   `);
 
   await dbRun(`
+    CREATE TABLE IF NOT EXISTS everlight_daily_thoughts (
+      id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+      user_id BIGINT UNSIGNED NOT NULL,
+      body VARCHAR(280) NOT NULL,
+      thought_date DATE NOT NULL,
+      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      PRIMARY KEY (id),
+      UNIQUE KEY uq_daily_thought_user_date (user_id, thought_date),
+      KEY idx_daily_thought_date (thought_date, updated_at),
+      CONSTRAINT fk_daily_thought_user FOREIGN KEY (user_id) REFERENCES everlight_users(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  `);
+
+  await dbRun(`
     CREATE TABLE IF NOT EXISTS everlight_posts (
       id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
       author_id BIGINT UNSIGNED NOT NULL,
@@ -1391,6 +1406,54 @@ async function getAnonymousUserId() {
   );
   return result.insertId;
 }
+
+/* =========================================================
+   DAILY THOUGHTS — CHAT BUBBLES
+   These are separate from feed posts. Only today's thoughts are shown.
+   ========================================================= */
+app.get('/api/daily-thoughts', optionalAuth, async (req, res, next) => {
+  try {
+    const rows = await dbAll(`
+      SELECT
+        t.id, t.body, t.user_id, t.thought_date, t.updated_at,
+        u.username, u.display_name, u.avatar, u.name_color
+      FROM everlight_daily_thoughts t
+      JOIN everlight_users u ON u.id = t.user_id
+      WHERE t.thought_date = CURRENT_DATE
+      ORDER BY t.updated_at DESC, t.id DESC
+      LIMIT 50
+    `);
+    return res.json({ thoughts: rows || [] });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/daily-thoughts', auth, async (req, res, next) => {
+  try {
+    const body = clean(req.body.body, 280);
+    if (!body) return res.status(400).json({ error: 'A napi gondolat nem lehet üres.' });
+
+    await dbRun(`
+      INSERT INTO everlight_daily_thoughts (user_id, body, thought_date)
+      VALUES (?, ?, CURRENT_DATE)
+      ON DUPLICATE KEY UPDATE body = VALUES(body), updated_at = CURRENT_TIMESTAMP
+    `, [req.userId, body]);
+
+    const thought = await dbGet(`
+      SELECT t.id, t.body, t.user_id, t.thought_date, t.updated_at,
+             u.username, u.display_name, u.avatar, u.name_color
+      FROM everlight_daily_thoughts t
+      JOIN everlight_users u ON u.id = t.user_id
+      WHERE t.user_id = ? AND t.thought_date = CURRENT_DATE
+      LIMIT 1
+    `, [req.userId]);
+
+    return res.json({ success: true, thought });
+  } catch (error) {
+    next(error);
+  }
+});
 
 /* =========================================================
    POSTS — GET

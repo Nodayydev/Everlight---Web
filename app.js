@@ -3643,47 +3643,31 @@ async function loadDailyThoughts() {
   const list = document.getElementById("dailyThoughtBubbles");
   if (!list) return;
   list.innerHTML = `<div class="daily-thought-loading">Napi gondolatok betöltése…</div>`;
+
   try {
-    const data = await api("/api/posts");
-    const posts = Array.isArray(data.posts) ? data.posts : [];
-    const thoughts = posts
-      .filter((post) => String(post.category || "Gondolat") === "Gondolat" && String(post.body || "").trim())
-      .slice(0, 12);
+    const data = await api("/api/daily-thoughts");
+    const thoughts = Array.isArray(data.thoughts) ? data.thoughts : [];
 
     if (!thoughts.length) {
-      list.innerHTML = `<div class="daily-thought-empty">Még nincs mai gondolat. Írd ki az elsőt.</div>`;
+      list.innerHTML = `<div class="daily-thought-empty">Még nincs mai gondolat.</div>`;
       return;
     }
 
-    list.innerHTML = thoughts.map((post) => {
-      const body = markdownToPlain(String(post.body || "").trim()).replace(/\s+/g, " ");
-      const name = post.display_name || post.username || "Névtelen";
-      const avatar = post.avatar
-        ? `<img src="${escapeHtml(post.avatar)}" alt="" loading="lazy">`
-        : escapeHtml(getInitial(post));
+    list.innerHTML = thoughts.map((thought) => {
+      const body = String(thought.body || "").trim();
+      const name = thought.display_name || thought.username || "Felhasználó";
+      const avatar = thought.avatar
+        ? `<img src="${escapeHtml(thought.avatar)}" alt="" loading="lazy">`
+        : escapeHtml(getInitial(thought));
       return `
-        <button type="button" class="daily-thought-bubble" data-thought-id="${escapeHtml(String(post.id))}" title="${escapeHtml(body)}">
-          <span class="daily-thought-bubble-avatar">${avatar}</span>
-          <span class="daily-thought-bubble-copy">
-            <span class="daily-thought-bubble-name">${escapeHtml(name)}</span>
-            <span class="daily-thought-bubble-text">${escapeHtml(body)}</span>
-          </span>
-        </button>`;
+        <div class="daily-thought-person" data-thought-id="${escapeHtml(String(thought.id))}">
+          <div class="daily-thought-bubble" title="${escapeHtml(body)}">
+            ${escapeHtml(body)}
+          </div>
+          <div class="daily-thought-person-avatar">${avatar}</div>
+          <span class="daily-thought-person-name">${escapeHtml(name)}</span>
+        </div>`;
     }).join("");
-
-    list.querySelectorAll("[data-thought-id]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const id = button.dataset.thoughtId;
-        if (!id) return;
-        closeMessages();
-        const target = document.querySelector(`[data-post-id="${CSS.escape(id)}"]`);
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "center" });
-          target.classList.add("post-focus-flash");
-          window.setTimeout(() => target.classList.remove("post-focus-flash"), 1200);
-        }
-      });
-    });
   } catch (error) {
     list.innerHTML = `<div class="daily-thought-empty">Nem sikerült betölteni a napi gondolatokat.</div>`;
   }
@@ -3713,15 +3697,14 @@ function setupDailyThoughtComposer() {
     const submit = form.querySelector("button[type=submit]");
     submit.disabled = true;
     try {
-      await api("/api/posts", {
+      await api("/api/daily-thoughts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ category: "Gondolat", body, anonymous: false })
+        body: JSON.stringify({ body })
       });
       input.value = "";
       form.hidden = true;
       await loadDailyThoughts();
-      if (typeof loadPosts === "function") await loadPosts();
     } catch (error) {
       alert(error.message || "Nem sikerült közzétenni a gondolatot.");
     } finally {

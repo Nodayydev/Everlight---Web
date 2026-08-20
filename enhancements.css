@@ -15093,3 +15093,144 @@ main#feed{
 .password-hint-card input{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:12px;border:1px solid rgba(139,173,204,.25);background:#101516;color:#fff;outline:none}
 .password-hint-status{min-height:20px;font-size:12px}
 @media(max-width:660px){.password-hint-modal{padding:14px}.password-hint-card{padding:22px;border-radius:20px}.password-hint-card h2{font-size:22px}}
+
+/* =========================================================
+   FINAL FIX — MOBILE FEED SCROLL + REAL DAILY THOUGHT BUBBLES
+   ========================================================= */
+@media (max-width:660px){
+  html, body{
+    height:auto !important;
+    min-height:100% !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    touch-action:pan-y !important;
+  }
+
+  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open){
+    overflow-y:auto !important;
+  }
+
+  .layout{
+    min-height:auto !important;
+    height:auto !important;
+  }
+
+  main#feed{
+    min-height:calc(100dvh - 64px) !important;
+    height:auto !important;
+    overflow:visible !important;
+    touch-action:pan-y !important;
+  }
+
+  #feedList,
+  .feed-list{
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    touch-action:pan-y !important;
+  }
+
+  .feed-card,
+  .feed-card *{
+    touch-action:pan-y !important;
+  }
+
+  /* Daily thoughts are not feed posts: they are small bubbles above avatars. */
+  .daily-thoughts-strip{
+    background:transparent !important;
+    border:0 !important;
+    padding:10px 8px 14px !important;
+  }
+  .daily-thoughts-strip-head{
+    margin:0 4px 10px !important;
+  }
+  .daily-thoughts-strip-head strong{
+    font-size:12px !important;
+  }
+  .daily-thought-bubbles{
+    display:flex !important;
+    align-items:flex-end !important;
+    gap:14px !important;
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    padding:34px 8px 4px !important;
+    min-height:94px !important;
+    scrollbar-width:none !important;
+    touch-action:pan-x !important;
+  }
+  .daily-thought-bubbles::-webkit-scrollbar{display:none !important;}
+  .daily-thought-person{
+    position:relative !important;
+    flex:0 0 54px !important;
+    width:54px !important;
+    min-width:54px !important;
+    height:64px !important;
+    display:flex !important;
+    align-items:center !important;
+    flex-direction:column !important;
+  }
+  .daily-thought-bubble{
+    position:absolute !important;
+    left:50% !important;
+    bottom:42px !important;
+    transform:translateX(-50%) !important;
+    width:max-content !important;
+    max-width:128px !important;
+    min-width:0 !important;
+    height:auto !important;
+    padding:7px 9px !important;
+    border:1px solid #31424a !important;
+    border-radius:12px !important;
+    background:#0b1114 !important;
+    color:#dce4e5 !important;
+    font:500 8px/1.25 Manrope,sans-serif !important;
+    text-align:center !important;
+    box-shadow:0 5px 14px rgba(0,0,0,.28) !important;
+    overflow:hidden !important;
+    white-space:normal !important;
+    display:-webkit-box !important;
+    -webkit-line-clamp:2 !important;
+    -webkit-box-orient:vertical !important;
+  }
+  .daily-thought-bubble::after{
+    content:"" !important;
+    position:absolute !important;
+    left:50% !important;
+    bottom:-5px !important;
+    width:9px !important;
+    height:9px !important;
+    background:#0b1114 !important;
+    border-right:1px solid #31424a !important;
+    border-bottom:1px solid #31424a !important;
+    transform:translateX(-50%) rotate(45deg) !important;
+  }
+  .daily-thought-person-avatar{
+    position:absolute !important;
+    bottom:7px !important;
+    width:40px !important;
+    height:40px !important;
+    border-radius:50% !important;
+    overflow:hidden !important;
+    border:2px solid #11181b !important;
+    background:#121a1e !important;
+    display:grid !important;
+    place-items:center !important;
+    color:#9fc4e5 !important;
+    font:700 11px/1 Manrope,sans-serif !important;
+  }
+  .daily-thought-person-avatar img{
+    width:100% !important;height:100% !important;object-fit:cover !important;display:block !important;
+  }
+  .daily-thought-person-name{
+    position:absolute !important;
+    bottom:-6px !important;
+    width:70px !important;
+    text-align:center !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    color:#8d9a9f !important;
+    font:600 7px/1 Manrope,sans-serif !important;
+  }
+}
