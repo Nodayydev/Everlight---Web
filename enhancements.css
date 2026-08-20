@@ -15466,3 +15466,102 @@ main#feed{
   }
 }
 
+
+/* =========================================================
+   MOBILE ÉRTESÍTÉSEK — ugyanolyan online körök, mint gépen
+   A klón ID-je mobile-everlightOnlineCard, ezért a desktop
+   #everlightOnlineCard szabályok nem érvényesültek.
+   ========================================================= */
+@media (max-width: 660px) {
+  .mobile-community-panel-body .mobile-cloned-rail,
+  .mobile-community-panel #mobile-everlightOnlineCard,
+  .mobile-community-panel #mobile-everlightCommunityCard,
+  .mobile-community-panel .right-share-card,
+  .mobile-community-panel .activity-card {
+    overflow: visible !important;
+  }
+
+  .mobile-community-panel #mobile-onlineFaces,
+  .mobile-community-panel #mobile-everlightOnlineCard .faces,
+  .mobile-community-panel .mobile-cloned-rail .faces {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    margin: 10px 0 0 !important;
+    min-height: 42px !important;
+    overflow: visible !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-user {
+    display: block !important;
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    height: 42px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-avatar {
+    position: relative !important;
+    display: block !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    background: #18242c !important;
+    border: 2px solid #000 !important;
+    box-sizing: border-box !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-avatar img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    border-radius: 50% !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-avatar-fallback {
+    width: 100% !important;
+    height: 100% !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #8fb8da !important;
+    font-size: 13px !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-streak {
+    position: absolute !important;
+    right: -8px !important;
+    bottom: -6px !important;
+    z-index: 3 !important;
+    min-width: 24px !important;
+    height: 18px !important;
+    padding: 0 4px !important;
+    border-radius: 10px !important;
+    background: #090d0f !important;
+    color: #f3b14b !important;
+    border: 1px solid #27363b !important;
+    font: 700 10px/18px Manrope, sans-serif !important;
+  }
+
+  .mobile-community-panel #mobile-everlightOnlineCard .everlight-online-name {
+    display: none !important;
+  }
+
+  .mobile-community-panel .share-symbol-grid {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .mobile-community-panel-body {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
