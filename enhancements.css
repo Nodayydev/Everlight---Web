@@ -18282,3 +18282,52 @@ body.sun-mode .topbar .domain .domain-mode-light {
     pointer-events: auto !important;
   }
 }
+
+
+/* =========================================================
+   NO GAP + INTERACTIVE SHEETS
+   ========================================================= */
+@media (max-width: 660px) {
+  body.messages-view-open,
+  body.profile-view-open,
+  body.mobile-community-open {
+    overflow: hidden !important;
+    touch-action: auto !important;
+  }
+
+  html body .mobile-bottom-chrome {
+    z-index: 2147483646 !important;
+    background: #07090b !important;
+  }
+
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"],
+  html body .profile-view.open,
+  html body .profile-view[aria-hidden="false"],
+  html body .mobile-community-panel.is-open {
+    top: 64px !important;
+    bottom: calc(56px + 24px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #000 !important;
+    pointer-events: auto !important;
+    touch-action: auto !important;
+    z-index: 2147483000 !important;
+  }
+
+  html body .messages-view.open *,
+  html body .profile-view.open *,
+  html body .mobile-community-panel.is-open * {
+    pointer-events: auto !important;
+  }
+
+  html body.messages-view-open main#feed,
+  html body.profile-view-open main#feed {
+    pointer-events: none !important;
+  }
+}

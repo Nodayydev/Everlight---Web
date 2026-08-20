@@ -3787,8 +3787,19 @@ async function loadDailyThoughts() {
   `;
 
   try {
-    const data = await api("/api/daily-thoughts");
-    const users = data.users || [];
+    let users = [];
+    try {
+      const data = await api("/api/daily-thoughts");
+      users = data.users || [];
+    } catch (_) {
+      users = [];
+    }
+    if (!users.length) {
+      try {
+        const online = await api("/api/online");
+        users = online.users || [];
+      } catch (_) {}
+    }
     for (const user of users) {
       if (currentUser && user.username === currentUser.username) {
         if (user.thought) window.__ownDailyThought = user.thought;
