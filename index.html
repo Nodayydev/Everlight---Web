@@ -360,7 +360,7 @@
                 </div>
               </div>
               <div class="profile-actions">
-                <span class="profile-view-status-pill" id="profileViewStatus">✦ Elérhető</span>
+                <span class="profile-view-status-pill" id="profileViewStatus">Elérhető</span>
                 <button id="openProfileSettings" class="secondary profile-customize-button" type="button" aria-label="Profil szerkesztése">
                   Profil szerkesztése <span>→</span>
                 </button>
@@ -369,11 +369,9 @@
 
             <nav class="profile-tabs" aria-label="Profil szekciók">
               <button type="button" class="active" data-profile-reaction-tab="main">Fő</button>
-              <button type="button" data-profile-reaction-tab="liked">
-                <span class="profile-tab-like-icon" aria-hidden="true"></span><span>Kedvelések</span>
-              </button>
-              <button type="button" data-profile-reaction-tab="saved">▱ Mentettek</button>
-              <button type="button" data-profile-reaction-tab="history">◫ Előzmények</button>
+              <button type="button" data-profile-reaction-tab="liked">Kedvelések</button>
+              <button type="button" data-profile-reaction-tab="saved">Mentettek</button>
+              <button type="button" data-profile-reaction-tab="history">Előzmények</button>
             </nav>
 
             <div id="profileReactionList" class="profile-reaction-list" hidden></div>
@@ -417,6 +415,14 @@
       <span class="mobile-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
     </button>
   </nav>
+
+  <section class="mobile-community-panel" id="mobileCommunityPanel" aria-hidden="true" aria-label="Értesítések és oldalmenü">
+    <div class="mobile-community-panel-head">
+      <strong>Értesítések</strong>
+      <button id="mobileCommunityClose" type="button" aria-label="Bezárás">×</button>
+    </div>
+    <div class="mobile-community-panel-body" id="mobileCommunityPanelBody"></div>
+  </section>
 
   <footer class="site-footer">
     <p>◇ EZ A WEBOLDAL RÉSZBEN MESTERSÉGES INTELLIGENCIA (AI) SEGÍTSÉGÉVEL KÉSZÜLT</p>
