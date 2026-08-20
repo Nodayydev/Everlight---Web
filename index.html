@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260820-clean-canonical-1">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="enhancements.css?v=20260818-final-clean-2">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -287,24 +288,6 @@
         </div>
         <button id="closeMessagesView" class="messages-close" type="button" aria-label="Üzenetek bezárása" tabindex="-1" aria-hidden="true">×</button>
       </header>
-
-      <section class="daily-thoughts-strip" id="dailyThoughtsStrip" aria-label="Napi gondolatok">
-        <div class="daily-thoughts-strip-head">
-          <div>
-            <p class="eyebrow">MAI GONDOLATOK</p>
-            <strong>Napi gondolatok</strong>
-          </div>
-          <button id="dailyThoughtAddButton" class="daily-thought-add" type="button">＋ Gondolat</button>
-        </div>
-        <form id="dailyThoughtForm" class="daily-thought-form" hidden>
-          <input id="dailyThoughtInput" type="text" maxlength="280" placeholder="Írd le a mai gondolatodat…" autocomplete="off">
-          <button type="submit">Megosztás</button>
-        </form>
-        <div id="dailyThoughtBubbles" class="daily-thought-bubbles" aria-live="polite">
-          <div class="daily-thought-loading">Napi gondolatok betöltése…</div>
-        </div>
-      </section>
-
       <div class="messages-layout">
         <aside class="message-contacts">
           <div class="message-contacts-head">
@@ -432,7 +415,7 @@
                 </div>
               </div>
               <div class="profile-actions">
-                <span class="profile-view-status-pill" id="profileViewStatus">Elérhető</span>
+                <span class="profile-view-status-pill" id="profileViewStatus">✦ Elérhető</span>
                 <button id="openProfileSettings" class="secondary profile-customize-button" type="button" aria-label="Profil szerkesztése">
                   Profil szerkesztése <span>→</span>
                 </button>
@@ -441,9 +424,11 @@
 
             <nav class="profile-tabs" aria-label="Profil szekciók">
               <button type="button" class="active" data-profile-reaction-tab="main">Fő</button>
-              <button type="button" data-profile-reaction-tab="liked">Kedvelések</button>
-              <button type="button" data-profile-reaction-tab="saved">Mentettek</button>
-              <button type="button" data-profile-reaction-tab="history">Előzmények</button>
+              <button type="button" data-profile-reaction-tab="liked">
+                <span class="profile-tab-like-icon" aria-hidden="true"></span><span>Kedvelések</span>
+              </button>
+              <button type="button" data-profile-reaction-tab="saved">▱ Mentettek</button>
+              <button type="button" data-profile-reaction-tab="history">◫ Előzmények</button>
             </nav>
 
             <div id="profileReactionList" class="profile-reaction-list" hidden></div>
@@ -490,7 +475,7 @@
 
   <section class="mobile-community-panel" id="mobileCommunityPanel" aria-hidden="true">
     <div class="mobile-community-panel-head">
-      <strong>Közösség</strong>
+      <strong>Értesítések</strong>
       <button id="mobileCommunityClose" type="button" aria-label="Bezárás">×</button>
     </div>
     <div class="mobile-community-panel-body" id="mobileCommunityPanelBody"></div>
@@ -499,22 +484,6 @@
   <footer class="site-footer">
     <p>◇ EZ A WEBOLDAL RÉSZBEN MESTERSÉGES INTELLIGENCIA (AI) SEGÍTSÉGÉVEL KÉSZÜLT</p>
   </footer>
-
-  <section class="password-hint-modal" id="passwordHintModal" hidden aria-hidden="true">
-    <div class="password-hint-backdrop"></div>
-    <div class="password-hint-card" role="dialog" aria-modal="true" aria-labelledby="passwordHintTitle">
-      <p class="eyebrow">FIÓK BIZTONSÁG</p>
-      <h2 id="passwordHintTitle">Adj meg egy jelszó emlékeztetőt</h2>
-      <p>Ehhez a fiókhoz nincs e-mail cím megadva, ezért e-mailes jelszó-visszaállítás nem használható. Bejelentkezés után adj meg egy rövid emlékeztetőt, ami segít emlékezni a jelszavadra.</p>
-      <form id="passwordHintForm">
-        <label>Jelszó emlékeztető
-          <input id="passwordHintInput" type="text" maxlength="160" autocomplete="off" placeholder="Például: a kedvenc mondatom eleje…" required>
-        </label>
-        <p class="password-hint-status" id="passwordHintStatus" role="status" aria-live="polite"></p>
-        <button class="primary" type="submit">Emlékeztető mentése</button>
-      </form>
-    </div>
-  </section>
 
   <section class="password-reset-modal" id="passwordResetModal" hidden aria-hidden="true">
     <div class="password-reset-backdrop" data-reset-close></div>
@@ -545,7 +514,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260820-clean-canonical-1"></script>
+  <script src="app.js?v=20260819-mobile-bottom-final"></script>
   <script src="theme.js"></script>
 </body>
 </html>
