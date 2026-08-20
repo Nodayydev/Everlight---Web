@@ -14862,3 +14862,36 @@ main#feed{
   #mobileDock .mobile-menu-icon{transform:scale(.92) !important;}
   #feed,.layout{padding-bottom:82px !important;}
 }
+
+/* =========================================================
+   MOBILE DOCK FINAL POSITION — KEEP DOCK + AI TOGETHER
+   The black tray must not create a large empty area.
+   ========================================================= */
+@media (max-width:660px){
+  #mobileDock.mobile-dock,
+  body #mobileDock.mobile-dock{
+    bottom:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
+  }
+
+  body .site-footer{
+    bottom:0 !important;
+    height:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
+    min-height:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
+    max-height:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
+    padding:0 8px env(safe-area-inset-bottom,0px) !important;
+    align-items:flex-start !important;
+  }
+
+  body .site-footer p{
+    transform:translateY(-1px) !important;
+    font-size:6px !important;
+    line-height:1 !important;
+  }
+}
+
+@media (max-width:390px){
+  #mobileDock.mobile-dock,
+  body #mobileDock.mobile-dock{
+    bottom:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
+  }
+}
