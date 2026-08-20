@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-rail-fix">
-  <link rel="stylesheet" href="enhancements.css?v=20260820-mobile-tabbar">
+  <link rel="stylesheet" href="enhancements.css?v=20260820-footer-modes">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -321,6 +321,9 @@
               <label>Jelszó
                 <input id="messageLoginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
               </label>
+              <label>Jelszó-emlékeztető <span class="profile-field-optional">(e-mail nélkül kötelező)</span>
+                <input id="messageLoginHint" type="text" maxlength="120" placeholder="első belépéshez / e-mail nélkül" autocomplete="off">
+              </label>
               <button class="primary" type="submit">Belépés</button>
             </form>
             <p class="message-login-error" role="alert" aria-live="polite"></p>
@@ -386,6 +389,9 @@
             </label>
             <label>Jelszó
               <input id="profileLoginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
+            </label>
+            <label>Jelszó-emlékeztető <span class="profile-field-optional">(e-mail nélkül kötelező)</span>
+              <input id="profileLoginHint" type="text" maxlength="120" placeholder="első belépéshez / e-mail nélkül" autocomplete="off">
             </label>
             <button class="primary" type="submit">Belépés</button>
           </form>
@@ -482,7 +488,21 @@
   </section>
 
   <footer class="site-footer">
+    <div class="footer-modes" aria-label="Megjelenés">
+      <div class="footer-mode-switch" role="group" aria-label="Sötét vagy fehér">
+        <button type="button" class="footer-mode-btn is-active" data-contrast="dark" title="Sötét mód">Sötét</button>
+        <button type="button" class="footer-mode-btn" data-contrast="white" title="Fehér mód">Fehér</button>
+      </div>
+      <div class="footer-mode-switch" role="group" aria-label="Kék vagy sárga">
+        <button type="button" class="footer-mode-btn is-active" data-accent="aqua" title="Kék">Kék</button>
+        <button type="button" class="footer-mode-btn" data-accent="sun" title="Sárga">Sárga</button>
+      </div>
+    </div>
     <p>◇ EZ A WEBOLDAL RÉSZBEN MESTERSÉGES INTELLIGENCIA (AI) SEGÍTSÉGÉVEL KÉSZÜLT</p>
+    <button type="button" class="footer-install-button" id="installAppButton" aria-label="Letöltés az asztalra">
+      <img src="icon.svg" alt="" width="18" height="18">
+      <span>Letöltés</span>
+    </button>
   </footer>
 
   <section class="password-reset-modal" id="passwordResetModal" hidden aria-hidden="true">
@@ -494,9 +514,25 @@
       <p id="passwordResetIntro">Add meg azt az e-mail címet, amelyet a fiókodhoz megadtál. Csak e-maillel rendelkező fiókokhoz küldünk visszaállító linket.</p>
       <form id="forgotPasswordForm" class="password-reset-form">
         <label>E-mail cím
-          <input id="forgotPasswordEmail" type="email" autocomplete="email" placeholder="hello@pelda.hu" required>
+          <input id="forgotPasswordEmail" type="email" autocomplete="email" placeholder="hello@pelda.hu">
         </label>
         <button class="primary" type="submit">Visszaállító e-mail küldése</button>
+      </form>
+      <form id="hintResetForm" class="password-reset-form">
+        <p>Ha nincs e-mail a fiókodhoz, a név + emlékeztető elég.</p>
+        <label>Név
+          <input id="hintResetUsername" type="text" placeholder="nev#1234" autocomplete="username">
+        </label>
+        <label>Jelszó-emlékeztető
+          <input id="hintResetHint" type="text" maxlength="120" autocomplete="off">
+        </label>
+        <label>Új jelszó
+          <input id="hintResetPassword" type="password" autocomplete="new-password" minlength="6">
+        </label>
+        <label>Új jelszó újra
+          <input id="hintResetPasswordConfirm" type="password" autocomplete="new-password" minlength="6">
+        </label>
+        <button class="primary" type="submit">Jelszó csere emlékeztetővel</button>
       </form>
       <p class="password-reset-status" id="forgotPasswordStatus" role="status" aria-live="polite"></p>
 
@@ -514,7 +550,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260820-mobile-rail-sync"></script>
-  <script src="theme.js"></script>
+  <script src="app.js?v=20260820-desktop-rail-toggle"></script>
+  <script src="theme.js?v=20260820-footer-modes"></script>
 </body>
 </html>

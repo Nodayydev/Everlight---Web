@@ -238,3 +238,80 @@
     addHeaderSymbolDivider();
   }
 })();
+
+
+/* =========================================================
+   FOOTER CONTRAST + ACCENT + PWA INSTALL
+   ========================================================= */
+(function(){
+  var contrastKey = "everlight-contrast";
+  var accentKey = "everlight-accent";
+  var deferredPrompt = null;
+
+  function applyLook(){
+    var contrast = localStorage.getItem(contrastKey) === "white" ? "white" : "dark";
+    var accent = localStorage.getItem(accentKey) === "sun" ? "sun" : "aqua";
+    document.body.classList.remove("sun-mode","mono-mode","white-mode");
+    if (contrast === "white") document.body.classList.add("white-mode");
+    if (accent === "sun") document.body.classList.add("sun-mode");
+
+    document.querySelectorAll("[data-contrast]").forEach(function(btn){
+      btn.classList.toggle("is-active", btn.getAttribute("data-contrast") === contrast);
+    });
+    document.querySelectorAll("[data-accent]").forEach(function(btn){
+      btn.classList.toggle("is-active", btn.getAttribute("data-accent") === accent);
+    });
+
+    try {
+      var state = JSON.parse(localStorage.getItem("everlight-site-settings") || "{}");
+      state.theme = contrast === "white" ? "white" : accent;
+      localStorage.setItem("everlight-site-settings", JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  document.addEventListener("click", function(event){
+    var contrastBtn = event.target.closest("[data-contrast]");
+    if (contrastBtn) {
+      localStorage.setItem(contrastKey, contrastBtn.getAttribute("data-contrast") || "dark");
+      applyLook();
+      return;
+    }
+    var accentBtn = event.target.closest("[data-accent]");
+    if (accentBtn) {
+      localStorage.setItem(accentKey, accentBtn.getAttribute("data-accent") || "aqua");
+      applyLook();
+    }
+  });
+
+  applyLook();
+
+  window.addEventListener("beforeinstallprompt", function(event){
+    event.preventDefault();
+    deferredPrompt = event;
+    var btn = document.getElementById("installAppButton");
+    if (btn) btn.hidden = false;
+  });
+
+  function isStandalone(){
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+
+  document.getElementById("installAppButton")?.addEventListener("click", async function(){
+    if (isStandalone()) {
+      alert("Az Everlight már az asztalon van.");
+      return;
+    }
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      return;
+    }
+    var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    if (ios) {
+      alert("iPhone-on: Oszd meg → Kezdőképernyőhöz adás.");
+      return;
+    }
+    alert("A böngészőben add hozzá az asztalhoz / telepítsd az Everlightot. Az ikon az icon.svg.");
+  });
+})();
