@@ -3639,6 +3639,100 @@ async function loadMessageContacts() {
 }
 
 
+async function loadDailyThoughts() {
+  const list = document.getElementById("dailyThoughtBubbles");
+  if (!list) return;
+  list.innerHTML = `<div class="daily-thought-loading">Napi gondolatok betöltése…</div>`;
+  try {
+    const data = await api("/api/posts");
+    const posts = Array.isArray(data.posts) ? data.posts : [];
+    const thoughts = posts
+      .filter((post) => String(post.category || "Gondolat") === "Gondolat" && String(post.body || "").trim())
+      .slice(0, 12);
+
+    if (!thoughts.length) {
+      list.innerHTML = `<div class="daily-thought-empty">Még nincs mai gondolat. Írd ki az elsőt.</div>`;
+      return;
+    }
+
+    list.innerHTML = thoughts.map((post) => {
+      const body = markdownToPlain(String(post.body || "").trim()).replace(/\s+/g, " ");
+      const name = post.display_name || post.username || "Névtelen";
+      const avatar = post.avatar
+        ? `<img src="${escapeHtml(post.avatar)}" alt="" loading="lazy">`
+        : escapeHtml(getInitial(post));
+      return `
+        <button type="button" class="daily-thought-bubble" data-thought-id="${escapeHtml(String(post.id))}" title="${escapeHtml(body)}">
+          <span class="daily-thought-bubble-avatar">${avatar}</span>
+          <span class="daily-thought-bubble-copy">
+            <span class="daily-thought-bubble-name">${escapeHtml(name)}</span>
+            <span class="daily-thought-bubble-text">${escapeHtml(body)}</span>
+          </span>
+        </button>`;
+    }).join("");
+
+    list.querySelectorAll("[data-thought-id]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.thoughtId;
+        if (!id) return;
+        closeMessages();
+        const target = document.querySelector(`[data-post-id="${CSS.escape(id)}"]`);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          target.classList.add("post-focus-flash");
+          window.setTimeout(() => target.classList.remove("post-focus-flash"), 1200);
+        }
+      });
+    });
+  } catch (error) {
+    list.innerHTML = `<div class="daily-thought-empty">Nem sikerült betölteni a napi gondolatokat.</div>`;
+  }
+}
+
+function setupDailyThoughtComposer() {
+  const addButton = document.getElementById("dailyThoughtAddButton");
+  const form = document.getElementById("dailyThoughtForm");
+  const input = document.getElementById("dailyThoughtInput");
+  if (!addButton || !form || !input || addButton.dataset.bound === "1") return;
+  addButton.dataset.bound = "1";
+
+  addButton.addEventListener("click", () => {
+    if (!currentUser) {
+      openProfileView();
+      return;
+    }
+    form.hidden = !form.hidden;
+    if (!form.hidden) window.setTimeout(() => input.focus(), 40);
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!currentUser) return;
+    const body = input.value.trim();
+    if (!body) return;
+    const submit = form.querySelector("button[type=submit]");
+    submit.disabled = true;
+    try {
+      await api("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ category: "Gondolat", body, anonymous: false })
+      });
+      input.value = "";
+      form.hidden = true;
+      await loadDailyThoughts();
+      if (typeof loadPosts === "function") await loadPosts();
+    } catch (error) {
+      alert(error.message || "Nem sikerült közzétenni a gondolatot.");
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
+
+setupDailyThoughtComposer();
+
+
 const messagesViewHome = (() => {
   const node = document.getElementById("messagesView");
   return node ? { parent: node.parentNode, next: node.nextSibling } : null;
@@ -3790,6 +3884,7 @@ function openMessages() {
   ) {
 
     loadMessages();
+    loadDailyThoughts();
     document.getElementById("messagesView")?.classList.add("chat-open");
   } else if (window.matchMedia("(max-width: 660px)").matches) {
     // Mobilon a Csevegés maga a megnyitott panel; ne csússzon ki jobbra.
@@ -5212,13 +5307,13 @@ async function readCustomizerImage(
 
   try {
     const data = await compressImageFile(file, {
-      maxBytes: 900 * 1024,
+      maxBytes: 1024 * 1024,
       maxWidth: 512,
       maxHeight: 512,
       outputWidth: 512,
       outputHeight: 512,
       cropAspect: 1,
-      quality: 0.88
+      quality: 0.9
     });
 
     callback(data);
@@ -5236,13 +5331,13 @@ async function readCustomizerCoverImage(file, callback) {
       // A borítókép automatikusan középre vágódik a profil által
       // használt széles formátumra. A felhasználónak nem kell
       // előre szerkesztenie vagy átméreteznie a képet.
-      maxBytes: 700 * 1024,
+      maxBytes: 1024 * 1024,
       maxWidth: 1600,
       maxHeight: 680,
       outputWidth: 1600,
       outputHeight: 680,
       cropAspect: 1600 / 680,
-      quality: 0.84
+      quality: 0.86
     });
 
     callback(data);
@@ -6603,6 +6698,10 @@ window.addEventListener("popstate", () => {
   if (source && !panelBody.dataset.ready) {
     const clone = source.cloneNode(true);
     clone.classList.add("mobile-cloned-rail");
+    // A cloned right rail must not keep the original element IDs.
+    // Duplicate IDs make querySelector/getElementById target the hidden
+    // desktop rail and can make the mobile panel appear frozen.
+    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
     panelBody.innerHTML = "";
     panelBody.appendChild(clone);
 
@@ -6612,6 +6711,7 @@ window.addEventListener("popstate", () => {
     const syncMobileRail = () => {
       if (!panelBody.contains(clone)) return;
       clone.innerHTML = source.innerHTML;
+    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
     };
 
     syncMobileRail();
@@ -6653,6 +6753,7 @@ window.addEventListener("popstate", () => {
 
     if (source && panelBody.contains(clone)) {
       clone.innerHTML = source.innerHTML;
+    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
     }
   };
 
@@ -6700,6 +6801,62 @@ window.addEventListener("popstate", () => {
    state immediately after a view is opened. */
 
 /* =========================================================
+   PASSWORD HINT FOR ACCOUNTS WITHOUT EMAIL
+   ========================================================= */
+
+const passwordHintModal = $("#passwordHintModal");
+const passwordHintForm = $("#passwordHintForm");
+const passwordHintInput = $("#passwordHintInput");
+const passwordHintStatus = $("#passwordHintStatus");
+
+function openPasswordHintModal() {
+  if (!passwordHintModal) return;
+  passwordHintModal.hidden = false;
+  passwordHintModal.setAttribute("aria-hidden", "false");
+  if (passwordHintInput) {
+    passwordHintInput.focus();
+  }
+}
+
+function closePasswordHintModal() {
+  if (!passwordHintModal) return;
+  passwordHintModal.hidden = true;
+  passwordHintModal.setAttribute("aria-hidden", "true");
+}
+
+passwordHintForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const hint = passwordHintInput?.value.trim() || "";
+  if (hint.length < 3) {
+    if (passwordHintStatus) passwordHintStatus.textContent = "Adj meg legalább 3 karaktert.";
+    return;
+  }
+
+  const submit = passwordHintForm.querySelector('button[type="submit"]');
+  if (submit) submit.disabled = true;
+  try {
+    const data = await api("/api/auth/password-hint", {
+      method: "POST",
+      body: JSON.stringify({ hint })
+    });
+    if (passwordHintStatus) passwordHintStatus.textContent = data.message || "Mentve.";
+    if (window.currentUser) window.currentUser.hasPasswordHint = true;
+    setTimeout(closePasswordHintModal, 500);
+  } catch (error) {
+    if (passwordHintStatus) passwordHintStatus.textContent = error?.message || "Nem sikerült elmenteni.";
+  } finally {
+    if (submit) submit.disabled = false;
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && passwordHintModal && !passwordHintModal.hidden) {
+    // The reminder is required for accounts without email, so Escape does not dismiss it.
+    event.preventDefault();
+  }
+});
+
+/* =========================================================
    PASSWORD RESET
    ========================================================= */
 
@@ -6742,7 +6899,18 @@ function closePasswordResetModal() {
   passwordResetModal.setAttribute("aria-hidden", "true");
 }
 
-forgotPasswordButton?.addEventListener("click", () => openPasswordResetModal());
+forgotPasswordButton?.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  openPasswordResetModal();
+});
+document.addEventListener("click", (event) => {
+  const button = event.target.closest?.("#forgotPasswordButton");
+  if (!button) return;
+  event.preventDefault();
+  event.stopPropagation();
+  openPasswordResetModal();
+});
 $("#passwordResetClose")?.addEventListener("click", closePasswordResetModal);
 document.querySelectorAll("[data-reset-close]").forEach((element) => {
   element.addEventListener("click", closePasswordResetModal);

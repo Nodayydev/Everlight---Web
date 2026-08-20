@@ -288,6 +288,24 @@
         </div>
         <button id="closeMessagesView" class="messages-close" type="button" aria-label="Üzenetek bezárása" tabindex="-1" aria-hidden="true">×</button>
       </header>
+
+      <section class="daily-thoughts-strip" id="dailyThoughtsStrip" aria-label="Napi gondolatok">
+        <div class="daily-thoughts-strip-head">
+          <div>
+            <p class="eyebrow">MAI GONDOLATOK</p>
+            <strong>Napi gondolatok</strong>
+          </div>
+          <button id="dailyThoughtAddButton" class="daily-thought-add" type="button">＋ Gondolat</button>
+        </div>
+        <form id="dailyThoughtForm" class="daily-thought-form" hidden>
+          <input id="dailyThoughtInput" type="text" maxlength="280" placeholder="Írd le a mai gondolatodat…" autocomplete="off">
+          <button type="submit">Megosztás</button>
+        </form>
+        <div id="dailyThoughtBubbles" class="daily-thought-bubbles" aria-live="polite">
+          <div class="daily-thought-loading">Napi gondolatok betöltése…</div>
+        </div>
+      </section>
+
       <div class="messages-layout">
         <aside class="message-contacts">
           <div class="message-contacts-head">
@@ -482,6 +500,22 @@
   <footer class="site-footer">
     <p>◇ EZ A WEBOLDAL RÉSZBEN MESTERSÉGES INTELLIGENCIA (AI) SEGÍTSÉGÉVEL KÉSZÜLT</p>
   </footer>
+
+  <section class="password-hint-modal" id="passwordHintModal" hidden aria-hidden="true">
+    <div class="password-hint-backdrop"></div>
+    <div class="password-hint-card" role="dialog" aria-modal="true" aria-labelledby="passwordHintTitle">
+      <p class="eyebrow">FIÓK BIZTONSÁG</p>
+      <h2 id="passwordHintTitle">Adj meg egy jelszó emlékeztetőt</h2>
+      <p>Ehhez a fiókhoz nincs e-mail cím megadva, ezért e-mailes jelszó-visszaállítás nem használható. Bejelentkezés után adj meg egy rövid emlékeztetőt, ami segít emlékezni a jelszavadra.</p>
+      <form id="passwordHintForm">
+        <label>Jelszó emlékeztető
+          <input id="passwordHintInput" type="text" maxlength="160" autocomplete="off" placeholder="Például: a kedvenc mondatom eleje…" required>
+        </label>
+        <p class="password-hint-status" id="passwordHintStatus" role="status" aria-live="polite"></p>
+        <button class="primary" type="submit">Emlékeztető mentése</button>
+      </form>
+    </div>
+  </section>
 
   <section class="password-reset-modal" id="passwordResetModal" hidden aria-hidden="true">
     <div class="password-reset-backdrop" data-reset-close></div>

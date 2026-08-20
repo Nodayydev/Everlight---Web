@@ -305,7 +305,10 @@ function safeUser(user) {
       user.website || '',
 
     messageStreak:
-      Number(user.message_streak || 0)
+      Number(user.message_streak || 0),
+
+    hasEmail: Boolean(user.email),
+    hasPasswordHint: Boolean(user.password_hint)
   };
 }
 
@@ -607,6 +610,7 @@ async function createSchema() {
     ['pronouns', 'ALTER TABLE everlight_users ADD COLUMN pronouns VARCHAR(60) NULL'],
     ['location', 'ALTER TABLE everlight_users ADD COLUMN location VARCHAR(120) NULL'],
     ['website', 'ALTER TABLE everlight_users ADD COLUMN website VARCHAR(255) NULL'],
+    ['password_hint', 'ALTER TABLE everlight_users ADD COLUMN password_hint VARCHAR(160) NULL'],
     ['last_seen', 'ALTER TABLE everlight_users ADD COLUMN last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP']
   ];
 
@@ -693,6 +697,24 @@ function passwordResetRateLimited(req) {
   passwordResetAttempts.set(key, recent);
   return recent.length > 5;
 }
+
+app.post('/api/auth/password-hint', auth, async (req, res, next) => {
+  try {
+    const hint = clean(req.body.hint, 160);
+    if (hint.length < 3) {
+      return res.status(400).json({ error: 'A jelszó emlékeztető legalább 3 karakter legyen.' });
+    }
+
+    await dbRun(
+      `UPDATE everlight_users SET password_hint = ? WHERE id = ?`,
+      [hint, req.userId]
+    );
+
+    return res.json({ success: true, message: 'A jelszó emlékeztető elmentve.' });
+  } catch (error) {
+    return next(error);
+  }
+});
 
 app.post('/api/auth/forgot-password', async (req, res, next) => {
   try {

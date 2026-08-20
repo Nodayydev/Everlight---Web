@@ -14895,3 +14895,201 @@ main#feed{
     bottom:calc(env(safe-area-inset-bottom,0px) + 4px) !important;
   }
 }
+
+/* =========================================================
+   LAPTOP / SMALL DESKTOP — KEEP THE RIGHT RAIL USABLE
+   The previous fixed 220 + 760 + 300 grid was wider than
+   many laptop viewports, causing the right rail to collapse/
+   become partially hidden. Keep all three desktop columns
+   inside the available viewport while preserving the rail.
+   ========================================================= */
+@media (min-width: 961px) and (max-width: 1299px){
+  .layout{
+    width:100% !important;
+    max-width:none !important;
+    grid-template-columns:180px minmax(0,1fr) 250px !important;
+  }
+
+  .left-rail{
+    min-width:0 !important;
+    padding-left:18px !important;
+    padding-right:18px !important;
+  }
+
+  main#feed{
+    min-width:0 !important;
+    padding-left:28px !important;
+    padding-right:28px !important;
+  }
+
+  .right-rail{
+    min-width:0 !important;
+    width:100% !important;
+    padding-left:12px !important;
+    padding-right:12px !important;
+    overflow-x:hidden !important;
+  }
+
+  .right-rail > .rail-info-card,
+  .right-rail > .activity-card,
+  .right-rail > .right-share-card,
+  .right-rail > #everlightCommunityCard,
+  .right-rail > #everlightOnlineCard{
+    min-width:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+  }
+
+  .right-rail .share-symbol-grid{
+    width:100% !important;
+    max-width:100% !important;
+    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+    gap:5px !important;
+  }
+
+  .right-rail .share-symbol-grid button{
+    min-width:0 !important;
+    width:100% !important;
+    aspect-ratio:1 / 1 !important;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1080px){
+  .layout{
+    grid-template-columns:170px minmax(0,1fr) 235px !important;
+  }
+
+  .left-rail{
+    padding-left:14px !important;
+    padding-right:14px !important;
+  }
+
+  main#feed{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+
+  .right-rail{
+    padding-left:10px !important;
+    padding-right:10px !important;
+  }
+
+  .right-rail .rail-card-title,
+  .right-rail .rail-card-title > span{
+    font-size:14px !important;
+  }
+
+  .right-rail .community-latest-item{
+    min-width:0 !important;
+    padding:9px !important;
+  }
+}
+
+
+/* MOBILE COMMUNITY PANEL — FINAL INTERACTION FIX
+   Keep the full right-rail sheet independently scrollable and clickable.
+   The panel must never inherit the desktop rail's interaction constraints. */
+@media (max-width:660px){
+  #mobileCommunityPanel{
+    pointer-events:none !important;
+    touch-action:none !important;
+  }
+  #mobileCommunityPanel.is-open{
+    pointer-events:auto !important;
+    touch-action:pan-y !important;
+    overflow:hidden !important;
+  }
+  #mobileCommunityPanelBody{
+    height:calc(100% - 58px) !important;
+    max-height:calc(100% - 58px) !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    touch-action:pan-y !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior-y:contain !important;
+    pointer-events:auto !important;
+  }
+  #mobileCommunityPanel .mobile-cloned-rail{
+    pointer-events:auto !important;
+    touch-action:auto !important;
+  }
+}
+
+/* =========================================================
+   DAILY THOUGHTS — CHAT / PRIVATE SPACE
+   ========================================================= */
+.daily-thoughts-strip{
+  flex:0 0 auto !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  padding:14px 4vw 12px !important;
+  background:#000 !important;
+  border-bottom:1px solid #202729 !important;
+}
+.daily-thoughts-strip-head{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:14px !important;
+  margin-bottom:10px !important;
+}
+.daily-thoughts-strip-head .eyebrow{margin:0 0 3px !important;font-size:8px !important;letter-spacing:.16em !important;color:#86aaca !important;}
+.daily-thoughts-strip-head strong{display:block !important;font:700 15px/1.15 Manrope,sans-serif !important;color:#ecebe4 !important;}
+.daily-thought-add{
+  border:1px solid #2b3b42 !important;
+  border-radius:999px !important;
+  background:#0d1417 !important;
+  color:#9fc4e5 !important;
+  padding:8px 12px !important;
+  font:700 10px/1 Manrope,sans-serif !important;
+  cursor:pointer !important;
+}
+.daily-thought-add:hover{border-color:#6f9dc1 !important;background:#101b20 !important;}
+.daily-thought-form{display:grid !important;grid-template-columns:minmax(0,1fr) auto !important;gap:8px !important;margin:0 0 10px !important;}
+.daily-thought-form[hidden]{display:none !important;}
+.daily-thought-form input{min-width:0 !important;height:38px !important;padding:0 12px !important;border:1px solid #29383d !important;border-radius:12px !important;background:#080b0c !important;color:#e8e7df !important;outline:none !important;font:500 11px/1.2 Manrope,sans-serif !important;}
+.daily-thought-form input:focus{border-color:#6f9dc1 !important;box-shadow:0 0 0 3px rgba(111,157,193,.09) !important;}
+.daily-thought-form button{height:38px !important;padding:0 13px !important;border:0 !important;border-radius:12px !important;background:#8badcc !important;color:#071015 !important;font:800 10px/1 Manrope,sans-serif !important;cursor:pointer !important;}
+.daily-thought-bubbles{display:flex !important;gap:10px !important;overflow-x:auto !important;overflow-y:hidden !important;scrollbar-width:none !important;touch-action:pan-x !important;padding:2px 1px 4px !important;}
+.daily-thought-bubbles::-webkit-scrollbar{display:none !important;}
+.daily-thought-bubble{flex:0 0 118px !important;height:118px !important;position:relative !important;border:1px solid #2b3b42 !important;border-radius:34px !important;background:#0b1114 !important;overflow:hidden !important;cursor:pointer !important;box-shadow:0 4px 16px rgba(0,0,0,.16) !important;}
+.daily-thought-bubble::before{content:"";position:absolute;inset:5px;border:1px solid rgba(143,185,218,.18);border-radius:30px;pointer-events:none;}
+.daily-thought-bubble-avatar{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;overflow:hidden;border:1px solid #36515f;background:#111a1e;display:grid;place-items:center;color:#9fc4e5;font:700 13px/1 Manrope,sans-serif;}
+.daily-thought-bubble-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.daily-thought-bubble-copy{position:absolute;left:10px;right:10px;bottom:10px;text-align:center;}
+.daily-thought-bubble-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dfe4e5;font:700 9px/1.1 Manrope,sans-serif;}
+.daily-thought-bubble-text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:3px;color:#849196;font:500 8px/1.3 Manrope,sans-serif;}
+.daily-thought-empty,.daily-thought-loading{padding:12px 2px;color:#68767c;font:500 10px/1.4 Manrope,sans-serif;}
+
+@media (min-width:661px){
+  .messages-view .messages-view-inner{overflow:hidden !important;}
+  .messages-view .messages-layout{min-height:0 !important;}
+}
+@media (max-width:660px){
+  .daily-thoughts-strip{padding:11px 12px 9px !important;}
+  .daily-thoughts-strip-head strong{font-size:13px !important;}
+  .daily-thought-add{padding:7px 10px !important;font-size:9px !important;}
+  .daily-thought-bubble{flex-basis:104px !important;width:104px !important;height:104px !important;border-radius:30px !important;}
+  .daily-thought-bubble::before{border-radius:26px !important;}
+  .daily-thought-bubble-avatar{width:38px !important;height:38px !important;top:10px !important;}
+  .daily-thought-bubble-copy{bottom:9px !important;}
+  .daily-thought-form{grid-template-columns:minmax(0,1fr) auto !important;}
+  .daily-thought-form input{height:36px !important;font-size:10px !important;}
+  .daily-thought-form button{height:36px !important;padding:0 11px !important;}
+}
+
+/* =========================================================
+   PASSWORD RESET / PASSWORD HINT — FINAL MOBILE + DESKTOP
+   ========================================================= */
+.password-hint-modal[hidden]{display:none!important}
+.password-hint-modal{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;box-sizing:border-box}
+.password-hint-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}
+.password-hint-card{position:relative;width:min(460px,100%);box-sizing:border-box;padding:26px;border:1px solid rgba(139,173,204,.24);border-radius:22px;background:#080b0c;color:#eef6f5;box-shadow:0 24px 80px rgba(0,0,0,.55)}
+.password-hint-card h2{margin:8px 0 10px;font-size:25px}
+.password-hint-card p{line-height:1.5;color:#aab8b7}
+.password-hint-card label{display:grid;gap:8px;margin:18px 0 12px;color:#dce8e7;font-size:13px}
+.password-hint-card input{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:12px;border:1px solid rgba(139,173,204,.25);background:#101516;color:#fff;outline:none}
+.password-hint-status{min-height:20px;font-size:12px}
+@media(max-width:660px){.password-hint-modal{padding:14px}.password-hint-card{padding:22px;border-radius:20px}.password-hint-card h2{font-size:22px}}
