@@ -3613,6 +3613,13 @@ if (mobileMessageNav) {
   mobileMessageNav.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
+    const isOpen = $("#messagesView")?.classList.contains("open");
+    window.__closeMobileCommunity?.();
+    if (isOpen) {
+      closeMessages();
+      setMobileDockActive("hub");
+      return;
+    }
     closeProfileView({ syncDock: false });
     openMessages();
     setMobileDockActive("messages");
@@ -3624,6 +3631,13 @@ if (mobileProfileNav) {
   mobileProfileNav.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
+    const isOpen = $("#profileView")?.classList.contains("open");
+    window.__closeMobileCommunity?.();
+    if (isOpen) {
+      closeProfileView();
+      setMobileDockActive("hub");
+      return;
+    }
     closeMessages({ syncDock: false });
     openProfileView();
     setMobileDockActive("profile");
@@ -3760,60 +3774,112 @@ async function loadDailyThoughts() {
   const ownAvatar = currentUser?.avatar
     ? `<img src="${escapeHtml(currentUser.avatar)}" alt="">`
     : "+";
+  const ownThought = window.__ownDailyThought || "";
 
   let items = `
-    <button type="button" class="daily-thought own" id="dailyThoughtOwn">
-      <span class="daily-thought-bubble">Írd meg a mai gondolatod.</span>
+    <button type="button" class="daily-thought own" id="dailyThoughtOwn" data-action="write">
+      ${ownThought
+        ? `<span class="daily-thought-bubble">${escapeHtml(ownThought)}</span>`
+        : `<span class="daily-thought-bubble">Írd meg a mai gondolatod.</span>`}
       <span class="daily-thought-avatar">${ownAvatar}</span>
       <small>A tiéd</small>
     </button>
   `;
 
   try {
-    const [onlineData, postsData] = await Promise.all([
-      api("/api/online").catch(() => ({ users: [] })),
-      api("/api/posts").catch(() => ({ posts: [] }))
-    ]);
-    const users = onlineData.users || [];
-    const posts = postsData.posts || postsData || [];
-    const todayKey = new Date().toDateString();
-    const thoughtByUser = new Map();
-    for (const post of posts) {
-      const name = post.username;
-      if (!name || thoughtByUser.has(name)) continue;
-      const created = post.createdAt || post.created_at || post.time || "";
-      const when = created ? new Date(created) : null;
-      if (when && !Number.isNaN(when.getTime()) && when.toDateString() !== todayKey) continue;
-      const text = String(post.body || post.title || "").replace(/\s+/g, " ").trim();
-      if (!text) continue;
-      thoughtByUser.set(name, text);
-    }
-
-    const ranked = users
-      .filter((user) => !currentUser || user.username !== currentUser.username)
-      .sort((a, b) => Number(b.message_streak || 0) - Number(a.message_streak || 0));
-
-    items += ranked.slice(0, 10).map((user) => {
+    const data = await api("/api/daily-thoughts");
+    const users = data.users || [];
+    for (const user of users) {
+      if (currentUser && user.username === currentUser.username) {
+        if (user.thought) window.__ownDailyThought = user.thought;
+        continue;
+      }
       const name = (user.display_name || user.username || "✦").split("#")[0];
-      const thought = thoughtByUser.get(user.username) || "";
+      const thought = String(user.thought || "").trim();
       const avatar = user.avatar
         ? `<img src="${escapeHtml(user.avatar)}" alt="">`
         : escapeHtml((name || "✦").charAt(0));
       const streak = Number(user.message_streak || 0);
-      return `
-        <button type="button" class="daily-thought" data-author="${escapeHtml(user.username || "")}">
-          ${thought ? `<span class="daily-thought-bubble">${escapeHtml(thought.slice(0, 42))}${thought.length > 42 ? "…" : ""}</span>` : ""}
+      items += `
+        <button type="button" class="daily-thought" data-author="${escapeHtml(user.username || "")}" data-action="preview">
+          ${thought ? `<span class="daily-thought-bubble">${escapeHtml(thought.slice(0, 80))}</span>` : ""}
           <span class="daily-thought-avatar">${avatar}</span>
           <small>${escapeHtml(name)}</small>
           ${streak > 0 ? `<span class="daily-thought-streak">🔥 ${streak}</span>` : ""}
         </button>
       `;
-    }).join("");
+    }
   } catch {
     /* keep own tile */
   }
 
   track.innerHTML = items;
+}
+
+function openDailyThoughtWriter() {
+  if (!currentUser) {
+    notify("A napi gondolathoz jelentkezz be a Profilban.");
+    openProfileView();
+    return;
+  }
+  let modal = document.getElementById("dailyThoughtModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "dailyThoughtModal";
+    modal.className = "daily-thought-modal";
+    modal.innerHTML = `
+      <div class="daily-thought-modal-card">
+        <h3>Mai gondolat</h3>
+        <p>24 óra múlva automatikusan eltűnik. Ez nem bejegyzés.</p>
+        <textarea id="dailyThoughtInput" maxlength="140" rows="3" placeholder="Mi jár a fejedben?"></textarea>
+        <small id="dailyThoughtCount">0 / 140</small>
+        <div class="daily-thought-modal-actions">
+          <button type="button" id="dailyThoughtCancel">Mégse</button>
+          <button type="button" class="primary" id="dailyThoughtSave">Közzéteszem</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) modal.hidden = true;
+    });
+    document.getElementById("dailyThoughtCancel").addEventListener("click", () => {
+      modal.hidden = true;
+    });
+    document.getElementById("dailyThoughtInput").addEventListener("input", () => {
+      const el = document.getElementById("dailyThoughtCount");
+      if (el) el.textContent = `${document.getElementById("dailyThoughtInput").value.length} / 140`;
+    });
+    document.getElementById("dailyThoughtSave").addEventListener("click", async () => {
+      const body = document.getElementById("dailyThoughtInput").value.trim();
+      try {
+        await api("/api/daily-thoughts", { method: "POST", body: JSON.stringify({ body }) });
+        window.__ownDailyThought = body;
+        modal.hidden = true;
+        loadDailyThoughts();
+      } catch (error) {
+        notify(error.message || "Nem sikerült menteni.");
+      }
+    });
+  }
+  const input = document.getElementById("dailyThoughtInput");
+  if (input) {
+    input.value = window.__ownDailyThought || "";
+    document.getElementById("dailyThoughtCount").textContent = `${input.value.length} / 140`;
+  }
+  modal.hidden = false;
+}
+
+function openDailyThoughtPreview(author) {
+  if (!author) return;
+  const recipient = document.getElementById("dmRecipient");
+  if (recipient) recipient.value = author;
+  const messagesView = document.getElementById("messagesView");
+  if (currentUser) {
+    messagesView?.classList.add("chat-open");
+    loadMessages?.();
+  } else {
+    notify("Üzenethez jelentkezz be a Profilban.");
+  }
 }
 
 function openMessages() {
@@ -5700,20 +5766,29 @@ function buildProfileCustomizer() {
           </section>
 
           <section class="profile-customizer-section" id="customizerSecuritySection">
-            <h3>Fiók és jelszó</h3>
-            <p class="customizer-help">Bejelentkezve a régi jelszó nélkül is átírhatod. Ha nincs e-mail címed, adj meg emlékeztetőt.</p>
-            <label>E-mail
-              <input id="customizerEmail" type="email" autocomplete="email" placeholder="opcionális">
+            <div class="profile-customizer-section-title">
+              <div>
+                <strong>Fiók és jelszó</strong>
+                <span>Bejelentkezve a régi jelszó nélkül is átírhatod. E-mail opcionális; ha nincs, adj meg emlékeztetőt.</span>
+              </div>
+            </div>
+            <label class="customizer-field customizer-field-full">
+              <span>E-mail <small>(opcionális)</small></span>
+              <input id="customizerEmail" type="email" autocomplete="email" placeholder="hello@pelda.hu">
             </label>
-            <label>Jelszó-emlékeztető
-              <input id="customizerPasswordHint" type="text" maxlength="120" placeholder="Csak te érted, pl. kutyám neve">
+            <label class="customizer-field customizer-field-full">
+              <span>Jelszó-emlékeztető</span>
+              <input id="customizerPasswordHint" type="text" maxlength="120" placeholder="pl. kutyám neve">
             </label>
-            <label>Új jelszó
+            <label class="customizer-field customizer-field-full">
+              <span>Új jelszó</span>
               <input id="customizerNewPassword" type="password" autocomplete="new-password" minlength="6" placeholder="legalább 6 karakter">
             </label>
-            <label>Új jelszó újra
-              <input id="customizerNewPasswordConfirm" type="password" autocomplete="new-password" minlength="6">
+            <label class="customizer-field customizer-field-full">
+              <span>Új jelszó újra</span>
+              <input id="customizerNewPasswordConfirm" type="password" autocomplete="new-password" minlength="6" placeholder="írd be még egyszer">
             </label>
+            <p id="customizerPasswordMatch" class="customizer-password-match" aria-live="polite"></p>
             <button type="button" class="secondary" id="customizerSaveSecurity">Jelszó / e-mail mentése</button>
             <p id="customizerSecurityStatus" class="password-reset-status"></p>
           </section>
@@ -6312,6 +6387,31 @@ function bindProfileCustomizer(
   modal.addEventListener(
     "input",
     (event) => {
+
+      if (
+        event.target.matches(
+          "#customizerNewPassword, #customizerNewPasswordConfirm"
+        )
+      ) {
+        const a = $("#customizerNewPassword")?.value || "";
+        const b = $("#customizerNewPasswordConfirm")?.value || "";
+        const matchEl = $("#customizerPasswordMatch");
+        if (matchEl) {
+          if (!a && !b) {
+            matchEl.textContent = "";
+            matchEl.className = "customizer-password-match";
+          } else if (!b) {
+            matchEl.textContent = "Írd be még egyszer a jelszót.";
+            matchEl.className = "customizer-password-match is-pending";
+          } else if (a === b) {
+            matchEl.textContent = "✓ A két jelszó egyezik.";
+            matchEl.className = "customizer-password-match is-ok";
+          } else {
+            matchEl.textContent = "✗ A két jelszó nem egyezik.";
+            matchEl.className = "customizer-password-match is-bad";
+          }
+        }
+      }
 
       if (
         event.target.matches(
@@ -7052,15 +7152,11 @@ if (initialResetToken) {
 document.getElementById("dailyThoughts")?.addEventListener("click", (event) => {
   const thought = event.target.closest(".daily-thought");
   if (!thought) return;
-  if (thought.id === "dailyThoughtOwn" || thought.classList.contains("own")) {
-    const btn = document.getElementById("newMessageButton") || document.getElementById("composeNewButton");
-    btn?.click();
+  event.preventDefault();
+  if (thought.id === "dailyThoughtOwn" || thought.classList.contains("own") || thought.dataset.action === "write") {
+    openDailyThoughtWriter();
     return;
   }
   const author = thought.getAttribute("data-author");
-  if (author) {
-    const recipient = document.getElementById("dmRecipient");
-    if (recipient) recipient.value = author;
-    document.querySelector(`.message-contact[data-recipient="${CSS.escape(author)}"]`)?.click();
-  }
+  if (author) openDailyThoughtPreview(author);
 });

@@ -18145,3 +18145,140 @@ body.sun-mode .topbar .domain .domain-mode-light {
     pointer-events: auto !important;
   }
 }
+
+
+/* =========================================================
+   CUSTOMIZER SECURITY FORM — mobile readable fields
+   ========================================================= */
+#customizerSecuritySection {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  padding: 8px 0 24px !important;
+}
+#customizerSecuritySection .customizer-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+#customizerSecuritySection .customizer-field > span {
+  display: block !important;
+  font: 600 12px/1.2 Manrope, sans-serif !important;
+  color: #c5ced1 !important;
+}
+#customizerSecuritySection .customizer-field input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  height: 44px !important;
+  padding: 0 12px !important;
+  border: 1px solid #2a363a !important;
+  border-radius: 12px !important;
+  background: #0b0f11 !important;
+  color: #e8e7df !important;
+  font: 500 14px/1.2 Manrope, sans-serif !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+#customizerSecuritySection .customizer-field input:focus {
+  outline: none !important;
+  border-color: #8badcc !important;
+}
+#customizerSecuritySection #customizerSaveSecurity {
+  width: 100% !important;
+  height: 44px !important;
+  margin-top: 4px !important;
+  border-radius: 12px !important;
+}
+.customizer-password-match {
+  min-height: 18px !important;
+  margin: 0 !important;
+  font: 600 12px/1.3 Manrope, sans-serif !important;
+  color: #8a969a !important;
+}
+.customizer-password-match.is-ok {
+  color: #6fcf97 !important;
+}
+.customizer-password-match.is-bad {
+  color: #eb5757 !important;
+}
+.customizer-password-match.is-pending {
+  color: #8badcc !important;
+}
+
+
+.daily-thought-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483645;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,.72);
+  padding: 20px;
+}
+.daily-thought-modal[hidden] { display: none !important; }
+.daily-thought-modal-card {
+  width: min(420px, 100%);
+  background: #0b0f11;
+  border: 1px solid #2a363a;
+  border-radius: 18px;
+  padding: 18px;
+  color: #e8e7df;
+}
+.daily-thought-modal-card h3 { margin: 0 0 6px; font: 700 18px Manrope, sans-serif; }
+.daily-thought-modal-card p { margin: 0 0 12px; color: #8a969a; font-size: 13px; }
+.daily-thought-modal-card textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 88px;
+  padding: 10px 12px;
+  border: 1px solid #2a363a;
+  border-radius: 12px;
+  background: #07090b;
+  color: #e8e7df;
+  font: 500 14px/1.4 Manrope, sans-serif;
+}
+.daily-thought-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+
+/* =========================================================
+   SHEETS FLUSH TO DOCK — topbar stays, no gap
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .mobile-bottom-chrome {
+    height: auto !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  html body .mobile-bottom-chrome #mobileDock {
+    height: 56px !important;
+  }
+  html body .mobile-ai-caption {
+    padding: 0 12px 6px !important;
+  }
+
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"],
+  html body .profile-view.open,
+  html body .profile-view[aria-hidden="false"],
+  html body .mobile-community-panel.is-open {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 64px !important;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #000 !important;
+    z-index: 2147483000 !important;
+    pointer-events: auto !important;
+  }
+}
