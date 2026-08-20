@@ -59,6 +59,49 @@ function escapeHtml(text = "") {
   return node.innerHTML;
 }
 
+function formatImageFile(file, { maxWidth = 1080, maxHeight = 1080, crop = false, quality = 0.86 } = {}) {
+  return new Promise((resolve, reject) => {
+    if (!file) return reject(new Error("Nincs kép."));
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let sx = 0;
+      let sy = 0;
+      let sw = img.naturalWidth || img.width;
+      let sh = img.naturalHeight || img.height;
+      if (!sw || !sh) return reject(new Error("A kép nem olvasható."));
+
+      if (crop) {
+        const side = Math.min(sw, sh);
+        sx = Math.floor((sw - side) / 2);
+        sy = Math.floor((sh - side) / 2);
+        sw = side;
+        sh = side;
+      }
+
+      const scale = Math.min(1, maxWidth / sw, maxHeight / sh);
+      const dw = Math.max(1, Math.round(sw * scale));
+      const dh = Math.max(1, Math.round(sh * scale));
+      const canvas = document.createElement("canvas");
+      canvas.width = dw;
+      canvas.height = dh;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, dw, dh);
+      let data = canvas.toDataURL("image/jpeg", quality);
+      if (data.length > 3200000) {
+        data = canvas.toDataURL("image/jpeg", 0.7);
+      }
+      resolve(data);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Ezt a képet az oldal nem tudja beolvasni."));
+    };
+    img.src = url;
+  });
+}
+
 
 /* =========================================================
    API
@@ -520,7 +563,8 @@ if (profileLoginForm) {
         body: JSON.stringify({
           username: $("#profileLoginName")?.value.trim() || "",
           email: $("#profileLoginEmail")?.value.trim() || "",
-          password: $("#profileLoginPassword")?.value || ""
+          password: $("#profileLoginPassword")?.value || "",
+          passwordHint: $("#profileLoginHint")?.value.trim() || ""
         })
       });
 
@@ -573,7 +617,8 @@ if (messageLoginForm) {
         body: JSON.stringify({
           username: $("#messageLoginName")?.value.trim() || "",
           email: $("#messageLoginEmail")?.value.trim() || "",
-          password: $("#messageLoginPassword")?.value || ""
+          password: $("#messageLoginPassword")?.value || "",
+          passwordHint: $("#messageLoginHint")?.value.trim() || ""
         })
       });
       token = data.token;
@@ -3328,15 +3373,32 @@ function closeProfileView(options = {}) {
 
 
   document.body.classList.remove(
-    "profile-view-open"
+    "profile-view-open",
+    "messages-view-open"
   );
 
+  const topbar = document.querySelector(".topbar");
+  if (topbar) {
+    topbar.style.display = "";
+    topbar.style.visibility = "visible";
+    topbar.style.opacity = "1";
+  }
 
   setMobileDockActive(
     "hub"
   );
   window.__syncDesktopNav?.("hub");
   restoreProfileHome();
+
+  const feed = document.getElementById("feed");
+  if (feed) {
+    feed.scrollTop = 0;
+  }
+  try {
+    window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  } catch {
+    window.scrollTo(0, 0);
+  }
 }
 
 
@@ -5612,6 +5674,25 @@ function buildProfileCustomizer() {
 
           </section>
 
+          <section class="profile-customizer-section" id="customizerSecuritySection">
+            <h3>Fiók és jelszó</h3>
+            <p class="customizer-help">Bejelentkezve a régi jelszó nélkül is átírhatod. Ha nincs e-mail címed, adj meg emlékeztetőt.</p>
+            <label>E-mail
+              <input id="customizerEmail" type="email" autocomplete="email" placeholder="opcionális">
+            </label>
+            <label>Jelszó-emlékeztető
+              <input id="customizerPasswordHint" type="text" maxlength="120" placeholder="Csak te érted, pl. kutyám neve">
+            </label>
+            <label>Új jelszó
+              <input id="customizerNewPassword" type="password" autocomplete="new-password" minlength="6" placeholder="legalább 6 karakter">
+            </label>
+            <label>Új jelszó újra
+              <input id="customizerNewPasswordConfirm" type="password" autocomplete="new-password" minlength="6">
+            </label>
+            <button type="button" class="secondary" id="customizerSaveSecurity">Jelszó / e-mail mentése</button>
+            <p id="customizerSecurityStatus" class="password-reset-status"></p>
+          </section>
+
         </main>
 
 
@@ -5932,6 +6013,9 @@ function fillProfileCustomizer() {
         currentUser?.nameColor || "#ffffff"
       ),
 
+    customizerEmail:
+      currentUser?.email || "",
+
     customizerNameFont:
       customizerValue(
         "nameFont",
@@ -6133,7 +6217,7 @@ async function saveProfileCustomizer() {
     }
 
     notify("A profilod mentve lett.");
-    closeProfileCustomizer();
+    fillProfileCustomizer();
   } catch (error) {
     notify(error.message || "A profil mentése nem sikerült.");
   } finally {
@@ -6145,6 +6229,56 @@ async function saveProfileCustomizer() {
   }
 }
 
+
+async function saveProfileSecurity() {
+  const status = $("#customizerSecurityStatus");
+  const setStatus = (message, type) => {
+    if (!status) return;
+    status.textContent = message || "";
+    status.classList.toggle("is-error", type === "error");
+    status.classList.toggle("is-success", type === "success");
+  };
+
+  const email = $("#customizerEmail")?.value.trim() || "";
+  const hint = $("#customizerPasswordHint")?.value.trim() || "";
+  const password = $("#customizerNewPassword")?.value || "";
+  const confirm = $("#customizerNewPasswordConfirm")?.value || "";
+
+  try {
+    if (email || hint) {
+      await api("/api/profile/security", {
+        method: "POST",
+        body: JSON.stringify({ email, passwordHint: hint })
+      });
+    }
+
+    if (password || confirm) {
+      if (password !== confirm) {
+        setStatus("A két jelszó nem egyezik.", "error");
+        return;
+      }
+      if (!email && !hint && !currentUser?.hasEmail && !currentUser?.hasPasswordHint) {
+        setStatus("E-mail nélkül adj meg jelszó-emlékeztetőt is.", "error");
+        return;
+      }
+      await api("/api/profile/password", {
+        method: "POST",
+        body: JSON.stringify({ password, confirm, passwordHint: hint })
+      });
+      if ($("#customizerNewPassword")) $("#customizerNewPassword").value = "";
+      if ($("#customizerNewPasswordConfirm")) $("#customizerNewPasswordConfirm").value = "";
+    }
+
+    const verified = await api("/api/auth/me");
+    if (verified?.user) {
+      setAccount(verified.user);
+      currentUser = verified.user;
+    }
+    setStatus("Mentve. A profilbeállításokban maradtál.", "success");
+  } catch (error) {
+    setStatus(error.message || "A mentés nem sikerült.", "error");
+  }
+}
 
 function bindProfileCustomizer(
   modal
@@ -6184,28 +6318,16 @@ function bindProfileCustomizer(
         )
       ) {
 
-        readCustomizerImage(
-          event.target.files[0],
-          (data) => {
-
-            profileImageData =
-              data;
-
-            const preview =
-              $("#customizerAvatarPreview");
-
+        formatImageFile(event.target.files[0], { maxWidth: 512, maxHeight: 512, crop: true, quality: 0.88 })
+          .then((data) => {
+            profileImageData = data;
+            const preview = $("#customizerAvatarPreview");
             if (preview) {
-              preview.innerHTML = `
-                <img
-                  src="${escapeHtml(data)}"
-                  alt="Profilkép"
-                >
-              `;
+              preview.innerHTML = `<img src="${escapeHtml(data)}" alt="Profilkép">`;
             }
-
             updateCustomizerPreview();
-          }
-        );
+          })
+          .catch((error) => notify(error.message || "A profilkép feltöltése nem sikerült."));
 
         return;
       }
@@ -6220,9 +6342,8 @@ function bindProfileCustomizer(
         const file = event.target.files?.[0];
         if (!file) return;
 
-        readCustomizerCoverImage(
-          file,
-          (data) => {
+        formatImageFile(file, { maxWidth: 1600, maxHeight: 640, crop: false, quality: 0.86 })
+          .then((data) => {
 
             coverImageData =
               data;
@@ -6237,8 +6358,8 @@ function bindProfileCustomizer(
             }
 
             updateCustomizerPreview();
-          }
-        );
+          })
+          .catch((error) => notify(error.message || "A borítókép feltöltése nem sikerült."));
 
         return;
       }
@@ -6318,6 +6439,15 @@ function bindProfileCustomizer(
 
       if (save) {
         saveProfileCustomizer();
+        return;
+      }
+
+      const security =
+        event.target.closest(
+          "#customizerSaveSecurity"
+        );
+      if (security) {
+        saveProfileSecurity();
       }
     }
   );
@@ -6722,6 +6852,28 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+$("#hintResetForm")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const username = $("#hintResetUsername")?.value.trim() || "";
+  const hint = $("#hintResetHint")?.value.trim() || "";
+  const password = $("#hintResetPassword")?.value || "";
+  const confirm = $("#hintResetPasswordConfirm")?.value || "";
+  if (password !== confirm) {
+    setPasswordResetStatus("A két jelszó nem egyezik.", "error");
+    return;
+  }
+  try {
+    const data = await api("/api/auth/reset-with-hint", {
+      method: "POST",
+      body: JSON.stringify({ username, passwordHint: hint, password })
+    });
+    setPasswordResetStatus(data.message || "A jelszó megváltozott.", "success");
+    event.target.reset();
+  } catch (error) {
+    setPasswordResetStatus(error?.message || "A jelszó csere nem sikerült.", "error");
+  }
+});
+
 forgotPasswordForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   setPasswordResetStatus("");
@@ -6777,3 +6929,48 @@ const initialResetToken = new URLSearchParams(window.location.search).get("reset
 if (initialResetToken) {
   window.addEventListener("DOMContentLoaded", () => openPasswordResetModal(initialResetToken));
 }
+
+
+/* =========================================================
+   DESKTOP HAMBURGER — toggle right rail instead of styles
+   ========================================================= */
+(function initDesktopRailToggle(){
+  const toggle = document.getElementById("settingsToggle");
+  const menu = document.getElementById("settingsMenu");
+  if (!toggle) return;
+
+  const key = "everlight-right-rail-collapsed";
+
+  const isDesktop = () => window.matchMedia("(min-width: 961px)").matches;
+
+  const apply = (collapsed) => {
+    document.body.classList.toggle("right-rail-collapsed", collapsed);
+    toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    toggle.classList.toggle("is-open", !collapsed);
+    toggle.setAttribute("aria-label", collapsed ? "Jobb panel megnyitása" : "Jobb panel bezárása");
+    toggle.setAttribute("title", collapsed ? "Jobb panel" : "Jobb panel elrejtése");
+    try { localStorage.setItem(key, collapsed ? "1" : "0"); } catch {}
+  };
+
+  apply(localStorage.getItem(key) === "1");
+
+  toggle.addEventListener("click", (event) => {
+    if (!isDesktop()) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (menu) {
+      menu.hidden = true;
+      menu.style.display = "none";
+    }
+    apply(!document.body.classList.contains("right-rail-collapsed"));
+  }, true);
+
+  window.addEventListener("resize", () => {
+    if (!isDesktop()) {
+      document.body.classList.remove("right-rail-collapsed");
+    } else {
+      apply(localStorage.getItem(key) === "1");
+    }
+  });
+})();

@@ -379,3 +379,33 @@
     }
   }, true);
 })();
+
+
+/* Domain status dot — JS pulse fallback */
+(function(){
+  function pulseDot(){
+    var dot = document.querySelector(".topbar .domain .domain-mode-light");
+    if (!dot) return;
+    dot.style.animation = "everlight-domain-pulse 1.55s ease-in-out infinite";
+    dot.style.animationPlayState = "running";
+    // JS fallback if CSS animation is blocked
+    var t = 0;
+    if (window.__everlightDotPulse) return;
+    window.__everlightDotPulse = true;
+    setInterval(function(){
+      var d = document.querySelector(".topbar .domain .domain-mode-light");
+      if (!d) return;
+      t = (t + 1) % 32;
+      var phase = Math.abs(16 - t) / 16;
+      var opacity = 0.3 + phase * 0.7;
+      var scale = 0.82 + phase * 0.36;
+      d.style.opacity = String(opacity);
+      d.style.transform = "scale(" + scale + ")";
+    }, 50);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pulseDot);
+  } else {
+    pulseDot();
+  }
+})();
