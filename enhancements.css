@@ -5,7 +5,10 @@
 @media (max-width: 660px) {
   /* The profile screen owns the viewport. The normal bottom dock must not
      sit on top of profile content or its buttons. */
-  
+  body:has(.profile-view[aria-hidden="false"]) .mobile-dock,
+  body:has(.profile-view:not([aria-hidden="true"])) .mobile-dock {
+    display: none !important;
+  }
 
   body:has(.profile-view[aria-hidden="false"]) {
     overflow: hidden !important;
@@ -749,7 +752,10 @@ body{
   }
 
   /* Fullscreen messages own the screen; do not let the global dock overlap it. */
-  
+  body.messages-view-open .mobile-dock,
+  body.messages-view-open .site-footer{
+    display:none !important;
+  }
 }
 
 /* Small phones: stack message composer fields vertically to avoid squeezing. */
@@ -923,7 +929,21 @@ body{
 @media (max-width:660px){
 
   /* The floating island is the only visual bottom control. */
-  
+  .mobile-dock{
+    position:fixed !important;
+    left:14px !important;
+    right:14px !important;
+    bottom:calc(34px + env(safe-area-inset-bottom, 0px)) !important;
+    width:auto !important;
+    height:56px !important;
+    min-height:56px !important;
+    margin:0 !important;
+    background:#050707 !important;
+    border:1px solid rgba(139,173,204,.16) !important;
+    border-radius:17px !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.55) !important;
+    z-index:1600 !important;
+  }
 
   /* Kill every possible strip/background under the island. */
   html,
@@ -980,11 +1000,22 @@ body{
   }
 
   /* On fullscreen screens there is no dock or AI footer. */
-  
+  body.messages-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock,
+  body.profile-customizer-open .mobile-dock,
+  body.messages-view-open .site-footer,
+  body.profile-view-open .site-footer,
+  body.profile-customizer-open .site-footer{
+    display:none !important;
+  }
 }
 
 @media(max-width:390px){
-  
+  .mobile-dock{
+    bottom:calc(31px + env(safe-area-inset-bottom, 0px)) !important;
+    height:54px !important;
+    min-height:54px !important;
+  }
 
   .site-footer{
     min-height:25px !important;
@@ -1079,7 +1110,10 @@ body{
   }
 
   /* No mobile dock or page footer over the editor. */
-  
+  body.profile-customizer-open .mobile-dock,
+  body.profile-customizer-open .site-footer{
+    display:none !important;
+  }
 
   body.profile-customizer-open{
     background:#000 !important;
@@ -1316,7 +1350,10 @@ body{
     place-items:center !important;
   }
 
-  
+  body.messages-view-open .mobile-dock,
+  body.messages-view-open .site-footer{
+    display:none !important;
+  }
 }
 
 @media(max-width:390px){
@@ -1717,7 +1754,14 @@ body.sun-mode .topbar .header-logo .logo-word{
   }
 
   /* Remove the old mobile footer/dock from fullscreen views. */
-  
+  body.messages-view-open .mobile-dock,
+  body.messages-view-open .site-footer,
+  body.profile-view-open .mobile-dock,
+  body.profile-view-open .site-footer,
+  body.profile-customizer-open .mobile-dock,
+  body.profile-customizer-open .site-footer{
+    display:none !important;
+  }
 
   .messages-view-header{
     padding-top:calc(10px + env(safe-area-inset-top,0px)) !important;
@@ -1942,11 +1986,37 @@ body .phone-card .install-button{
    ========================================================= */
 
 @media (max-width:660px){
-  
+  .mobile-dock{
+    position:fixed !important;
+    left:14px !important;
+    right:14px !important;
+    bottom:calc(34px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;
+    height:56px !important;
+    min-height:56px !important;
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    z-index:1600 !important;
+    background:#050707 !important;
+    border:1px solid #242d2e !important;
+    border-radius:17px !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.55) !important;
+    overflow:hidden !important;
+  }
 
-  
+  .mobile-dock-item{
+    min-width:0 !important;
+    width:100% !important;
+    height:100% !important;
+    border:0 !important;
+    background:transparent !important;
+    color:#7f8986 !important;
+  }
 
-  
+  .mobile-dock-item.active{
+    color:var(--accent) !important;
+    background:var(--accent-soft) !important;
+  }
 }
 
 /* =========================================================
@@ -2024,7 +2094,12 @@ body .phone-card .install-button{
   }
 
   /* No global dock/footer on fullscreen view. */
-  
+  body.messages-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock,
+  body.messages-view-open .site-footer,
+  body.profile-view-open .site-footer{
+    display:none !important;
+  }
 }
 
 /* =========================================================
@@ -2339,7 +2414,10 @@ body{
     font-family:"Playfair Display",Georgia,serif !important;
   }
 
-  
+  .mobile-dock-item small{
+    font-family:"Manrope",Arial,sans-serif !important;
+    font-weight:700 !important;
+  }
 }
 
 
@@ -3237,9 +3315,29 @@ body{
 @media(max-width:660px){
 
   /* The island is always on top and always clickable. */
-  
+  #mobileDock{
+    position:fixed !important;
+    left:14px !important;
+    right:14px !important;
+    bottom:calc(34px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;
+    height:56px !important;
+    min-height:56px !important;
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    z-index:2147483000 !important;
+    pointer-events:auto !important;
+    isolation:isolate !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    position:relative !important;
+    z-index:2147483001 !important;
+    pointer-events:auto !important;
+    touch-action:manipulation !important;
+    -webkit-user-select:none !important;
+    user-select:none !important;
+  }
 
   /* Fullscreen views are above the page, but MUST NOT cover the dock
      before they are actually opened. */
@@ -3278,7 +3376,10 @@ body{
   }
 
   /* Never show the bottom dock/footer while a fullscreen view is open. */
-  
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock{
+    display:none !important;
+  }
 
   body.messages-view-open .site-footer,
   body.profile-view-open .site-footer{
@@ -3384,7 +3485,9 @@ body{
 
 @media(max-width:660px){
 
-  
+  #mobileDock{
+    z-index:2147483000 !important;
+  }
 
   /* Mobile fullscreen views */
   .messages-view.open,
@@ -3417,7 +3520,14 @@ body{
     background:#000 !important;
   }
 
-  
+  body.messages-view-open .topbar,
+  body.profile-view-open .topbar,
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock,
+  body.messages-view-open .site-footer,
+  body.profile-view-open .site-footer{
+    display:none !important;
+  }
 }
 
 /* Desktop typography: one clear scale instead of mixed tiny sizes. */
@@ -3992,7 +4102,9 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
   }
 }
 
-
+/* =========================================================
+   MOBILE — FIXED HEADER + FIXED ISLAND, CENTER CONTENT SCROLLS
+   ========================================================= */
 @media (max-width:660px){
   html, body{
     height:100% !important;
@@ -4020,10 +4132,24 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
     -webkit-overflow-scrolling:touch !important;
     padding-bottom:calc(110px + env(safe-area-inset-bottom,0px)) !important;
   }
-  
-  
-  
-  
+  .mobile-dock{
+    position:fixed !important;
+    z-index:99998 !important;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;
+    pointer-events:auto !important;
+  }
+  .mobile-dock-item .rail-action-icon{
+    width:26px !important;
+    height:26px !important;
+    flex:0 0 26px !important;
+  }
+  .mobile-dock-item small{
+    display:none !important;
+  }
+  .mobile-dock-item{
+    gap:0 !important;
+    font-size:0 !important;
+  }
 }
 
 
@@ -4032,50 +4158,216 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
    A szigeten a Hub / Csevegés / Profil ikonok mindig látszanak.
    ========================================================= */
 @media (max-width:660px){
-  
+  #mobileDock .mobile-dock-item .rail-action-icon{
+    position:relative !important;
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    width:28px !important;
+    height:28px !important;
+    min-width:28px !important;
+    min-height:28px !important;
+    flex:0 0 28px !important;
+    color:currentColor !important;
+    overflow:visible !important;
+    font-size:0 !important;
+    line-height:1 !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item .rail-action-icon::before,
+  #mobileDock .mobile-dock-item .rail-action-icon::after{
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:none !important;
+  }
 
   /* Hub */
-  
-  
+  #mobileDock .rail-icon-home::before{
+    content:"" !important;
+    position:absolute !important;
+    left:5px !important;
+    top:10px !important;
+    width:18px !important;
+    height:14px !important;
+    border:2px solid currentColor !important;
+    border-top:0 !important;
+    border-radius:2px !important;
+    box-sizing:border-box !important;
+  }
+  #mobileDock .rail-icon-home::after{
+    content:"" !important;
+    position:absolute !important;
+    left:6px !important;
+    top:4px !important;
+    width:16px !important;
+    height:16px !important;
+    border-left:2px solid currentColor !important;
+    border-top:2px solid currentColor !important;
+    transform:rotate(45deg) !important;
+    border-radius:2px 0 0 0 !important;
+    box-sizing:border-box !important;
+  }
 
   /* Csevegés */
-  
-  
+  #mobileDock .rail-icon-chat::before{
+    content:"" !important;
+    position:absolute !important;
+    left:3px !important;
+    top:4px !important;
+    width:21px !important;
+    height:17px !important;
+    border:2px solid currentColor !important;
+    border-radius:50% !important;
+    box-sizing:border-box !important;
+  }
+  #mobileDock .rail-icon-chat::after{
+    content:"" !important;
+    position:absolute !important;
+    left:16px !important;
+    top:17px !important;
+    width:7px !important;
+    height:7px !important;
+    border-left:2px solid currentColor !important;
+    border-bottom:2px solid currentColor !important;
+    transform:skewY(-28deg) !important;
+    box-sizing:border-box !important;
+  }
 
   /* Profil */
-  
-  
+  #mobileDock .rail-icon-profile::before{
+    content:"" !important;
+    position:absolute !important;
+    left:9px !important;
+    top:2px !important;
+    width:10px !important;
+    height:10px !important;
+    border:2px solid currentColor !important;
+    border-radius:50% !important;
+    box-sizing:border-box !important;
+  }
+  #mobileDock .rail-icon-profile::after{
+    content:"" !important;
+    position:absolute !important;
+    left:4px !important;
+    top:14px !important;
+    width:20px !important;
+    height:11px !important;
+    border:2px solid currentColor !important;
+    border-bottom:0 !important;
+    border-radius:12px 12px 0 0 !important;
+    box-sizing:border-box !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex-direction:column !important;
+    gap:0 !important;
+    overflow:visible !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item small{
+    display:none !important;
+  }
 }
 
-
+/* =========================================================
+   EVERLIGHT MOBILE ISLAND — iOS/DYNAMIC-ISLAND STYLE
+   Compact -> drag upward -> expanded glass bubble.
+   Only the middle content scrolls.
+   ========================================================= */
 @media (max-width:660px){
-  
+  #mobileDock{
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(12px + env(safe-area-inset-bottom)) !important;
+    width:154px !important;
+    height:54px !important;
+    padding:5px !important;
+    transform:translateX(-50%) !important;
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:2px !important;
+    border-radius:28px !important;
+    background:rgba(12,15,17,.82) !important;
+    border:1px solid rgba(150,190,215,.24) !important;
+    box-shadow:0 10px 35px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.08) !important;
+    backdrop-filter:blur(24px) saturate(150%) !important;
+    -webkit-backdrop-filter:blur(24px) saturate(150%) !important;
+    transition:
+      width .28s cubic-bezier(.22,1,.36,1),
+      height .28s cubic-bezier(.22,1,.36,1),
+      bottom .28s cubic-bezier(.22,1,.36,1),
+      border-radius .28s cubic-bezier(.22,1,.36,1),
+      background .28s ease !important;
+    touch-action:none !important;
+    user-select:none !important;
+    -webkit-user-select:none !important;
+    will-change:transform,width,height,bottom !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:190px !important;
+    height:76px !important;
+    bottom:calc(24px + env(safe-area-inset-bottom)) !important;
+    border-radius:34px !important;
+    background:rgba(20,24,27,.88) !important;
+    box-shadow:0 18px 50px rgba(0,0,0,.72), inset 0 1px 0 rgba(255,255,255,.11) !important;
+  }
 
-  
+  #mobileDock::before{
+    content:"" !important;
+    position:absolute !important;
+    left:50% !important;
+    top:4px !important;
+    width:34px !important;
+    height:3px !important;
+    border-radius:3px !important;
+    transform:translateX(-50%) !important;
+    background:rgba(220,230,235,.30) !important;
+    opacity:.7 !important;
+    pointer-events:none !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    width:100% !important;
+    height:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    border-radius:22px !important;
+    color:#aeb9b7 !important;
+    background:transparent !important;
+    transition:transform .2s ease, background .2s ease, color .2s ease !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item.active{
+    color:var(--accent) !important;
+    background:rgba(130,180,215,.12) !important;
+  }
 
-  
+  #mobileDock.is-expanded .mobile-dock-item{
+    border-radius:26px !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item:active{
+    transform:scale(.90) !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item small{
+    display:none !important;
+  }
 
   /* Keep the custom icons crisp and centered in both states. */
-  
+  #mobileDock .rail-action-icon{
+    margin:auto !important;
+  }
 
   /* Do not let the fixed island become part of the scrolling layer. */
-  
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock{
+    position:fixed !important;
+  }
 }
 
 /* =========================================================
@@ -4149,7 +4441,9 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
   }
 
   /* Prevent the island/glass layer from covering the style control. */
-  
+  #mobileDock{
+    z-index:2147483000 !important;
+  }
 
   .topbar{
     position:relative !important;
@@ -4209,12 +4503,21 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
   }
 }
 
-
+/* =========================================================
+   FINAL MOBILE HEADER / ISLAND FIX
+   ========================================================= */
 @media (max-width:660px){
 
   /* Dynamic island: tapping does not leave it expanded.
      It expands temporarily and collapses again after interaction. */
-  
+  #mobileDock.is-expanded{
+    width:190px !important;
+    height:76px !important;
+    transition:width .24s cubic-bezier(.22,1,.36,1),
+               height .24s cubic-bezier(.22,1,.36,1),
+               bottom .24s cubic-bezier(.22,1,.36,1),
+               border-radius .24s cubic-bezier(.22,1,.36,1) !important;
+  }
 
   /* Domain: force the complete domain into one compact inline group. */
   .topbar .domain,
@@ -4291,17 +4594,39 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
   }
 }
 
-
+/* =========================================================
+   MOBILE ISLAND V2 — LARGER + HIGHER + NO CENTER HANDLE
+   ========================================================= */
 @media (max-width:660px){
-  
+  #mobileDock{
+    width:184px !important;
+    height:62px !important;
+    bottom:calc(30px + env(safe-area-inset-bottom)) !important;
+    border-radius:32px !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:218px !important;
+    height:84px !important;
+    bottom:calc(42px + env(safe-area-inset-bottom)) !important;
+    border-radius:38px !important;
+  }
 
-  
+  #mobileDock::before{
+    display:none !important;
+    content:none !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    min-height:50px !important;
+  }
 
-  
+  #mobileDock .rail-action-icon{
+    width:32px !important;
+    height:32px !important;
+    min-width:32px !important;
+    min-height:32px !important;
+  }
 
   /* Compact domain, but larger and clearly separated into the two domains. */
   .topbar .domain,
@@ -4477,13 +4802,28 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
 @media (max-width:660px){
 
   /* --- Dynamic Island: larger, less rounded, slightly higher --- */
-  
+  #mobileDock{
+    width:205px !important;
+    height:68px !important;
+    bottom:calc(38px + env(safe-area-inset-bottom)) !important;
+    border-radius:22px !important;
+    padding:6px !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:240px !important;
+    height:88px !important;
+    bottom:calc(50px + env(safe-area-inset-bottom)) !important;
+    border-radius:26px !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    border-radius:16px !important;
+  }
 
-  
+  #mobileDock.is-expanded .mobile-dock-item{
+    border-radius:19px !important;
+  }
 
   /* --- Domain: exactly two clean lines, no duplicate separator --- */
   .topbar .domain,
@@ -4589,14 +4929,35 @@ body.mono-mode .domain a:first-of-type{color:#f2f2f2 !important}
   }
 }
 
-
+/* =========================================================
+   MOBILE ISLAND — LONGER + LOWER + EQUAL SCREEN MARGINS
+   ========================================================= */
 @media (max-width:660px){
-  
+  #mobileDock{
+    width:230px !important;
+    height:68px !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:24px !important;
+    transform:translateX(-50%) !important;
+    border-radius:22px !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:264px !important;
+    height:88px !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:24px !important;
+    transform:translateX(-50%) !important;
+    border-radius:26px !important;
+  }
 
   /* Keep the same horizontal and vertical visual inset. */
-  
+  #mobileDock{
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
 }
 
 /* =========================================================
@@ -4715,11 +5076,31 @@ body.sun-mode .topbar .domain::before{
   }
 }
 
-
+/* FINAL MOBILE ISLAND / AI / DOMAIN */
 @media (max-width:660px){
-  
-  
-  
+  #mobileDock,.mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    width:230px !important;
+    max-width:calc(100vw - 28px) !important;
+    height:68px !important;
+    bottom:calc(78px + env(safe-area-inset-bottom,0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    border-radius:22px !important;
+    z-index:2147483000 !important;
+  }
+  #mobileDock.is-expanded{
+    width:250px !important;
+    height:84px !important;
+    bottom:calc(78px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:26px !important;
+  }
+  #mobileDock::before,.mobile-dock::before{
+    display:none !important;
+    content:none !important;
+  }
 
   .topbar .domain,.topbar .domain-wrap,.topbar .domain-address,.header-domain{
     position:relative !important;
@@ -4777,20 +5158,49 @@ body.sun-mode .topbar .domain::before{
   margin:0 !important;
 }
 
-
+/* =========================================================
+   FINAL MOBILE ISLAND / LOGO / DOMAIN LIGHT
+   ========================================================= */
 @media (max-width:660px){
 
   /* Island slightly lower, but still directly above the AI text. */
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(58px + env(safe-area-inset-bottom,0px)) !important;
+    left:50% !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    width:230px !important;
+    height:68px !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    bottom:calc(58px + env(safe-area-inset-bottom,0px)) !important;
+    width:250px !important;
+    height:84px !important;
+  }
 
   /* Force all three island icons to remain visible above every overlay. */
-  
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-dock-item .rail-action-icon{
+    visibility:visible !important;
+    opacity:1 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    color:#c7d1d5 !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-dock-item.active .rail-action-icon{
+    color:var(--accent) !important;
+  }
 
-  
+  #mobileDock .rail-action-icon::before,
+  #mobileDock .rail-action-icon::after{
+    opacity:1 !important;
+    visibility:visible !important;
+  }
 
   /* Domain light: clearly visible, beside the domain, not above it. */
   .topbar .domain::before{
@@ -4871,33 +5281,149 @@ body.sun-mode .topbar .domain::before{
   }
 }
 
-
+/* =========================================================
+   FINAL MOBILE ISLAND — LONGER, LOWER, SAFE SIDE MARGINS
+   + REAL ICONS ALWAYS VISIBLE
+   ========================================================= */
 @media (max-width:660px){
-  
+  #mobileDock,
+  .mobile-dock{
+    left:50% !important;
+    right:auto !important;
+    width:252px !important;
+    max-width:calc(100vw - 32px) !important;
+    height:68px !important;
+    bottom:calc(38px + env(safe-area-inset-bottom,0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    border-radius:22px !important;
+    overflow:visible !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:272px !important;
+    max-width:calc(100vw - 28px) !important;
+    height:84px !important;
+    bottom:calc(38px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:26px !important;
+  }
 
   /* Do not clip the icon drawings inside the island. */
-  
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-dock-item .rail-action-icon,
+  #mobileDock .mobile-dock-item .rail-action-icon::before,
+  #mobileDock .mobile-dock-item .rail-action-icon::after{
+    visibility:visible !important;
+    opacity:1 !important;
+    overflow:visible !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    color:#c9d3d7 !important;
+    background:transparent !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-dock-item.active .rail-action-icon{
+    color:var(--accent) !important;
+  }
 
-  
+  #mobileDock .rail-action-icon{
+    position:relative !important;
+    display:block !important;
+    width:30px !important;
+    height:30px !important;
+    min-width:30px !important;
+    min-height:30px !important;
+    flex:0 0 30px !important;
+    font-size:0 !important;
+    color:currentColor !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
 
   /* Explicit icon drawing, independent of icon font/SVG loading. */
-  
-  
+  #mobileDock .rail-icon-home::before{
+    content:"" !important;
+    position:absolute !important;
+    left:5px !important;
+    top:11px !important;
+    width:20px !important;
+    height:15px !important;
+    border:2px solid currentColor !important;
+    border-top:0 !important;
+    border-radius:3px !important;
+    box-sizing:border-box !important;
+  }
+  #mobileDock .rail-icon-home::after{
+    content:"" !important;
+    position:absolute !important;
+    left:7px !important;
+    top:4px !important;
+    width:16px !important;
+    height:16px !important;
+    border-left:2px solid currentColor !important;
+    border-top:2px solid currentColor !important;
+    transform:rotate(45deg) !important;
+    border-radius:2px 0 0 0 !important;
+    box-sizing:border-box !important;
+  }
 
-  
-  
+  #mobileDock .rail-icon-chat::before{
+    content:"" !important;
+    position:absolute !important;
+    left:3px !important;
+    top:5px !important;
+    width:22px !important;
+    height:18px !important;
+    border:2px solid currentColor !important;
+    border-radius:50% !important;
+    box-sizing:border-box !important;
+  }
+  #mobileDock .rail-icon-chat::after{
+    content:"" !important;
+    position:absolute !important;
+    left:17px !important;
+    top:18px !important;
+    width:7px !important;
+    height:7px !important;
+    border-left:2px solid currentColor !important;
+    border-bottom:2px solid currentColor !important;
+    transform:skewY(-28deg) !important;
+    box-sizing:border-box !important;
+  }
 
-  
-  
+  #mobileDock .rail-icon-profile::before{
+    content:"" !important;
+    position:absolute !important;
+    left:10px !important;
+    top:2px !important;
+    width:10px !important;
+    height:10px !important;
+    border:2px solid currentColor !important;
+    border-radius:50% !important;
+    box-sizing:border-box !important;
+  }
+  #mobileDock .rail-icon-profile::after{
+    content:"" !important;
+    position:absolute !important;
+    left:4px !important;
+    top:15px !important;
+    width:22px !important;
+    height:11px !important;
+    border:2px solid currentColor !important;
+    border-bottom:0 !important;
+    border-radius:12px 12px 0 0 !important;
+    box-sizing:border-box !important;
+  }
 }
 
-
+/* =========================================================
+   FINAL HEADER / DOMAIN / MOBILE ISLAND TUNING
+   ========================================================= */
 
 /* PC: larger Everlight wordmark */
 @media (min-width:661px){
@@ -5002,9 +5528,26 @@ body.sun-mode .topbar .domain::before{
   }
 
   /* Longer island, lower on screen, but with safe equal side margins. */
-  
+  #mobileDock,
+  .mobile-dock{
+    width:270px !important;
+    max-width:calc(100vw - 32px) !important;
+    height:68px !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    border-radius:22px !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:292px !important;
+    max-width:calc(100vw - 28px) !important;
+    height:84px !important;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:26px !important;
+  }
 }
 
 /* =========================================================
@@ -5105,13 +5648,32 @@ body.sun-mode .topbar .domain::before{
   }
 }
 
-
+/* =========================================================
+   FINAL MOBILE BOTTOM ISLAND + DATE/TIME POSITION
+   ========================================================= */
 @media (max-width:660px){
 
   /* Longer bottom island, still safely inside both screen edges. */
-  
+  #mobileDock,
+  .mobile-dock{
+    width:286px !important;
+    max-width:calc(100vw - 28px) !important;
+    height:68px !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    border-radius:22px !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:306px !important;
+    max-width:calc(100vw - 24px) !important;
+    height:84px !important;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:26px !important;
+  }
 
   /* Date/time immediately below the fixed top header. */
   .layout{
@@ -5151,7 +5713,7 @@ body.sun-mode .topbar .domain::before{
     position:relative!important;z-index:2147483647!important;pointer-events:auto!important;touch-action:manipulation!important;transform:none!important;
   }
   .topbar{position:relative!important;z-index:2147483500!important;isolation:isolate!important;overflow:visible!important;}
-  
+  #mobileDock,.mobile-dock{z-index:2147483000!important;}
 }
 
 /* =========================================================
@@ -5259,10 +5821,20 @@ body.sun-mode .topbar .domain::before{
   }
 }
 
-
+/* Mobile island is fixed-size: no drag-to-expand interaction. */
 @media (max-width:660px){
-  
-  
+  #mobileDock,.mobile-dock{
+    touch-action:manipulation !important;
+    user-select:none !important;
+    -webkit-user-select:none !important;
+  }
+  #mobileDock.is-expanded{
+    width:286px !important;
+    max-width:calc(100vw - 28px) !important;
+    height:68px !important;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:22px !important;
+  }
 }
 
 /* =========================================================
@@ -8025,11 +8597,35 @@ body.mono-mode .right-rail .activity-stats strong{
   }
 }
 
-
+/* =========================================================
+   MOBILE ISLAND — notification trigger + expandable panel
+   ========================================================= */
 @media(max-width:660px){
-  
+  #mobileDock{
+    position:fixed !important;
+    z-index:2147483000 !important;
+  }
 
-  
+  .mobile-island-alert{
+    position:absolute !important;
+    right:-5px !important;
+    top:-9px !important;
+    width:30px !important;
+    height:30px !important;
+    padding:0 !important;
+    display:grid !important;
+    place-items:center !important;
+    border:1px solid rgba(139,173,204,.22) !important;
+    border-radius:50% !important;
+    background:#151d23 !important;
+    color:#9fc8e8 !important;
+    box-shadow:
+      0 4px 12px rgba(0,0,0,.28),
+      inset 0 1px 0 rgba(255,255,255,.04) !important;
+    cursor:pointer !important;
+    z-index:12 !important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
 
   .mobile-alert-icon{
     display:block !important;
@@ -8055,7 +8651,9 @@ body.mono-mode .right-rail .activity-stats strong{
     box-shadow:0 0 9px rgba(130,185,232,.55) !important;
   }
 
-  
+  .mobile-island-alert:active{
+    transform:scale(.94) !important;
+  }
 
   .mobile-community-panel{
     position:fixed !important;
@@ -8170,20 +8768,59 @@ body.mono-mode .right-rail .activity-stats strong{
   }
 }
 
-
-
+/* =========================================================
+   FINAL MOBILE POLISH — notification is INSIDE the island
+   and the header symbol divider is tied to the real header.
+   ========================================================= */
+.mobile-island-alert{
+  display:none !important;
+}
 
 @media(max-width:660px){
   /* The notification control is a normal island item, not a floating bubble. */
-  
+  #mobileDock{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-around !important;
+    gap:2px !important;
+    overflow:visible !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item{
+    position:relative !important;
+    flex:1 1 0 !important;
+    min-width:0 !important;
+  }
 
-  
+  #mobileDock .mobile-island-alert{
+    position:relative !important;
+    inset:auto !important;
+    flex:0 0 48px !important;
+    width:48px !important;
+    height:48px !important;
+    margin:0 4px !important;
+    padding:0 !important;
+    display:grid !important;
+    place-items:center !important;
+    border:1px solid rgba(139,173,204,.16) !important;
+    border-radius:16px !important;
+    background:rgba(21,29,35,.72) !important;
+    color:#9fc8e8 !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+  }
 
-  
+  #mobileDock .mobile-alert-icon{
+    font-size:13px !important;
+    line-height:1 !important;
+  }
 
-  
+  #mobileDock .mobile-alert-badge{
+    top:4px !important;
+    right:4px !important;
+    min-width:12px !important;
+    height:12px !important;
+    font-size:8px !important;
+  }
 
   /* Header divider: derive its position from the actual fixed header,
      so there cannot be a second/offset line. */
@@ -8248,44 +8885,197 @@ body.mono-mode .right-rail .activity-stats strong{
 
 
 
-
+/* =========================================================
+   CANONICAL MOBILE ISLAND + COMMUNITY PANEL
+   One source of truth for the four bottom actions.
+   ========================================================= */
 @media (max-width:660px){
-  
+  #mobileDock,
+  .mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px)) !important;
+    width:286px !important;
+    max-width:calc(100vw - 28px) !important;
+    height:68px !important;
+    margin:0 !important;
+    padding:5px !important;
+    transform:translateX(-50%) !important;
+    display:grid !important;
+    grid-template-columns:repeat(4,1fr) !important;
+    gap:0 !important;
+    align-items:center !important;
+    justify-items:center !important;
+    box-sizing:border-box !important;
+    overflow:visible !important;
+    border:1px solid rgba(150,190,215,.24) !important;
+    border-radius:22px !important;
+    background:rgba(12,15,17,.88) !important;
+    box-shadow:0 10px 35px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.08) !important;
+    backdrop-filter:blur(24px) saturate(150%) !important;
+    -webkit-backdrop-filter:blur(24px) saturate(150%) !important;
+    z-index:2147483000 !important;
+  }
 
-  
+  #mobileDock.is-expanded{
+    width:306px !important;
+    max-width:calc(100vw - 24px) !important;
+    height:84px !important;
+    border-radius:26px !important;
+  }
 
-  
+  #mobileDock::before{
+    display:none !important;
+    content:none !important;
+  }
 
   /* Every action owns the same 48×48 selected square. */
-  
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-island-alert{
+    position:relative !important;
+    inset:auto !important;
+    width:48px !important;
+    height:48px !important;
+    min-width:48px !important;
+    min-height:48px !important;
+    max-width:48px !important;
+    max-height:48px !important;
+    margin:0 !important;
+    padding:0 !important;
+    box-sizing:border-box !important;
+    justify-self:center !important;
+    align-self:center !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border:1px solid transparent !important;
+    border-radius:16px !important;
+    background:transparent !important;
+    color:#c9d3d7 !important;
+    box-shadow:none !important;
+    outline:none !important;
+    transition:background .18s ease,color .18s ease,border-color .18s ease,box-shadow .22s ease,transform .14s ease !important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item small{display:none !important;}
 
   /* Only the currently open view gets the selected surface. */
-  
+  #mobileDock .mobile-dock-item.active{
+    color:var(--accent) !important;
+    background:var(--accent-soft) !important;
+    border-color:rgba(130,185,232,.10) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item:not(.active),
+  #mobileDock .mobile-island-alert:not(.is-open){
+    color:#c9d3d7 !important;
+    background:transparent !important;
+    border-color:transparent !important;
+    box-shadow:none !important;
+  }
 
   /* Notification is exactly the same selected square as Hub. */
-  
+  #mobileDock .mobile-island-alert.is-open{
+    color:var(--accent) !important;
+    background:var(--accent-soft) !important;
+    border-color:rgba(130,185,232,.20) !important;
+    box-shadow:
+      0 0 0 1px rgba(130,185,232,.08),
+      0 0 18px rgba(130,185,232,.18),
+      inset 0 1px 0 rgba(255,255,255,.05) !important;
+  }
 
-  
+  #mobileDock .mobile-island-alert:hover,
+  #mobileDock .mobile-island-alert:focus-visible{
+    color:#c9d3d7 !important;
+    background:transparent !important;
+    border-color:transparent !important;
+    box-shadow:none !important;
+    outline:none !important;
+  }
 
-  
+  #mobileDock .mobile-island-alert.is-open:hover,
+  #mobileDock .mobile-island-alert.is-open:focus-visible{
+    color:var(--accent) !important;
+    background:var(--accent-soft) !important;
+    border-color:rgba(130,185,232,.20) !important;
+    box-shadow:
+      0 0 0 1px rgba(130,185,232,.08),
+      0 0 18px rgba(130,185,232,.18),
+      inset 0 1px 0 rgba(255,255,255,.05) !important;
+  }
 
-  
+  #mobileDock .rail-action-icon{
+    position:relative !important;
+    display:block !important;
+    width:30px !important;
+    height:30px !important;
+    min-width:30px !important;
+    min-height:30px !important;
+    flex:0 0 30px !important;
+    margin:0 !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    color:currentColor !important;
+    overflow:visible !important;
+    font-size:0 !important;
+  }
 
-  
+  #mobileDock .mobile-alert-icon{
+    display:grid !important;
+    place-items:center !important;
+    width:30px !important;
+    height:30px !important;
+    min-width:30px !important;
+    min-height:30px !important;
+    flex:0 0 30px !important;
+    color:currentColor !important;
+    opacity:.72 !important;
+    filter:none !important;
+    text-shadow:none !important;
+  }
 
-  
+  #mobileDock .mobile-alert-icon svg{
+    display:block !important;
+    width:22px !important;
+    height:22px !important;
+    fill:none !important;
+    stroke:currentColor !important;
+  }
 
-  
+  #mobileDock .mobile-island-alert.is-open .mobile-alert-icon{
+    opacity:1 !important;
+  }
 
-  
+  #mobileDock .mobile-alert-badge{
+    position:absolute !important;
+    top:3px !important;
+    right:3px !important;
+    min-width:13px !important;
+    height:13px !important;
+    padding:0 3px !important;
+    border-radius:8px !important;
+    display:grid !important;
+    place-items:center !important;
+    box-sizing:border-box !important;
+    background:#66737b !important;
+    color:#0b1115 !important;
+    font:800 8px/1 Arial,sans-serif !important;
+    box-shadow:none !important;
+  }
 
-  
+  #mobileDock .mobile-island-alert.is-open .mobile-alert-badge{
+    background:#82b9e8 !important;
+    box-shadow:0 0 9px rgba(130,185,232,.42) !important;
+  }
 
-  
+  #mobileDock .mobile-dock-item:active,
+  #mobileDock .mobile-island-alert:active{
+    transform:scale(.94) !important;
+  }
 
   /* Notification sheet: one glass shell, no inner black rectangle. */
   .mobile-community-panel{
@@ -8377,7 +9167,11 @@ body.mono-mode .right-rail .activity-stats strong{
 
 /* Desktop: notification island is mobile-only. */
 @media (min-width:661px){
-  
+  #mobileCommunityAlert,
+  .mobile-island-alert,
+  #mobileCommunityPanel{
+    display:none !important;
+  }
 }
 
 /* =========================================================
@@ -9884,7 +10678,9 @@ body.sun-mode .topbar .domain .domain-mode-light{
 }
 
 
-
+/* =========================================================
+   FINAL NAVIGATION LAYOUT — desktop sidebar + mobile island
+   ========================================================= */
 @media (min-width: 961px){
   .desktop-rail-actions{
     display:flex !important;
@@ -9952,13 +10748,27 @@ body.sun-mode .topbar .domain .domain-mode-light{
 }
 
 @media (max-width:660px){
-  
-  
-  
-  
-  
-  
-  
+  #mobileDock{
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    height:64px !important; min-height:64px !important;
+    border-radius:22px !important;
+  }
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-island-alert{
+    box-sizing:border-box !important; width:100% !important; height:100% !important;
+    min-width:0 !important; border:0 !important; background:transparent !important;
+    display:grid !important; place-items:center !important;
+    border-radius:20px !important; color:#cfd9de !important;
+  }
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-island-alert[aria-expanded="true"]{
+    background:#162127 !important; color:#9fc4e7 !important;
+    box-shadow:inset 0 0 0 1px rgba(139,173,204,.15) !important;
+  }
+  #mobileDock .mobile-dock-item small{display:none !important;}
+  #mobileDock .mobile-menu-item{position:relative !important;}
+  #mobileDock .mobile-menu-icon{width:25px !important;height:22px !important;display:flex !important;flex-direction:column !important;justify-content:space-between !important;padding:2px 0 !important;}
+  #mobileDock .mobile-menu-icon i{display:block !important;width:25px !important;height:2.5px !important;border-radius:3px !important;background:currentColor !important;}
 }
 
 /* =========================================================
@@ -10066,7 +10876,12 @@ body.sun-mode .topbar .domain .domain-mode-light{
     max-width:55% !important;
   }
 
-  
+  .mobile-dock{
+    left:14px !important;
+    right:14px !important;
+    width:auto !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  }
 
   .site-footer p{
     font-size:12px !important;
@@ -10115,7 +10930,8 @@ body.sun-mode .topbar .domain .domain-mode-light{
   }
 }
 
-
+/* FINAL MOBILE AI ATTRIBUTION FIX
+   The attribution belongs above the floating island, not underneath it. */
 @media (max-width:660px){
   .site-footer{
     position:fixed !important;
@@ -10438,7 +11254,10 @@ body.sun-mode .topbar .domain .domain-mode-light{
 
 @media (max-width:660px){
   /* Move the floating island slightly lower on phones. */
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(22px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 
   /* Keep the AI attribution below the island and lower on the screen. */
   .site-footer{
@@ -10460,11 +11279,27 @@ body.sun-mode .topbar .domain .domain-mode-light{
   }
 
   /* Remove any central footer/dock glow that can appear as a white spot. */
-  
+  .site-footer::before,
+  .site-footer::after,
+  .site-footer p::before,
+  .site-footer p::after,
+  #mobileDock::before,
+  #mobileDock::after,
+  .mobile-dock::before,
+  .mobile-dock::after{
+    content:none !important;
+    display:none !important;
+    background:none !important;
+    box-shadow:none !important;
+    filter:none !important;
+  }
 }
 
 @media(max-width:390px){
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+  }
   .site-footer{
     bottom:calc(-2px + env(safe-area-inset-bottom, 0px)) !important;
     transform:translateY(7px) !important;
@@ -10476,10 +11311,23 @@ body.sun-mode .topbar .domain .domain-mode-light{
 }
 
 
-
+/* =========================================================
+   FINAL MOBILE BOTTOM ISLAND / AI FOOTER CLEANUP
+   ========================================================= */
 @media (max-width:660px){
   /* Keep the island genuinely low, but above the iOS safe-area/home indicator. */
-  
+  #mobileDock,
+  .mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(5px + env(safe-area-inset-bottom, 0px)) !important;
+    transform:translateX(-50%) !important;
+    z-index:2147483000 !important;
+    background:#050707 !important;
+    background-image:none !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.55) !important;
+  }
 
   /* The attribution is below the island, not a black fixed block over the page. */
   .site-footer{
@@ -10528,7 +11376,22 @@ body.sun-mode .topbar .domain .domain-mode-light{
   }
 
   /* Absolutely no pseudo-element may paint the old white spot or black strip. */
-  
+  .site-footer::before,
+  .site-footer::after,
+  .site-footer p::before,
+  .site-footer p::after,
+  #mobileDock::before,
+  #mobileDock::after,
+  .mobile-dock::before,
+  .mobile-dock::after{
+    content:none !important;
+    display:none !important;
+    width:0 !important;
+    height:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    filter:none !important;
+  }
 
   /* Do not let any ancestor create a painted strip underneath the island. */
   html,
@@ -10541,7 +11404,10 @@ body.sun-mode .topbar .domain .domain-mode-light{
 }
 
 @media (max-width:390px){
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 
   .site-footer{
     bottom:calc(1px + env(safe-area-inset-bottom, 0px)) !important;
@@ -10767,7 +11633,11 @@ body.sun-mode .topbar .domain .domain-mode-light{
 
 
 
-
+/* =========================================================
+   MOBILE BOTTOM DOCK + AI ATTRIBUTION — SINGLE CLEAN RULESET
+   Keep the island and attribution together, below the content,
+   without using pseudo-elements or artificial bottom strips.
+   ========================================================= */
 @media (max-width:660px){
   html, body{
     background:#000 !important;
@@ -10775,7 +11645,19 @@ body.sun-mode .topbar .domain .domain-mode-light{
     overflow-x:hidden !important;
   }
 
-  
+  #mobileDock,
+  .mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+    transform:translateX(-50%) !important;
+    z-index:2147483000 !important;
+    margin:0 !important;
+    background:#050707 !important;
+    background-image:none !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.58) !important;
+  }
 
   .site-footer{
     position:fixed !important;
@@ -10819,7 +11701,23 @@ body.sun-mode .topbar .domain .domain-mode-light{
   }
 
   /* No web-element pseudo-element is allowed to paint the old spot/strip. */
-  
+  body::before, body::after,
+  .layout::before, .layout::after,
+  main#feed::before, main#feed::after,
+  #feed::before, #feed::after,
+  #feed > .feed-list::before, #feed > .feed-list::after,
+  #mobileDock::before, #mobileDock::after,
+  .mobile-dock::before, .mobile-dock::after,
+  .site-footer::before, .site-footer::after,
+  .site-footer p::before, .site-footer p::after{
+    content:none !important;
+    display:none !important;
+    width:0 !important;
+    height:0 !important;
+    background:none !important;
+    box-shadow:none !important;
+    filter:none !important;
+  }
 
   /* Keep the page content clear of the fixed dock. */
   main#feed, #feed, .layout{
@@ -10827,7 +11725,14 @@ body.sun-mode .topbar .domain .domain-mode-light{
   }
 
   /* Keep the mobile dock visible while panels are open. The panel sits above it. */
-  
+  body.messages-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock,
+  body.profile-customizer-open .mobile-dock{
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+  }
 
   body.messages-view-open .site-footer,
   body.profile-view-open .site-footer,
@@ -10837,7 +11742,10 @@ body.sun-mode .topbar .domain .domain-mode-light{
 }
 
 @media (max-width:390px){
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 
   .site-footer{
     bottom:calc(-8px + env(safe-area-inset-bottom, 0px)) !important;
@@ -10863,7 +11771,16 @@ body.sun-mode .topbar .domain .domain-mode-light{
     overflow-x:hidden !important;
   }
 
-  
+  #mobileDock,
+  .mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    z-index:2147483000 !important;
+  }
 
   .site-footer{
     position:fixed !important;
@@ -10887,11 +11804,27 @@ body.sun-mode .topbar .domain .domain-mode-light{
   }
 
   /* Explicitly remove every decorative pseudo-element from the bottom area. */
-  
+  #mobileDock::before,
+  #mobileDock::after,
+  .mobile-dock::before,
+  .mobile-dock::after,
+  .site-footer::before,
+  .site-footer::after,
+  .site-footer p::before,
+  .site-footer p::after{
+    content:none !important;
+    display:none !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+  }
 }
 
 @media (max-width:390px){
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+  }
   .site-footer{
     bottom:calc(17px + env(safe-area-inset-bottom, 0px)) !important;
   }
@@ -10976,7 +11909,13 @@ html body[data-font="mono"] svg text {
   font-family: inherit !important;
 }
 
-
+/* =========================================================
+   FINAL MOBILE DOCK / AI FOOTER TUNING
+   - move the floating island lower
+   - keep AI attribution readable below the island
+   - keep the page black through the iOS safe-area
+   - remove any remaining web-painted bottom artifacts
+   ========================================================= */
 @media (max-width:660px){
   html,
   body{
@@ -10987,7 +11926,16 @@ html body[data-font="mono"] svg text {
     overflow-x:hidden !important;
   }
 
-  
+  #mobileDock,
+  .mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    z-index:2147483000 !important;
+  }
 
   .site-footer{
     position:fixed !important;
@@ -11030,11 +11978,44 @@ html body[data-font="mono"] svg text {
   }
 
   /* Nothing from the web page may paint the old white bottom spot. */
-  
+  html::before,
+  html::after,
+  body::before,
+  body::after,
+  .layout::before,
+  .layout::after,
+  main#feed::before,
+  main#feed::after,
+  #feed::before,
+  #feed::after,
+  #feed > .feed-list::before,
+  #feed > .feed-list::after,
+  #mobileDock::before,
+  #mobileDock::after,
+  .mobile-dock::before,
+  .mobile-dock::after,
+  .site-footer::before,
+  .site-footer::after,
+  .site-footer p::before,
+  .site-footer p::after{
+    content:none !important;
+    display:none !important;
+    width:0 !important;
+    height:0 !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    filter:none !important;
+  }
 }
 
 @media (max-width:390px){
-  
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 
   .site-footer{
     bottom:calc(6px + env(safe-area-inset-bottom, 0px)) !important;
@@ -11131,9 +12112,9 @@ html body[data-font="mono"] svg text {
 }
 .editor-symbol-picker button:hover{background:rgba(139,173,204,.12);color:var(--accent);}
 .feed-card-full-text .ev-font-sans,.post-reader-body .ev-font-sans{font-family:Manrope,Arial,sans-serif;}
-.feed-card-full-text .ev-font-serif,.post-reader-body .ev-font-serif{font-family:Georgia,"Times New Roman",serif;}
-.feed-card-full-text .ev-font-mono,.post-reader-body .ev-font-mono{font-family:"DM Mono",monospace;}
-.feed-card-full-text .ev-font-display,.post-reader-body .ev-font-display{font-family:"Playfair Display",Georgia,serif;}
+.feed-card-full-text .ev-font-serif,.post-reader-body .ev-font-serif{font-family:Georgia,'Times New Roman',serif;}
+.feed-card-full-text .ev-font-mono,.post-reader-body .ev-font-mono{font-family:'DM Mono',monospace;}
+.feed-card-full-text .ev-font-display,.post-reader-body .ev-font-display{font-family:'Playfair Display',Georgia,serif;}
 
 @media(max-width:660px){
   #feed .feed-editor-toolbar #editorFontFormat{min-width:104px !important;}
@@ -11182,9 +12163,9 @@ html body[data-font="mono"] svg text {
 #feed .feed-rich-editor ul{margin:6px 0 6px 24px !important;padding-left:20px !important;}
 #feed .feed-rich-editor li{margin:2px 0 !important;}
 #feed .feed-rich-editor .ev-font-sans{font-family:Manrope,Arial,sans-serif !important;}
-#feed .feed-rich-editor .ev-font-serif{font-family:"Playfair Display",Georgia,serif !important;}
-#feed .feed-rich-editor .ev-font-mono{font-family:"DM Mono",ui-monospace,monospace !important;}
-#feed .feed-rich-editor .ev-font-display{font-family:"Playfair Display",Georgia,serif !important;}
+#feed .feed-rich-editor .ev-font-serif{font-family:'Playfair Display',Georgia,serif !important;}
+#feed .feed-rich-editor .ev-font-mono{font-family:'DM Mono',ui-monospace,monospace !important;}
+#feed .feed-rich-editor .ev-font-display{font-family:'Playfair Display',Georgia,serif !important;}
 
 #feed .feed-editor-toolbar .editor-tool-spacer{
   display:block !important;
@@ -12399,9 +13380,34 @@ main#feed{
   box-sizing:border-box !important;
   transform:skewY(-28deg) !important;
 }
-
-
-
+#mobileDock .rail-icon-chat{
+  width:30px !important;
+  height:30px !important;
+  min-width:30px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+#mobileDock .rail-icon-chat::before{
+  left:3px !important;
+  top:3px !important;
+  width:22px !important;
+  height:18px !important;
+  border:2.2px solid currentColor !important;
+  border-radius:50% !important;
+  transform:none !important;
+}
+#mobileDock .rail-icon-chat::after{
+  left:19px !important;
+  top:17px !important;
+  width:7px !important;
+  height:7px !important;
+  border:0 !important;
+  border-left:2.2px solid currentColor !important;
+  border-bottom:2.2px solid currentColor !important;
+  border-radius:0 0 0 2px !important;
+  transform:skewY(-28deg) !important;
+}
 
 /* =========================================================
    CHAT SURFACE — FINAL DESKTOP HEADER + COMPOSER FIX
@@ -12944,6 +13950,905 @@ main#feed{
   }
 }
 
+/* =========================================================
+   FINAL MOBILE PANEL BEHAVIOUR
+   Csevegés + Profil behave exactly like the Értesítések sheet:
+   floating panel above the same mobile island, with the island
+   always staying visible.
+   ========================================================= */
+@media (max-width:660px){
+  /* Never hide the mobile island while a view is open. */
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock,
+  body.messages-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock{
+    display:grid !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    z-index:2147483000 !important;
+  }
+
+  /* The top header also stays in place, like the notification sheet. */
+  body.messages-view-open .topbar,
+  body.profile-view-open .topbar{
+    display:grid !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    z-index:50 !important;
+  }
+
+  /* Shared sheet geometry — deliberately matches .mobile-community-panel. */
+  .messages-view.open,
+  .messages-view[aria-hidden="false"],
+  .profile-view.open,
+  .profile-view[aria-hidden="false"]{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    top:auto !important;
+    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-width:none !important;
+    max-height:min(64vh,520px) !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    border:1px solid rgba(139,173,204,.20) !important;
+    border-radius:16px !important;
+    background:linear-gradient(145deg,rgba(20,27,33,.985),rgba(12,18,23,.99)) !important;
+    box-shadow:0 18px 45px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.035) !important;
+    z-index:2147482990 !important;
+  }
+
+  .messages-view-inner,
+  .profile-view-inner{
+    width:100% !important;
+    min-height:0 !important;
+    max-height:min(64vh,520px) !important;
+    overflow:auto !important;
+    background:transparent !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .messages-view-header,
+  .profile-view-header{
+    position:sticky !important;
+    top:0 !important;
+    z-index:5 !important;
+    background:rgba(14,20,24,.96) !important;
+    backdrop-filter:blur(14px) !important;
+    -webkit-backdrop-filter:blur(14px) !important;
+  }
+
+  /* Do not use full-screen body locking for sheet views. */
+  body.messages-view-open,
+  body.profile-view-open{
+    overflow:auto !important;
+    height:auto !important;
+  }
+}
+
+/* =========================================================
+   FINAL MOBILE NAV TOGGLE — one consistent interaction model
+   ========================================================= */
+@media (max-width:660px){
+  #mobileDock .mobile-dock-item.active{
+    background:var(--accent-soft) !important;
+    color:var(--accent) !important;
+  }
+
+  #mobileDock .mobile-dock-item:not(.active){
+    background:transparent !important;
+    color:#c9d3d7 !important;
+  }
+}
+
+/* =========================================================
+   MOBILE FINAL — NOTIFICATION / CHAT / PROFILE SHEETS
+   One consistent floating panel; dock stays visible.
+   ========================================================= */
+@media (max-width:660px){
+  #mobileDock{
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    z-index:2147483647 !important;
+  }
+
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-island-alert.is-open,
+  #mobileDock .mobile-island-alert[aria-expanded="true"]{
+    color:var(--accent) !important;
+    background:var(--accent-soft) !important;
+  }
+
+  /* All three mobile views use the same long, floating sheet style. */
+  .messages-view.open,
+  .messages-view[aria-hidden="false"],
+  .profile-view.open,
+  .profile-view[aria-hidden="false"],
+  .mobile-community-panel.is-open{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    top:calc(64px + env(safe-area-inset-top,0px)) !important;
+    bottom:calc(102px + env(safe-area-inset-bottom,0px)) !important;
+    inset-inline:12px !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    border-radius:20px !important;
+    overflow:hidden !important;
+    background:#050707 !important;
+    border:1px solid #20292a !important;
+    box-shadow:0 18px 55px rgba(0,0,0,.62) !important;
+    z-index:2147483000 !important;
+  }
+
+  .messages-view-inner,
+  .profile-view-inner,
+  .mobile-community-panel-body{
+    min-height:0 !important;
+    height:100% !important;
+    max-height:none !important;
+    overflow:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+  }
+
+  /* Remove built-in top-right X buttons; dock button is the only toggle. */
+  #closeMessagesView,
+  #closeProfileView,
+  #mobileCommunityClose{
+    display:none !important;
+  }
+
+  .messages-view-header,
+  .profile-view-header,
+  .mobile-community-panel-head{
+    position:sticky !important;
+    top:0 !important;
+    z-index:20 !important;
+    background:#050707 !important;
+    backdrop-filter:blur(10px) !important;
+  }
+
+  .messages-layout{
+    min-height:0 !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+
+  .message-chat{
+    min-height:0 !important;
+    height:auto !important;
+  }
+
+  .dm-list{
+    min-height:180px !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+  }
+
+  .message-compose{
+    position:sticky !important;
+    bottom:0 !important;
+    z-index:15 !important;
+  }
+
+  /* The dock must remain visible under every sheet. */
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock,
+  body.mobile-community-open #mobileDock{
+    display:grid !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+  }
+
+  body.messages-view-open .site-footer,
+  body.profile-view-open .site-footer,
+  body.mobile-community-open .site-footer{
+    display:none !important;
+  }
+}
+
+
+/* MOBILE FINAL PATCH — notification/chat/profile sheet alignment + dock state */
+@media (max-width:660px){
+  /* Every mobile sheet gets the same long, scrollable panel geometry. */
+  .messages-view.open,
+  .messages-view[aria-hidden="false"],
+  .profile-view.open,
+  .profile-view[aria-hidden="false"],
+  .mobile-community-panel.is-open{
+    left:12px !important;
+    right:12px !important;
+    top:calc(64px + env(safe-area-inset-top,0px)) !important;
+    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+
+  /* The dock uses a real data-view on every item, including Ertesítések/Menü. */
+  #mobileDock .mobile-dock-item.active,
+  #mobileDock .mobile-dock-item[data-view][aria-current="page"],
+  #mobileDock .mobile-island-alert.is-open,
+  #mobileDock .mobile-island-alert[aria-expanded="true"]{
+    background:var(--accent-soft) !important;
+    color:var(--accent) !important;
+  }
+
+  #mobileDock .mobile-dock-item:not(.active):not([aria-current="page"]),
+  #mobileDock .mobile-island-alert:not(.is-open):not([aria-expanded="true"]){
+    background:transparent !important;
+    color:#c9d3d7 !important;
+  }
+
+  /* Keep the island above sheets and always interactive. */
+  #mobileDock{
+    display:grid !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    z-index:2147483647 !important;
+  }
+
+  /* Make the chat one self-contained, vertically movable area. */
+  .messages-view-inner{
+    height:100% !important;
+    min-height:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    overflow:hidden !important;
+  }
+
+  .messages-view-header{
+    flex:0 0 auto !important;
+  }
+
+  .messages-layout{
+    display:flex !important;
+    flex:1 1 auto !important;
+    flex-direction:column !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:hidden !important;
+  }
+
+  .message-contacts{
+    display:none !important;
+  }
+
+  .message-auth-gate{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .message-chat{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:hidden !important;
+    flex-direction:column !important;
+  }
+
+  .message-chat-header{
+    flex:0 0 auto !important;
+  }
+
+  .dm-list{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+    touch-action:pan-y !important;
+  }
+
+  .message-compose{
+    flex:0 0 auto !important;
+    position:relative !important;
+    bottom:auto !important;
+  }
+
+  /* Remove all embedded close controls: dock button is the only toggle. */
+  #closeMessagesView, #closeProfileView, #mobileCommunityClose{
+    display:none !important;
+  }
+}
+
+
+
+/* MOBILE DEFINITIVE SHEET FIX
+   - dock state is controlled only by setMobileDockActive()
+   - Csevegés is a single self-contained sheet, never an inner window
+   - contacts/chat panes scroll independently without translating the outer sheet
+*/
+@media (max-width:660px){
+  #mobileDock{
+    display:grid !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    z-index:2147483647 !important;
+  }
+
+  #mobileDock .mobile-dock-item.active{
+    background:var(--accent-soft) !important;
+    color:var(--accent) !important;
+    box-shadow:inset 0 0 0 1px var(--accent-border) !important;
+  }
+  #mobileDock .mobile-dock-item.active .rail-action-icon{ color:var(--accent) !important; }
+  #mobileDock .mobile-island-alert.is-open,
+  #mobileDock .mobile-island-alert[aria-expanded="true"]{
+    background:var(--accent-soft) !important;
+    color:var(--accent) !important;
+    box-shadow:inset 0 0 0 1px var(--accent-border) !important;
+  }
+
+  /* All three sheets share one geometry. */
+  .messages-view.open, .messages-view[aria-hidden="false"],
+  .profile-view.open, .profile-view[aria-hidden="false"],
+  .mobile-community-panel.is-open{
+    position:fixed !important;
+    left:12px !important; right:12px !important;
+    top:calc(64px + env(safe-area-inset-top,0px)) !important;
+    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important; height:auto !important;
+    max-width:none !important; max-height:none !important;
+    margin:0 !important;
+    border-radius:20px !important;
+    overflow:hidden !important;
+    z-index:2147483640 !important;
+    touch-action:auto !important;
+  }
+
+  .messages-view.open, .messages-view[aria-hidden="false"]{
+    display:flex !important;
+    flex-direction:column !important;
+    background:#050707 !important;
+  }
+
+  .messages-view-inner{
+    display:flex !important;
+    flex-direction:column !important;
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    height:100% !important;
+    max-height:none !important;
+    overflow:hidden !important;
+    touch-action:auto !important;
+  }
+
+  .messages-view-header{
+    flex:0 0 auto !important;
+    position:relative !important;
+    height:62px !important;
+    min-height:62px !important;
+  }
+
+  /* Do not slide the chat pane off-screen on the mobile sheet.
+     The list is the primary view; when chat-open is active, chat fills it. */
+  .messages-view .messages-layout{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:hidden !important;
+    position:relative !important;
+  }
+
+  .messages-view .message-contacts{
+    position:relative !important;
+    inset:auto !important;
+    flex:1 1 auto !important;
+    width:100% !important;
+    height:100% !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    transform:none !important;
+    transition:none !important;
+    -webkit-overflow-scrolling:touch !important;
+    touch-action:pan-y !important;
+  }
+
+  .messages-view .message-chat{
+    position:absolute !important;
+    inset:0 !important;
+    display:grid !important;
+    grid-template-rows:auto minmax(0,1fr) auto !important;
+    width:100% !important;
+    height:100% !important;
+    max-height:none !important;
+    overflow:hidden !important;
+    transform:translateX(100%) !important;
+    transition:transform .2s ease !important;
+    z-index:5 !important;
+    background:#050707 !important;
+  }
+  .messages-view.chat-open .message-chat{ transform:translateX(0) !important; }
+  .messages-view.chat-open .message-contacts{ opacity:1 !important; }
+
+  .messages-view .dm-list{
+    min-height:0 !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    touch-action:pan-y !important;
+    overscroll-behavior:contain !important;
+  }
+
+  .messages-view .message-compose{
+    position:relative !important;
+    flex:0 0 auto !important;
+    bottom:auto !important;
+    z-index:10 !important;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px)) !important;
+  }
+
+  .messages-view .message-chat-back{ display:grid !important; place-items:center !important; }
+
+  /* Login gate also scrolls normally and is never trapped by an outer window. */
+  .messages-view .message-auth-gate{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    touch-action:pan-y !important;
+  }
+
+  #closeMessagesView,#closeProfileView,#mobileCommunityClose{ display:none !important; }
+}
+
+
+/* Mobile chat: unauthenticated users see only a compact sign-in notice.
+   Authentication itself remains in the Profile view. */
+@media (max-width:660px){
+  .chat-login-required{
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:28px 24px;
+    text-align:center;
+    color:var(--text, #e9eeee);
+  }
+  .chat-login-required .chat-welcome-icon{
+    margin-bottom:4px;
+  }
+  .chat-login-required strong{
+    font-size:20px;
+  }
+  .chat-login-required p{
+    margin:0;
+    max-width:330px;
+    color:var(--muted, #9ca9ad);
+    line-height:1.55;
+  }
+  .messages-view .message-chat{
+    transform:translateX(0) !important;
+  }
+  .messages-view.chat-open .message-chat{
+    transform:translateX(0) !important;
+  }
+  .messages-view .message-chat[hidden]{
+    display:none !important;
+  }
+  .messages-view .message-chat{
+    touch-action:auto !important;
+  }
+}
+
+/* =========================================================
+   FINAL CHAT CLEANUP
+   One chat surface only. The chat never contains the Profile
+   login form and never slides behind another pane.
+   ========================================================= */
+.message-auth-gate[hidden]{display:none !important;}
+.chat-login-required{
+  min-height:220px;
+  width:min(520px,100%);
+  margin:auto;
+  padding:28px 24px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-align:center;
+  color:var(--text,#e9eeee);
+}
+.chat-login-required .chat-welcome-icon{font-size:22px;line-height:1;margin-bottom:4px;color:var(--accent,#9fc8e8);}
+.chat-login-required strong{font:700 20px/1.25 "Manrope",Arial,sans-serif;color:#e8eeee;}
+.chat-login-required p{margin:0;max-width:420px;color:#89959a;line-height:1.55;}
+
+@media (max-width:660px){
+  /* The mobile dock is always visible and owns the open/close state. */
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock,
+  #mobileDock{display:grid !important;visibility:visible !important;opacity:1 !important;pointer-events:auto !important;}
+
+  /* Csevegés is one sheet, not a sheet containing another sliding window. */
+  .messages-view.open,
+  .messages-view[aria-hidden="false"]{
+    left:12px !important;
+    right:12px !important;
+    top:calc(64px + env(safe-area-inset-top,0px)) !important;
+    bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;
+    height:auto !important;
+    max-width:none !important;
+    max-height:none !important;
+    overflow:hidden !important;
+    display:flex !important;
+    flex-direction:column !important;
+    background:#050707 !important;
+    transform:none !important;
+  }
+
+  .messages-view.open .messages-view-inner,
+  .messages-view[aria-hidden="false"] .messages-view-inner{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    height:100% !important;
+    overflow:hidden !important;
+  }
+
+  .messages-view .messages-layout{
+    display:flex !important;
+    flex:1 1 auto !important;
+    flex-direction:column !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:hidden !important;
+    position:relative !important;
+  }
+
+  .messages-view .message-auth-gate{display:none !important;}
+  .messages-view .message-contacts{display:none !important;}
+
+  .messages-view .message-chat,
+  .messages-view.chat-open .message-chat{
+    position:relative !important;
+    inset:auto !important;
+    display:grid !important;
+    grid-template-rows:auto minmax(0,1fr) auto !important;
+    flex:1 1 auto !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    transform:none !important;
+    transition:none !important;
+    overflow:hidden !important;
+    z-index:1 !important;
+    background:#050707 !important;
+  }
+
+  .messages-view .dm-list{
+    min-height:0 !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+    touch-action:pan-y !important;
+  }
+
+  .messages-view .message-compose{
+    position:relative !important;
+    flex:0 0 auto !important;
+    bottom:auto !important;
+    z-index:2 !important;
+  }
+
+  #closeMessagesView,#closeProfileView,#mobileCommunityClose{display:none !important;}
+}
+
+@media (min-width:661px){
+  /* Desktop uses the same compact notice instead of duplicating the Profile login form. */
+  .message-auth-gate{display:none !important;}
+  .messages-view .message-chat{display:flex !important;}
+  .messages-view .message-contacts{display:none !important;}
+  .messages-view .dm-list{min-height:220px !important;overflow:auto !important;}
+}
+
+/* =========================================================
+   CHAT LAYOUT FINAL — one spacious surface on desktop + mobile
+   ========================================================= */
+.messages-view .message-chat{
+  min-width:0 !important;
+  min-height:0 !important;
+  width:100% !important;
+  overflow:hidden !important;
+}
+.messages-view .message-chat-header{
+  flex:0 0 auto !important;
+  min-height:92px !important;
+  padding:22px 28px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:18px !important;
+  box-sizing:border-box !important;
+}
+.messages-view .message-chat-title-wrap{
+  min-width:0 !important;
+  flex:1 1 auto !important;
+}
+.messages-view .message-chat-title-wrap h2{
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+.messages-view .dm-list{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  padding:30px clamp(20px,4vw,48px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  touch-action:pan-y !important;
+}
+.messages-view .chat-login-required{
+  width:min(620px,100%) !important;
+  min-height:320px !important;
+  margin:0 auto !important;
+  padding:56px 28px !important;
+  box-sizing:border-box !important;
+  border:1px solid var(--line) !important;
+  border-radius:18px !important;
+  background:#080b0c !important;
+}
+.messages-view .chat-login-required strong{
+  font-size:clamp(22px,3vw,30px) !important;
+}
+.messages-view .chat-login-required p{
+  max-width:520px !important;
+  font-size:14px !important;
+}
+.messages-view .message-compose{
+  flex:0 0 auto !important;
+  width:100% !important;
+  min-height:72px !important;
+  padding:14px 20px !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+.messages-view .message-compose-row{
+  width:100% !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+.messages-view .message-compose-row #dmBody{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+}
+.messages-view #messageChatBack{
+  display:none !important;
+}
+
+@media (max-width:660px){
+  .messages-view .message-chat-header{
+    min-height:94px !important;
+    padding:18px 20px !important;
+    gap:14px !important;
+  }
+  .messages-view .message-chat-header h2{
+    font-size:22px !important;
+  }
+  .messages-view .message-chat-header small{
+    font-size:11px !important;
+  }
+  .messages-view .dm-list{
+    padding:24px 16px !important;
+  }
+  .messages-view .chat-login-required{
+    width:100% !important;
+    min-height:360px !important;
+    padding:48px 22px !important;
+    border-radius:16px !important;
+  }
+  .messages-view .chat-login-required strong{
+    font-size:24px !important;
+  }
+  .messages-view .chat-login-required p{
+    font-size:14px !important;
+    line-height:1.6 !important;
+  }
+  .messages-view .message-compose{
+    min-height:76px !important;
+    padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px)) !important;
+  }
+}
+
+.chat-demo-preview{
+  width:min(520px,100%);
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  text-align:left;
+}
+.chat-demo-label{font:9px 'DM Mono';letter-spacing:.12em;color:var(--accent);}
+.chat-demo-message{
+  max-width:86%;
+  padding:11px 14px;
+  border:1px solid var(--line);
+  border-radius:12px 12px 12px 4px;
+  background:#0d1112;
+  color:#d9dfdd;
+  font-size:12px;
+  line-height:1.5;
+}
+.chat-demo-message-me{
+  align-self:flex-end;
+  border-radius:12px 12px 4px 12px;
+  background:var(--accent-soft);
+  border-color:var(--accent-border);
+}
+@media(max-width:660px){
+  .chat-demo-preview{width:100%;margin-top:20px;}
+  .chat-demo-message{font-size:12px;}
+}
+
+
+/* =========================================================
+   ONLINE USERS — AVATARS DIRECTLY IN THE CARD
+   No nested text bubble; desktop and mobile share the same layout.
+   ========================================================= */
+#everlightOnlineCard{
+  overflow:hidden !important;
+}
+#everlightOnlineCard .everlight-online-summary{
+  display:none !important;
+}
+#everlightOnlineCard .faces{
+  display:flex !important;
+  align-items:center !important;
+  flex-wrap:wrap !important;
+  gap:10px !important;
+  margin:14px 0 0 !important;
+  padding:0 !important;
+  min-height:30px !important;
+}
+#everlightOnlineCard .everlight-online-user{
+  display:block !important;
+  flex:0 0 38px !important;
+  width:38px !important;
+  height:38px !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+#everlightOnlineCard .everlight-online-avatar{
+  position:relative !important;
+  display:block !important;
+  width:38px !important;
+  height:38px !important;
+  border-radius:50% !important;
+  overflow:visible !important;
+  background:#18242c !important;
+  border:2px solid #000 !important;
+  box-sizing:border-box !important;
+}
+#everlightOnlineCard .everlight-online-avatar img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  border-radius:50% !important;
+}
+#everlightOnlineCard .everlight-online-avatar-fallback{
+  width:100% !important;
+  height:100% !important;
+  display:grid !important;
+  place-items:center !important;
+  color:#8fb8da !important;
+  font-size:13px !important;
+}
+#everlightOnlineCard .everlight-online-avatar i{
+  position:absolute !important;
+  right:-2px !important;
+  bottom:-1px !important;
+  width:9px !important;
+  height:9px !important;
+  border-radius:50% !important;
+  background:#72d8d0 !important;
+  border:2px solid #000 !important;
+  box-sizing:content-box !important;
+}
+#everlightOnlineCard .everlight-online-name{
+  display:none !important;
+}
+#everlightOnlineCard .everlight-online-empty{
+  display:inline-grid !important;
+  place-items:center !important;
+  width:38px !important;
+  height:38px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(139,173,204,.28) !important;
+  color:#8fb8da !important;
+  font-size:14px !important;
+}
+@media(max-width:760px){
+  #everlightOnlineCard .faces{
+    gap:11px !important;
+    margin-top:14px !important;
+  }
+  #everlightOnlineCard .everlight-online-user,
+  #everlightOnlineCard .everlight-online-avatar,
+  #everlightOnlineCard .everlight-online-empty{
+    width:42px !important;
+    height:42px !important;
+    flex-basis:42px !important;
+  }
+}
+
+/* =========================================================
+   CHAT — DESKTOP FINAL WIDTH FIX
+   The contacts column is hidden on desktop, so the chat must
+   explicitly occupy the full feed width instead of the second
+   column of the old 280px + 1fr grid.
+   ========================================================= */
+@media (min-width: 961px){
+  main#feed > .messages-view.open .messages-layout,
+  main#feed > .messages-view[aria-hidden="false"] .messages-layout{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    margin:0 !important;
+  }
+
+  main#feed > .messages-view.open .message-chat,
+  main#feed > .messages-view[aria-hidden="false"] .message-chat{
+    grid-column:1 / -1 !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+  }
+
+  main#feed > .messages-view.open .dm-list,
+  main#feed > .messages-view[aria-hidden="false"] .dm-list{
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  /* The chat is closed only by pressing Csevegés again. */
+  main#feed > .messages-view .messages-close{
+    display:none !important;
+  }
+}
+
 
 
 /* Feed post streak badge — same visual language as Available Stars. */
@@ -13080,7 +14985,7 @@ main#feed{
   .mobile-post-share-preview>.feed-card .feed-card-full-text{display:block !important;color:#d3d9db !important;font-size:15px !important;line-height:1.65 !important}
   .mobile-post-share-preview>.feed-card .feed-card-meta{margin:0 0 12px !important}
   .mobile-post-share-preview>.feed-card .feed-card-media{margin-top:14px !important;border-radius:16px !important;overflow:hidden !important}
-  .mobile-post-share-heading{font:700 12px/1.2 "DM Mono",monospace;color:#8badcc;letter-spacing:.08em;text-transform:uppercase;margin:2px 4px 10px}
+  .mobile-post-share-heading{font:700 12px/1.2 'DM Mono',monospace;color:#8badcc;letter-spacing:.08em;text-transform:uppercase;margin:2px 4px 10px}
   .mobile-post-share-options{display:grid;gap:8px}
   .mobile-post-share-option{
     width:100%;display:grid;grid-template-columns:48px 1fr 22px;align-items:center;gap:12px;
@@ -13331,7 +15236,6 @@ main#feed{
   min-height:0 !important;
 }
 .profile-login-error:empty{display:none !important;}
-
 @media (max-width:660px){
   .profile-view.open .profile-login-state,
   .profile-view[aria-hidden="false"] .profile-login-state{
@@ -13370,668 +15274,77 @@ main#feed{
   }
 }
 
-
-
 /* =========================================================
-   DAILY THOUGHTS — CHAT / PRIVATE SPACE
-   ========================================================= */
-.daily-thoughts-strip{
-  flex:0 0 auto !important;
-  width:100% !important;
-  box-sizing:border-box !important;
-  padding:14px 4vw 12px !important;
-  background:#000 !important;
-  border-bottom:1px solid #202729 !important;
-}
-.daily-thoughts-strip-head{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:space-between !important;
-  gap:14px !important;
-  margin-bottom:10px !important;
-}
-.daily-thoughts-strip-head .eyebrow{margin:0 0 3px !important;font-size:8px !important;letter-spacing:.16em !important;color:#86aaca !important;}
-.daily-thoughts-strip-head strong{display:block !important;font:700 15px/1.15 Manrope,sans-serif !important;color:#ecebe4 !important;}
-.daily-thought-add{
-  border:1px solid #2b3b42 !important;
-  border-radius:999px !important;
-  background:#0d1417 !important;
-  color:#9fc4e5 !important;
-  padding:8px 12px !important;
-  font:700 10px/1 Manrope,sans-serif !important;
-  cursor:pointer !important;
-}
-.daily-thought-add:hover{border-color:#6f9dc1 !important;background:#101b20 !important;}
-.daily-thought-form{display:grid !important;grid-template-columns:minmax(0,1fr) auto !important;gap:8px !important;margin:0 0 10px !important;}
-.daily-thought-form[hidden]{display:none !important;}
-.daily-thought-form input{min-width:0 !important;height:38px !important;padding:0 12px !important;border:1px solid #29383d !important;border-radius:12px !important;background:#080b0c !important;color:#e8e7df !important;outline:none !important;font:500 11px/1.2 Manrope,sans-serif !important;}
-.daily-thought-form input:focus{border-color:#6f9dc1 !important;box-shadow:0 0 0 3px rgba(111,157,193,.09) !important;}
-.daily-thought-form button{height:38px !important;padding:0 13px !important;border:0 !important;border-radius:12px !important;background:#8badcc !important;color:#071015 !important;font:800 10px/1 Manrope,sans-serif !important;cursor:pointer !important;}
-.daily-thought-bubbles{display:flex !important;gap:10px !important;overflow-x:auto !important;overflow-y:hidden !important;scrollbar-width:none !important;touch-action:pan-x !important;padding:2px 1px 4px !important;}
-.daily-thought-bubbles::-webkit-scrollbar{display:none !important;}
-.daily-thought-bubble{flex:0 0 118px !important;height:118px !important;position:relative !important;border:1px solid #2b3b42 !important;border-radius:34px !important;background:#0b1114 !important;overflow:hidden !important;cursor:pointer !important;box-shadow:0 4px 16px rgba(0,0,0,.16) !important;}
-.daily-thought-bubble::before{content:"";position:absolute;inset:5px;border:1px solid rgba(143,185,218,.18);border-radius:30px;pointer-events:none;}
-.daily-thought-bubble-avatar{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;overflow:hidden;border:1px solid #36515f;background:#111a1e;display:grid;place-items:center;color:#9fc4e5;font:700 13px/1 Manrope,sans-serif;}
-.daily-thought-bubble-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
-.daily-thought-bubble-copy{position:absolute;left:10px;right:10px;bottom:10px;text-align:center;}
-.daily-thought-bubble-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dfe4e5;font:700 9px/1.1 Manrope,sans-serif;}
-.daily-thought-bubble-text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:3px;color:#849196;font:500 8px/1.3 Manrope,sans-serif;}
-.daily-thought-empty,.daily-thought-loading{padding:12px 2px;color:#68767c;font:500 10px/1.4 Manrope,sans-serif;}
-
-@media (min-width:661px){
-  .messages-view .messages-view-inner{overflow:hidden !important;}
-  .messages-view .messages-layout{min-height:0 !important;}
-}
-@media (max-width:660px){
-  .daily-thoughts-strip{padding:11px 12px 9px !important;}
-  .daily-thoughts-strip-head strong{font-size:13px !important;}
-  .daily-thought-add{padding:7px 10px !important;font-size:9px !important;}
-  .daily-thought-bubble{flex-basis:104px !important;width:104px !important;height:104px !important;border-radius:30px !important;}
-  .daily-thought-bubble::before{border-radius:26px !important;}
-  .daily-thought-bubble-avatar{width:38px !important;height:38px !important;top:10px !important;}
-  .daily-thought-bubble-copy{bottom:9px !important;}
-  .daily-thought-form{grid-template-columns:minmax(0,1fr) auto !important;}
-  .daily-thought-form input{height:36px !important;font-size:10px !important;}
-  .daily-thought-form button{height:36px !important;padding:0 11px !important;}
-}
-
-/* =========================================================
-   PASSWORD RESET / PASSWORD HINT — FINAL MOBILE + DESKTOP
-   ========================================================= */
-.password-hint-modal[hidden]{display:none!important}
-.password-hint-modal{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;box-sizing:border-box}
-.password-hint-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}
-.password-hint-card{position:relative;width:min(460px,100%);box-sizing:border-box;padding:26px;border:1px solid rgba(139,173,204,.24);border-radius:22px;background:#080b0c;color:#eef6f5;box-shadow:0 24px 80px rgba(0,0,0,.55)}
-.password-hint-card h2{margin:8px 0 10px;font-size:25px}
-.password-hint-card p{line-height:1.5;color:#aab8b7}
-.password-hint-card label{display:grid;gap:8px;margin:18px 0 12px;color:#dce8e7;font-size:13px}
-.password-hint-card input{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:12px;border:1px solid rgba(139,173,204,.25);background:#101516;color:#fff;outline:none}
-.password-hint-status{min-height:20px;font-size:12px}
-@media(max-width:660px){.password-hint-modal{padding:14px}.password-hint-card{padding:22px;border-radius:20px}.password-hint-card h2{font-size:22px}}
-
-/* =========================================================
-   FINAL FIX — MOBILE FEED SCROLL + REAL DAILY THOUGHT BUBBLES
+   FINAL MOBILE ISLAND / AI FOOTER FIX
+   - lower the floating island on phones
+   - keep the AI attribution as a small black strip only
+     around the text, never behind the whole island
    ========================================================= */
 @media (max-width:660px){
-
-
-
-/* =========================================================
-   EVERLIGHT CLEAN RESPONSIVE SYSTEM
-   One mobile dock, one mobile sheet model, one desktop model.
-   ========================================================= */
-
-/* Desktop baseline stays independent from mobile UI. */
-@media (min-width: 961px), (hover:hover) and (pointer:fine){
   #mobileDock,
-  #mobileCommunityPanel,
-  .mobile-community-panel{display:none !important;visibility:hidden !important;pointer-events:none !important;}
-  html,body{width:100% !important;min-width:0 !important;height:auto !important;min-height:100% !important;overflow-x:hidden !important;overflow-y:auto !important;touch-action:auto !important;}
-  .layout{display:grid !important;width:100% !important;max-width:1480px !important;margin:0 auto !important;grid-template-columns:minmax(190px,210px) minmax(0,1fr) minmax(260px,300px) !important;min-height:calc(100vh - 72px) !important;height:auto !important;overflow:visible !important;}
-  .left-rail,.right-rail{display:block !important;min-width:0 !important;}
-  .left-rail{border-right:1px solid var(--line) !important;padding:48px 24px !important;}
-  .right-rail{border-left:1px solid var(--line) !important;padding:38px 22px !important;overflow:visible !important;}
-  main#feed{display:block !important;width:auto !important;min-width:0 !important;min-height:calc(100vh - 72px) !important;height:auto !important;padding:38px 34px 80px !important;overflow:visible !important;touch-action:auto !important;}
-  #feedList,.feed-list{height:auto !important;min-height:0 !important;max-height:none !important;overflow:visible !important;}
-  .site-footer{position:static !important;width:auto !important;height:auto !important;min-height:0 !important;padding:14px 15px !important;background:transparent !important;border-top:1px solid var(--line) !important;pointer-events:auto !important;}
-  .site-footer p{white-space:normal !important;overflow:visible !important;text-overflow:clip !important;transform:none !important;}
-  .right-rail .rail-info-card,.right-rail .activity-card,.right-rail .right-share-card{width:100% !important;min-width:0 !important;box-sizing:border-box !important;}
-  .messages-view.open,.profile-view.open{display:block !important;}
-  body.messages-view-open main#feed > *:not(#messagesView),
-  body.profile-view-open main#feed > *:not(#profileView){display:none !important;}
-  body.messages-view-open main#feed > #messagesView,
-  body.profile-view-open main#feed > #profileView{display:block !important;width:100% !important;max-width:none !important;min-width:0 !important;margin:0 !important;}
-  main#feed > #messagesView .messages-layout{grid-template-columns:minmax(0,1fr) !important;}
-  main#feed > #messagesView .message-chat{grid-column:1 !important;width:100% !important;}
-}
-
-@media (max-width: 960px) and (hover:hover) and (pointer:fine){
-  /* Narrow laptop: desktop UI, never mobile dock. */
-  .layout{grid-template-columns:minmax(175px,200px) minmax(0,1fr) minmax(235px,265px) !important;}
-  .left-rail{padding-inline:18px !important;}
-  .right-rail{padding-inline:16px !important;}
-  main#feed{padding-inline:24px !important;}
-  .right-rail .rail-info-card,.right-rail .activity-card,.right-rail .right-share-card{font-size:.96em !important;}
-}
-
-@media (max-width:660px){
-  /* Never lock the Hub. The document itself is the feed scroller. */
-  html,body{width:100% !important;height:auto !important;min-height:100% !important;overflow-x:hidden !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch !important;touch-action:pan-y !important;position:static !important;inset:auto !important;}
-  body.messages-view-open,body.profile-view-open,body.mobile-share-open{overflow:hidden !important;touch-action:none !important;}
-  body:not(.messages-view-open):not(.profile-view-open):not(.mobile-share-open):not(.mobile-community-open){overflow-y:auto !important;touch-action:pan-y !important;}
-  .layout{display:block !important;width:100% !important;min-height:auto !important;height:auto !important;overflow:visible !important;padding:0 !important;}
-  .left-rail,.right-rail{display:none !important;}
-  main#feed{display:block !important;width:100% !important;min-height:calc(100dvh - 64px) !important;height:auto !important;padding:24px 14px calc(84px + env(safe-area-inset-bottom,0px)) !important;overflow:visible !important;touch-action:pan-y !important;}
-  #feedList,.feed-list{height:auto !important;min-height:0 !important;max-height:none !important;overflow:visible !important;touch-action:pan-y !important;}
-  #feedList > *,#feedList .feed-card,.feed-card{touch-action:pan-y !important;}
-
-  /* Clean bottom dock: one layer only, small and low. */
-  #mobileDock.mobile-dock{
+  .mobile-dock{
     position:fixed !important;
-    left:0 !important;right:0 !important;bottom:env(safe-area-inset-bottom,0px) !important;
-    width:100% !important;height:54px !important;min-height:54px !important;
-    margin:0 !important;padding:0 !important;box-sizing:border-box !important;
-    display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-    align-items:stretch !important;overflow:hidden !important;
-    background:#050707 !important;border-top:1px solid #202729 !important;
-    border-radius:0 !important;box-shadow:none !important;
-    z-index:7000 !important;touch-action:none !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    z-index:2147483000 !important;
   }
-  #mobileDock .mobile-dock-item,#mobileDock .mobile-island-alert{
-    position:relative !important;display:grid !important;place-items:center !important;
-    width:auto !important;height:54px !important;min-width:0 !important;min-height:54px !important;
-    margin:0 !important;padding:0 !important;border:0 !important;border-right:1px solid #202729 !important;
-    border-radius:0 !important;background:transparent !important;box-shadow:none !important;
-    color:#dbe3e5 !important;pointer-events:auto !important;touch-action:manipulation !important;
+
+  .site-footer{
+    position:fixed !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:calc(0px + env(safe-area-inset-bottom, 0px)) !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 10px !important;
+    background:transparent !important;
+    background-image:none !important;
+    border:0 !important;
+    box-shadow:none !important;
+    text-align:center !important;
+    z-index:2147482999 !important;
+    pointer-events:none !important;
   }
-  #mobileDock .mobile-dock-item:last-child{border-right:0 !important;}
-  #mobileDock .mobile-dock-item small{display:none !important;}
-  #mobileDock .mobile-dock-item.active{background:#0c1317 !important;box-shadow:inset 0 0 0 1px rgba(139,173,204,.18) !important;}
-  #mobileDock .mobile-dock-item.active .rail-action-icon,#mobileDock .mobile-island-alert.is-open .mobile-menu-icon{color:#8badcc !important;}
-  #mobileDock .rail-action-icon{display:block !important;width:28px !important;height:28px !important;transform:none !important;}
-  #mobileDock .rail-icon-home{width:24px !important;height:24px !important;}
-  #mobileDock .rail-icon-chat{width:25px !important;height:20px !important;}
-  #mobileDock .rail-icon-profile{width:24px !important;height:28px !important;}
-  #mobileDock .mobile-menu-icon{display:flex !important;flex-direction:column !important;gap:5px !important;width:28px !important;height:22px !important;justify-content:center !important;}
-  #mobileDock .mobile-menu-icon i{display:block !important;height:2px !important;width:100% !important;background:currentColor !important;border-radius:99px !important;}
 
-  /* AI line sits directly under the dock, inside the safe area. */
-  body > .site-footer{position:fixed !important;left:0 !important;right:0 !important;bottom:calc(0px + env(safe-area-inset-bottom,0px) + 54px) !important;width:100% !important;height:20px !important;min-height:20px !important;padding:0 8px !important;display:flex !important;align-items:center !important;justify-content:center !important;background:#000 !important;border:0 !important;z-index:6999 !important;pointer-events:none !important;}
-  body > .site-footer p{margin:0 !important;width:100% !important;max-width:100% !important;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important;text-align:center !important;font:6px/1 "DM Mono",monospace !important;color:#4f5957 !important;letter-spacing:.025em !important;}
-
-  /* Mobile sheets are real fixed panels with their own vertical scroller. */
-  .messages-view.open,.messages-view[aria-hidden="false"],.profile-view.open,.profile-view[aria-hidden="false"],#mobileCommunityPanel.is-open{
-    position:fixed !important;left:10px !important;right:10px !important;top:calc(64px + env(safe-area-inset-top,0px)) !important;
-    bottom:calc(78px + env(safe-area-inset-bottom,0px)) !important;width:auto !important;height:auto !important;max-height:none !important;
-    margin:0 !important;padding:0 !important;border:1px solid #20292a !important;border-radius:18px !important;background:#050707 !important;
-    overflow:hidden !important;z-index:8000 !important;box-shadow:0 18px 55px rgba(0,0,0,.62) !important;}
-  .messages-view-inner,.profile-view-inner,#mobileCommunityPanelBody{height:100% !important;min-height:0 !important;max-height:none !important;overflow-y:auto !important;overflow-x:hidden !important;-webkit-overflow-scrolling:touch !important;overscroll-behavior:contain !important;touch-action:pan-y !important;}
-  .messages-view-header,.profile-view-header,#mobileCommunityPanel .mobile-community-panel-head{position:sticky !important;top:0 !important;z-index:20 !important;background:#050707 !important;}
-  #closeMessagesView,#closeProfileView,#mobileCommunityClose{display:none !important;}
-  .messages-layout{display:flex !important;flex-direction:column !important;height:auto !important;min-height:0 !important;overflow:visible !important;}
-  .message-contacts{display:none !important;}
-  .message-chat{display:flex !important;flex-direction:column !important;min-height:0 !important;height:auto !important;overflow:visible !important;}
-  .dm-list{flex:0 0 auto !important;min-height:220px !important;max-height:calc(100vh - 230px) !important;overflow-y:auto !important;overflow-x:hidden !important;-webkit-overflow-scrolling:touch !important;touch-action:pan-y !important;}
-  .message-compose{position:sticky !important;bottom:0 !important;z-index:25 !important;background:#050707 !important;}
-
-  /* Daily thoughts: bubbles above avatar, not feed cards. */
-  .daily-thoughts-strip{background:transparent !important;border:0 !important;padding:10px 8px 14px !important;}
-  .daily-thoughts-strip-head strong{font-size:12px !important;}
-  .daily-thought-bubbles{display:flex !important;align-items:flex-end !important;gap:14px !important;overflow-x:auto !important;overflow-y:visible !important;min-height:94px !important;padding:34px 8px 4px !important;scrollbar-width:none !important;touch-action:pan-x !important;}
-  .daily-thought-bubble{flex:0 0 auto !important;width:104px !important;height:auto !important;min-height:0 !important;position:absolute !important;left:50% !important;bottom:42px !important;transform:translateX(-50%) !important;padding:7px 9px !important;border:1px solid #31424a !important;border-radius:12px !important;background:#0b1114 !important;box-shadow:0 5px 14px rgba(0,0,0,.28) !important;}
-  .daily-thought-person{position:relative !important;flex:0 0 54px !important;width:54px !important;height:64px !important;display:flex !important;align-items:center !important;}
-  .daily-thought-person-avatar{position:absolute !important;bottom:7px !important;width:40px !important;height:40px !important;border-radius:50% !important;overflow:hidden !important;}
-
-  /* Mobile community panel contains the full desktop right rail. */
-  #mobileCommunityPanel{pointer-events:none !important;}
-  #mobileCommunityPanel.is-open{pointer-events:auto !important;}
-  #mobileCommunityPanelBody{height:calc(100% - 56px) !important;max-height:calc(100% - 56px) !important;padding:0 !important;}
-  #mobileCommunityPanelBody .mobile-cloned-rail{display:block !important;width:100% !important;min-width:0 !important;padding:12px !important;box-sizing:border-box !important;}
-  #mobileCommunityPanelBody .mobile-cloned-rail .rail-info-card,
-  #mobileCommunityPanelBody .mobile-cloned-rail .activity-card,
-  #mobileCommunityPanelBody .mobile-cloned-rail .right-share-card{width:100% !important;min-width:0 !important;box-sizing:border-box !important;}
+  .site-footer p{
+    display:inline-block !important;
+    width:auto !important;
+    max-width:calc(100vw - 20px) !important;
+    margin:0 auto !important;
+    padding:3px 9px !important;
+    background:#000 !important;
+    border-radius:6px !important;
+    color:#65716f !important;
+    font:500 7px/1.25 "DM Mono",monospace !important;
+    letter-spacing:.018em !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+    word-break:normal !important;
+    text-align:center !important;
+    text-shadow:none !important;
+  }
 }
 
 @media (max-width:390px){
-  #mobileDock.mobile-dock{height:50px !important;min-height:50px !important;}
-  #mobileDock .mobile-dock-item,#mobileDock .mobile-island-alert{height:50px !important;min-height:50px !important;}
-  body > .site-footer{bottom:calc(env(safe-area-inset-bottom,0px) + 50px) !important;height:18px !important;min-height:18px !important;}
-  main#feed{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px)) !important;}
-  .messages-view.open,.profile-view.open,#mobileCommunityPanel.is-open{left:8px !important;right:8px !important;bottom:calc(72px + env(safe-area-inset-bottom,0px)) !important;}
-}
-
-/* =========================================================
-   FINAL DESKTOP FEED SCROLLER
-   Only the center Hub feed scrolls on desktop. The document
-   itself stays locked so desktop navigation/rails do not move.
-   ========================================================= */
-@media (min-width: 661px) and (hover: hover) and (pointer: fine) {
-  html, body {
-    height: 100%;
-    min-height: 100%;
-    overflow: hidden !important;
-  }
-
-  .topbar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-  }
-
-  .layout {
-    height: 100dvh !important;
-    min-height: 0 !important;
-    margin-top: 0 !important;
-    padding-top: 72px !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-  }
-
-  .layout > .left-rail,
-  .layout > .right-rail {
-    min-height: 0 !important;
-    height: calc(100dvh - 72px) !important;
-    overflow: hidden !important;
-  }
-
-  main#feed {
-    height: calc(100dvh - 72px) !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-gutter: stable !important;
-  }
-
-  /* Fullscreen profile/messages keep their own scrolling; they are not
-     allowed to make the desktop document scroll. */
-  .messages-view.open,
-  .profile-view.open,
-  .profile-customizer.open {
-    overflow: hidden !important;
-  }
-
-  .messages-view-inner,
-  .profile-view-inner,
-  .profile-customizer-content {
-    overscroll-behavior: contain !important;
-  }
-}
-
-/* Password section inside the existing profile customizer. */
-.customizer-password-card {
-  border: 1px solid var(--accent-border, rgba(139,173,204,.28));
-  border-radius: 14px;
-  background: rgba(139,173,204,.05);
-  padding: 16px;
-  display: grid;
-  gap: 12px;
-}
-
-.customizer-password-status {
-  min-height: 20px;
-  margin: 0;
-  color: var(--muted, #7d8785);
-  font-size: 12px;
-}
-
-.customizer-password-save {
-  justify-self: start;
-}
-
-/* =========================================================
-   EVERLIGHT — FINAL DESKTOP SHELL REPAIR
-   Desktop is completely separate from the mobile navigation.
-   Only the center feed scrolls; rails and header stay fixed.
-   ========================================================= */
-@media (min-width: 961px) {
-  html,
-  body {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 100% !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-  }
-
-  /* Never allow the mobile dock/sheet to leak into desktop. */
   #mobileDock,
-  .mobile-dock,
-  #mobileCommunityPanel,
-  .mobile-community-panel,
-  .mobile-post-share-sheet {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
+  .mobile-dock{
+    bottom:calc(4px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  .topbar {
-    position: fixed !important;
-    inset: 0 0 auto 0 !important;
-    width: 100% !important;
-    height: 72px !important;
-    min-height: 72px !important;
-    margin: 0 !important;
-    z-index: 5000 !important;
-    box-sizing: border-box !important;
+  .site-footer{
+    bottom:calc(0px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-left:8px !important;
+    padding-right:8px !important;
   }
 
-  .layout {
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    top: 72px !important;
-    bottom: 0 !important;
-    width: min(1440px, 100%) !important;
-    max-width: 1440px !important;
-    height: calc(100dvh - 72px) !important;
-    min-height: 0 !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    display: grid !important;
-    grid-template-columns: clamp(190px, 18vw, 230px) minmax(0, 1fr) clamp(250px, 22vw, 310px) !important;
-    column-gap: 0 !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-  }
-
-  .layout > .left-rail,
-  .layout > main#feed,
-  .layout > .right-rail {
-    grid-row: 1 !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .layout > .left-rail {
-    grid-column: 1 !important;
-    display: block !important;
-    position: relative !important;
-    top: auto !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    padding: 28px 18px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    border-right: 1px solid rgba(139,173,204,.14) !important;
-    background: #000 !important;
-  }
-
-  .layout > .left-rail .desktop-rail-actions {
-    display: grid !important;
-    width: 100% !important;
-    gap: 5px !important;
-    margin: 0 !important;
-    padding: 0 0 18px !important;
-    border-bottom: 1px solid rgba(139,173,204,.12) !important;
-  }
-
-  .layout > .left-rail .desktop-rail-action {
-    display: flex !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 44px !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 10px !important;
-    box-sizing: border-box !important;
-  }
-
-  .layout > main#feed {
-    grid-column: 2 !important;
-    position: relative !important;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 28px clamp(24px, 3vw, 40px) 80px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-gutter: stable !important;
-    border-right: 1px solid rgba(139,173,204,.14) !important;
-    background: #000 !important;
-    touch-action: pan-y !important;
-  }
-
-  .layout > .right-rail {
-    grid-column: 3 !important;
-    display: block !important;
-    position: relative !important;
-    top: auto !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    padding: 28px 22px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    border-left: 0 !important;
-    background: #000 !important;
-  }
-
-  /* Do not let the footer become a second fixed desktop bar. */
-  body > .site-footer {
-    position: static !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 12px 20px !important;
-    background: #000 !important;
-    border-top: 1px solid var(--line) !important;
-    pointer-events: auto !important;
-    box-sizing: border-box !important;
-  }
-
-  /* The desktop feed must retain its complete composer and posts. */
-  #feed > .time-lockup,
-  #feed > .section-heading,
-  #feed > .composer,
-  #feed > .feed-list {
-    display: block !important;
-    visibility: visible !important;
-  }
-
-  #feed > .composer,
-  #feed > .feed-list {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  /* Open desktop views stay inside the center column. */
-  main#feed > .messages-view.open,
-  main#feed > .profile-view.open {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    z-index: 1000 !important;
-  }
-}
-
-/* Narrow desktop/laptop: preserve the 3-column desktop model. */
-@media (min-width: 961px) and (max-width: 1120px) {
-  .layout {
-    grid-template-columns: 178px minmax(0, 1fr) 238px !important;
-  }
-  .layout > .left-rail { padding-inline: 12px !important; }
-  .layout > .right-rail { padding-inline: 14px !important; }
-  .layout > main#feed { padding-inline: 22px !important; }
-  .layout > .left-rail .desktop-rail-action { font-size: 11px !important; }
-}
-
-/* =========================================================
-   FINAL MOBILE ISLAND — single canonical bottom navigation
-   This block intentionally overrides all older mobile dock rules.
-   ========================================================= */
-@media (max-width: 660px) {
-  html,
-  body {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    min-height: 100% !important;
-    height: auto !important;
-    touch-action: pan-y !important;
-  }
-
-  main#feed {
-    padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
-    overflow: visible !important;
-  }
-
-  /* The only mobile navigation: a compact floating island. */
-  #mobileDock.mobile-dock {
-    position: fixed !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important;
-    transform: translateX(-50%) !important;
-    width: min(82vw, 430px) !important;
-    height: 64px !important;
-    min-height: 64px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    align-items: stretch !important;
-    overflow: hidden !important;
-    background: rgba(5, 7, 7, .98) !important;
-    border: 1px solid #20292a !important;
-    border-radius: 32px !important;
-    box-shadow: 0 8px 28px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04) !important;
-    z-index: 7000 !important;
-    isolation: isolate !important;
-    touch-action: none !important;
-  }
-
-  #mobileDock .mobile-dock-item,
-  #mobileDock .mobile-island-alert {
-    position: relative !important;
-    display: grid !important;
-    place-items: center !important;
-    width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-right: 1px solid rgba(139,173,204,.12) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    color: #dbe3e5 !important;
-    box-shadow: none !important;
-    pointer-events: auto !important;
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-  }
-
-  #mobileDock .mobile-dock-item:last-child,
-  #mobileDock .mobile-island-alert:last-child {
-    border-right: 0 !important;
-  }
-
-  #mobileDock .mobile-dock-item small {
-    display: none !important;
-  }
-
-  #mobileDock .mobile-dock-item.active {
-    background: rgba(139,173,204,.08) !important;
-    box-shadow: inset 0 0 0 1px rgba(139,173,204,.16) !important;
-  }
-
-  #mobileDock .mobile-dock-item.active .rail-action-icon,
-  #mobileDock .mobile-island-alert.is-open .mobile-menu-icon {
-    color: #8badcc !important;
-  }
-
-  #mobileDock .rail-action-icon {
-    display: block !important;
-    transform: none !important;
-    margin: 0 !important;
-  }
-
-  #mobileDock .rail-icon-home {
-    width: 25px !important;
-    height: 25px !important;
-  }
-
-  #mobileDock .rail-icon-chat {
-    width: 27px !important;
-    height: 22px !important;
-  }
-
-  #mobileDock .rail-icon-profile {
-    width: 26px !important;
-    height: 29px !important;
-  }
-
-  #mobileDock .mobile-menu-icon {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    width: 28px !important;
-    height: 24px !important;
-  }
-
-  #mobileDock .mobile-menu-icon i {
-    display: block !important;
-    width: 100% !important;
-    height: 2px !important;
-    margin: 0 !important;
-    border-radius: 99px !important;
-    background: currentColor !important;
-  }
-
-  /* AI notice belongs BELOW the island, not above it. */
-  body > .site-footer {
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: calc(6px + env(safe-area-inset-bottom, 0px)) !important;
-    width: 100% !important;
-    height: 16px !important;
-    min-height: 16px !important;
-    margin: 0 !important;
-    padding: 0 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #000 !important;
-    border: 0 !important;
-    z-index: 6999 !important;
-    pointer-events: none !important;
-  }
-
-  body > .site-footer p {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    text-align: center !important;
-    font: 6px/1 "DM Mono", monospace !important;
-    color: #4f5957 !important;
-    letter-spacing: .025em !important;
-  }
-
-  /* Keep the content clear of the island + AI line. */
-  .feed-list {
-    padding-bottom: 8px !important;
-  }
-}
-
-@media (max-width: 390px) {
-  #mobileDock.mobile-dock {
-    width: calc(100vw - 44px) !important;
-    height: 60px !important;
-    min-height: 60px !important;
-    bottom: calc(27px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  #mobileDock .mobile-dock-item,
-  #mobileDock .mobile-island-alert {
-    height: 60px !important;
-    min-height: 60px !important;
-  }
-
-  body > .site-footer {
-    bottom: calc(5px + env(safe-area-inset-bottom, 0px)) !important;
-    height: 15px !important;
-    min-height: 15px !important;
+  .site-footer p{
+    max-width:calc(100vw - 16px) !important;
+    padding:3px 7px !important;
+    font-size:6.5px !important;
   }
 }

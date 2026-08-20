@@ -375,7 +375,7 @@ function setAccount(user) {
 
     profileStatus:
       user.status ||
-      "Elérhető",
+      "✦ Elérhető",
 
     nameColor:
       user.nameColor ||
@@ -3061,7 +3061,7 @@ function updateProfileView(
 
     profileViewStatus.textContent =
       user.status ||
-      "Elérhető";
+      "✦ Elérhető";
   }
 
 
@@ -3497,14 +3497,11 @@ function openHubView() {
     $("#feed");
 
   if (feed) {
-    if (window.matchMedia("(max-width: 660px)").matches) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      feed.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
+
+    feed.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   }
 }
 
@@ -3640,83 +3637,6 @@ async function loadMessageContacts() {
     `;
   }
 }
-
-
-async function loadDailyThoughts() {
-  const list = document.getElementById("dailyThoughtBubbles");
-  if (!list) return;
-  list.innerHTML = `<div class="daily-thought-loading">Napi gondolatok betöltése…</div>`;
-
-  try {
-    const data = await api("/api/daily-thoughts");
-    const thoughts = Array.isArray(data.thoughts) ? data.thoughts : [];
-
-    if (!thoughts.length) {
-      list.innerHTML = `<div class="daily-thought-empty">Még nincs mai gondolat.</div>`;
-      return;
-    }
-
-    list.innerHTML = thoughts.map((thought) => {
-      const body = String(thought.body || "").trim();
-      const name = thought.display_name || thought.username || "Felhasználó";
-      const avatar = thought.avatar
-        ? `<img src="${escapeHtml(thought.avatar)}" alt="" loading="lazy">`
-        : escapeHtml(getInitial(thought));
-      return `
-        <div class="daily-thought-person" data-thought-id="${escapeHtml(String(thought.id))}">
-          <div class="daily-thought-bubble" title="${escapeHtml(body)}">
-            ${escapeHtml(body)}
-          </div>
-          <div class="daily-thought-person-avatar">${avatar}</div>
-          <span class="daily-thought-person-name">${escapeHtml(name)}</span>
-        </div>`;
-    }).join("");
-  } catch (error) {
-    list.innerHTML = `<div class="daily-thought-empty">Nem sikerült betölteni a napi gondolatokat.</div>`;
-  }
-}
-
-function setupDailyThoughtComposer() {
-  const addButton = document.getElementById("dailyThoughtAddButton");
-  const form = document.getElementById("dailyThoughtForm");
-  const input = document.getElementById("dailyThoughtInput");
-  if (!addButton || !form || !input || addButton.dataset.bound === "1") return;
-  addButton.dataset.bound = "1";
-
-  addButton.addEventListener("click", () => {
-    if (!currentUser) {
-      openProfileView();
-      return;
-    }
-    form.hidden = !form.hidden;
-    if (!form.hidden) window.setTimeout(() => input.focus(), 40);
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (!currentUser) return;
-    const body = input.value.trim();
-    if (!body) return;
-    const submit = form.querySelector("button[type=submit]");
-    submit.disabled = true;
-    try {
-      await api("/api/daily-thoughts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body })
-      });
-      input.value = "";
-      form.hidden = true;
-      await loadDailyThoughts();
-    } catch (error) {
-      alert(error.message || "Nem sikerült közzétenni a gondolatot.");
-    } finally {
-      submit.disabled = false;
-    }
-  });
-}
-
-setupDailyThoughtComposer();
 
 
 const messagesViewHome = (() => {
@@ -3870,7 +3790,6 @@ function openMessages() {
   ) {
 
     loadMessages();
-    loadDailyThoughts();
     document.getElementById("messagesView")?.classList.add("chat-open");
   } else if (window.matchMedia("(max-width: 660px)").matches) {
     // Mobilon a Csevegés maga a megnyitott panel; ne csússzon ki jobbra.
@@ -5293,13 +5212,13 @@ async function readCustomizerImage(
 
   try {
     const data = await compressImageFile(file, {
-      maxBytes: 1024 * 1024,
+      maxBytes: 900 * 1024,
       maxWidth: 512,
       maxHeight: 512,
       outputWidth: 512,
       outputHeight: 512,
       cropAspect: 1,
-      quality: 0.9
+      quality: 0.88
     });
 
     callback(data);
@@ -5317,13 +5236,13 @@ async function readCustomizerCoverImage(file, callback) {
       // A borítókép automatikusan középre vágódik a profil által
       // használt széles formátumra. A felhasználónak nem kell
       // előre szerkesztenie vagy átméreteznie a képet.
-      maxBytes: 1024 * 1024,
+      maxBytes: 700 * 1024,
       maxWidth: 1600,
       maxHeight: 680,
       outputWidth: 1600,
       outputHeight: 680,
       cropAspect: 1600 / 680,
-      quality: 0.86
+      quality: 0.84
     });
 
     callback(data);
@@ -5458,15 +5377,6 @@ function buildProfileCustomizer() {
           >
             <span>▣</span>
             Képek
-          </button>
-
-          <button
-            type="button"
-            class="profile-customizer-nav"
-            data-customizer-scroll="customizerSecuritySection"
-          >
-            <span>⌘</span>
-            Biztonság
           </button>
 
           <div class="profile-customizer-sidebar-note">
@@ -5698,34 +5608,6 @@ function buildProfileCustomizer() {
 
               </div>
 
-            </div>
-
-          </section>
-
-
-          <section
-            id="customizerSecuritySection"
-            class="profile-customizer-section customizer-security-section"
-          >
-
-            <div class="profile-customizer-section-title">
-              <div>
-                <strong>Jelszó módosítása</strong>
-                <span>Bejelentkezve közvetlenül beállíthatsz új jelszót, a régi megadása nélkül.</span>
-              </div>
-            </div>
-
-            <div class="customizer-password-card">
-              <label class="customizer-field customizer-field-full">
-                <span>Új jelszó</span>
-                <input id="customizerNewPassword" type="password" minlength="6" autocomplete="new-password" placeholder="Legalább 6 karakter">
-              </label>
-              <label class="customizer-field customizer-field-full">
-                <span>Új jelszó újra</span>
-                <input id="customizerNewPasswordConfirm" type="password" minlength="6" autocomplete="new-password" placeholder="Írd be még egyszer">
-              </label>
-              <p class="customizer-password-status" id="customizerPasswordStatus" role="status" aria-live="polite"></p>
-              <button type="button" class="secondary customizer-password-save" id="customizerPasswordSave">Jelszó módosítása</button>
             </div>
 
           </section>
@@ -6201,43 +6083,6 @@ function closeProfileCustomizer() {
 }
 
 
-async function changePasswordFromCustomizer() {
-  if (!requireLogin()) return;
-
-  const passwordInput = $("#customizerNewPassword");
-  const confirmInput = $("#customizerNewPasswordConfirm");
-  const status = $("#customizerPasswordStatus");
-  const button = $("#customizerPasswordSave");
-  const password = passwordInput?.value || "";
-  const confirmPassword = confirmInput?.value || "";
-
-  if (password.length < 6) {
-    if (status) status.textContent = "Az új jelszó legalább 6 karakter legyen.";
-    return;
-  }
-  if (password !== confirmPassword) {
-    if (status) status.textContent = "A két új jelszó nem egyezik.";
-    return;
-  }
-
-  if (button) { button.disabled = true; button.textContent = "Mentés…"; }
-  if (status) status.textContent = "";
-  try {
-    const data = await api("/api/auth/change-password", {
-      method: "POST",
-      body: JSON.stringify({ password, confirmPassword })
-    });
-    if (passwordInput) passwordInput.value = "";
-    if (confirmInput) confirmInput.value = "";
-    if (status) status.textContent = data.message || "A jelszavad sikeresen megváltozott.";
-  } catch (error) {
-    if (status) status.textContent = error?.message || "A jelszó módosítása nem sikerült.";
-  } finally {
-    if (button) { button.disabled = false; button.textContent = "Jelszó módosítása"; }
-  }
-}
-
-
 async function saveProfileCustomizer() {
   if (!requireLogin()) return;
 
@@ -6462,17 +6307,6 @@ function bindProfileCustomizer(
           });
         }
 
-        return;
-      }
-
-
-      const passwordSave =
-        event.target.closest(
-          "#customizerPasswordSave"
-        );
-
-      if (passwordSave) {
-        changePasswordFromCustomizer();
         return;
       }
 
@@ -6769,35 +6603,8 @@ window.addEventListener("popstate", () => {
   if (source && !panelBody.dataset.ready) {
     const clone = source.cloneNode(true);
     clone.classList.add("mobile-cloned-rail");
-    // A cloned right rail must not keep the original element IDs.
-    // Duplicate IDs make querySelector/getElementById target the hidden
-    // desktop rail and can make the mobile panel appear frozen.
-    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
     panelBody.innerHTML = "";
     panelBody.appendChild(clone);
-
-    // The right rail is populated asynchronously (latest post, online users,
-    // statistics, etc.).  A one-time clone would therefore stay empty on
-    // mobile. Keep the mobile sheet synchronized with the live desktop rail.
-    const syncMobileRail = () => {
-      if (!panelBody.contains(clone)) return;
-      clone.innerHTML = source.innerHTML;
-    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
-    };
-
-    syncMobileRail();
-
-    const railObserver = new MutationObserver(() => {
-      window.requestAnimationFrame(syncMobileRail);
-    });
-    railObserver.observe(source, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-      attributes: true
-    });
-
-    window.__mobileCommunityRailObserver = railObserver;
     panelBody.dataset.ready = "1";
   }
 
@@ -6810,24 +6617,6 @@ window.addEventListener("popstate", () => {
     setMobileDockActive("hub");
   };
 
-  const syncCommunityRailNow = async () => {
-    // Refresh the same public data sources used by the desktop right rail
-    // before copying it into the mobile panel. This prevents stale/empty
-    // placeholders from being shown on phones.
-    try {
-      await Promise.allSettled([
-        typeof loadCommunityLatest === "function" ? loadCommunityLatest() : Promise.resolve(),
-        typeof loadOnline === "function" ? loadOnline() : Promise.resolve(),
-        typeof loadStats === "function" ? loadStats() : Promise.resolve()
-      ]);
-    } catch {}
-
-    if (source && panelBody.contains(clone)) {
-      clone.innerHTML = source.innerHTML;
-    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
-    }
-  };
-
   const openCommunity = () => {
     closeMessages();
     closeProfileView();
@@ -6837,7 +6626,6 @@ window.addEventListener("popstate", () => {
     alertButton.setAttribute("aria-expanded", "true");
     document.body.classList.add("mobile-community-open");
     setMobileDockActive("menu");
-    void syncCommunityRailNow();
   };
 
   window.__closeMobileCommunity = closeCommunity;
@@ -6870,62 +6658,6 @@ window.addEventListener("popstate", () => {
 /* Mobile dock cleanup: primary handlers above own these buttons.
    Do not add secondary click handlers here; they can reset the active
    state immediately after a view is opened. */
-
-/* =========================================================
-   PASSWORD HINT FOR ACCOUNTS WITHOUT EMAIL
-   ========================================================= */
-
-const passwordHintModal = $("#passwordHintModal");
-const passwordHintForm = $("#passwordHintForm");
-const passwordHintInput = $("#passwordHintInput");
-const passwordHintStatus = $("#passwordHintStatus");
-
-function openPasswordHintModal() {
-  if (!passwordHintModal) return;
-  passwordHintModal.hidden = false;
-  passwordHintModal.setAttribute("aria-hidden", "false");
-  if (passwordHintInput) {
-    passwordHintInput.focus();
-  }
-}
-
-function closePasswordHintModal() {
-  if (!passwordHintModal) return;
-  passwordHintModal.hidden = true;
-  passwordHintModal.setAttribute("aria-hidden", "true");
-}
-
-passwordHintForm?.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const hint = passwordHintInput?.value.trim() || "";
-  if (hint.length < 3) {
-    if (passwordHintStatus) passwordHintStatus.textContent = "Adj meg legalább 3 karaktert.";
-    return;
-  }
-
-  const submit = passwordHintForm.querySelector('button[type="submit"]');
-  if (submit) submit.disabled = true;
-  try {
-    const data = await api("/api/auth/password-hint", {
-      method: "POST",
-      body: JSON.stringify({ hint })
-    });
-    if (passwordHintStatus) passwordHintStatus.textContent = data.message || "Mentve.";
-    if (window.currentUser) window.currentUser.hasPasswordHint = true;
-    setTimeout(closePasswordHintModal, 500);
-  } catch (error) {
-    if (passwordHintStatus) passwordHintStatus.textContent = error?.message || "Nem sikerült elmenteni.";
-  } finally {
-    if (submit) submit.disabled = false;
-  }
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && passwordHintModal && !passwordHintModal.hidden) {
-    // The reminder is required for accounts without email, so Escape does not dismiss it.
-    event.preventDefault();
-  }
-});
 
 /* =========================================================
    PASSWORD RESET
@@ -6970,18 +6702,7 @@ function closePasswordResetModal() {
   passwordResetModal.setAttribute("aria-hidden", "true");
 }
 
-forgotPasswordButton?.addEventListener("click", (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-  openPasswordResetModal();
-});
-document.addEventListener("click", (event) => {
-  const button = event.target.closest?.("#forgotPasswordButton");
-  if (!button) return;
-  event.preventDefault();
-  event.stopPropagation();
-  openPasswordResetModal();
-});
+forgotPasswordButton?.addEventListener("click", () => openPasswordResetModal());
 $("#passwordResetClose")?.addEventListener("click", closePasswordResetModal);
 document.querySelectorAll("[data-reset-close]").forEach((element) => {
   element.addEventListener("click", closePasswordResetModal);
@@ -7048,73 +6769,3 @@ const initialResetToken = new URLSearchParams(window.location.search).get("reset
 if (initialResetToken) {
   window.addEventListener("DOMContentLoaded", () => openPasswordResetModal(initialResetToken));
 }
-
-
-/* =========================================================
-   CLEAN MOBILE NAVIGATION CONTROLLER
-   Removes conflicting legacy dock listeners by replacing the
-   three primary buttons with fresh nodes. Menu button keeps
-   the dedicated community-sheet handler above.
-   ========================================================= */
-(function cleanMobileNavigation(){
-  function run(){
-    const bind = (id, handler) => {
-      const old = document.getElementById(id);
-      if (!old || old.dataset.cleanMobileBound === '1') return;
-      const fresh = old.cloneNode(true);
-      fresh.dataset.cleanMobileBound = '1';
-      old.replaceWith(fresh);
-      fresh.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        handler(event);
-      });
-      fresh.addEventListener('pointerup', (event) => {
-        if (event.pointerType === 'touch') {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      });
-      return fresh;
-    };
-
-    bind('mobileHubNav', () => {
-      closeMessages();
-      closeProfileView();
-      window.__closeMobileCommunity?.();
-      document.body.classList.remove('mobile-community-open','messages-view-open','profile-view-open','mobile-share-open');
-      setMobileDockActive('hub');
-      document.documentElement.style.overflowY = '';
-      document.body.style.overflowY = '';
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    });
-
-    bind('mobileMessageNav', () => {
-      const view = document.getElementById('messagesView');
-      if (view?.classList.contains('open')) {
-        closeMessages();
-        setMobileDockActive('hub');
-      } else {
-        window.__closeMobileCommunity?.();
-        openProfileView && closeProfileView();
-        openMessages();
-        setMobileDockActive('messages');
-      }
-    });
-
-    bind('mobileProfileNav', () => {
-      const view = document.getElementById('profileView');
-      if (view?.classList.contains('open')) {
-        closeProfileView();
-        setMobileDockActive('hub');
-      } else {
-        window.__closeMobileCommunity?.();
-        closeMessages();
-        openProfileView();
-        setMobileDockActive('profile');
-      }
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, {once:true});
-  else run();
-})();
