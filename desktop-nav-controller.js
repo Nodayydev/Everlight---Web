@@ -152,7 +152,8 @@
     const sectionMap = {
       profile: 'main',
       'profile-liked': 'liked',
-      'profile-saved': 'saved'
+      'profile-saved': 'saved',
+      'profile-history': 'history'
     };
     const section = sectionMap[view];
     if (!section) return;
