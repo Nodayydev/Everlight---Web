@@ -16385,3 +16385,63 @@ body.sun-mode .footer-mode-btn[data-accent="sun"].is-active,
     display: none !important;
   }
 }
+
+
+/* =========================================================
+   EQUAL RAILS HARD LOCK
+   ========================================================= */
+@media (min-width: 661px) {
+  html body .layout,
+  body .layout,
+  .layout {
+    display: grid !important;
+    width: min(1400px, calc(100vw - 36px)) !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    grid-template-columns: 280px minmax(0, 1fr) 280px !important;
+    column-gap: 24px !important;
+  }
+
+  html body .left-rail,
+  html body .right-rail,
+  body .left-rail,
+  body .right-rail,
+  .left-rail,
+  .right-rail {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    box-sizing: border-box !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  html body main#feed,
+  main#feed {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  html body.right-rail-collapsed .layout,
+  body.right-rail-collapsed .layout {
+    grid-template-columns: 280px minmax(0, 1fr) !important;
+  }
+
+  html body.right-rail-collapsed .right-rail,
+  body.right-rail-collapsed .right-rail {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  html body #settingsMenu,
+  html body .settings-menu,
+  #settingsMenu {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

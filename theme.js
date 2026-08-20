@@ -126,7 +126,7 @@
     }
 
     function isDesktop(){
-      return window.matchMedia("(min-width: 961px)").matches;
+      return window.matchMedia("(min-width: 661px)").matches;
     }
 
     function applyRail(collapsed){
@@ -358,4 +358,24 @@
       toggle.setAttribute("aria-expanded", "false");
     }
   });
+})();
+
+
+/* EQUAL RAILS HARD LOCK handler */
+(function(){
+  document.addEventListener("click", function(e){
+    if (!window.matchMedia("(min-width: 661px)").matches) return;
+    var btn = e.target.closest("#settingsToggle");
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    document.body.classList.toggle("right-rail-collapsed");
+    var collapsed = document.body.classList.contains("right-rail-collapsed");
+    try { localStorage.setItem("everlight-right-rail-collapsed", collapsed ? "1" : "0"); } catch (err) {}
+    var menu = document.getElementById("settingsMenu");
+    if (menu) {
+      menu.hidden = true;
+      menu.style.display = "none";
+    }
+  }, true);
 })();
