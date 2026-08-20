@@ -3539,6 +3539,43 @@ if (mobileProfileNav) {
   });
 }
 
+/* =========================================================
+   MOBILE ISLAND MENU / NOTIFICATIONS
+   ========================================================= */
+
+const mobileCommunityAlert = $("#mobileCommunityAlert");
+const mobileCommunityPanel = $("#mobileCommunityPanel");
+const mobileCommunityClose = $("#mobileCommunityClose");
+
+function setMobileCommunityPanel(open) {
+  if (!mobileCommunityPanel) return;
+  mobileCommunityPanel.classList.toggle("is-open", open);
+  mobileCommunityPanel.setAttribute("aria-hidden", open ? "false" : "true");
+  mobileCommunityAlert?.classList.toggle("is-open", open);
+  mobileCommunityAlert?.setAttribute("aria-expanded", open ? "true" : "false");
+  if (open) {
+    loadInAppNotifications({ markRead: true });
+  }
+}
+
+mobileCommunityAlert?.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  const open = mobileCommunityPanel?.classList.contains("is-open");
+  setMobileCommunityPanel(!open);
+});
+
+mobileCommunityClose?.addEventListener("click", (event) => {
+  event.preventDefault();
+  setMobileCommunityPanel(false);
+});
+
+document.addEventListener("click", (event) => {
+  if (!mobileCommunityPanel?.classList.contains("is-open")) return;
+  if (mobileCommunityPanel.contains(event.target) || mobileCommunityAlert?.contains(event.target)) return;
+  setMobileCommunityPanel(false);
+});
+
 
 /* =========================================================
    MESSAGES / CHAT

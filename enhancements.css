@@ -15608,3 +15608,189 @@ main#feed{
     display:none !important;
   }
 }
+
+/* =========================================================
+   RIGHT RAIL — TRUE RESPONSIVE DESKTOP LAYOUT
+   Keep the cards readable instead of squeezing them into a
+   fixed-width column. The feed absorbs the remaining space.
+   ========================================================= */
+@media (min-width: 961px){
+  .layout{
+    width:100% !important;
+    max-width:1480px !important;
+    margin-inline:auto !important;
+    grid-template-columns:clamp(170px,15vw,220px) minmax(0,1fr) clamp(280px,21vw,320px) !important;
+  }
+
+  .left-rail,
+  main#feed,
+  .right-rail{
+    min-width:0 !important;
+  }
+
+  .right-rail{
+    width:100% !important;
+    padding-left:14px !important;
+    padding-right:14px !important;
+    box-sizing:border-box !important;
+  }
+
+  .right-rail > .rail-info-card,
+  .right-rail > .activity-card,
+  .right-rail > .right-share-card{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    box-sizing:border-box !important;
+  }
+
+  .right-rail .rail-card-title{
+    min-width:0 !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  .right-rail .community-latest-list,
+  .right-rail .community-latest-item,
+  .right-rail .community-latest-copy{
+    min-width:0 !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+  }
+
+  .right-rail .community-latest-item{
+    display:flex !important;
+    align-items:center !important;
+    gap:10px !important;
+  }
+
+  .right-rail .community-avatar{
+    flex:0 0 30px !important;
+    width:30px !important;
+    height:30px !important;
+  }
+
+  .right-rail .community-latest-copy{
+    flex:1 1 auto !important;
+    overflow:hidden !important;
+  }
+
+  .right-rail .community-latest-copy strong{
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+
+  .right-rail .community-latest-copy small{
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+
+  .right-rail #everlightOnlineCard .faces{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:6px !important;
+    min-width:0 !important;
+  }
+
+  .right-rail #everlightOnlineCard .faces .avatar{
+    flex:0 0 30px !important;
+    width:30px !important;
+    height:30px !important;
+    margin-right:0 !important;
+  }
+
+  .right-rail .activity-stats{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    gap:7px 12px !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  .right-rail .activity-stats > div{
+    min-width:0 !important;
+  }
+
+  .right-rail .activity-stats span,
+  .right-rail .activity-stats strong{
+    min-width:0 !important;
+  }
+
+  .right-rail .activity-stats span{
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+
+  .right-rail .activity-stats strong{
+    white-space:nowrap !important;
+    text-align:right !important;
+  }
+
+  .right-rail .right-share-card .share-symbol-grid{
+    display:grid !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    grid-template-columns:repeat(5,minmax(28px,1fr)) !important;
+    grid-auto-rows:36px !important;
+    gap:5px !important;
+  }
+
+  .right-rail .right-share-card .share-symbol-grid button{
+    width:32px !important;
+    height:32px !important;
+    min-width:0 !important;
+    justify-self:center !important;
+  }
+}
+
+/* Medium desktop: reserve enough width for the right cards while
+   allowing the center feed to shrink naturally. */
+@media (min-width:961px) and (max-width:1180px){
+  .layout{
+    grid-template-columns:170px minmax(0,1fr) 280px !important;
+  }
+
+  .left-rail{
+    padding-left:16px !important;
+    padding-right:16px !important;
+  }
+
+  main#feed{
+    padding-left:26px !important;
+    padding-right:26px !important;
+  }
+
+  .right-rail{
+    padding-left:10px !important;
+    padding-right:10px !important;
+  }
+
+  .right-rail > .rail-info-card,
+  .right-rail > .activity-card,
+  .right-rail > .right-share-card{
+    padding-left:14px !important;
+    padding-right:14px !important;
+  }
+
+  .right-rail .right-share-card .share-symbol-grid{
+    grid-template-columns:repeat(4,minmax(28px,1fr)) !important;
+  }
+}
+
+/* Very wide desktop: give the right rail a little more breathing room. */
+@media (min-width:1320px){
+  .layout{
+    grid-template-columns:220px minmax(0,1fr) 320px !important;
+  }
+
+  .right-rail{
+    padding-left:16px !important;
+    padding-right:16px !important;
+  }
+}
