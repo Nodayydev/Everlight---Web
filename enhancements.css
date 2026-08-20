@@ -17202,3 +17202,136 @@ body.sun-mode .topbar .domain .domain-mode-light {
     color: #6d7679 !important;
   }
 }
+
+
+/* =========================================================
+   FINAL MOBILE DOCK + HEADER — exact screenshot match
+   ========================================================= */
+@media (max-width: 660px) {
+  header.topbar,
+  .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr) !important;
+    align-items: center !important;
+    height: 64px !important;
+    min-height: 64px !important;
+    padding: 0 12px !important;
+    background: #000 !important;
+    z-index: 5000 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  header.topbar .domain {
+    grid-column: 1 !important;
+    justify-self: start !important;
+    position: static !important;
+    transform: none !important;
+  }
+
+  header.topbar .header-logo,
+  header.topbar .brand-lockup,
+  header.topbar .logo {
+    grid-column: 2 !important;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    justify-self: center !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  header.topbar .header-look-controls {
+    grid-column: 3 !important;
+    justify-self: end !important;
+  }
+
+  main#feed {
+    padding-top: 8px !important;
+    padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .time-lockup {
+    margin: 4px 14px !important;
+    padding: 0 !important;
+  }
+
+  /* One bar, no black tiles */
+  html body #mobileDock,
+  html body nav.mobile-dock {
+    position: fixed !important;
+    inset: auto 0 calc(30px + env(safe-area-inset-bottom, 0px)) 0 !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #07090b !important;
+    border: 0 !important;
+    border-top: 1px solid #1c2428 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+    overflow: visible !important;
+  }
+
+  html body #mobileDock .mobile-dock-item,
+  html body #mobileDock .mobile-island-alert,
+  html body #mobileDock .mobile-menu-item,
+  html body #mobileDock .mobile-dock-item.active,
+  html body #mobileDock .mobile-dock-item:hover,
+  html body #mobileDock .mobile-island-alert.is-open {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    height: 56px !important;
+  }
+
+  html body #mobileDock .mobile-dock-item + .mobile-dock-item::before,
+  html body #mobileDock .mobile-island-alert::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 14px !important;
+    bottom: 14px !important;
+    width: 1px !important;
+    background: #243033 !important;
+  }
+
+  html body #mobileDock .mobile-dock-item.active .rail-action-icon {
+    color: #8badcc !important;
+    filter: none !important;
+  }
+
+  html body .site-footer {
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+    background: #000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+  }
+
+  html body .site-footer p {
+    position: static !important;
+    display: block !important;
+    font-size: 8px !important;
+    color: #6d7679 !important;
+    background: transparent !important;
+  }
+}
