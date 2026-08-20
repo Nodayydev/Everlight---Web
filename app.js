@@ -375,7 +375,7 @@ function setAccount(user) {
 
     profileStatus:
       user.status ||
-      "✦ Elérhető",
+      "Elérhető",
 
     nameColor:
       user.nameColor ||
@@ -3061,7 +3061,7 @@ function updateProfileView(
 
     profileViewStatus.textContent =
       user.status ||
-      "✦ Elérhető";
+      "Elérhető";
   }
 
 
