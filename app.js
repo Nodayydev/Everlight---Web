@@ -3420,21 +3420,11 @@ function closeProfileView(options = {}) {
     topbar.style.opacity = "1";
   }
 
-  setMobileDockActive(
-    "hub"
-  );
-  window.__syncDesktopNav?.("hub");
+  if (options.syncDock !== false) {
+    setMobileDockActive("hub");
+    window.__syncDesktopNav?.("hub");
+  }
   restoreProfileHome();
-
-  const feed = document.getElementById("feed");
-  if (feed) {
-    feed.scrollTop = 0;
-  }
-  try {
-    window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
-  } catch {
-    window.scrollTo(0, 0);
-  }
 }
 
 
@@ -3575,32 +3565,16 @@ function setMobileDockActive(view) {
    ========================================================= */
 
 function openHubView() {
-
-  closeMessages();
-
-  closeProfileView();
-
-
-  setMobileDockActive(
-    "hub"
-  );
-
-
-  /*
-   * A főoldal elejére megyünk,
-   * de nem ugrunk agresszívan.
-   */
-
-  const feed =
-    $("#feed");
-
+  closeMessages({ syncDock: false });
+  closeProfileView({ syncDock: false });
+  document.body.classList.remove("messages-view-open", "profile-view-open");
+  setMobileDockActive("hub");
+  window.__syncDesktopNav?.("hub");
+  const feed = $("#feed");
   if (feed) {
-
-    feed.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    try { feed.scrollTo({ top: 0, behavior: "smooth" }); } catch (_) { feed.scrollTop = 0; }
   }
+  try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (_) { window.scrollTo(0, 0); }
 }
 
 
@@ -3633,16 +3607,10 @@ const mobileMessageNav = $("#mobileMessageNav");
 if (mobileMessageNav) {
   mobileMessageNav.addEventListener("click", (event) => {
     event.preventDefault();
-    const messagesView = $("#messagesView");
-    const isOpen = messagesView?.classList.contains("open");
-
-    if (isOpen) {
-      closeMessages();
-      setMobileDockActive("hub");
-    } else {
-      openMessages();
-      setMobileDockActive("messages");
-    }
+    event.stopPropagation();
+    closeProfileView({ syncDock: false });
+    openMessages();
+    setMobileDockActive("messages");
   });
 }
 
@@ -3650,16 +3618,10 @@ const mobileProfileNav = $("#mobileProfileNav");
 if (mobileProfileNav) {
   mobileProfileNav.addEventListener("click", (event) => {
     event.preventDefault();
-    const profileView = $("#profileView");
-    const isOpen = profileView?.classList.contains("open");
-
-    if (isOpen) {
-      closeProfileView();
-      setMobileDockActive("hub");
-    } else {
-      openProfileView();
-      setMobileDockActive("profile");
-    }
+    event.stopPropagation();
+    closeMessages({ syncDock: false });
+    openProfileView();
+    setMobileDockActive("profile");
   });
 }
 

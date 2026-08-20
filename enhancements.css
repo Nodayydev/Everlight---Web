@@ -17455,3 +17455,427 @@ body.sun-mode .topbar .domain .domain-mode-light {
     flex: 0 0 auto !important;
   }
 }
+
+
+/* =========================================================
+   DOCK — only short separators, no long faint lines
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .mobile-bottom-chrome,
+  html body #mobileDock,
+  html body nav.mobile-dock {
+    border: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html body #mobileDock .mobile-dock-item,
+  html body #mobileDock .mobile-island-alert,
+  html body #mobileDock .mobile-menu-item,
+  html body #mobileDock .mobile-dock-item + .mobile-dock-item,
+  html body #mobileDock .mobile-dock-item.active {
+    border: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  html body #mobileDock .mobile-dock-item::after,
+  html body #mobileDock .mobile-dock-item.active::before {
+    /* keep only the short divider below */
+  }
+
+  html body #mobileDock .mobile-dock-item + .mobile-dock-item::before,
+  html body #mobileDock .mobile-dock-item + .mobile-island-alert::before,
+  html body #mobileDock .mobile-island-alert::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 18px !important;
+    bottom: 18px !important;
+    width: 1px !important;
+    height: auto !important;
+    background: #2a3336 !important;
+    box-shadow: none !important;
+    display: block !important;
+  }
+
+  html body #mobileDock .mobile-dock-item.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 9px !important;
+    width: 4px !important;
+    height: 4px !important;
+    margin-left: -2px !important;
+    border-radius: 50% !important;
+    background: #8badcc !important;
+    top: auto !important;
+  }
+}
+
+
+/* =========================================================
+   MESSAGES — daily thought bubbles + chat list
+   ========================================================= */
+.daily-thoughts {
+  padding: 6px 16px 14px !important;
+  border-bottom: 1px solid rgba(139,173,204,.12) !important;
+}
+.daily-thoughts-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 12px !important;
+}
+.daily-thoughts-head strong {
+  font: 700 13px/1 Manrope, sans-serif !important;
+  color: #dce6ea !important;
+}
+.daily-thoughts-head button {
+  border: 0 !important;
+  background: transparent !important;
+  color: #8badcc !important;
+  font: 600 11px/1 Manrope, sans-serif !important;
+  cursor: pointer !important;
+}
+.daily-thoughts-track {
+  display: flex !important;
+  gap: 14px !important;
+  overflow-x: auto !important;
+  padding: 4px 2px 8px !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+.daily-thought {
+  flex: 0 0 76px !important;
+  width: 76px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #d7e0e3 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+}
+.daily-thought-bubble {
+  position: relative !important;
+  max-width: 88px !important;
+  padding: 7px 8px !important;
+  border: 1px solid rgba(139,173,204,.22) !important;
+  border-radius: 12px !important;
+  background: #10161a !important;
+  font: 600 9px/1.25 Manrope, sans-serif !important;
+  color: #c9d4d8 !important;
+  text-align: center !important;
+}
+.daily-thought-bubble::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -5px !important;
+  width: 8px !important;
+  height: 8px !important;
+  margin-left: -4px !important;
+  background: #10161a !important;
+  border-right: 1px solid rgba(139,173,204,.22) !important;
+  border-bottom: 1px solid rgba(139,173,204,.22) !important;
+  transform: rotate(45deg) !important;
+}
+.daily-thought-avatar {
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #151c20 !important;
+  border: 2px solid #8badcc !important;
+  font-size: 22px !important;
+  color: #8badcc !important;
+}
+.daily-thought-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.daily-thought.own .daily-thought-avatar {
+  border-style: dashed !important;
+  background: #0b1013 !important;
+}
+.daily-thought small {
+  font: 600 10px/1 Manrope, sans-serif !important;
+  color: #c5ced1 !important;
+  max-width: 76px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.daily-thought b {
+  font: 700 10px/1 Manrope, sans-serif !important;
+  color: #f3b14b !important;
+}
+
+.message-contacts-list .message-contact {
+  display: grid !important;
+  grid-template-columns: 48px minmax(0,1fr) auto !important;
+  gap: 10px !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 10px 12px !important;
+  margin-bottom: 8px !important;
+  border: 1px solid rgba(139,173,204,.12) !important;
+  border-radius: 16px !important;
+  background: rgba(10,14,16,.88) !important;
+  text-align: left !important;
+}
+.message-contact-avatar {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+.message-contact-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.message-contact-copy {
+  min-width: 0 !important;
+}
+.message-contact-copy strong {
+  display: block !important;
+  font-size: 14px !important;
+  color: #edf1f1 !important;
+}
+.message-contact-copy small {
+  display: block !important;
+  margin-top: 3px !important;
+  font-size: 12px !important;
+  color: #8a969a !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.message-contact-meta {
+  font: 500 11px/1 "DM Mono", monospace !important;
+  color: #7d8785 !important;
+  align-self: start !important;
+  padding-top: 4px !important;
+}
+
+@media (max-width: 660px) {
+  .messages-view.open,
+  .messages-view[aria-hidden="false"] {
+    max-height: none !important;
+    height: auto !important;
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+
+/* =========================================================
+   DAILY THOUGHT — bubble above, streak below name
+   ========================================================= */
+.daily-thought {
+  position: relative !important;
+}
+.daily-thought-bubble {
+  order: 1 !important;
+  margin-bottom: 2px !important;
+}
+.daily-thought-avatar {
+  order: 2 !important;
+  position: relative !important;
+}
+.daily-thought small {
+  order: 3 !important;
+  margin-top: 2px !important;
+}
+.daily-thought b,
+.daily-thought .daily-thought-streak {
+  order: 4 !important;
+  position: static !important;
+  display: block !important;
+  margin-top: 2px !important;
+  right: auto !important;
+  bottom: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font: 700 10px/1 Manrope, sans-serif !important;
+  color: #f3b14b !important;
+}
+
+
+/* =========================================================
+   MOBILE: keep dock always, fix messages/profile sheets
+   ========================================================= */
+@media (max-width: 660px) {
+  /* Dock never hides on profile / messages */
+  body.messages-view-open .mobile-bottom-chrome,
+  body.profile-view-open .mobile-bottom-chrome,
+  body.messages-view-open #mobileDock,
+  body.profile-view-open #mobileDock,
+  body.messages-view-open .mobile-dock,
+  body.profile-view-open .mobile-dock,
+  body.messages-view-open .site-footer,
+  body.profile-view-open .site-footer,
+  html body.messages-view-open .mobile-bottom-chrome,
+  html body.profile-view-open .mobile-bottom-chrome {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 2147483600 !important;
+  }
+
+  html body.messages-view-open .mobile-bottom-chrome,
+  html body.profile-view-open .mobile-bottom-chrome {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html body.messages-view-open #mobileDock,
+  html body.profile-view-open #mobileDock {
+    display: grid !important;
+  }
+
+  /* Sheets leave room for the bottom chrome */
+  .messages-view.open,
+  .messages-view[aria-hidden="false"],
+  .profile-view.open,
+  .profile-view[aria-hidden="false"] {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 64px !important;
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    background: #000 !important;
+    z-index: 400 !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .messages-view-inner,
+  .profile-view-inner {
+    min-height: 100% !important;
+    padding-bottom: 12px !important;
+    background: #000 !important;
+  }
+
+  /* Daily thoughts — vertical tiles, no white pill collapse */
+  .daily-thoughts {
+    display: block !important;
+    padding: 10px 12px 14px !important;
+    border-bottom: 1px solid rgba(139,173,204,.14) !important;
+    background: #000 !important;
+  }
+  .daily-thoughts-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  .daily-thoughts-head strong {
+    font: 700 13px/1.2 Manrope, sans-serif !important;
+    color: #e8eef1 !important;
+    white-space: nowrap !important;
+  }
+  .daily-thoughts-head button {
+    border: 0 !important;
+    background: transparent !important;
+    color: #8badcc !important;
+    font: 600 11px/1 Manrope, sans-serif !important;
+    white-space: nowrap !important;
+  }
+  .daily-thoughts-track {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 14px !important;
+    overflow-x: auto !important;
+    padding-bottom: 6px !important;
+  }
+  .daily-thought {
+    flex: 0 0 78px !important;
+    width: 78px !important;
+    max-width: 78px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .daily-thought-bubble {
+    display: block !important;
+    width: 100% !important;
+    max-width: 78px !important;
+    padding: 6px 7px !important;
+    border: 1px solid rgba(139,173,204,.22) !important;
+    border-radius: 12px !important;
+    background: #10161a !important;
+    color: #c9d4d8 !important;
+    font: 600 9px/1.25 Manrope, sans-serif !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+  .daily-thought-avatar {
+    display: grid !important;
+    place-items: center !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    border: 2px solid #8badcc !important;
+    background: #151c20 !important;
+  }
+  .daily-thought-avatar img {
+    width: 56px !important;
+    height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
+    object-fit: cover !important;
+  }
+  .daily-thought small {
+    display: block !important;
+    max-width: 76px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font: 600 10px/1 Manrope, sans-serif !important;
+    color: #c5ced1 !important;
+  }
+  .daily-thought-streak {
+    display: block !important;
+    font: 700 10px/1 Manrope, sans-serif !important;
+    color: #f3b14b !important;
+  }
+
+  /* Keep topbar visible above sheets */
+  body.messages-view-open .topbar,
+  body.profile-view-open .topbar {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 5000 !important;
+  }
+}
