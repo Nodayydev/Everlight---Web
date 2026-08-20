@@ -6625,8 +6625,9 @@ window.addEventListener("popstate", () => {
 
 /* =========================================================
    FINAL MOBILE COMMUNITY / NOTIFICATION SHEET
-   The right-side community content is presented in the same
-   floating sheet pattern as Csevegés and Profil.
+   The mobile menu is a real notification sheet. It must not
+   clone the desktop right rail, because that rail contains
+   community/stats cards rather than the user's notifications.
    ========================================================= */
 (function initMobileCommunitySheet(){
   const alertButton = document.getElementById("mobileCommunityAlert");
@@ -6635,13 +6636,18 @@ window.addEventListener("popstate", () => {
   const panelBody = document.getElementById("mobileCommunityPanelBody");
   if (!alertButton || !panel || !panelBody) return;
 
-  const source = document.querySelector(".right-rail");
-  if (source && !panelBody.dataset.ready) {
-    const clone = source.cloneNode(true);
-    clone.classList.add("mobile-cloned-rail");
-    panelBody.innerHTML = "";
-    panelBody.appendChild(clone);
-    panelBody.dataset.ready = "1";
+  // Build the notification list once. The existing notification
+  // renderer will fill this element with real /api/notifications data.
+  if (!panelBody.querySelector(".mobile-notification-content")) {
+    panelBody.innerHTML = `
+      <section class="mobile-notification-content" aria-label="Értesítések">
+        <div class="mobile-notification-summary">
+          <span class="eyebrow">ÉRTESÍTÉSEK</span>
+          <strong>Legfrissebb értesítések</strong>
+        </div>
+        <div class="notification-list" role="list" aria-live="polite"></div>
+      </section>
+    `;
   }
 
   const closeCommunity = () => {
@@ -6653,7 +6659,7 @@ window.addEventListener("popstate", () => {
     setMobileDockActive("hub");
   };
 
-  const openCommunity = () => {
+  const openCommunity = async () => {
     closeMessages();
     closeProfileView();
     panel.classList.add("is-open");
@@ -6662,6 +6668,9 @@ window.addEventListener("popstate", () => {
     alertButton.setAttribute("aria-expanded", "true");
     document.body.classList.add("mobile-community-open");
     setMobileDockActive("menu");
+
+    // Refresh immediately instead of waiting for the 5-second poll.
+    await loadInAppNotifications();
   };
 
   window.__closeMobileCommunity = closeCommunity;
@@ -6670,7 +6679,7 @@ window.addEventListener("popstate", () => {
     event.preventDefault();
     event.stopPropagation();
     if (panel.classList.contains("is-open")) closeCommunity();
-    else openCommunity();
+    else void openCommunity();
   });
 
   closeButton?.addEventListener("click", (event) => {
