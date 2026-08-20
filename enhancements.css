@@ -15898,3 +15898,116 @@ main#feed{
     bottom:calc(-1 * env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+/* =========================================================
+   FINAL MOBILE BOTTOM POSITION — FULL ISLAND + AI LINE
+   The previous safe-area override moved the whole dock below the
+   viewport on iPhone. Keep the complete island visible, place it
+   immediately above the AI attribution, and leave the Home Indicator
+   area free.
+   ========================================================= */
+@media (max-width:660px){
+  #mobileDock,
+  .mobile-dock{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    top:auto !important;
+    bottom:calc(10px + env(safe-area-inset-bottom,0px)) !important;
+    width:min(92vw,430px) !important;
+    height:72px !important;
+    min-height:72px !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    padding:0 10px !important;
+    box-sizing:border-box !important;
+    overflow:visible !important;
+    background:transparent !important;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    z-index:2147483000 !important;
+  }
+
+  #mobileDock::before,
+  .mobile-dock::before{
+    content:"" !important;
+    position:absolute !important;
+    z-index:-1 !important;
+    left:0 !important;
+    right:0 !important;
+    top:0 !important;
+    height:72px !important;
+    bottom:auto !important;
+    background:#050708 !important;
+    border:1px solid rgba(143,185,223,.20) !important;
+    border-bottom:0 !important;
+    border-radius:38px 38px 0 0 !important;
+    box-shadow:0 -8px 24px rgba(0,0,0,.22) !important;
+    pointer-events:none !important;
+  }
+
+  #mobileDock .mobile-dock-item,
+  #mobileDock .mobile-island-alert{
+    width:54px !important;
+    height:54px !important;
+    min-width:54px !important;
+    min-height:54px !important;
+    border-radius:18px !important;
+  }
+
+  /* AI text sits directly underneath the island and above the
+     iPhone Home Indicator safe area. */
+  .site-footer{
+    position:fixed !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:env(safe-area-inset-bottom,0px) !important;
+    width:100% !important;
+    height:18px !important;
+    min-height:18px !important;
+    margin:0 !important;
+    padding:0 8px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    box-sizing:border-box !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    z-index:2147483001 !important;
+    pointer-events:none !important;
+  }
+
+  .site-footer p{
+    margin:0 !important;
+    padding:0 !important;
+    width:auto !important;
+    max-width:calc(100vw - 16px) !important;
+    background:transparent !important;
+    border:0 !important;
+    border-radius:0 !important;
+    color:#65716f !important;
+    font:500 6.5px/1 "DM Mono",monospace !important;
+    letter-spacing:.018em !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    text-align:center !important;
+  }
+
+  main{
+    padding-bottom:calc(100px + env(safe-area-inset-bottom,0px)) !important;
+  }
+}
+
+@media (max-width:390px){
+  #mobileDock,
+  .mobile-dock{
+    bottom:calc(10px + env(safe-area-inset-bottom,0px)) !important;
+    width:92vw !important;
+    height:72px !important;
+    min-height:72px !important;
+  }
+}
