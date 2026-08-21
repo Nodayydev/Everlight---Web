@@ -18095,7 +18095,7 @@ body.sun-mode .topbar .domain .domain-mode-light {
   body.mobile-community-open {
     overflow: hidden !important;
     height: 100dvh !important;
-    touch-action: none !important;
+    touch-action: auto !important;
   }
 
   body.messages-view-open main#feed,
@@ -18631,5 +18631,190 @@ html.everlight-standalone {
   html body .messages-view.chat-open #dmList {
     overflow-y: auto !important;
     min-height: 180px !important;
+  }
+}
+
+
+/* =========================================================
+   MESSENGER LAYOUT — contacts left, avatars when open
+   ========================================================= */
+.messages-view-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.messages-layout {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+.message-contacts {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 320px !important;
+  min-width: 320px !important;
+  max-width: 320px !important;
+  border-right: 1px solid #1c2426 !important;
+  background: #07090b !important;
+  overflow: hidden !important;
+  transition: width .28s ease, min-width .28s ease, max-width .28s ease !important;
+}
+.message-contacts-list {
+  overflow-y: auto !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+.message-chat {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+}
+
+.messages-view.chat-open .message-contacts {
+  width: 72px !important;
+  min-width: 72px !important;
+  max-width: 72px !important;
+}
+.messages-view.chat-open .message-contacts-head,
+.messages-view.chat-open .message-search,
+.messages-view.chat-open .message-contact-copy,
+.messages-view.chat-open .message-contact-meta,
+.messages-view.chat-open .message-streak {
+  display: none !important;
+}
+.messages-view.chat-open .message-contact {
+  justify-content: center !important;
+  padding: 10px 8px !important;
+  gap: 0 !important;
+}
+.messages-view.chat-open .message-contact-avatar,
+.messages-view.chat-open .message-contact-avatar img {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 50% !important;
+}
+.messages-view.chat-open .daily-thoughts {
+  display: none !important;
+}
+
+.message-contact {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+.message-contact.active {
+  background: rgba(139,173,204,.10) !important;
+}
+
+@media (max-width: 660px) {
+  html body .messages-view .messages-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+  html body .messages-view .message-contacts {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view .message-chat {
+    display: none !important;
+  }
+  html body .messages-view.chat-open .message-contacts {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    display: flex !important;
+  }
+  html body .messages-view.chat-open .message-chat {
+    display: grid !important;
+    width: auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  html body .messages-view.chat-open .message-contacts-head,
+  html body .messages-view.chat-open .message-search {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   CHAT SCROLL FIX
+   ========================================================= */
+html body .messages-view.open,
+html body .messages-view[aria-hidden="false"] {
+  overflow: hidden !important;
+  touch-action: auto !important;
+}
+html body .messages-view-inner {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+html body .messages-layout {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+html body .message-contacts-list,
+html body #messageContactsList {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+html body #dmList,
+html body .dm-list {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  overscroll-behavior: contain !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  pointer-events: auto !important;
+}
+html body .message-chat {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+@media (max-width: 660px) {
+  html body.messages-view-open,
+  html body.profile-view-open {
+    touch-action: auto !important;
+  }
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"] {
+    overflow: hidden !important;
+    top: 64px !important;
+    bottom: calc(80px + var(--dock-lift, 12px) + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
