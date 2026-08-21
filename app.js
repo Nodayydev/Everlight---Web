@@ -3580,71 +3580,99 @@ async function loadMessageContacts() {
   const contactsList = $("#messageContactsList");
   if (!contactsList || !currentUser) return;
 
-  contactsList.innerHTML = `
-    <p class="loading-copy">Beszélgetések betöltése…</p>
-  `;
+  contactsList.innerHTML = `<p class="loading-copy">Betöltés…</p>`;
 
   try {
-    const data = await api("/api/messages");
-    const contacts = data.contacts || [];
+    let contacts = [];
+    let everyone = [];
+    try {
+      const data = await api("/api/messages");
+      contacts = data.contacts || [];
+    } catch (_) {}
+    try {
+      const all = await api("/api/message-users");
+      everyone = all.users || [];
+    } catch (_) {
+      try {
+        const online = await api("/api/online");
+        everyone = online.users || [];
+      } catch (_) {}
+    }
 
-    if (!contacts.length) {
-      contactsList.innerHTML = `
-        <div class="chat-empty">
-          <div class="chat-empty-icon">✉</div>
-          <strong>Még nincs beszélgetés</strong>
-          <p>Válassz egy beszélgetést, vagy indíts újat az ＋ Új gombbal.</p>
-        </div>
-      `;
+    const byName = new Map();
+    for (const u of everyone) {
+      if (!u || !u.username) continue;
+      if (currentUser && u.username === currentUser.username) continue;
+      byName.set(u.username, {
+        username: u.username,
+        display_name: u.display_name,
+        avatar: u.avatar,
+        name_color: u.name_color,
+        message_streak: u.message_streak || 0,
+        last_body: "",
+        last_message_at: null,
+        last_seen: u.last_seen || u.lastSeen || null
+      });
+    }
+    for (const u of contacts) {
+      if (!u || !u.username) continue;
+      if (currentUser && u.username === currentUser.username) continue;
+      const prev = byName.get(u.username) || {};
+      byName.set(u.username, {
+        ...prev,
+        ...u,
+        message_streak: u.message_streak || prev.message_streak || 0
+      });
+    }
+
+    const merged = [...byName.values()].sort((a, b) => {
+      const at = a.last_message_at || a.lastMessageAt || "";
+      const bt = b.last_message_at || b.lastMessageAt || "";
+      if (at && bt) return String(bt).localeCompare(String(at));
+      if (at && !bt) return -1;
+      if (!at && bt) return 1;
+      const an = (a.display_name || a.username || "").toLowerCase();
+      const bn = (b.display_name || b.username || "").toLowerCase();
+      return an.localeCompare(bn, "hu");
+    });
+
+    if (!merged.length) {
+      contactsList.innerHTML = `<div class="chat-empty"><strong>Nincs elérhető felhasználó</strong></div>`;
       return;
     }
 
-    contactsList.innerHTML = contacts.map((user) => {
+    contactsList.innerHTML = merged.map((user) => {
       const preview = String(user.last_body || user.lastBody || "").replace(/\s+/g, " ").trim();
       const when = formatChatTime(user.last_message_at || user.lastMessageAt);
-      const active = (function(v){try{if(!v)return"Ismeretlen aktivitás";var t=new Date(v).getTime();if(!isFinite(t))return"Ismeretlen aktivitás";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user.last_seen || user.lastSeen);
+      const active = (function(v){try{if(!v)return"";var t=new Date(v).getTime();if(!isFinite(t))return"";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user.last_seen || user.lastSeen);
+      const streak = Number(user.message_streak || 0);
       return `
-      <button
-        type="button"
-        class="message-contact"
-        data-recipient="${escapeHtml(user.username)}"
-      >
+      <button type="button" class="message-contact" data-recipient="${escapeHtml(user.username)}">
         <span class="message-contact-avatar">
-          ${user.avatar
-            ? `<img src="${escapeHtml(user.avatar)}" alt="">`
-            : escapeHtml(getInitial(user))}
+          ${user.avatar ? `<img src="${escapeHtml(user.avatar)}" alt="">` : escapeHtml(getInitial(user))}
         </span>
         <span class="message-contact-copy">
           <strong>${escapeHtml(getDisplayName(user))}</strong>
           <small>${escapeHtml(preview || "@" + user.username)}</small>
-          <small class="message-contact-active">${escapeHtml(active)}</small>
+          ${active ? `<small class="message-contact-active">${escapeHtml(active)}</small>` : ""}
         </span>
-        <span class="message-contact-meta">${escapeHtml(when)}</span>
-        ${Number(user.message_streak || 0) > 0
-          ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(user.message_streak))}</span>`
-          : ""}
-      </button>
-    `;
+        <span class="message-contact-meta">${escapeHtml(when || "")}</span>
+        ${streak > 0 ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(streak))}</span>` : ""}
+      </button>`;
     }).join("");
 
     filterMessageContacts();
 
     const recipient = $("#dmRecipient")?.value.trim();
     if (recipient) {
-      const active = contactsList.querySelector(
-        `.message-contact[data-recipient="${CSS.escape(recipient)}"]`
-      );
-      active?.classList.add("active");
+      const activeBtn = contactsList.querySelector(`.message-contact[data-recipient="${CSS.escape(recipient)}"]`);
+      activeBtn?.classList.add("active");
     }
   } catch (error) {
-    contactsList.innerHTML = `
-      <div class="chat-empty">
-        <strong>Nem sikerült betölteni</strong>
-        <p>${escapeHtml(error.message)}</p>
-      </div>
-    `;
+    contactsList.innerHTML = `<div class="chat-empty"><strong>Nem sikerült betölteni</strong><p>${escapeHtml(error.message || "")}</p></div>`;
   }
 }
+
 
 
 const messagesViewHome = (() => {
