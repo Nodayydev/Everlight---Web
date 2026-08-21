@@ -848,7 +848,7 @@ function renderPost(post) {
 
   const postStreak = anonymous ? 0 : Number(post.message_streak || 0);
   const streakMarkup = postStreak > 0
-    ? `<span class="feed-card-streak" title="${postStreak} napos üzenet streak" aria-label="${postStreak} napos üzenet streak">🔥${escapeHtml(String(postStreak))}</span>`
+    ? `<span class="feed-card-streak" title="${postStreak} napos streak" aria-label="${postStreak} napos streak">🔥${escapeHtml(String(postStreak))}</span>`
     : "";
 
   const avatarMarkup = anonymous
@@ -2100,7 +2100,7 @@ async function loadOnline() {
                     <span class="everlight-online-avatar" aria-label="${escapeHtml(displayName)}">
                       ${avatarHtml}
                       <i aria-hidden="true"></i>
-                      ${streak > 0 ? `<b class="everlight-online-streak" aria-label="${streak} napos üzenet streak">🔥${escapeHtml(String(streak))}</b>` : ''}
+                      ${streak > 0 ? `<b class="everlight-online-streak" aria-label="${streak} napos streak">🔥${escapeHtml(String(streak))}</b>` : ''}
                     </span>
                   </div>
                 `;
@@ -3241,7 +3241,7 @@ function updateProfileView(
     const streak = Number(user.messageStreak || user.message_streak || 0);
     profileViewStreak.hidden = streak <= 0;
     profileViewStreak.textContent = streak > 0 ? `🔥${streak}` : "";
-    profileViewStreak.title = streak > 0 ? `${streak} napos üzenet streak` : "";
+    profileViewStreak.title = streak > 0 ? `${streak} napos streak` : "";
   }
 
 
@@ -3794,7 +3794,7 @@ async function loadMessageContacts() {
           ${active ? `<small class="message-contact-active">${escapeHtml(active)}</small>` : ""}
         </span>
         <span class="message-contact-meta">${escapeHtml(when || "")}</span>
-        ${streak > 0 ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(streak))}</span>` : ""}
+        ${streak > 0 ? `<span class="message-streak" title="Streak">🔥${escapeHtml(String(streak))}</span>` : ""}
       </button>`;
     }).join("");
 
@@ -4274,7 +4274,7 @@ async function loadMessages() {
         recipient;
       const streak = Number(data.streak || 0);
       dmTitle.innerHTML = `${escapeHtml(displayName)}${streak > 0
-        ? ` <span class="chat-streak" title="Üzenet streak">🔥${escapeHtml(String(streak))}</span>`
+        ? ` <span class="chat-streak" title="Streak">🔥${escapeHtml(String(streak))}</span>`
         : ""}`;
     }
 
@@ -4419,7 +4419,7 @@ function renderMessageContact(user) {
         <strong>${escapeHtml(displayName)}</strong>
         <small>@${escapeHtml(username)}</small>
       </span>
-      ${streak > 0 ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(streak))}</span>` : ""}
+      ${streak > 0 ? `<span class="message-streak" title="Streak">🔥${escapeHtml(String(streak))}</span>` : ""}
     `;
     contactsList.appendChild(contact);
   }

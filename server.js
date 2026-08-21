@@ -640,7 +640,9 @@ async function createSchema() {
     ['location', 'ALTER TABLE everlight_users ADD COLUMN location VARCHAR(120) NULL'],
     ['website', 'ALTER TABLE everlight_users ADD COLUMN website VARCHAR(255) NULL'],
     ['last_seen', 'ALTER TABLE everlight_users ADD COLUMN last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP'],
-    ['password_hint', 'ALTER TABLE everlight_users ADD COLUMN password_hint VARCHAR(120) NULL']
+    ['password_hint', 'ALTER TABLE everlight_users ADD COLUMN password_hint VARCHAR(120) NULL'],
+    ['post_streak', 'ALTER TABLE everlight_users ADD COLUMN post_streak INT NOT NULL DEFAULT 0'],
+    ['last_post_date', 'ALTER TABLE everlight_users ADD COLUMN last_post_date DATE NULL']
   ];
 
   const columns = await dbAll(`
@@ -1001,11 +1003,11 @@ app.post(
           `
             SELECT
               u.*,
-              COALESCE((
-                SELECT MAX(ms.current_streak)
-                FROM everlight_message_streaks ms
-                WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
-              ), 0) AS message_streak
+              CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak
             FROM everlight_users u
             WHERE u.id = ?
           `,
@@ -1062,11 +1064,11 @@ app.get(
           `
             SELECT
               u.*,
-              COALESCE((
-                SELECT MAX(ms.current_streak)
-                FROM everlight_message_streaks ms
-                WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
-              ), 0) AS message_streak
+              CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak
             FROM everlight_users u
             WHERE u.id = ?
           `,
@@ -1447,12 +1449,11 @@ app.get(
             u.display_name,
             u.avatar,
             u.name_color,
-            COALESCE((
-              SELECT MAX(ms.current_streak)
-              FROM everlight_message_streaks ms
-              WHERE (ms.user_a_id = u.id OR ms.user_b_id = u.id)
-                AND ms.last_message_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
-            ), 0) AS message_streak,
+            CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak,
             (SELECT COUNT(*) FROM everlight_post_likes l WHERE l.post_id = p.id) AS like_count,
             (SELECT COUNT(*) FROM everlight_post_saves s WHERE s.post_id = p.id) AS save_count,
             (SELECT COUNT(*) FROM everlight_post_comments c WHERE c.post_id = p.id) AS comment_count,
@@ -1573,28 +1574,28 @@ app.post(
 
       if (req.userId) {
         await touch(req.userId);
+        if (!anonymous) {
+          await updatePostStreak(req.userId);
+        }
       }
 
       const post =
         await dbGet(
           `
             SELECT
-
               p.*,
-
               u.username,
-
               u.display_name,
-
               u.avatar,
-
-              u.name_color
-
+              u.name_color,
+              CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak
             FROM everlight_posts p
-
             JOIN everlight_users u
               ON u.id = p.author_id
-
             WHERE p.id = ?
           `,
           [result.insertId]
@@ -1931,11 +1932,11 @@ app.get(
 
               name_color,
 
-              COALESCE((
-                SELECT MAX(ms.current_streak)
-                FROM everlight_message_streaks ms
-                WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
-              ), 0) AS message_streak
+              CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak
 
             FROM everlight_users u
 
@@ -1962,52 +1963,36 @@ app.get(
 );
 
 /* =========================================================
-   MESSAGE STREAKS
-   A streak is maintained by message activity on consecutive calendar days.
-   Same-day messages do not increase it; a missed day resets it to 1.
+   POST STREAK (single source of truth)
+   - One streak per user on everlight_users (post_streak, last_post_date)
+   - Only non-anonymous posts count
+   - Consecutive calendar days of posting; same day does not bump
+   - Missed day resets to 1 on next post; visible streak is 0 if last post older than yesterday
+   - Same value shown on posts, chat, profile, online, daily thoughts
    ========================================================= */
 
-function orderedPair(a, b) {
-  const first = Number(a);
-  const second = Number(b);
-  return first < second
-    ? [first, second]
-    : [second, first];
-}
-
-async function updateMessageStreak(userA, userB) {
-  const [a, b] = orderedPair(userA, userB);
+async function updatePostStreak(userId) {
+  const id = Number(userId);
+  if (!id) return 0;
   const today = await dbGet(`SELECT CURRENT_DATE AS today`);
   const todayValue = today?.today;
-  const existing = await dbGet(
-    `SELECT current_streak, last_message_date
-     FROM everlight_message_streaks
-     WHERE user_a_id = ? AND user_b_id = ?
-     LIMIT 1`,
-    [a, b]
+  const row = await dbGet(
+    `SELECT post_streak, last_post_date FROM everlight_users WHERE id = ? LIMIT 1`,
+    [id]
   );
+  if (!row) return 0;
 
-  if (!existing) {
-    await dbRun(
-      `INSERT INTO everlight_message_streaks
-       (user_a_id, user_b_id, current_streak, last_message_date)
-       VALUES (?, ?, 1, ?)`,
-      [a, b, todayValue]
-    );
-    return 1;
-  }
-
-  const last = existing.last_message_date
-    ? new Date(`${String(existing.last_message_date).slice(0, 10)}T00:00:00Z`)
+  const last = row.last_post_date
+    ? new Date(`${String(row.last_post_date).slice(0, 10)}T00:00:00Z`)
     : null;
   const now = new Date(`${String(todayValue).slice(0, 10)}T00:00:00Z`);
   const diffDays = last
     ? Math.round((now - last) / 86400000)
     : Infinity;
 
-  let streak = Number(existing.current_streak || 0);
+  let streak = Number(row.post_streak || 0);
   if (diffDays === 0) {
-    // Already active today.
+    // already posted today
   } else if (diffDays === 1) {
     streak += 1;
   } else {
@@ -2015,36 +2000,38 @@ async function updateMessageStreak(userA, userB) {
   }
 
   await dbRun(
-    `UPDATE everlight_message_streaks
-     SET current_streak = ?, last_message_date = ?
-     WHERE user_a_id = ? AND user_b_id = ?`,
-    [streak, todayValue, a, b]
+    `UPDATE everlight_users SET post_streak = ?, last_post_date = ? WHERE id = ?`,
+    [streak, todayValue, id]
   );
-
   return streak;
 }
 
-async function getMessageStreak(userA, userB) {
-  const [a, b] = orderedPair(userA, userB);
+function postStreakSql(alias = 'u') {
+  // Active visible streak: 0 if last post older than yesterday
+  return `CASE
+    WHEN ${alias}.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+    THEN COALESCE(${alias}.post_streak, 0)
+    ELSE 0
+  END`;
+}
+
+async function getPostStreak(userId) {
+  const id = Number(userId);
+  if (!id) return 0;
   const row = await dbGet(
-    `SELECT current_streak, last_message_date
-     FROM everlight_message_streaks
-     WHERE user_a_id = ? AND user_b_id = ?
-     LIMIT 1`,
-    [a, b]
+    `SELECT post_streak, last_post_date FROM everlight_users WHERE id = ? LIMIT 1`,
+    [id]
   );
-
-  if (!row || !row.last_message_date) return 0;
-
+  if (!row || !row.last_post_date) return 0;
   const today = await dbGet(`SELECT CURRENT_DATE AS today`);
-  const last = new Date(`${String(row.last_message_date).slice(0, 10)}T00:00:00Z`);
+  const last = new Date(`${String(row.last_post_date).slice(0, 10)}T00:00:00Z`);
   const now = new Date(`${String(today?.today).slice(0, 10)}T00:00:00Z`);
   const diffDays = Math.round((now - last) / 86400000);
-
-  // A missed day ends the visible streak immediately, without deleting history.
   if (diffDays > 1) return 0;
-  return Number(row.current_streak || 0);
+  return Number(row.post_streak || 0);
 }
+
+
 
 /* =========================================================
    NOTIFICATIONS
@@ -2093,11 +2080,11 @@ app.get('/api/message-users', auth, async (req, res, next) => {
         u.avatar,
         u.name_color,
         u.last_seen,
-        COALESCE((
-          SELECT MAX(ms.current_streak)
-          FROM everlight_message_streaks ms
-          WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
-        ), 0) AS message_streak
+        CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak
       FROM everlight_users u
       WHERE u.id <> ?
       ORDER BY u.display_name ASC, u.username ASC
@@ -2123,11 +2110,11 @@ app.get('/api/daily-thoughts', optionalAuth, async (req, res, next) => {
         u.display_name,
         u.avatar,
         u.name_color,
-        COALESCE((
-          SELECT MAX(ms.current_streak)
-          FROM everlight_message_streaks ms
-          WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
-        ), 0) AS message_streak,
+        CASE
+                WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                THEN COALESCE(u.post_streak, 0)
+                ELSE 0
+              END AS message_streak,
         t.body AS thought,
         t.created_at AS thought_at
       FROM everlight_users u
@@ -2185,13 +2172,11 @@ app.get(
               ORDER BY m2.created_at DESC
               LIMIT 1
             ) AS last_body,
-            COALESCE((
-              SELECT ms.current_streak
-              FROM everlight_message_streaks ms
-              WHERE ms.user_a_id = LEAST(?, u.id)
-                AND ms.user_b_id = GREATEST(?, u.id)
-              LIMIT 1
-            ), 0) AS message_streak
+            CASE
+              WHEN u.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+              THEN COALESCE(u.post_streak, 0)
+              ELSE 0
+            END AS message_streak
           FROM everlight_messages m
           JOIN everlight_users u
             ON u.id = CASE
@@ -2205,7 +2190,7 @@ app.get(
           ORDER BY last_message_at DESC
           LIMIT 50
         `,
-        [req.userId, req.userId, req.userId, req.userId, req.userId, req.userId, req.userId]
+        [req.userId, req.userId, req.userId, req.userId, req.userId]
       );
 
       return res.json({
@@ -2287,10 +2272,7 @@ app.get(
           [req.userId, other.id, other.id, req.userId]
         );
 
-      const streak = await getMessageStreak(
-        req.userId,
-        other.id
-      );
+      const streak = await getPostStreak(other.id);
 
       return res.json({
         user: safeUser(other),
@@ -2420,10 +2402,7 @@ app.post(
         req.userId
       );
 
-      const streak = await updateMessageStreak(
-        req.userId,
-        other.id
-      );
+      const streak = await getPostStreak(req.userId);
 
       return res
         .status(201)
