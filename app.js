@@ -1373,7 +1373,7 @@ async function createPostShareFile(data) {
   const avatarY = 36;
   const textX = avatarX + avatarSize + 28;
 
-  const titleY = headerH + 56;
+  const titleY = headerH + 72;
   const categoryH = 0; // category moved under date in header
   const bodyY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 36;
   let estBodyH = 0;
@@ -1459,12 +1459,12 @@ async function createPostShareFile(data) {
       <text x="${textX}" y="${cardY + avatarY + 64}" fill="#849196" font-size="20" font-family="Arial">${escapeXml(meta)}</text>
       <text x="${cardX + cardW - 42}" y="${cardY + avatarY + 32}" text-anchor="end" fill="#7f8b90" font-size="18" font-family="Arial">${escapeXml(dateText)}</text>
       ${categorySvg}
-      <line x1="${innerX}" y1="${cardY + headerH}" x2="${cardX + cardW - 44}" y2="${cardY + headerH}" stroke="#273238" stroke-width="2"/>
+      <line x1="${innerX}" y1="${cardY + headerH + 18}" x2="${cardX + cardW - 44}" y2="${cardY + headerH + 18}" stroke="#273238" stroke-width="2"/>
       ${titleSvg}
       ${bodySvg}
       <line x1="${innerX}" y1="${cardY + dividerY}" x2="${cardX + cardW - 44}" y2="${cardY + dividerY}" stroke="#263238" stroke-width="2"/>
       <text x="${innerX}" y="${footerY}" fill="${accentColor}" font-size="20" font-family="Arial">Everlight</text>
-      <text x="${cardX + cardW - 44}" y="${footerY}" text-anchor="end" font-size="17" font-family="Arial"><tspan fill="#7a858a">${escapeXml(domainPrimary)}</tspan><tspan fill="${accentColor}"> // </tspan><tspan fill="${accentColor}">${escapeXml(domainSecondary)}</tspan></text>
+      <text x="${cardX + cardW - 44}" y="${footerY}" text-anchor="end" font-size="17" font-family="Arial"><tspan fill="${accentColor}">${escapeXml(domainPrimary)}</tspan><tspan fill="#7a858a"> // </tspan><tspan fill="#7a858a">${escapeXml(domainSecondary)}</tspan></text>
     </g>
   </svg>`;
 
