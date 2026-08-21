@@ -1064,16 +1064,16 @@ document.addEventListener("keydown", (event) => {
 function getPostShareData(card) {
   const title = card?.querySelector(".feed-card-title")?.textContent.trim() ||
     card?.querySelector(".feed-card-category")?.textContent.trim() || "Everlight bejegyzés";
-  const body = card?.querySelector("[data-full-body]")?.textContent.trim() ||
-    card?.querySelector(".feed-card-body-preview")?.textContent.trim() || "";
+  const bodyEl = card?.querySelector(".feed-card-body-preview") || card?.querySelector("[data-full-body]");
+  const bodyHtml = bodyEl ? (bodyEl.innerHTML || "") : "";
+  const body = bodyEl?.textContent.trim() || "";
   const accountName = card?.querySelector(".feed-card-author-line strong")?.textContent.trim() || "Névtelen";
   const realName = card?.querySelector(".feed-card-real-name")?.textContent.trim() || "";
   const handle = card?.querySelector(".feed-card-handle")?.textContent.trim() || "";
   const hashtags = card?.querySelector(".feed-card-hashtags")?.textContent.trim() || "";
   const date = card?.querySelector(".feed-card-author-date")?.textContent.trim() || "";
   const category = card?.querySelector(".feed-card-category")?.textContent.trim() || "";
-  const streakText = card?.querySelector(".feed-card-streak")?.textContent.trim() || "";
-  const streak = Number((streakText.match(/\d+/) || [0])[0]);
+  const streak = 0;
   const avatar = card?.querySelector(".feed-card-avatar img")?.currentSrc || card?.querySelector(".feed-card-avatar img")?.src || "";
   const id = card?.dataset.postId || "";
   const url = id ? `${window.location.origin}${window.location.pathname}#post-${encodeURIComponent(id)}` : window.location.href;
@@ -1087,7 +1087,7 @@ function getPostShareData(card) {
   const shareHeight = Math.max(1, Math.round(rect?.height || 0));
 
   return {
-    accountName, realName, handle, hashtags, date, category, streak, avatar, title, body, url,
+    accountName, realName, handle, hashtags, date, category, streak: 0, avatar, title, body, bodyHtml,
     shareWidth, shareHeight,
     shareAspectRatio: shareWidth > 0 && shareHeight > 0 ? shareHeight / shareWidth : (16 / 9),
     text: `${title}${body ? ` — ${body}` : ""}`
@@ -1178,12 +1178,72 @@ async function createPostShareFile(data) {
   const categorySvg = category
     ? `<rect x="${innerX}" y="${cardY + categoryY}" width="${Math.max(150, category.length * 18 + 52)}" height="${categoryH}" rx="24" fill="#15252d" stroke="#203943" stroke-width="2"/><text x="${innerX + 26}" y="${cardY + categoryY + 32}" fill="#9fc4e7" font-size="24" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : '';
-  const bodySvg = bodyLines.map((line, i) =>
-    `<text x="${innerX}" y="${cardY + bodyY + i * bodyLineHeight}" fill="#cbd3d6" font-size="${bodyFont}" font-family="Arial">${escapeXml(line)}</text>`
-  ).join('');
-  const streakSvg = streak > 0
-    ? `<g><rect x="${avatarX + 52}" y="${cardY + avatarY + 62}" width="62" height="42" rx="21" fill="#0b1114" stroke="#30434b" stroke-width="2"/><text x="${avatarX + 83}" y="${cardY + avatarY + 91}" text-anchor="middle" font-size="22" font-family="Arial">🔥${escapeXml(streak)}</text></g>`
-    : '';
+  // Prefer formatted HTML runs (bold/italic/quote); fall back to plain lines.
+  const bodySvg = (function () {
+    const html = String(data.bodyHtml || "").trim();
+    if (!html) {
+      return bodyLines.map((line, i) =>
+        `<text x="${innerX}" y="${cardY + bodyY + i * bodyLineHeight}" fill="#cbd3d6" font-size="${bodyFont}" font-family="Arial">${escapeXml(line)}</text>`
+      ).join("");
+    }
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    const blocks = [];
+    const walk = (node, style) => {
+      if (!node) return;
+      if (node.nodeType === 3) {
+        const t = String(node.textContent || "").replace(/\s+/g, " ");
+        if (t) blocks.push({ text: t, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
+        return;
+      }
+      if (node.nodeType !== 1) return;
+      const tag = node.tagName.toLowerCase();
+      const next = {
+        bold: style.bold || tag === "strong" || tag === "b",
+        italic: style.italic || tag === "em" || tag === "i",
+        quote: style.quote || tag === "blockquote"
+      };
+      if (tag === "br") { blocks.push({ text: "\n", bold: false, italic: false, quote: false }); return; }
+      if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") {
+        if (blocks.length && blocks[blocks.length - 1].text !== "\n") blocks.push({ text: "\n", bold: false, italic: false, quote: false });
+      }
+      Array.from(node.childNodes).forEach((ch) => walk(ch, next));
+      if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") {
+        blocks.push({ text: "\n", bold: false, italic: false, quote: false });
+      }
+    };
+    Array.from(tmp.childNodes).forEach((ch) => walk(ch, { bold: false, italic: false, quote: false }));
+    // flatten to visual lines (~55 chars)
+    const lines = [];
+    let cur = "";
+    let curStyle = { bold: false, italic: false, quote: false };
+    const flush = () => {
+      if (!cur) return;
+      lines.push({ text: cur, ...curStyle });
+      cur = "";
+    };
+    for (const b of blocks) {
+      if (b.text === "\n") { flush(); continue; }
+      const words = b.text.split(/(\s+)/);
+      for (const w of words) {
+        if (!w) continue;
+        if ((cur + w).length > 55 && cur) flush();
+        if (!cur) curStyle = { bold: b.bold, italic: b.italic, quote: b.quote };
+        cur += w;
+      }
+    }
+    flush();
+    const limited = lines.slice(0, 12);
+    if (lines.length > 12 && limited.length) limited[limited.length - 1].text += "…";
+    return limited.map((line, i) => {
+      const weight = line.bold ? "800" : "500";
+      const style = line.italic ? ' font-style="italic"' : "";
+      const fill = line.quote ? "#9fc4e7" : "#cbd3d6";
+      const x = line.quote ? innerX + 18 : innerX;
+      return `<text x="${x}" y="${cardY + bodyY + i * bodyLineHeight}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="Arial"${style}>${escapeXml(line.text)}</text>`;
+    }).join("");
+  })();
+  const streakSvg = "";
   const dateText = data.date || '';
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${targetWidth}" height="${targetHeight}" viewBox="0 0 ${targetWidth} ${targetHeight}">
@@ -1330,7 +1390,7 @@ function openMobilePostShareSheet(card) {
   clone.removeAttribute("tabindex");
   clone.removeAttribute("aria-expanded");
   clone.classList.remove("is-expanded");
-  clone.querySelectorAll("[data-post-action], [data-post-share-toggle], [data-post-share-menu], .feed-card-actions").forEach((el) => el.remove());
+  clone.querySelectorAll("[data-post-action], [data-post-share-toggle], [data-post-share-menu], .feed-card-actions, .feed-card-streak").forEach((el) => el.remove());
   const preview = clone.querySelector("[data-post-preview]");
   const full = clone.querySelector("[data-full-body]");
   if (preview) preview.hidden = true;
