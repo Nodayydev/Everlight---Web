@@ -19670,3 +19670,22 @@ html body .message-chat-title-wrap > span { display: none !important; }
   display: block !important;
   -webkit-line-clamp: unset !important;
 }
+
+
+/* Expanded post body — full contrast, not gray */
+html body .feed-card.is-expanded .feed-card-body-preview,
+html body .feed-card.is-expanded .feed-card-body-preview p,
+html body .feed-card.is-expanded .feed-card-body-preview span,
+html body .feed-card.is-expanded .feed-card-full-text,
+html body .feed-card .feed-card-body-preview {
+  color: #f3f2ea !important;
+  opacity: 1 !important;
+}
+html body .feed-card .feed-card-body-preview em,
+html body .feed-card.is-expanded .feed-card-body-preview em {
+  color: #e8e6dc !important;
+  font-style: italic !important;
+}
+html body .feed-card .feed-card-body-preview blockquote {
+  color: #d7e0e3 !important;
+}
