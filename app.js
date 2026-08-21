@@ -886,14 +886,13 @@ function renderPost(post) {
               ${hashtags.length ? `<span class="feed-card-hashtags">${escapeHtml(hashtags.join(" "))}</span>` : ""}
             </div>
           </div>
-          <time class="feed-card-author-date" datetime="${escapeHtml(String(post.created_at || ""))}">${escapeHtml(dateTimeLabel)}</time>
+          <div class="feed-card-author-aside">
+            <time class="feed-card-author-date" datetime="${escapeHtml(String(post.created_at || ""))}">${escapeHtml(dateTimeLabel)}</time>
+            <span class="feed-card-category">${escapeHtml(category)}</span>
+          </div>
         </header>
 
         ${titleMarkup}
-
-        <div class="feed-card-meta">
-          <span class="feed-card-category">${escapeHtml(category)}</span>
-        </div>
 
         <div class="feed-card-body-preview" data-post-preview>${markdownToSafeHtml(fullBody)}</div>
         ${imageMarkup}
@@ -1164,9 +1163,14 @@ async function createPostShareFile(data) {
 
     const detectStyle = (segment) => {
       let text = String(segment || "");
-      let bold = false, italic = false, quote = false;
-      // strip simple markdown markers while noting style
+      let bold = false, italic = false, quote = false, font = "sans";
       if (/^\s*>\s?/.test(text)) { quote = true; text = text.replace(/^\s*>\s?/, ""); }
+      if (/\{\{font:(sans|serif|mono|display)\}\}/.test(text)) {
+        const fm = text.match(/\{\{font:(sans|serif|mono|display)\}\}/);
+        if (fm) font = fm[1];
+        text = text.replace(/\{\{font:(sans|serif|mono|display)\}\}([\s\S]*?)\{\{\/font\}\}/g, "$2");
+        if (font === "serif" || font === "display") italic = true;
+      }
       if (/\*\*[^*]+\*\*/.test(text) || /__[^_]+__/.test(text)) {
         bold = true;
         text = text.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/__([^_]+)__/g, "$1");
@@ -1179,9 +1183,8 @@ async function createPostShareFile(data) {
         .replace(/~~([^~]+)~~/g, "$1")
         .replace(/\+\+([^+]+)\+\+/g, "$1")
         .replace(/`([^`]+)`/g, "$1")
-        .replace(/\{\{font:(?:sans|serif|mono|display)\}\}([\s\S]*?)\{\{\/font\}\}/g, "$1")
         .replace(/^#{1,6}\s+/gm, "");
-      return { text: text.replace(/[ \t]+/g, " ").trim(), bold, italic, quote };
+      return { text: text.replace(/[ \t]+/g, " ").trim(), bold, italic, quote, font };
     };
 
     const pushWrapped = (lines, segment) => {
@@ -1192,11 +1195,11 @@ async function createPostShareFile(data) {
       for (const w of words) {
         const next = cur ? cur + " " + w : w;
         if (next.length > maxChars && cur) {
-          lines.push({ text: cur, bold: styled.bold, italic: styled.italic, quote: styled.quote });
+          lines.push({ text: cur, bold: styled.bold, italic: styled.italic, quote: styled.quote, font: styled.font });
           cur = w;
         } else cur = next;
       }
-      if (cur) lines.push({ text: cur, bold: styled.bold, italic: styled.italic, quote: styled.quote });
+      if (cur) lines.push({ text: cur, bold: styled.bold, italic: styled.italic, quote: styled.quote, font: styled.font });
     };
 
     const lines = [];
@@ -1285,14 +1288,13 @@ async function createPostShareFile(data) {
 
   const avatarSize = 88;
   const avatarX = innerX;
-  const headerH = 168;
+  const headerH = 188;
   const avatarY = 40;
   const textX = avatarX + avatarSize + 28;
 
   const titleY = headerH + 70;
-  const categoryY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 12;
-  const categoryH = category ? 44 : 0;
-  const bodyY = categoryY + categoryH + 40;
+  const categoryH = 0; // category moved under date in header
+  const bodyY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 36;
   let estBodyH = 0;
   for (const line of formattedBodyLines) {
     if (line.blank || !String(line.text || "").trim()) estBodyH += Math.round(bodyLineHeight * 0.85);
@@ -1314,7 +1316,7 @@ async function createPostShareFile(data) {
     `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
   ).join("");
   const categorySvg = category
-    ? `<rect x="${innerX}" y="${cardY + categoryY}" width="${Math.max(150, category.length * 18 + 52)}" height="${categoryH}" rx="22" fill="#15252d" stroke="#203943" stroke-width="2"/><text x="${innerX + 26}" y="${cardY + categoryY + 30}" fill="#9fc4e7" font-size="22" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
+    ? `<text x="${cardX + cardW - 42}" y="${cardY + avatarY + 98}" text-anchor="end" fill="#9fc4e7" font-size="20" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : "";
   let bodyCursorY = 0;
   const bodySvg = formattedBodyLines.map((line) => {
@@ -1328,7 +1330,13 @@ async function createPostShareFile(data) {
     const style = line.italic ? ' font-style="italic"' : "";
     const fill = line.quote ? "#9fc4e7" : "#e8e7df";
     const x = line.quote ? innerX + 16 : innerX;
-    return `<text x="${x}" y="${y}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="Arial"${style}>${escapeXml(line.text)}</text>`;
+    const fontKey = line.font || "sans";
+    const family = fontKey === "serif" || fontKey === "display"
+      ? "Georgia, 'Times New Roman', serif"
+      : fontKey === "mono"
+        ? "'Courier New', monospace"
+        : "Arial, Helvetica, sans-serif";
+    return `<text x="${x}" y="${y}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="${family}"${style}>${escapeXml(line.text)}</text>`;
   }).join("");
   const streakSvg = "";
   const dateText = data.date || "";
@@ -1365,9 +1373,9 @@ async function createPostShareFile(data) {
       <text x="${textX}" y="${cardY + avatarY + 38}" fill="#f1f4f5" font-size="34" font-weight="800" font-family="Arial">${escapeXml(data.accountName)}</text>
       <text x="${textX}" y="${cardY + avatarY + 72}" fill="#849196" font-size="22" font-family="Arial">${escapeXml(meta)}</text>
       <text x="${cardX + cardW - 42}" y="${cardY + avatarY + 70}" text-anchor="end" fill="#7f8b90" font-size="20" font-family="Arial">${escapeXml(dateText)}</text>
+      ${categorySvg}
       <line x1="${innerX}" y1="${cardY + headerH}" x2="${cardX + cardW - 44}" y2="${cardY + headerH}" stroke="#273238" stroke-width="2"/>
       ${titleSvg}
-      ${categorySvg}
       ${bodySvg}
       <line x1="${innerX}" y1="${cardY + dividerY}" x2="${cardX + cardW - 44}" y2="${cardY + dividerY}" stroke="#263238" stroke-width="2"/>
       <text x="${innerX}" y="${footerY}" fill="#8badcc" font-size="22" font-family="Arial">Everlight</text>

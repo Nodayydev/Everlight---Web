@@ -20791,3 +20791,36 @@ html, body { touch-action: manipulation !important; }
     font-size: 16px !important;
   }
 }
+
+
+/* Category under date/time on post cards */
+.feed-card-author {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+.feed-card-author-aside {
+  margin-left: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 6px !important;
+  flex: 0 0 auto !important;
+  text-align: right !important;
+}
+.feed-card-author-aside .feed-card-author-date {
+  font: 500 11px/1.2 Manrope, sans-serif !important;
+  color: #6d777a !important;
+  white-space: nowrap !important;
+}
+.feed-card-author-aside .feed-card-category {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(139,173,204,.12) !important;
+  color: #9fc0d8 !important;
+  font: 600 11px/1.2 Manrope, sans-serif !important;
+  margin: 0 !important;
+}
+.feed-card-meta:empty { display: none !important; }
