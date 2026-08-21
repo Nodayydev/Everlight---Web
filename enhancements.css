@@ -13155,7 +13155,7 @@ main#feed{
   .messages-view .message-contacts{padding:14px 14px calc(18px + env(safe-area-inset-bottom,0px)) !important;border:0 !important;overflow-y:auto !important;overflow-x:hidden !important;background:#000 !important;}
   .messages-view .message-contacts-list{display:block !important;width:100% !important;min-width:0 !important;overflow:visible !important;}
   .messages-view .message-chat{display:grid !important;grid-template-rows:auto minmax(0,1fr) auto !important;background:#000 !important;transform:translateX(102%) !important;transition:transform .22s ease !important;z-index:4 !important;}
-  .messages-view.chat-open .message-contacts{transform:translateX(-102%) !important;transition:transform .22s ease !important;}
+  .messages-view.chat-open .message-contacts{transform:none !important;}
   .messages-view.chat-open .message-chat{transform:translateX(0) !important;}
   .messages-view .message-chat-back{display:grid !important;place-items:center !important;}
   .messages-view .message-chat-header{min-height:64px !important;padding:8px 12px !important;border-bottom:1px solid #202729 !important;background:#050707 !important;}
@@ -18067,7 +18067,7 @@ body.sun-mode .topbar .domain .domain-mode-light {
   }
 
   html body .messages-view.chat-open .message-contacts {
-    display: none !important;
+    display: flex !important;
   }
 
   html body .messages-view.chat-open .message-chat {
@@ -19030,5 +19030,418 @@ html body .chat-bubble {
     width: 80px !important;
     min-width: 80px !important;
     max-width: 80px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE CHAT — single clean layout
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"] {
+    display: flex !important;
+    flex-direction: column !important;
+    top: 64px !important;
+    bottom: calc(80px + var(--dock-lift, 12px) + env(safe-area-inset-bottom, 0px)) !important;
+    overflow: hidden !important;
+    background: #000 !important;
+  }
+  html body .messages-view-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  html body .messages-view-header { display: none !important; }
+
+  html body .messages-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    transform: none !important;
+  }
+
+  html body .message-contacts,
+  html body .messages-view.chat-open .message-contacts,
+  html body .messages-view .message-contacts {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    height: auto !important;
+    overflow: hidden !important;
+    background: #07090b !important;
+    border-right: 1px solid #1c2426 !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contacts {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    border-right: 0 !important;
+  }
+  html body .messages-view.chat-open .message-contacts {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    flex: 0 0 64px !important;
+  }
+
+  html body .messages-view:not(.chat-open) .message-chat {
+    display: none !important;
+  }
+  html body .messages-view.chat-open .message-chat {
+    display: grid !important;
+    grid-template-rows: 58px minmax(0, 1fr) auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: 100% !important;
+    transform: none !important;
+    position: relative !important;
+    inset: auto !important;
+    background: #050707 !important;
+  }
+
+  html body .messages-view.chat-open .daily-thoughts {
+    display: none !important;
+  }
+  html body .messages-view:not(.chat-open) .daily-thoughts {
+    display: block !important;
+    flex: 0 0 auto !important;
+    padding: 8px 10px 6px !important;
+  }
+
+  html body .messages-view.chat-open .message-contacts-head,
+  html body .messages-view.chat-open .message-search,
+  html body .messages-view.chat-open .message-contact-copy,
+  html body .messages-view.chat-open .message-contact-meta,
+  html body .messages-view.chat-open .message-streak,
+  html body .messages-view.chat-open .new-message-button {
+    display: none !important;
+  }
+
+  html body .message-contact {
+    overflow: visible !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  html body .messages-view.chat-open .message-contact {
+    width: 64px !important;
+    justify-content: center !important;
+    padding: 8px 0 !important;
+    margin: 0 !important;
+  }
+  html body .messages-view.chat-open .message-contact-avatar,
+  html body .messages-view.chat-open .message-contact-avatar img {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+
+  html body .message-chat-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 6px 10px !important;
+    min-height: 58px !important;
+    height: 58px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+  html body #dmList,
+  html body .dm-list {
+    overflow-y: auto !important;
+    min-height: 0 !important;
+    padding: 10px !important;
+    margin: 0 !important;
+  }
+  html body .message-compose {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 8px 10px !important;
+    margin: 0 !important;
+  }
+  html body .message-compose-row {
+    display: flex !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  html body #dmBody {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  html body .chat-message {
+    position: static !important;
+    transform: none !important;
+    margin: 0 0 8px !important;
+    max-width: 86% !important;
+  }
+  html body .chat-message-own {
+    align-self: flex-end !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+  html body .chat-message-other {
+    align-self: flex-start !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE CHAT — CLEAN RESET (final)
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"] {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    top: 64px !important;
+    bottom: calc(80px + var(--dock-lift, 12px) + env(safe-area-inset-bottom, 0px)) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #000 !important;
+  }
+
+  html body .messages-view-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+
+  html body .messages-view-header {
+    display: none !important;
+  }
+
+  /* List mode: daily thoughts + full contacts */
+  html body .messages-view:not(.chat-open) .daily-thoughts {
+    display: block !important;
+    flex: 0 0 auto !important;
+    padding: 8px 12px 10px !important;
+  }
+  html body .messages-view:not(.chat-open) .messages-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contacts {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    position: relative !important;
+    inset: auto !important;
+    border: 0 !important;
+    background: #000 !important;
+  }
+  html body .messages-view:not(.chat-open) .message-chat {
+    display: none !important;
+  }
+
+  /* Chat mode: avatar rail + thread */
+  html body .messages-view.chat-open .daily-thoughts {
+    display: none !important;
+  }
+  html body .messages-view.chat-open .messages-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .message-contacts {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 0 0 56px !important;
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    height: 100% !important;
+    border-right: 1px solid #1c2426 !important;
+    background: #07090b !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .message-contacts-head,
+  html body .messages-view.chat-open .message-search,
+  html body .messages-view.chat-open .message-contact-copy,
+  html body .messages-view.chat-open .message-contact-meta,
+  html body .messages-view.chat-open .message-streak,
+  html body .messages-view.chat-open .new-message-button {
+    display: none !important;
+  }
+  html body .messages-view.chat-open .message-contacts-list {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  html body .messages-view.chat-open .message-contact {
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+  }
+  html body .messages-view.chat-open .message-contact.active {
+    background: rgba(139,173,204,.15) !important;
+  }
+  html body .messages-view.chat-open .message-contact-avatar,
+  html body .messages-view.chat-open .message-contact-avatar img {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+
+  html body .messages-view.chat-open .message-chat {
+    display: grid !important;
+    grid-template-rows: 56px minmax(0, 1fr) auto !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+    position: relative !important;
+    inset: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000 !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .message-chat-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #1c2426 !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .message-chat-avatar {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .message-chat-avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  html body .messages-view.chat-open .message-chat-title-wrap {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .message-chat-title-wrap span {
+    font-size: 9px !important;
+  }
+  html body .messages-view.chat-open #dmTitle {
+    font-size: 16px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  html body .messages-view.chat-open #dmHandle {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+  }
+
+  html body .messages-view.chat-open #dmList,
+  html body .messages-view.chat-open .dm-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    min-height: 0 !important;
+    padding: 12px 12px 16px !important;
+  }
+
+  html body .chat-message {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    max-width: 82% !important;
+    margin: 0 !important;
+    transform: none !important;
+    position: static !important;
+  }
+  html body .chat-message-own {
+    align-self: flex-end !important;
+    align-items: flex-end !important;
+  }
+  html body .chat-message-other {
+    align-self: flex-start !important;
+    align-items: flex-start !important;
+  }
+  html body .chat-bubble {
+    font: 600 15px/1.45 Manrope, sans-serif !important;
+    padding: 10px 14px !important;
+    border-radius: 16px !important;
+    transform: none !important;
+    position: static !important;
+  }
+  html body .message-compose {
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    border-top: 1px solid #1c2426 !important;
+    background: #07090b !important;
   }
 }
