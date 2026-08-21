@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260821-nozoom-all">
+  <link rel="stylesheet" href="enhancements.css?v=20260821-clean">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -569,169 +569,160 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260821-dbname"></script>
+  <script src="app.js?v=20260821-clean"></script>
   <script src="theme.js?v=20260820-final"></script>
 
-<style id="everlight-daily-fix">
-.daily-thoughts-track{
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:flex-end!important;
-  gap:12px!important;
-  padding:4px 6px!important;
-}
-.daily-thought,
-button.daily-thought,
-.daily-thought.own,
-button.daily-thought.own{
-  position:relative!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  width:72px!important;
-  min-width:72px!important;
-  height:118px!important;
-  max-height:118px!important;
-  padding:0!important;
-  margin:0!important;
-  gap:4px!important;
-  box-sizing:border-box!important;
-}
-.daily-thought .daily-thought-avatar,
-.daily-thought.own .daily-thought-avatar{
-  width:58px!important;
-  height:58px!important;
-  min-width:58px!important;
-  min-height:58px!important;
-  border-radius:50%!important;
-  margin-top:auto!important;
-  flex:0 0 58px!important;
-  order:2!important;
-}
-.daily-thought small,
-.daily-thought.own small{
-  order:3!important;
-  margin:0!important;
-  max-width:72px!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  white-space:nowrap!important;
-}
-.daily-thought .daily-thought-streak{order:4!important;}
-.daily-thought .daily-thought-bubble,
-.daily-thought.own .daily-thought-bubble{
-  position:absolute!important;
-  left:50%!important;
-  bottom:68px!important;
-  top:auto!important;
-  transform:translateX(-50%)!important;
-  z-index:9!important;
-  max-width:108px!important;
-  padding:7px 10px!important;
-  border-radius:14px!important;
-  background:#2a2f33!important;
-  color:#f5f4ef!important;
-  font:600 11px/1.25 Manrope,sans-serif!important;
-  text-align:center!important;
-  margin:0!important;
-  order:1!important;
-  box-shadow:0 4px 14px rgba(0,0,0,.4)!important;
-}
-.daily-thought .daily-thought-bubble[hidden]{
-  visibility:hidden!important;
-  opacity:0!important;
-  pointer-events:none!important;
-}
-.daily-thought .daily-thought-bubble::after,
-.daily-thought.own .daily-thought-bubble::after{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  bottom:-6px!important;
-  transform:translateX(-50%)!important;
-  width:12px!important;
-  height:8px!important;
-  background:#2a2f33!important;
-  clip-path:polygon(0 0,100% 0,50% 100%)!important;
-  border:0!important;
-  margin:0!important;
-}
-.message-contacts-head,#newMessageButton{display:none!important;}
-.messages-view .message-search{margin:4px 12px 6px!important;}
-</style>
 
+<style id="everlight-critical">
+html, body, * { touch-action: manipulation; }
+input, textarea, select, [contenteditable="true"] { font-size: 16px !important; }
 
-<style id="everlight-desktop-chat">
+.daily-thoughts-track {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-end !important;
+  gap: 12px !important;
+  padding: 4px 6px !important;
+}
+.daily-thought, .daily-thought.own {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  width: 72px !important;
+  min-width: 72px !important;
+  height: 118px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 4px !important;
+  box-sizing: border-box !important;
+}
+.daily-thought .daily-thought-avatar {
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 50% !important;
+  flex: 0 0 58px !important;
+  z-index: 1 !important;
+}
+.daily-thought .daily-thought-bubble {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 68px !important;
+  transform: translateX(-50%) !important;
+  z-index: 9 !important;
+  max-width: 108px !important;
+  padding: 7px 10px !important;
+  border-radius: 14px !important;
+  background: #2a2f33 !important;
+  color: #f5f4ef !important;
+  font: 600 11px/1.25 Manrope, sans-serif !important;
+  text-align: center !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.4) !important;
+}
+.daily-thought .daily-thought-bubble[hidden] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+.daily-thought .daily-thought-bubble::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -6px !important;
+  transform: translateX(-50%) !important;
+  width: 12px !important;
+  height: 8px !important;
+  background: #2a2f33 !important;
+  clip-path: polygon(0 0, 100% 0, 50% 100%) !important;
+}
+.message-contacts-head, #newMessageButton, .chat-welcome, .chat-empty {
+  display: none !important;
+}
+
 @media (min-width: 661px) {
   body.messages-view-open #feed > #messagesView.open {
-    display:flex!important;flex-direction:column!important;
-    width:100%!important;max-width:100%!important;
-    height:min(75vh,820px)!important;min-height:560px!important;max-height:820px!important;
-    margin:12px auto!important;padding:0!important;
-    border:1px solid #1c2426!important;border-radius:20px!important;
-    background:#07090b!important;overflow:hidden!important;
-    position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
-    transform:none!important;opacity:1!important;visibility:visible!important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: min(75vh, 820px) !important;
+    min-height: 560px !important;
+    margin: 12px auto !important;
+    border: 1px solid #1c2426 !important;
+    border-radius: 20px !important;
+    background: #07090b !important;
+    overflow: hidden !important;
+    position: relative !important;
+    transform: none !important;
   }
-  body.messages-view-open #messagesView .messages-view-inner{
-    display:flex!important;flex-direction:column!important;height:100%!important;min-height:0!important;overflow:hidden!important;
+  body.messages-view-open #messagesView .messages-view-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
   }
-  body.messages-view-open #messagesView .messages-layout{
-    display:flex!important;flex-direction:row!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important;
+  body.messages-view-open #messagesView .messages-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
   }
-  body.messages-view-open #messagesView .message-contacts{
-    display:flex!important;flex-direction:column!important;width:38%!important;min-width:300px!important;max-width:420px!important;
-    height:100%!important;transform:none!important;position:relative!important;border-right:1px solid #1c2426!important;overflow:hidden!important;
+  body.messages-view-open #messagesView .message-contacts {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 38% !important;
+    min-width: 300px !important;
+    max-width: 420px !important;
+    height: 100% !important;
+    transform: none !important;
+    border-right: 1px solid #1c2426 !important;
+    overflow: hidden !important;
   }
-  body.messages-view-open #messagesView.chat-open .message-contacts{
-    width:84px!important;min-width:84px!important;max-width:84px!important;
+  body.messages-view-open #messagesView.chat-open .message-contacts {
+    width: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
   }
-  body.messages-view-open #messagesView .message-contacts-list{
-    flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;
+  body.messages-view-open #messagesView .message-contacts-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
   }
-  body.messages-view-open #messagesView .message-chat{
-    display:grid!important;grid-template-rows:auto minmax(0,1fr) auto!important;
-    flex:1 1 auto!important;min-width:0!important;height:100%!important;transform:none!important;overflow:hidden!important;
+  body.messages-view-open #messagesView .message-chat {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+    overflow: hidden !important;
   }
-  body.messages-view-open #messagesView #dmList{overflow-y:auto!important;min-height:0!important;}
+  body.messages-view-open #messagesView #dmList {
+    overflow-y: auto !important;
+    min-height: 0 !important;
+  }
   body.messages-view-open #feed > .post,
   body.messages-view-open #feed > .feed-card,
   body.messages-view-open #feed > .composer,
-  body.messages-view-open #feed > #composerCard{display:none!important;}
+  body.messages-view-open #feed > #composerCard {
+    display: none !important;
+  }
 }
 </style>
-
-
-<style id="everlight-no-zoom">
-html, body, * { touch-action: manipulation; }
-input, textarea, select, [contenteditable="true"] {
-  font-size: 16px !important;
-  touch-action: manipulation;
-}
-</style>
-
-
 <script id="everlight-no-zoom-js">
 (function () {
   var block = function (e) { e.preventDefault(); };
   document.addEventListener("gesturestart", block, { passive: false });
   document.addEventListener("gesturechange", block, { passive: false });
   document.addEventListener("gestureend", block, { passive: false });
-  document.addEventListener("dblclick", function (e) {
-    if (e.target && (e.target.closest("input,textarea,select,button,a,[contenteditable]"))) return;
-    e.preventDefault();
-  }, { passive: false });
   document.addEventListener("touchmove", function (e) {
     if (e.touches && e.touches.length > 1) e.preventDefault();
   }, { passive: false });
   document.addEventListener("wheel", function (e) {
     if (e.ctrlKey) e.preventDefault();
   }, { passive: false });
-  try {
-    document.documentElement.style.touchAction = "manipulation";
-    document.body && (document.body.style.touchAction = "manipulation");
-  } catch (_) {}
 })();
 </script>
 

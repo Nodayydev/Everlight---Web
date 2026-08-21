@@ -1004,8 +1004,7 @@ app.post(
               COALESCE((
                 SELECT MAX(ms.current_streak)
                 FROM everlight_message_streaks ms
-                WHERE (ms.user_a_id = u.id OR ms.user_b_id = u.id)
-                  AND ms.last_message_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
               ), 0) AS message_streak
             FROM everlight_users u
             WHERE u.id = ?
@@ -1066,8 +1065,7 @@ app.get(
               COALESCE((
                 SELECT MAX(ms.current_streak)
                 FROM everlight_message_streaks ms
-                WHERE (ms.user_a_id = u.id OR ms.user_b_id = u.id)
-                  AND ms.last_message_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
               ), 0) AS message_streak
             FROM everlight_users u
             WHERE u.id = ?
@@ -1936,8 +1934,7 @@ app.get(
               COALESCE((
                 SELECT MAX(ms.current_streak)
                 FROM everlight_message_streaks ms
-                WHERE (ms.user_a_id = u.id OR ms.user_b_id = u.id)
-                  AND ms.last_message_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+                WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
               ), 0) AS message_streak
 
             FROM everlight_users u
@@ -2099,8 +2096,7 @@ app.get('/api/message-users', auth, async (req, res, next) => {
         COALESCE((
           SELECT MAX(ms.current_streak)
           FROM everlight_message_streaks ms
-          WHERE (ms.user_a_id = u.id OR ms.user_b_id = u.id)
-            AND ms.last_message_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+          WHERE ms.user_a_id = u.id OR ms.user_b_id = u.id
         ), 0) AS message_streak
       FROM everlight_users u
       WHERE u.id <> ?

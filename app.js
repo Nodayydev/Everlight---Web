@@ -21,15 +21,9 @@ window.formatRelativeActive = formatRelativeActive;
 let pendingReplyTo = null;
 
 
-
-
-
-
 const $ = (selector) => document.querySelector(selector);
 
 let token = localStorage.getItem("everlight-token") || "";
-
-
 
 
 let currentUser = null;
@@ -45,8 +39,6 @@ let editingPostId = null;
 const postCache = new Map();
 
 
-
-
 const CATEGORY_LIMITS = Object.freeze({
   Gondolat: 280,
   Történet: 600,
@@ -56,15 +48,10 @@ const CATEGORY_LIMITS = Object.freeze({
 });
 
 
-
-
 function notify(_message) {
   // A láthatatlan állapotértesítő helyett a releváns nézetek saját UI-ja jelzi az állapotot.
   // A korábbi lebegő toast szándékosan ki van kapcsolva.
 }
-
-
-
 
 
 function formatChatTime(value) {
@@ -135,8 +122,6 @@ function formatImageFile(file, { maxWidth = 1080, maxHeight = 1080, crop = false
 }
 
 
-
-
 async function api(url, options = {}) {
   const headers = {
     ...(options.body
@@ -179,8 +164,6 @@ async function api(url, options = {}) {
 }
 
 
-
-
 function getUsername(user) {
   return user?.username || "";
 }
@@ -204,8 +187,6 @@ function getInitial(user) {
     "?"
   );
 }
-
-
 
 
 function avatar(
@@ -239,8 +220,6 @@ function avatar(
     </div>
   `;
 }
-
-
 
 
 function setAccount(user) {
@@ -529,8 +508,6 @@ function setAccount(user) {
 }
 
 
-
-
 function showProfileLoginState() {
   const loginState = $("#profileLoginState");
   const loggedState = $("#profileLoggedInState");
@@ -695,8 +672,6 @@ function requireLogin(target = "profile") {
 }
 
 
-
-
 function getCurrentCategoryLimit() {
 
   const category =
@@ -712,8 +687,6 @@ function getCurrentCategoryLimit() {
     ] || 280
   );
 }
-
-
 
 
 function updateCharacterCounter() {
@@ -764,8 +737,6 @@ function updateCharacterCounter() {
 }
 
 
-
-
 function updateCategoryLimit() {
 
   const postText =
@@ -801,7 +772,6 @@ function updateCategoryLimit() {
 
   updateCharacterCounter();
 }
-
 
 
 function markdownToSafeHtml(value = "") {
@@ -844,7 +814,6 @@ function markdownToPlain(value = "") {
     .replace(/`([^`]+)`/g, '$1')
     .trim();
 }
-
 
 
 function renderPost(post) {
@@ -1041,8 +1010,6 @@ function refreshCommentSections() {
 }
 
 
-
-
 function togglePostExpanded(card, force) {
   if (!card) return;
 
@@ -1092,8 +1059,6 @@ document.addEventListener("keydown", (event) => {
     togglePostExpanded(card);
   }
 });
-
-
 
 
 function getPostShareData(card) {
@@ -1346,7 +1311,6 @@ async function sharePostToNetwork(network, data) {
     window.open(targets[network], "_blank", "noopener,noreferrer");
   }
 }
-
 
 
 function closeMobilePostShareSheet() {
@@ -1682,7 +1646,6 @@ document.addEventListener('submit', async (event) => {
 });
 
 
-
 async function loadPosts() {
 
   try {
@@ -1738,8 +1701,6 @@ async function loadPosts() {
     `;
   }
 }
-
-
 
 
 async function loadCommunityLatest() {
@@ -1829,7 +1790,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 
-
 async function loadStats() {
   try {
     const data = await api('/api/stats');
@@ -1848,7 +1808,6 @@ async function loadStats() {
     console.warn('Statisztika betöltése sikertelen:', error);
   }
 }
-
 
 
 async function loadOnline() {
@@ -1939,8 +1898,6 @@ if (category) {
 }
 
 
-
-
 const postText =
   $("#postText");
 
@@ -1971,8 +1928,6 @@ if (postText) {
     }
   );
 }
-
-
 
 
 const imageInput =
@@ -2026,10 +1981,6 @@ if (imageInput) {
 }
 
 
-
-
-
-
 const imagePreview =
   $("#imagePreview");
 
@@ -2076,8 +2027,6 @@ if (imagePreview) {
     }
   );
 }
-
-
 
 
 (() => {
@@ -2424,7 +2373,6 @@ if (imagePreview) {
 })();
 
 
-
 const postButton =
   $("#postButton");
 
@@ -2563,9 +2511,6 @@ if (postButton) {
 }
 
 
-
-
-
 async function compressImageFile(
   file,
   {
@@ -2697,8 +2642,6 @@ function readImage(input, callback, options = {}) {
 }
 
 
-
-
 const profileImageInput =
   $("#profileImageInput");
 
@@ -2755,8 +2698,6 @@ if (profileImageInput) {
     }
   );
 }
-
-
 
 
 const coverImageInput =
@@ -2989,8 +2930,6 @@ function modalNameFormatState(key, fallback = false) {
   const state = window.__everlightNameFormatState || {};
   return key in state ? Boolean(state[key]) : Boolean(fallback);
 }
-
-
 
 
 function updateProfileView(
@@ -3283,8 +3222,6 @@ function syncAuthenticatedShell() {
 syncAuthenticatedShell();
 
 
-
-
 function openProfileView() {
   const profileView = $("#profileView");
   if (!profileView) return;
@@ -3323,8 +3260,6 @@ function openProfileView() {
   updateProfileView(currentUser);
   activateProfileSection(activeProfileSection || "main");
 }
-
-
 
 
 function closeProfileView(options = {}) {
@@ -3367,8 +3302,6 @@ function closeProfileView(options = {}) {
 }
 
 
-
-
 const openProfileSettings =
   $("#openProfileSettings");
 
@@ -3381,7 +3314,6 @@ if (openProfileSettings) {
 }
 
 
-
 const closeProfileViewButton =
   $("#closeProfileView");
 
@@ -3392,8 +3324,6 @@ if (closeProfileViewButton) {
     closeProfileView
   );
 }
-
-
 
 
 const profileView =
@@ -3417,14 +3347,6 @@ if (profileView) {
 }
 
 
-
-
-function openProfileReactionSection(section) {
-  pendingAuthTarget = section;
-  openProfileView();
-  if (currentUser) activateProfileSection(section);
-}
-
 const leftProfileNav = $("#leftProfileNav");
 if (leftProfileNav) {
   leftProfileNav.addEventListener("click", (event) => {
@@ -3433,37 +3355,6 @@ if (leftProfileNav) {
     openProtectedView("profile");
   });
 }
-
-
-
-function handleAccountNavigation() {
-
-  if (!currentUser) {
-
-    if (token) {
-      openProfileView();
-      return;
-    }
-
-    openProfileView();
-
-    return;
-  }
-
-
-  /*
-   * Bejelentkezve a Fiók már nem
-   * egy kis lenyíló ablakot jelent,
-   * hanem a teljes profilnézetet.
-   */
-
-  openProfileView();
-}
-
-
-
-
-
 
 
 function setMobileDockActive(view) {
@@ -3487,8 +3378,6 @@ function setMobileDockActive(view) {
 }
 
 
-
-
 function openHubView() {
   window.__closeMobileCommunity?.();
   closeMessages({ syncDock: false });
@@ -3508,8 +3397,6 @@ function openHubView() {
 }
 
 
-
-
 const mobileHubNav =
   $("#mobileHubNav");
 
@@ -3525,7 +3412,6 @@ if (mobileHubNav) {
     }
   );
 }
-
 
 
 const mobileMessageNav = $("#mobileMessageNav");
@@ -3565,12 +3451,6 @@ if (mobileProfileNav) {
 }
 
 
-
-
-
-
-
-
 function __hideMessageContactsHead() {
   document.querySelectorAll(".message-contacts-head, #newMessageButton").forEach((el) => {
     el.style.display = "none";
@@ -3602,6 +3482,8 @@ async function loadMessageContacts() {
     const upsert = (u) => {
       if (!u || (!u.username && !u.id)) return;
       if (currentUser && (u.username === currentUser.username || u.id === currentUser.id)) return;
+      const uname = String(u.username || "").toLowerCase();
+      if (uname.startsWith("anonymous") || uname === "névtelen") return;
       const key = u.id != null ? "id:" + String(u.id) : "u:" + String(u.username || "").toLowerCase();
       const prev = byKey.get(key) || {};
       // also try match previous by username
@@ -3654,7 +3536,14 @@ async function loadMessageContacts() {
       const preview = String(user.last_body || "").replace(/\s+/g, " ").trim();
       const when = formatChatTime(user.last_message_at);
       const active = (function(v){try{if(!v)return"";var t=new Date(v).getTime();if(!isFinite(t))return"";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user.last_seen);
-      const streak = Number(user.message_streak || 0);
+      const cache = window.__streakByUser || {};
+      const bare = String(user.username || "").split("#")[0].toLowerCase();
+      const streak = Math.max(
+        Number(user.message_streak || 0),
+        Number(cache["id:" + user.id] || 0),
+        Number(cache["u:" + String(user.username || "").toLowerCase()] || 0),
+        Number(cache["b:" + bare] || 0)
+      );
       return `
       <button type="button" class="message-contact" data-recipient="${escapeHtml(user.username)}">
         <span class="message-contact-avatar">
@@ -3679,8 +3568,6 @@ async function loadMessageContacts() {
     contactsList.innerHTML = `<div class="chat-empty"><strong>Nem sikerült betölteni</strong><p>${escapeHtml(error.message || "")}</p></div>`;
   }
 }
-
-
 
 
 const messagesViewHome = (() => {
@@ -3791,6 +3678,18 @@ async function loadDailyThoughts() {
     `);
   }
   track.innerHTML = parts.join("");
+  // Cache streaks for the contacts list
+  window.__streakByUser = window.__streakByUser || {};
+  for (const user of users) {
+    if (!user) continue;
+    const s = Number(user.message_streak || user.streak || 0);
+    if (user.id != null) window.__streakByUser["id:" + user.id] = Math.max(window.__streakByUser["id:" + user.id] || 0, s);
+    if (user.username) {
+      window.__streakByUser["u:" + String(user.username).toLowerCase()] = Math.max(window.__streakByUser["u:" + String(user.username).toLowerCase()] || 0, s);
+      const bare = String(user.username).split("#")[0].toLowerCase();
+      window.__streakByUser["b:" + bare] = Math.max(window.__streakByUser["b:" + bare] || 0, s);
+    }
+  }
 }
 
 
@@ -3861,7 +3760,7 @@ function openDailyThoughtPreview(author) {
   loadMessages();
 }
 
-function openMessages() {
+async function openMessages() {
   const messagesView = $("#messagesView");
   if (!messagesView) return;
 
@@ -3875,7 +3774,7 @@ function openMessages() {
   document.body.classList.add("messages-view-open");
   setMobileDockActive("messages");
   window.__syncDesktopNav?.("messages");
-  loadDailyThoughts();
+  await loadDailyThoughts();
 
   const authGate = $("#messageAuthGate");
   const contacts = $(".message-contacts");
@@ -3932,8 +3831,6 @@ function openMessages() {
 }
 
 
-
-
 function closeMessages(options = {}) {
 
   const messagesView =
@@ -3977,7 +3874,6 @@ if (closeMessagesViewButton) {
 }
 
 
-
 function toggleMessages() {
 
   const messagesView =
@@ -4005,8 +3901,6 @@ function toggleMessages() {
 }
 
 
-
-
 const leftMessageNav =
   $("#leftMessageNav");
 
@@ -4024,7 +3918,6 @@ if (leftMessageNav) {
 }
 
 
-
 const closeMessagesView =
   $("#closeMessagesView");
 
@@ -4038,8 +3931,6 @@ if (closeMessagesView) {
     }
   );
 }
-
-
 
 
 const messagesView =
@@ -4066,8 +3957,6 @@ if (messagesView) {
     }
   );
 }
-
-
 
 
 async function loadMessages() {
@@ -4263,8 +4152,6 @@ async function loadMessages() {
 }
 
 
-
-
 function renderMessageContact(user) {
   const contactsList = $("#messageContactsList");
   if (!contactsList || !user) return;
@@ -4302,10 +4189,6 @@ function renderMessageContact(user) {
     item.classList.toggle("active", item.dataset.recipient === username);
   });
 }
-
-
-
-
 
 
 const messageContactsList =
@@ -4353,7 +4236,6 @@ if (messageContactsList) {
     }
   );
 }
-
 
 
 const messagesViewElement = $("#messagesView");
@@ -4431,7 +4313,6 @@ function filterMessageContacts() {
 messageSearch?.addEventListener("input", filterMessageContacts);
 
 
-
 const dmRecipient =
   $("#dmRecipient");
 
@@ -4461,8 +4342,6 @@ if (dmRecipient) {
     }
   );
 }
-
-
 
 
 const messageForm =
@@ -4551,8 +4430,6 @@ if (messageForm) {
 }
 
 
-
-
 document.addEventListener(
   "keydown",
   (event) => {
@@ -4597,31 +4474,6 @@ document.addEventListener(
 
     }
 );
-
-
-
-
-function updateViewScrollLock() {
-
-  const messagesOpen =
-    $("#messagesView")?.classList.contains(
-      "open"
-    );
-
-  const profileOpen =
-    $("#profileView")?.classList.contains(
-      "open"
-    );
-
-
-  document.body.classList.toggle(
-    "view-is-open",
-    Boolean(
-      messagesOpen ||
-      profileOpen
-    )
-  );
-}
 
 
 window.addEventListener(
@@ -4680,8 +4532,6 @@ if (installButton) {
 }
 
 
-
-
 const notificationButton =
   $("#notificationButton");
 
@@ -4733,8 +4583,6 @@ if (notificationButton) {
     }
   );
 }
-
-
 
 
 let notificationPollTimer = null;
@@ -4814,13 +4662,6 @@ function startNotificationPolling() {
   notificationPollTimer = setInterval(() => loadInAppNotifications(), 5000);
 }
 
-function stopNotificationPolling() {
-  if (notificationPollTimer) clearInterval(notificationPollTimer);
-  notificationPollTimer = null;
-  lastNotificationIds = new Set();
-  notificationsInitialized = false;
-}
-
 document.addEventListener("click", async (event) => {
   const item = event.target.closest?.(".notification-item");
   if (!item) return;
@@ -4841,7 +4682,6 @@ window.addEventListener("everlight:auth", () => startNotificationPolling());
 
 /* A jelenlegi app auth eseménytől függetlenül is elindítjuk, ha már be van jelentkezve. */
 if (currentUser) startNotificationPolling();
-
 
 
 if (
@@ -4866,8 +4706,6 @@ if (
     }
   );
 }
-
-
 
 
 function updateClock() {
@@ -4921,8 +4759,6 @@ setInterval(
 );
 
 
-
-
 function syncViewScrollLock() {
 
   const messagesOpen =
@@ -4945,8 +4781,6 @@ function syncViewScrollLock() {
     )
   );
 }
-
-
 
 
 const messagesViewObserver =
@@ -5000,18 +4834,12 @@ if (
 }
 
 
-
-
 updateCategoryLimit();
-
-
 
 
 setMobileDockActive(
   "hub"
 );
-
-
 
 
 if (currentUser) {
@@ -5020,8 +4848,6 @@ if (currentUser) {
     currentUser
   );
 }
-
-
 
 
 async function restoreSession() {
@@ -5059,7 +4885,6 @@ async function restoreSession() {
     return currentUser;
   }
 }
-
 
 
 (async () => {
@@ -5140,57 +4965,6 @@ async function restoreSession() {
 })();
 
 
-
-
-
-async function readCustomizerImage(
-  file,
-  callback
-) {
-  if (!file) return;
-
-  try {
-    const data = await compressImageFile(file, {
-      maxBytes: 900 * 1024,
-      maxWidth: 512,
-      maxHeight: 512,
-      outputWidth: 512,
-      outputHeight: 512,
-      cropAspect: 1,
-      quality: 0.88
-    });
-
-    callback(data);
-  } catch (error) {
-    notify(error.message || "A kép feldolgozása nem sikerült.");
-  }
-}
-
-
-async function readCustomizerCoverImage(file, callback) {
-  if (!file) return;
-
-  try {
-    const data = await compressImageFile(file, {
-      // A borítókép automatikusan középre vágódik a profil által
-      // használt széles formátumra. A felhasználónak nem kell
-      // előre szerkesztenie vagy átméreteznie a képet.
-      maxBytes: 700 * 1024,
-      maxWidth: 1600,
-      maxHeight: 680,
-      outputWidth: 1600,
-      outputHeight: 680,
-      cropAspect: 1600 / 680,
-      quality: 0.84
-    });
-
-    callback(data);
-  } catch (error) {
-    notify(error.message || "A borítókép feldolgozása nem sikerült.");
-  }
-}
-
-
 function customizerValue(id, fallback = "") {
   const element = $(`#${id}`);
 
@@ -5199,33 +4973,6 @@ function customizerValue(id, fallback = "") {
   }
 
   return element.value ?? fallback;
-}
-
-
-function syncCustomizerToProfileFields() {
-
-  const map = {
-    customizerDisplayName: "displayName",
-    customizerBio: "profileBio",
-    customizerStatus: "profileStatus",
-    customizerPronouns: "pronouns",
-    customizerLocation: "profileLocation",
-    customizerWebsite: "profileWebsite",
-    customizerNameColor: "nameColor",
-    customizerProfileColor: "profileColor"
-  };
-
-  Object.entries(map).forEach(
-    ([sourceId, targetId]) => {
-
-      const source = $(`#${sourceId}`);
-      const target = $(`#${targetId}`);
-
-      if (source && target) {
-        target.value = source.value;
-      }
-    }
-  );
 }
 
 
@@ -6455,8 +6202,6 @@ document.addEventListener(
 );
 
 
-
-
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
 
@@ -6749,7 +6494,6 @@ window.addEventListener("popstate", () => {
    state immediately after a view is opened. */
 
 
-
 const passwordResetModal = $("#passwordResetModal");
 const forgotPasswordButton = $("#forgotPasswordButton");
 const forgotPasswordForm = $("#forgotPasswordForm");
@@ -6878,7 +6622,6 @@ const initialResetToken = new URLSearchParams(window.location.search).get("reset
 if (initialResetToken) {
   window.addEventListener("DOMContentLoaded", () => openPasswordResetModal(initialResetToken));
 }
-
 
 
 (function initDesktopRailToggle(){
