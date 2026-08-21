@@ -16,47 +16,48 @@
   <meta name="theme-color" content="#000000">
 
 <style id="everlight-daily-fix">
-/* critical: same baseline for own + others, bubble centered over avatar */
 .daily-thoughts-track{
   display:flex!important;
   flex-direction:row!important;
   align-items:flex-end!important;
   gap:14px!important;
-  min-height:112px!important;
-  padding:0 6px 2px!important;
+  padding:4px 6px 2px!important;
   margin:0!important;
 }
+/* Every item same height so avatars share one baseline */
 .daily-thought,
 .daily-thought.own{
   position:relative!important;
-  display:grid!important;
-  grid-template-rows:58px auto auto!important;
-  grid-template-columns:72px!important;
-  place-items:center!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
   width:72px!important;
   min-width:72px!important;
-  height:auto!important;
-  padding:36px 0 0!important;
+  height:120px!important;
+  padding:0!important;
   margin:0!important;
   gap:4px!important;
   box-sizing:border-box!important;
 }
 .daily-thought .daily-thought-avatar,
 .daily-thought.own .daily-thought-avatar{
-  grid-row:1!important;
   width:58px!important;
   height:58px!important;
   min-width:58px!important;
   min-height:58px!important;
   border-radius:50%!important;
   margin:0!important;
+  flex:0 0 58px!important;
   z-index:1!important;
 }
+/* bubble floats above, does not push avatar */
 .daily-thought .daily-thought-bubble,
 .daily-thought.own .daily-thought-bubble{
   position:absolute!important;
-  top:0!important;
   left:50%!important;
+  bottom:70px!important;
+  top:auto!important;
   transform:translateX(-50%)!important;
   z-index:9!important;
   max-width:110px!important;
@@ -68,6 +69,7 @@
   text-align:center!important;
   margin:0!important;
   box-shadow:0 4px 14px rgba(0,0,0,.4)!important;
+  pointer-events:none!important;
 }
 .daily-thought .daily-thought-bubble::after,
 .daily-thought.own .daily-thought-bubble::after{
@@ -83,18 +85,18 @@
   border:0!important;
   margin:0!important;
 }
-.daily-thought small{grid-row:2!important;margin:0!important;}
-.daily-thought .daily-thought-streak{grid-row:3!important;}
-
-/* pull search + list up */
-.messages-view .daily-thoughts{padding:2px 10px 0!important;margin:0!important;}
-.messages-view .message-search{
-  margin:4px 12px 6px!important;
-  display:flex!important;
+.daily-thought small,
+.daily-thought.own small{
+  flex:0 0 auto!important;
+  margin:0!important;
+  max-width:72px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
 }
+.messages-view .daily-thoughts{padding:2px 10px 0!important;margin:0!important;}
+.messages-view .message-search{margin:4px 12px 6px!important;}
 .messages-view .message-contacts-list{padding-top:0!important;margin-top:0!important;}
-.messages-view .messages-layout{margin-top:0!important;padding-top:0!important;gap:0!important;}
-.messages-view .message-contacts{padding-top:0!important;margin-top:0!important;}
 .message-contacts-head,#newMessageButton{display:none!important;}
 </style>
 
