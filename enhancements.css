@@ -20559,3 +20559,134 @@ html body .messages-view:not(.chat-open) .messages-layout {
     background: #07090b !important;
   }
 }
+
+
+/* =========================================================
+   DESKTOP ONLY — isolated from mobile (v6 FINAL)
+   ========================================================= */
+@media (min-width: 661px) {
+  body.messages-view-open main#feed > .messages-view.open,
+  body.messages-view-open main#feed > .messages-view[aria-hidden="false"],
+  html body #feed > #messagesView.open {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 920px !important;
+    height: 640px !important;
+    min-height: 640px !important;
+    max-height: 640px !important;
+    margin: 12px auto !important;
+    padding: 0 !important;
+    border: 1px solid #1c2426 !important;
+    border-radius: 20px !important;
+    background: #07090b !important;
+    overflow: hidden !important;
+    z-index: 5 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  body.messages-view-open main#feed > .messages-view.open .messages-view-inner,
+  html body #feed > #messagesView.open .messages-view-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  body.messages-view-open #messagesView .messages-view-header {
+    display: none !important;
+  }
+
+  body.messages-view-open #messagesView .daily-thoughts {
+    flex: 0 0 auto !important;
+    padding: 12px 16px 8px !important;
+    border-bottom: 1px solid #1c2426 !important;
+  }
+
+  body.messages-view-open #messagesView .messages-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  body.messages-view-open #messagesView .message-contacts {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 320px !important;
+    min-width: 320px !important;
+    max-width: 320px !important;
+    height: 100% !important;
+    position: relative !important;
+    transform: none !important;
+    border-right: 1px solid #1c2426 !important;
+    overflow: hidden !important;
+  }
+
+  body.messages-view-open #messagesView.chat-open .message-contacts {
+    width: 84px !important;
+    min-width: 84px !important;
+    max-width: 84px !important;
+  }
+
+  body.messages-view-open #messagesView .message-contacts-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 8px 10px 12px !important;
+  }
+
+  body.messages-view-open #messagesView .message-search {
+    margin: 10px 12px !important;
+  }
+
+  body.messages-view-open #messagesView.chat-open .message-search,
+  body.messages-view-open #messagesView .message-contacts-head {
+    display: none !important;
+  }
+
+  body.messages-view-open #messagesView .message-chat {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    position: relative !important;
+    transform: none !important;
+    overflow: hidden !important;
+  }
+
+  body.messages-view-open #messagesView #dmList {
+    overflow-y: auto !important;
+    min-height: 0 !important;
+  }
+
+  body.messages-view-open #messagesView #messageForm {
+    border-top: 1px solid #1c2426 !important;
+    padding: 12px !important;
+  }
+
+  /* Hide feed posts while messages open on desktop */
+  body.messages-view-open main#feed > .post,
+  body.messages-view-open main#feed > .feed-card,
+  body.messages-view-open main#feed > .composer,
+  body.messages-view-open main#feed > #composerCard,
+  body.messages-view-open main#feed > .share-card {
+    display: none !important;
+  }
+}

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260821-desk-v5">
+  <link rel="stylesheet" href="enhancements.css?v=20260821-desk-v6">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -661,6 +661,47 @@ button.daily-thought.own{
 }
 .message-contacts-head,#newMessageButton{display:none!important;}
 .messages-view .message-search{margin:4px 12px 6px!important;}
+</style>
+
+
+<style id="everlight-desktop-chat">
+@media (min-width: 661px) {
+  body.messages-view-open #feed > #messagesView.open {
+    display:flex!important;flex-direction:column!important;
+    width:100%!important;max-width:920px!important;
+    height:640px!important;min-height:640px!important;max-height:640px!important;
+    margin:12px auto!important;padding:0!important;
+    border:1px solid #1c2426!important;border-radius:20px!important;
+    background:#07090b!important;overflow:hidden!important;
+    position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+    transform:none!important;opacity:1!important;visibility:visible!important;
+  }
+  body.messages-view-open #messagesView .messages-view-inner{
+    display:flex!important;flex-direction:column!important;height:100%!important;min-height:0!important;overflow:hidden!important;
+  }
+  body.messages-view-open #messagesView .messages-layout{
+    display:flex!important;flex-direction:row!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important;
+  }
+  body.messages-view-open #messagesView .message-contacts{
+    display:flex!important;flex-direction:column!important;width:320px!important;min-width:320px!important;max-width:320px!important;
+    height:100%!important;transform:none!important;position:relative!important;border-right:1px solid #1c2426!important;overflow:hidden!important;
+  }
+  body.messages-view-open #messagesView.chat-open .message-contacts{
+    width:84px!important;min-width:84px!important;max-width:84px!important;
+  }
+  body.messages-view-open #messagesView .message-contacts-list{
+    flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;
+  }
+  body.messages-view-open #messagesView .message-chat{
+    display:grid!important;grid-template-rows:auto minmax(0,1fr) auto!important;
+    flex:1 1 auto!important;min-width:0!important;height:100%!important;transform:none!important;overflow:hidden!important;
+  }
+  body.messages-view-open #messagesView #dmList{overflow-y:auto!important;min-height:0!important;}
+  body.messages-view-open #feed > .post,
+  body.messages-view-open #feed > .feed-card,
+  body.messages-view-open #feed > .composer,
+  body.messages-view-open #feed > #composerCard{display:none!important;}
+}
 </style>
 
 </body>
