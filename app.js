@@ -3700,7 +3700,8 @@ async function loadDailyThoughts() {
     : "+";
   const ownThought = window.__ownDailyThought || "";
 
-  let items = `
+  // Show own slot immediately so the row is not empty while loading.
+  track.innerHTML = `
     <button type="button" class="daily-thought own" id="dailyThoughtOwn" data-action="write">
       ${ownThought
         ? `<span class="daily-thought-bubble">${escapeHtml(ownThought)}</span>`
@@ -3710,46 +3711,54 @@ async function loadDailyThoughts() {
     </button>
   `;
 
+  let users = [];
   try {
-    let users = [];
+    const data = await api("/api/daily-thoughts");
+    users = data.users || [];
+  } catch (_) {
+    users = [];
+  }
+  if (!users.length) {
     try {
-      const data = await api("/api/daily-thoughts");
-      users = data.users || [];
-    } catch (_) {
-      users = [];
-    }
-    if (!users.length) {
-      try {
-        const online = await api("/api/online");
-        users = online.users || [];
-      } catch (_) {}
-    }
-    for (const user of users) {
-      if (currentUser && user.username === currentUser.username) {
-        if (user.thought) window.__ownDailyThought = user.thought;
-        continue;
-      }
-      const name = (user.display_name || user.username || "✦").split("#")[0];
-      const thought = String(user.thought || "").trim();
-      const avatar = user.avatar
-        ? `<img src="${escapeHtml(user.avatar)}" alt="">`
-        : escapeHtml((name || "✦").charAt(0));
-      const streak = Number(user.message_streak || 0);
-      items += `
-        <button type="button" class="daily-thought" data-author="${escapeHtml(user.username || "")}" data-action="preview">
-          ${thought ? `<span class="daily-thought-bubble">${escapeHtml(thought.slice(0, 80))}</span>` : ""}
-          <span class="daily-thought-avatar">${avatar}</span>
-          <small>${escapeHtml(name)}</small>
-          ${streak > 0 ? `<span class="daily-thought-streak">🔥 ${streak}</span>` : ""}
-        </button>
-      `;
-    }
-  } catch {
-    /* keep own tile */
+      const online = await api("/api/online");
+      users = online.users || [];
+    } catch (_) {}
   }
 
-  track.innerHTML = items;
+  const parts = [track.innerHTML];
+  for (const user of users) {
+    if (currentUser && user.username === currentUser.username) {
+      if (user.thought) {
+        window.__ownDailyThought = user.thought;
+        parts[0] = `
+    <button type="button" class="daily-thought own" id="dailyThoughtOwn" data-action="write">
+      <span class="daily-thought-bubble">${escapeHtml(user.thought)}</span>
+      <span class="daily-thought-avatar">${ownAvatar}</span>
+      <small>A tiéd</small>
+    </button>`;
+      }
+      continue;
+    }
+    const name = escapeHtml(user.display_name || (user.username || "").split("#")[0] || "?");
+    const av = user.avatar
+      ? `<img src="${escapeHtml(user.avatar)}" alt="">`
+      : escapeHtml((name.charAt(0) || "?").toUpperCase());
+    const thought = user.thought
+      ? `<span class="daily-thought-bubble">${escapeHtml(user.thought)}</span>`
+      : "";
+    const streak = Number(user.message_streak || user.streak || 0);
+    parts.push(`
+      <button type="button" class="daily-thought" data-username="${escapeHtml(user.username || "")}">
+        ${thought}
+        <span class="daily-thought-avatar">${av}</span>
+        <small>${name}</small>
+        ${streak > 0 ? `<span class="daily-thought-streak">🔥${escapeHtml(String(streak))}</span>` : ""}
+      </button>
+    `);
+  }
+  track.innerHTML = parts.join("");
 }
+
 
 function openDailyThoughtWriter() {
   if (!currentUser) {

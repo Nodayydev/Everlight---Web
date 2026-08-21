@@ -19720,3 +19720,54 @@ html body .mobile-dock .mobile-dock-item + .mobile-dock-item::before {
   opacity: 0 !important;
   box-shadow: none !important;
 }
+
+
+/* =========================================================
+   MESSAGES LIST — full-width cards, no bottom black cover
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view:not(.chat-open) .message-contacts-list {
+    width: 100% !important;
+    padding: 8px 12px calc(24px + 56px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contact {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 12px 14px !important;
+    margin: 0 0 10px 0 !important;
+    border-radius: 18px !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contact-copy {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contact-copy strong,
+  html body .messages-view:not(.chat-open) .message-contact-copy small {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+  }
+
+  /* Lift sheet so dock doesn't cover the last chats */
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"] {
+    bottom: calc(72px + var(--dock-lift, 12px) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  html body .messages-view.open .messages-layout,
+  html body .messages-view:not(.chat-open) .message-contacts {
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contacts-list {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+}
