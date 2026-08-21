@@ -20824,3 +20824,23 @@ html, body { touch-action: manipulation !important; }
   margin: 0 !important;
 }
 .feed-card-meta:empty { display: none !important; }
+
+
+/* Feed card: avatar + names a bit lower */
+.feed-card-author {
+  padding-top: 6px !important;
+  margin-top: 2px !important;
+  align-items: flex-start !important;
+}
+.feed-card-avatar-wrap,
+.feed-card-avatar,
+.feed-card-avatar-fallback {
+  margin-top: 4px !important;
+}
+.feed-card-author-copy {
+  padding-top: 6px !important;
+}
+.feed-card-author-aside {
+  padding-top: 4px !important;
+  gap: 10px !important;
+}

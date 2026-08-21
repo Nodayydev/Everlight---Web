@@ -1288,7 +1288,7 @@ async function createPostShareFile(data) {
 
   const avatarSize = 88;
   const avatarX = innerX;
-  const headerH = 188;
+  const headerH = 200;
   const avatarY = 40;
   const textX = avatarX + avatarSize + 28;
 
@@ -1316,7 +1316,7 @@ async function createPostShareFile(data) {
     `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
   ).join("");
   const categorySvg = category
-    ? `<text x="${cardX + cardW - 42}" y="${cardY + avatarY + 98}" text-anchor="end" fill="#9fc4e7" font-size="20" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
+    ? `<text x="${cardX + cardW - 42}" y="${cardY + avatarY + 118}" text-anchor="end" fill="#9fc4e7" font-size="20" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : "";
   let bodyCursorY = 0;
   const bodySvg = formattedBodyLines.map((line) => {
