@@ -20793,30 +20793,53 @@ html, body { touch-action: manipulation !important; }
 }
 
 
-/* Category under date/time on post cards */
+/* Category under date + aligned avatar/name, no double-layer look */
 .feed-card-author {
   display: flex !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   gap: 12px !important;
+  padding: 16px 18px !important;
+  margin: 0 !important;
+  /* blend with card body so it does not look like a second card */
+  background: transparent !important;
+  border-bottom: 1px solid rgba(130,185,232,.10) !important;
+  border-radius: 0 !important;
+  min-height: 0 !important;
+}
+.feed-card-avatar-wrap,
+.feed-card-avatar,
+.feed-card-avatar-fallback {
+  margin-top: 0 !important;
+}
+.feed-card-author-copy {
+  padding-top: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 2px !important;
 }
 .feed-card-author-aside {
   margin-left: auto !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-end !important;
-  gap: 6px !important;
+  justify-content: center !important;
+  gap: 8px !important;
   flex: 0 0 auto !important;
   text-align: right !important;
+  padding-top: 0 !important;
 }
 .feed-card-author-aside .feed-card-author-date {
   font: 500 11px/1.2 Manrope, sans-serif !important;
   color: #6d777a !important;
   white-space: nowrap !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
 }
 .feed-card-author-aside .feed-card-category {
   display: inline-flex !important;
   align-items: center !important;
-  padding: 3px 10px !important;
+  padding: 4px 11px !important;
   border-radius: 999px !important;
   background: rgba(139,173,204,.12) !important;
   color: #9fc0d8 !important;
@@ -20824,23 +20847,8 @@ html, body { touch-action: manipulation !important; }
   margin: 0 !important;
 }
 .feed-card-meta:empty { display: none !important; }
-
-
-/* Feed card: avatar + names a bit lower */
-.feed-card-author {
-  padding-top: 6px !important;
-  margin-top: 2px !important;
-  align-items: flex-start !important;
-}
-.feed-card-avatar-wrap,
-.feed-card-avatar,
-.feed-card-avatar-fallback {
-  margin-top: 4px !important;
-}
-.feed-card-author-copy {
-  padding-top: 6px !important;
-}
-.feed-card-author-aside {
-  padding-top: 4px !important;
-  gap: 10px !important;
+@media (max-width: 760px) {
+  .feed-card-author {
+    padding: 14px 15px !important;
+  }
 }
