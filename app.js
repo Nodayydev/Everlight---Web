@@ -3578,11 +3578,20 @@ if (mobileProfileNav) {
 
 
 
+
+function __hideMessageContactsHead() {
+  document.querySelectorAll(".message-contacts-head, #newMessageButton").forEach((el) => {
+    el.style.display = "none";
+    el.setAttribute("hidden", "");
+  });
+}
+
 async function loadMessageContacts() {
   const contactsList = $("#messageContactsList");
   if (!contactsList || !currentUser) return;
 
   contactsList.innerHTML = `<p class="loading-copy">Betöltés…</p>`;
+  __hideMessageContactsHead();
 
   try {
     let contacts = [];
