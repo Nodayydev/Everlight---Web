@@ -18897,3 +18897,70 @@ html body .chat-empty p {
 html body .messages-view .messages-view-header {
   display: none !important;
 }
+
+
+/* =========================================================
+   CHAT — one baseline, side rail sizes
+   ========================================================= */
+html body #dmList,
+html body .dm-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+}
+html body .chat-message {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  max-width: min(88%, 520px) !important;
+}
+html body .chat-message-own {
+  align-self: flex-end !important;
+  align-items: flex-end !important;
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+html body .chat-message-other {
+  align-self: flex-start !important;
+  align-items: flex-start !important;
+  margin-right: auto !important;
+  margin-left: 0 !important;
+}
+html body .chat-bubble {
+  position: relative !important;
+  top: 0 !important;
+  transform: none !important;
+}
+
+@media (min-width: 661px) {
+  html body .messages-view.chat-open .message-contacts {
+    width: 84px !important;
+    min-width: 84px !important;
+    max-width: 84px !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contacts {
+    width: 340px !important;
+    min-width: 340px !important;
+    max-width: 340px !important;
+  }
+  html body .chat-message {
+    max-width: min(70%, 560px) !important;
+  }
+}
+@media (max-width: 660px) {
+  html body .messages-view.chat-open .message-contacts {
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+  }
+  html body .messages-view.chat-open .message-contact-avatar,
+  html body .messages-view.chat-open .message-contact-avatar img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  html body .chat-message {
+    max-width: 85% !important;
+  }
+}

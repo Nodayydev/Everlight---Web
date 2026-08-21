@@ -4475,44 +4475,27 @@ if (messageContactsList) {
       }
 
 
-      const recipient =
-        contact.dataset.recipient;
+      const recipient = contact.dataset.recipient;
+      const messagesView = document.getElementById("messagesView");
+      const alreadyOpen =
+        contact.classList.contains("active") &&
+        messagesView?.classList.contains("chat-open");
 
-
-      const recipientInput =
-        $("#dmRecipient");
-
-
-      if (
-        recipientInput
-      ) {
-
-        recipientInput.value =
-          recipient;
+      if (alreadyOpen) {
+        messagesView.classList.remove("chat-open");
+        contact.classList.remove("active");
+        return;
       }
 
+      const recipientInput = $("#dmRecipient");
+      if (recipientInput) recipientInput.value = recipient;
 
-      document
-        .querySelectorAll(
-          ".message-contact"
-        )
-        .forEach(
-          (item) => {
-
-            item.classList.remove(
-              "active"
-            );
-          }
-        );
-
-
-      contact.classList.add(
-        "active"
-      );
-
-      document.getElementById("messagesView")?.classList.add("chat-open");
+      document.querySelectorAll(".message-contact").forEach((item) => {
+        item.classList.remove("active");
+      });
+      contact.classList.add("active");
+      messagesView?.classList.add("chat-open");
       document.getElementById("newMessageRecipientWrap")?.setAttribute("hidden", "");
-
       loadMessages();
     }
   );
