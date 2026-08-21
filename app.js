@@ -1397,7 +1397,7 @@ async function createPostShareFile(data) {
     `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
   ).join("");
   const categorySvg = category
-    ? `<rect x="${cardX + cardW - 42 - Math.max(70, category.length * 11 + 28)}" y="${cardY + avatarY + 78}" width="${Math.max(70, category.length * 11 + 28)}" height="32" rx="16" fill="#15252d" stroke="#203943" stroke-width="1.5"/><text x="${cardX + cardW - 42 - Math.max(70, category.length * 11 + 28) / 2}" y="${cardY + avatarY + 100}" text-anchor="middle" fill="#9fc4e7" font-size="16" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
+    ? `<rect x="${cardX + cardW - 42 - Math.max(70, category.length * 11 + 28)}" y="${cardY + avatarY + 58}" width="${Math.max(70, category.length * 11 + 28)}" height="30" rx="15" fill="#15252d" stroke="#203943" stroke-width="1.5"/><text x="${cardX + cardW - 42 - Math.max(70, category.length * 11 + 28) / 2}" y="${cardY + avatarY + 79}" text-anchor="middle" fill="#9fc4e7" font-size="16" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : "";
   let bodyCursorY = 0;
   const bodySvg = formattedBodyLines.map((line) => {
@@ -1459,7 +1459,6 @@ async function createPostShareFile(data) {
       <text x="${textX}" y="${cardY + avatarY + 64}" fill="#849196" font-size="20" font-family="Arial">${escapeXml(meta)}</text>
       <text x="${cardX + cardW - 42}" y="${cardY + avatarY + 32}" text-anchor="end" fill="#7f8b90" font-size="18" font-family="Arial">${escapeXml(dateText)}</text>
       ${categorySvg}
-      <line x1="${innerX}" y1="${cardY + headerH + 18}" x2="${cardX + cardW - 44}" y2="${cardY + headerH + 18}" stroke="#273238" stroke-width="2"/>
       ${titleSvg}
       ${bodySvg}
       <line x1="${innerX}" y1="${cardY + dividerY}" x2="${cardX + cardW - 44}" y2="${cardY + dividerY}" stroke="#263238" stroke-width="2"/>
