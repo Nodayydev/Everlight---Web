@@ -870,6 +870,7 @@ function renderPost(post) {
     <article
       class="post feed-card"
       data-post-id="${escapeHtml(String(post.id || ""))}"
+      data-share-body="${encodeURIComponent(rawBody)}"
       tabindex="0"
       aria-label="${escapeHtml(postTitle || category)} – bejegyzés"
     >
@@ -1064,9 +1065,15 @@ document.addEventListener("keydown", (event) => {
 function getPostShareData(card) {
   const title = card?.querySelector(".feed-card-title")?.textContent.trim() ||
     card?.querySelector(".feed-card-category")?.textContent.trim() || "Everlight bejegyzés";
-  const bodyEl = card?.querySelector(".feed-card-body-preview") || card?.querySelector("[data-full-body]");
+  let rawShareBody = "";
+  try {
+    rawShareBody = card?.dataset?.shareBody ? decodeURIComponent(card.dataset.shareBody) : "";
+  } catch (_) { rawShareBody = ""; }
+  const fullEl = card?.querySelector("[data-full-body]");
+  const previewEl = card?.querySelector(".feed-card-body-preview");
+  const bodyEl = fullEl || previewEl;
   const bodyHtml = bodyEl ? (bodyEl.innerHTML || "") : "";
-  const body = bodyEl?.textContent.trim() || "";
+  const body = (rawShareBody || bodyEl?.textContent || "").trim();
   const accountName = card?.querySelector(".feed-card-author-line strong")?.textContent.trim() || "Névtelen";
   const realName = card?.querySelector(".feed-card-real-name")?.textContent.trim() || "";
   const handle = card?.querySelector(".feed-card-handle")?.textContent.trim() || "";
@@ -1088,6 +1095,7 @@ function getPostShareData(card) {
 
   return {
     accountName, realName, handle, hashtags, date, category, streak: 0, avatar, title, body, bodyHtml,
+    rawBody: rawShareBody || body,
     shareWidth, shareHeight,
     shareAspectRatio: shareWidth > 0 && shareHeight > 0 ? shareHeight / shareWidth : (16 / 9),
     text: `${title}${body ? ` — ${body}` : ""}`
@@ -1147,108 +1155,130 @@ async function createPostShareFile(data) {
   const titleLines = wrapShareText(data.title, 28, 3);
   const category = String(data.category || "").trim();
 
-  // Build body lines preserving hard breaks from the post HTML (poetry layout).
+  // Universal body lines: prefer original post text (\n = line, \n\n = stanza gap).
   const formattedBodyLines = (function () {
-    const html = String(data.bodyHtml || "").trim();
     const maxChars = 38;
-    const maxLines = 18;
+    const maxLines = 20;
+    const raw = String(data.rawBody || data.body || "").replace(/\r\n/g, "\n");
+    const html = String(data.bodyHtml || "").trim();
 
-    const pushWrapped = (lines, text, style) => {
-      const raw = String(text || "").replace(/\s+/g, " ").trim();
-      if (!raw) return;
-      const words = raw.split(" ");
+    const detectStyle = (segment) => {
+      let text = String(segment || "");
+      let bold = false, italic = false, quote = false;
+      // strip simple markdown markers while noting style
+      if (/^\s*>\s?/.test(text)) { quote = true; text = text.replace(/^\s*>\s?/, ""); }
+      if (/\*\*[^*]+\*\*/.test(text) || /__[^_]+__/.test(text)) {
+        bold = true;
+        text = text.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/__([^_]+)__/g, "$1");
+      }
+      if (/(^|[^*])\*[^*]+\*(?!\*)/.test(text) || /(^|[^_])_[^_]+_(?!_)/.test(text)) {
+        italic = true;
+        text = text.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, "$1$2").replace(/(^|[^_])_([^_]+)_(?!_)/g, "$1$2");
+      }
+      text = text
+        .replace(/~~([^~]+)~~/g, "$1")
+        .replace(/\+\+([^+]+)\+\+/g, "$1")
+        .replace(/`([^`]+)`/g, "$1")
+        .replace(/\{\{font:(?:sans|serif|mono|display)\}\}([\s\S]*?)\{\{\/font\}\}/g, "$1")
+        .replace(/^#{1,6}\s+/gm, "");
+      return { text: text.replace(/[ \t]+/g, " ").trim(), bold, italic, quote };
+    };
+
+    const pushWrapped = (lines, segment) => {
+      const styled = detectStyle(segment);
+      if (!styled.text) return;
+      const words = styled.text.split(" ");
       let cur = "";
       for (const w of words) {
         const next = cur ? cur + " " + w : w;
         if (next.length > maxChars && cur) {
-          lines.push({ text: cur, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
+          lines.push({ text: cur, bold: styled.bold, italic: styled.italic, quote: styled.quote });
           cur = w;
-        } else {
-          cur = next;
-        }
+        } else cur = next;
       }
-      if (cur) lines.push({ text: cur, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
+      if (cur) lines.push({ text: cur, bold: styled.bold, italic: styled.italic, quote: styled.quote });
     };
-
-    if (!html) {
-      const lines = [];
-      String(data.body || "").split(/\n+/).forEach((para) => pushWrapped(lines, para, {}));
-      return lines.slice(0, maxLines);
-    }
-
-    const tmp = document.createElement("div");
-    tmp.innerHTML = html;
-
-    // Convert DOM to array of {text, style} paragraphs separated by hard breaks.
-    const paragraphs = [];
-    let buf = [];
-    const flushBuf = () => {
-      if (!buf.length) return;
-      paragraphs.push(buf);
-      buf = [];
-    };
-    const walk = (node, style) => {
-      if (!node) return;
-      if (node.nodeType === 3) {
-        const t = String(node.textContent || "");
-        if (t) buf.push({ text: t, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
-        return;
-      }
-      if (node.nodeType !== 1) return;
-      const tag = node.tagName.toLowerCase();
-      const next = {
-        bold: style.bold || tag === "strong" || tag === "b",
-        italic: style.italic || tag === "em" || tag === "i",
-        quote: style.quote || tag === "blockquote"
-      };
-      if (tag === "br") {
-        flushBuf();
-        return;
-      }
-      if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote" || tag === "h1" || tag === "h2" || tag === "h3") {
-        flushBuf();
-        Array.from(node.childNodes).forEach((ch) => walk(ch, next));
-        flushBuf();
-        // empty paragraph → blank line
-        paragraphs.push([]);
-        return;
-      }
-      Array.from(node.childNodes).forEach((ch) => walk(ch, next));
-    };
-    Array.from(tmp.childNodes).forEach((ch) => walk(ch, { bold: false, italic: false, quote: false }));
-    flushBuf();
 
     const lines = [];
-    for (const parts of paragraphs) {
-      if (!parts.length) {
-        // blank line for spacing between stanzas
-        if (lines.length && lines[lines.length - 1].text !== "") {
-          lines.push({ text: "", bold: false, italic: false, quote: false, blank: true });
+    if (raw) {
+      // Split on newlines; empty entry between = stanza gap
+      const parts = raw.split("\n");
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (!String(part).trim()) {
+          if (lines.length && !lines[lines.length - 1].blank) {
+            lines.push({ text: "", blank: true, bold: false, italic: false, quote: false });
+          }
+          continue;
         }
-        continue;
+        pushWrapped(lines, part);
       }
-      // merge runs with same style into segments, preserve spaces inside
-      let joined = "";
-      let style = { bold: parts[0].bold, italic: parts[0].italic, quote: parts[0].quote };
-      for (const p of parts) {
-        // if style changes mid-paragraph, flush previous as its own wrapped block
-        if (p.bold !== style.bold || p.italic !== style.italic || p.quote !== style.quote) {
-          pushWrapped(lines, joined, style);
-          joined = p.text;
-          style = { bold: p.bold, italic: p.italic, quote: p.quote };
-        } else {
-          joined += p.text;
+    } else if (html) {
+      // Fallback: DOM walk from rendered HTML
+      const tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      const paragraphs = [];
+      let buf = [];
+      const flushBuf = () => {
+        if (!buf.length) return;
+        paragraphs.push(buf);
+        buf = [];
+      };
+      const walk = (node, style) => {
+        if (!node) return;
+        if (node.nodeType === 3) {
+          const t = String(node.textContent || "");
+          if (t) buf.push({ text: t, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
+          return;
+        }
+        if (node.nodeType !== 1) return;
+        const tag = node.tagName.toLowerCase();
+        const next = {
+          bold: style.bold || tag === "strong" || tag === "b",
+          italic: style.italic || tag === "em" || tag === "i",
+          quote: style.quote || tag === "blockquote"
+        };
+        if (tag === "br") {
+          if (buf.length) flushBuf();
+          else paragraphs.push([]);
+          return;
+        }
+        if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") {
+          flushBuf();
+          Array.from(node.childNodes).forEach((ch) => walk(ch, next));
+          flushBuf();
+          paragraphs.push([]);
+          return;
+        }
+        Array.from(node.childNodes).forEach((ch) => walk(ch, next));
+      };
+      Array.from(tmp.childNodes).forEach((ch) => walk(ch, { bold: false, italic: false, quote: false }));
+      flushBuf();
+      for (const parts of paragraphs) {
+        const onlyWs = !parts.length || parts.every((p) => !String(p.text || "").replace(/\s+/g, "").trim());
+        if (onlyWs) {
+          if (lines.length && !lines[lines.length - 1].blank) {
+            lines.push({ text: "", blank: true, bold: false, italic: false, quote: false });
+          }
+          continue;
+        }
+        const joined = parts.map((p) => p.text).join("");
+        const style = parts[0] || {};
+        pushWrapped(lines, joined);
+        // apply dominant style from first run
+        if (lines.length) {
+          const last = lines[lines.length - 1];
+          last.bold = !!style.bold;
+          last.italic = !!style.italic;
+          last.quote = !!style.quote;
         }
       }
-      pushWrapped(lines, joined, style);
     }
 
-    // drop trailing blanks
     while (lines.length && lines[lines.length - 1].blank) lines.pop();
     const limited = lines.slice(0, maxLines);
-    if (lines.length > maxLines && limited.length) {
-      const last = limited[limited.length - 1];
-      if (last.text) last.text += "…";
+    if (lines.length > maxLines && limited.length && limited[limited.length - 1].text) {
+      limited[limited.length - 1].text += "…";
     }
     return limited.length ? limited : [{ text: String(data.body || "").slice(0, 120), bold: false, italic: false, quote: false }];
   })();
@@ -1263,7 +1293,12 @@ async function createPostShareFile(data) {
   const categoryY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 12;
   const categoryH = category ? 44 : 0;
   const bodyY = categoryY + categoryH + 40;
-  const bodyEnd = bodyY + Math.max(1, formattedBodyLines.length) * bodyLineHeight;
+  let estBodyH = 0;
+  for (const line of formattedBodyLines) {
+    if (line.blank || !String(line.text || "").trim()) estBodyH += Math.round(bodyLineHeight * 0.85);
+    else estBodyH += bodyLineHeight;
+  }
+  const bodyEnd = bodyY + Math.max(bodyLineHeight, estBodyH);
   const dividerY = bodyEnd + 40;
   const footerH = 90;
   const cardH = Math.max(520, Math.min(1500, dividerY + footerH));
@@ -1281,13 +1316,19 @@ async function createPostShareFile(data) {
   const categorySvg = category
     ? `<rect x="${innerX}" y="${cardY + categoryY}" width="${Math.max(150, category.length * 18 + 52)}" height="${categoryH}" rx="22" fill="#15252d" stroke="#203943" stroke-width="2"/><text x="${innerX + 26}" y="${cardY + categoryY + 30}" fill="#9fc4e7" font-size="22" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : "";
-  const bodySvg = formattedBodyLines.map((line, i) => {
-    if (line.blank || !String(line.text || "").trim()) return "";
+  let bodyCursorY = 0;
+  const bodySvg = formattedBodyLines.map((line) => {
+    if (line.blank || !String(line.text || "").trim()) {
+      bodyCursorY += Math.round(bodyLineHeight * 0.85);
+      return "";
+    }
+    bodyCursorY += bodyLineHeight;
+    const y = cardY + bodyY + bodyCursorY;
     const weight = line.bold ? "700" : "500";
     const style = line.italic ? ' font-style="italic"' : "";
     const fill = line.quote ? "#9fc4e7" : "#e8e7df";
     const x = line.quote ? innerX + 16 : innerX;
-    return `<text x="${x}" y="${cardY + bodyY + i * bodyLineHeight}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="Arial"${style}>${escapeXml(line.text)}</text>`;
+    return `<text x="${x}" y="${y}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="Arial"${style}>${escapeXml(line.text)}</text>`;
   }).join("");
   const streakSvg = "";
   const dateText = data.date || "";
