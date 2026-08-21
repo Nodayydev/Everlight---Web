@@ -8,97 +8,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260821-inline-daily">
+  <link rel="stylesheet" href="enhancements.css?v=20260821-desk-v5">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#000000">
 
-<style id="everlight-daily-fix">
-.daily-thoughts-track{
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:flex-end!important;
-  gap:14px!important;
-  padding:4px 6px 2px!important;
-  margin:0!important;
-}
-/* Every item same height so avatars share one baseline */
-.daily-thought,
-.daily-thought.own{
-  position:relative!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  width:72px!important;
-  min-width:72px!important;
-  height:120px!important;
-  padding:0!important;
-  margin:0!important;
-  gap:4px!important;
-  box-sizing:border-box!important;
-}
-.daily-thought .daily-thought-avatar,
-.daily-thought.own .daily-thought-avatar{
-  width:58px!important;
-  height:58px!important;
-  min-width:58px!important;
-  min-height:58px!important;
-  border-radius:50%!important;
-  margin:0!important;
-  flex:0 0 58px!important;
-  z-index:1!important;
-}
-/* bubble floats above, does not push avatar */
-.daily-thought .daily-thought-bubble,
-.daily-thought.own .daily-thought-bubble{
-  position:absolute!important;
-  left:50%!important;
-  bottom:70px!important;
-  top:auto!important;
-  transform:translateX(-50%)!important;
-  z-index:9!important;
-  max-width:110px!important;
-  padding:7px 10px!important;
-  border-radius:14px!important;
-  background:#2a2f33!important;
-  color:#f5f4ef!important;
-  font:600 11px/1.25 Manrope,sans-serif!important;
-  text-align:center!important;
-  margin:0!important;
-  box-shadow:0 4px 14px rgba(0,0,0,.4)!important;
-  pointer-events:none!important;
-}
-.daily-thought .daily-thought-bubble::after,
-.daily-thought.own .daily-thought-bubble::after{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  bottom:-6px!important;
-  transform:translateX(-50%)!important;
-  width:12px!important;
-  height:8px!important;
-  background:#2a2f33!important;
-  clip-path:polygon(0 0,100% 0,50% 100%)!important;
-  border:0!important;
-  margin:0!important;
-}
-.daily-thought small,
-.daily-thought.own small{
-  flex:0 0 auto!important;
-  margin:0!important;
-  max-width:72px!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  white-space:nowrap!important;
-}
-.messages-view .daily-thoughts{padding:2px 10px 0!important;margin:0!important;}
-.messages-view .message-search{margin:4px 12px 6px!important;}
-.messages-view .message-contacts-list{padding-top:0!important;margin-top:0!important;}
-.message-contacts-head,#newMessageButton{display:none!important;}
-</style>
+
 
 </head>
 <body>
@@ -654,7 +571,97 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260821-force-ig2"></script>
+  <script src="app.js?v=20260821-anon-latest"></script>
   <script src="theme.js?v=20260820-final"></script>
+
+<style id="everlight-daily-fix">
+.daily-thoughts-track{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:flex-end!important;
+  gap:12px!important;
+  padding:4px 6px!important;
+}
+.daily-thought,
+button.daily-thought,
+.daily-thought.own,
+button.daily-thought.own{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  width:72px!important;
+  min-width:72px!important;
+  height:118px!important;
+  max-height:118px!important;
+  padding:0!important;
+  margin:0!important;
+  gap:4px!important;
+  box-sizing:border-box!important;
+}
+.daily-thought .daily-thought-avatar,
+.daily-thought.own .daily-thought-avatar{
+  width:58px!important;
+  height:58px!important;
+  min-width:58px!important;
+  min-height:58px!important;
+  border-radius:50%!important;
+  margin-top:auto!important;
+  flex:0 0 58px!important;
+  order:2!important;
+}
+.daily-thought small,
+.daily-thought.own small{
+  order:3!important;
+  margin:0!important;
+  max-width:72px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.daily-thought .daily-thought-streak{order:4!important;}
+.daily-thought .daily-thought-bubble,
+.daily-thought.own .daily-thought-bubble{
+  position:absolute!important;
+  left:50%!important;
+  bottom:68px!important;
+  top:auto!important;
+  transform:translateX(-50%)!important;
+  z-index:9!important;
+  max-width:108px!important;
+  padding:7px 10px!important;
+  border-radius:14px!important;
+  background:#2a2f33!important;
+  color:#f5f4ef!important;
+  font:600 11px/1.25 Manrope,sans-serif!important;
+  text-align:center!important;
+  margin:0!important;
+  order:1!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.4)!important;
+}
+.daily-thought .daily-thought-bubble[hidden]{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+.daily-thought .daily-thought-bubble::after,
+.daily-thought.own .daily-thought-bubble::after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-6px!important;
+  transform:translateX(-50%)!important;
+  width:12px!important;
+  height:8px!important;
+  background:#2a2f33!important;
+  clip-path:polygon(0 0,100% 0,50% 100%)!important;
+  border:0!important;
+  margin:0!important;
+}
+.message-contacts-head,#newMessageButton{display:none!important;}
+.messages-view .message-search{margin:4px 12px 6px!important;}
+</style>
+
 </body>
 </html>

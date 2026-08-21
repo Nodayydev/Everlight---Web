@@ -1782,17 +1782,19 @@ async function loadCommunityLatest() {
           if (title.length > 64) title = title.slice(0, 64).trimEnd() + "…";
 
           const category = post.category || "Gondolat";
-
-          const avatar = post.avatar
-            ? `<img src="${escapeHtml(post.avatar)}" alt="" loading="lazy">`
-            : `<span class="community-avatar-fallback">✦</span>`;
+          const isAnon = Boolean(post.is_anonymous);
+          const avatar = isAnon
+            ? `<span class="community-avatar-fallback">✦</span>`
+            : (post.avatar
+              ? `<img src="${escapeHtml(post.avatar)}" alt="" loading="lazy">`
+              : `<span class="community-avatar-fallback">✦</span>`);
 
           return `
             <article class="community-latest-item" data-post-id="${escapeHtml(String(post.id || ""))}" tabindex="0" role="button">
               <div class="community-avatar">${avatar}</div>
               <div class="community-latest-copy">
                 <strong>${escapeHtml(title)}</strong>
-                <small>${escapeHtml(category)}</small>
+                <small>${escapeHtml(isAnon ? "Névtelen · " + category : category)}</small>
               </div>
             </article>
           `;
@@ -3782,13 +3784,11 @@ async function loadDailyThoughts() {
     const av = user.avatar
       ? `<img src="${escapeHtml(user.avatar)}" alt="">`
       : escapeHtml((name.charAt(0) || "?").toUpperCase());
-    const thought = user.thought
-      ? `<span class="daily-thought-bubble">${escapeHtml(user.thought)}</span>`
-      : "";
+    const thoughtText = user.thought ? escapeHtml(user.thought) : "";
     const streak = Number(user.message_streak || user.streak || 0);
     parts.push(`
       <button type="button" class="daily-thought" data-username="${escapeHtml(user.username || "")}">
-        ${thought}
+        <span class="daily-thought-bubble"${thoughtText ? "" : " hidden"}>${thoughtText || "&nbsp;"}</span>
         <span class="daily-thought-avatar">${av}</span>
         <small>${name}</small>
         ${streak > 0 ? `<span class="daily-thought-streak">🔥${escapeHtml(String(streak))}</span>` : ""}

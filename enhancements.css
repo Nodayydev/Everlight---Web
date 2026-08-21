@@ -20391,3 +20391,171 @@ html body .messages-view:not(.chat-open) .messages-layout {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+
+
+/* =========================================================
+   DESKTOP CHAT LAYOUT — clean messenger (v5)
+   ========================================================= */
+@media (min-width: 661px) {
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"] {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  html body .messages-view-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: min(72vh, 780px) !important;
+    min-height: 520px !important;
+    max-height: 780px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid #1c2426 !important;
+    border-radius: 20px !important;
+    background: #07090b !important;
+    overflow: hidden !important;
+  }
+
+  html body .messages-view-header {
+    display: none !important;
+  }
+
+  html body .messages-view .daily-thoughts {
+    flex: 0 0 auto !important;
+    padding: 10px 14px 6px !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #1c2426 !important;
+  }
+
+  html body .messages-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* LEFT: contacts */
+  html body .messages-view:not(.chat-open) .message-contacts,
+  html body .messages-view.chat-open .message-contacts {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    border-right: 1px solid #1c2426 !important;
+    background: #07090b !important;
+  }
+
+  html body .messages-view:not(.chat-open) .message-contacts {
+    width: 340px !important;
+    min-width: 340px !important;
+    max-width: 340px !important;
+  }
+
+  html body .messages-view.chat-open .message-contacts {
+    width: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
+  }
+
+  html body .message-contacts-head,
+  html body #newMessageButton {
+    display: none !important;
+  }
+
+  html body .message-search {
+    margin: 10px 12px !important;
+    flex: 0 0 auto !important;
+  }
+
+  html body .messages-view.chat-open .message-search {
+    display: none !important;
+  }
+
+  html body .message-contacts-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 0 10px 12px !important;
+  }
+
+  html body .messages-view:not(.chat-open) .message-contact {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px 12px !important;
+    margin: 0 0 8px !important;
+    border-radius: 14px !important;
+  }
+
+  html body .messages-view.chat-open .message-contact {
+    width: 64px !important;
+    height: 64px !important;
+    margin: 0 auto 8px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+
+  /* RIGHT: chat pane */
+  html body .message-chat {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    overflow: hidden !important;
+    background: #050708 !important;
+  }
+
+  html body .messages-view:not(.chat-open) .message-chat {
+    display: grid !important;
+  }
+
+  html body .message-chat-header {
+    flex: 0 0 auto !important;
+    min-height: 56px !important;
+    padding: 10px 16px !important;
+    border-bottom: 1px solid #1c2426 !important;
+  }
+
+  html body #dmList,
+  html body .dm-list {
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+  }
+
+  html body .message-compose,
+  html body #messageForm {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 12px 14px !important;
+    border-top: 1px solid #1c2426 !important;
+    background: #07090b !important;
+  }
+}
