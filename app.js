@@ -3591,62 +3591,55 @@ function __hideMessageContactsHead() {
 async function loadMessageContacts() {
   const contactsList = $("#messageContactsList");
   if (!contactsList || !currentUser) return;
+  __hideMessageContactsHead?.();
 
   contactsList.innerHTML = `<p class="loading-copy">Betöltés…</p>`;
-  __hideMessageContactsHead();
 
   try {
     let contacts = [];
     let everyone = [];
-    try {
-      const data = await api("/api/messages");
-      contacts = data.contacts || [];
-    } catch (_) {}
-    try {
-      const all = await api("/api/message-users");
-      everyone = all.users || [];
-    } catch (_) {
-      try {
-        const online = await api("/api/online");
-        everyone = online.users || [];
-      } catch (_) {}
-    }
+    let online = [];
+    const results = await Promise.allSettled([
+      api("/api/messages"),
+      api("/api/message-users"),
+      api("/api/online")
+    ]);
+    if (results[0].status === "fulfilled") contacts = results[0].value.contacts || [];
+    if (results[1].status === "fulfilled") everyone = results[1].value.users || [];
+    if (results[2].status === "fulfilled") online = results[2].value.users || [];
 
     const byName = new Map();
-    for (const u of everyone) {
-      if (!u || !u.username) continue;
-      if (currentUser && u.username === currentUser.username) continue;
-      byName.set(u.username, {
-        username: u.username,
-        display_name: u.display_name,
-        avatar: u.avatar,
-        name_color: u.name_color,
-        message_streak: u.message_streak || 0,
-        last_body: "",
-        last_message_at: null,
-        last_seen: u.last_seen || u.lastSeen || null
-      });
-    }
-    for (const u of contacts) {
-      if (!u || !u.username) continue;
-      if (currentUser && u.username === currentUser.username) continue;
+    const upsert = (u) => {
+      if (!u || !u.username) return;
+      if (currentUser && u.username === currentUser.username) return;
       const prev = byName.get(u.username) || {};
+      const streak = Math.max(
+        Number(u.message_streak || u.streak || 0),
+        Number(prev.message_streak || 0)
+      );
       byName.set(u.username, {
         ...prev,
         ...u,
-        message_streak: u.message_streak || prev.message_streak || 0
+        message_streak: streak,
+        last_body: u.last_body || u.lastBody || prev.last_body || "",
+        last_message_at: u.last_message_at || u.lastMessageAt || prev.last_message_at || null,
+        last_seen: u.last_seen || u.lastSeen || prev.last_seen || null
       });
-    }
+    };
+    everyone.forEach(upsert);
+    online.forEach(upsert);
+    contacts.forEach(upsert);
 
     const merged = [...byName.values()].sort((a, b) => {
-      const at = a.last_message_at || a.lastMessageAt || "";
-      const bt = b.last_message_at || b.lastMessageAt || "";
+      const at = a.last_message_at || "";
+      const bt = b.last_message_at || "";
       if (at && bt) return String(bt).localeCompare(String(at));
       if (at && !bt) return -1;
       if (!at && bt) return 1;
-      const an = (a.display_name || a.username || "").toLowerCase();
-      const bn = (b.display_name || b.username || "").toLowerCase();
-      return an.localeCompare(bn, "hu");
+      return String(a.display_name || a.username || "").localeCompare(
+        String(b.display_name || b.username || ""),
+        "hu"
+      );
     });
 
     if (!merged.length) {
@@ -3655,9 +3648,9 @@ async function loadMessageContacts() {
     }
 
     contactsList.innerHTML = merged.map((user) => {
-      const preview = String(user.last_body || user.lastBody || "").replace(/\s+/g, " ").trim();
-      const when = formatChatTime(user.last_message_at || user.lastMessageAt);
-      const active = (function(v){try{if(!v)return"";var t=new Date(v).getTime();if(!isFinite(t))return"";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user.last_seen || user.lastSeen);
+      const preview = String(user.last_body || "").replace(/\s+/g, " ").trim();
+      const when = formatChatTime(user.last_message_at);
+      const active = (function(v){try{if(!v)return"";var t=new Date(v).getTime();if(!isFinite(t))return"";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user.last_seen);
       const streak = Number(user.message_streak || 0);
       return `
       <button type="button" class="message-contact" data-recipient="${escapeHtml(user.username)}">
@@ -3675,16 +3668,15 @@ async function loadMessageContacts() {
     }).join("");
 
     filterMessageContacts();
-
     const recipient = $("#dmRecipient")?.value.trim();
     if (recipient) {
-      const activeBtn = contactsList.querySelector(`.message-contact[data-recipient="${CSS.escape(recipient)}"]`);
-      activeBtn?.classList.add("active");
+      contactsList.querySelector(`.message-contact[data-recipient="${CSS.escape(recipient)}"]`)?.classList.add("active");
     }
   } catch (error) {
     contactsList.innerHTML = `<div class="chat-empty"><strong>Nem sikerült betölteni</strong><p>${escapeHtml(error.message || "")}</p></div>`;
   }
 }
+
 
 
 

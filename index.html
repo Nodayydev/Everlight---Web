@@ -2,13 +2,13 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Everlight — gondolatok, amik megmaradnak</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260821-desk-list">
+  <link rel="stylesheet" href="enhancements.css?v=20260821-nozoom-all">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -569,7 +569,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260821-desk-list"></script>
+  <script src="app.js?v=20260821-streak-merge"></script>
   <script src="theme.js?v=20260820-final"></script>
 
 <style id="everlight-daily-fix">
@@ -666,8 +666,8 @@ button.daily-thought.own{
 @media (min-width: 661px) {
   body.messages-view-open #feed > #messagesView.open {
     display:flex!important;flex-direction:column!important;
-    width:100%!important;max-width:920px!important;
-    height:640px!important;min-height:640px!important;max-height:640px!important;
+    width:100%!important;max-width:100%!important;
+    height:min(75vh,820px)!important;min-height:560px!important;max-height:820px!important;
     margin:12px auto!important;padding:0!important;
     border:1px solid #1c2426!important;border-radius:20px!important;
     background:#07090b!important;overflow:hidden!important;
@@ -681,7 +681,7 @@ button.daily-thought.own{
     display:flex!important;flex-direction:row!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important;
   }
   body.messages-view-open #messagesView .message-contacts{
-    display:flex!important;flex-direction:column!important;width:320px!important;min-width:320px!important;max-width:320px!important;
+    display:flex!important;flex-direction:column!important;width:38%!important;min-width:300px!important;max-width:420px!important;
     height:100%!important;transform:none!important;position:relative!important;border-right:1px solid #1c2426!important;overflow:hidden!important;
   }
   body.messages-view-open #messagesView.chat-open .message-contacts{
@@ -701,6 +701,39 @@ button.daily-thought.own{
   body.messages-view-open #feed > #composerCard{display:none!important;}
 }
 </style>
+
+
+<style id="everlight-no-zoom">
+html, body, * { touch-action: manipulation; }
+input, textarea, select, [contenteditable="true"] {
+  font-size: 16px !important;
+  touch-action: manipulation;
+}
+</style>
+
+
+<script id="everlight-no-zoom-js">
+(function () {
+  var block = function (e) { e.preventDefault(); };
+  document.addEventListener("gesturestart", block, { passive: false });
+  document.addEventListener("gesturechange", block, { passive: false });
+  document.addEventListener("gestureend", block, { passive: false });
+  document.addEventListener("dblclick", function (e) {
+    if (e.target && (e.target.closest("input,textarea,select,button,a,[contenteditable]"))) return;
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener("touchmove", function (e) {
+    if (e.touches && e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener("wheel", function (e) {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+  try {
+    document.documentElement.style.touchAction = "manipulation";
+    document.body && (document.body.style.touchAction = "manipulation");
+  } catch (_) {}
+})();
+</script>
 
 </body>
 </html>

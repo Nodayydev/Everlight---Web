@@ -20749,3 +20749,45 @@ html body .chat-empty {
     margin-top: auto !important;
   }
 }
+
+
+@media (min-width: 661px) {
+  body.messages-view-open #feed > #messagesView.open {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: min(75vh, 820px) !important;
+    min-height: 560px !important;
+    max-height: 820px !important;
+  }
+  body.messages-view-open #messagesView .message-contacts {
+    width: 38% !important;
+    min-width: 300px !important;
+    max-width: 420px !important;
+  }
+  body.messages-view-open #messagesView.chat-open .message-contacts {
+    width: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
+  }
+  body.messages-view-open #messagesView .message-contacts-list {
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  body.messages-view-open #messagesView:not(.chat-open) .message-contact {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  body.messages-view-open #messagesView .message-streak {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+html, body { touch-action: manipulation !important; }
+@media (max-width: 660px) {
+  input, textarea, select, [contenteditable="true"] {
+    font-size: 16px !important;
+  }
+}
