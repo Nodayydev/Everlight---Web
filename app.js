@@ -1286,13 +1286,13 @@ async function createPostShareFile(data) {
     return limited.length ? limited : [{ text: String(data.body || "").slice(0, 120), bold: false, italic: false, quote: false }];
   })();
 
-  const avatarSize = 88;
+  const avatarSize = 72;
   const avatarX = innerX;
-  const headerH = 200;
-  const avatarY = 40;
+  const headerH = 132;
+  const avatarY = 28;
   const textX = avatarX + avatarSize + 28;
 
-  const titleY = headerH + 70;
+  const titleY = headerH + 48;
   const categoryH = 0; // category moved under date in header
   const bodyY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 36;
   let estBodyH = 0;
@@ -1316,7 +1316,7 @@ async function createPostShareFile(data) {
     `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
   ).join("");
   const categorySvg = category
-    ? `<text x="${cardX + cardW - 42}" y="${cardY + avatarY + 118}" text-anchor="end" fill="#9fc4e7" font-size="20" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
+    ? `<text x="${cardX + cardW - 42}" y="${cardY + avatarY + 86}" text-anchor="end" fill="#9fc4e7" font-size="18" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : "";
   let bodyCursorY = 0;
   const bodySvg = formattedBodyLines.map((line) => {
@@ -1340,6 +1340,10 @@ async function createPostShareFile(data) {
   }).join("");
   const streakSvg = "";
   const dateText = data.date || "";
+  const isSun = document.body.classList.contains("sun-mode") || localStorage.getItem("everlight-accent") === "sun";
+  const accentColor = isSun ? "#e8c56a" : "#8badcc";
+  const domainPrimary = "everlight.nodayy.hu";
+  const domainSecondary = "nodayy.hu";
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${targetWidth}" height="${targetHeight}" viewBox="0 0 ${targetWidth} ${targetHeight}">
     <defs>
@@ -1365,21 +1369,20 @@ async function createPostShareFile(data) {
     <circle cx="1040" cy="1650" r="240" fill="#55d7cf" opacity=".035" filter="url(#softBlur)"/>
 
     <g filter="url(#storyShadow)">
-      <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${cardH}" rx="44" fill="#080b0d" stroke="#26373f" stroke-width="3"/>
-      <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${headerH}" rx="44" fill="#11191d"/>
-      <rect x="${cardX}" y="${cardY + 135}" width="${cardW}" height="41" fill="#11191d"/>
+      <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${cardH}" rx="36" fill="#080b0d" stroke="#26373f" stroke-width="2.5"/>
       ${avatarMarkup}
       ${streakSvg}
-      <text x="${textX}" y="${cardY + avatarY + 38}" fill="#f1f4f5" font-size="34" font-weight="800" font-family="Arial">${escapeXml(data.accountName)}</text>
-      <text x="${textX}" y="${cardY + avatarY + 72}" fill="#849196" font-size="22" font-family="Arial">${escapeXml(meta)}</text>
-      <text x="${cardX + cardW - 42}" y="${cardY + avatarY + 70}" text-anchor="end" fill="#7f8b90" font-size="20" font-family="Arial">${escapeXml(dateText)}</text>
+      <text x="${textX}" y="${cardY + avatarY + 32}" fill="#f1f4f5" font-size="30" font-weight="800" font-family="Arial">${escapeXml(data.accountName)}</text>
+      <text x="${textX}" y="${cardY + avatarY + 60}" fill="#849196" font-size="18" font-family="Arial">${escapeXml(meta)}</text>
+      <text x="${cardX + cardW - 42}" y="${cardY + avatarY + 28}" text-anchor="end" fill="#7f8b90" font-size="17" font-family="Arial">${escapeXml(dateText)}</text>
       ${categorySvg}
-      <line x1="${innerX}" y1="${cardY + headerH}" x2="${cardX + cardW - 44}" y2="${cardY + headerH}" stroke="#273238" stroke-width="2"/>
+      <line x1="${innerX}" y1="${cardY + headerH}" x2="${cardX + cardW - 44}" y2="${cardY + headerH}" stroke="#1e2a2f" stroke-width="1.5"/>
       ${titleSvg}
       ${bodySvg}
-      <line x1="${innerX}" y1="${cardY + dividerY}" x2="${cardX + cardW - 44}" y2="${cardY + dividerY}" stroke="#263238" stroke-width="2"/>
-      <text x="${innerX}" y="${footerY}" fill="#8badcc" font-size="22" font-family="Arial">Everlight</text>
-      <text x="${cardX + cardW - 44}" y="${footerY}" text-anchor="end" fill="#657378" font-size="18" font-family="Arial">${escapeXml(window.location.host)}</text>
+      <line x1="${innerX}" y1="${cardY + dividerY}" x2="${cardX + cardW - 44}" y2="${cardY + dividerY}" stroke="#1e2a2f" stroke-width="1.5"/>
+      <text x="${innerX}" y="${footerY}" fill="#7a858a" font-size="18" font-family="Arial">${escapeXml(domainPrimary)}</text>
+      <text x="${innerX + 178}" y="${footerY}" fill="${accentColor}" font-size="18" font-family="Arial">//</text>
+      <text x="${innerX + 198}" y="${footerY}" fill="${accentColor}" font-size="18" font-family="Arial">${escapeXml(domainSecondary)}</text>
     </g>
   </svg>`;
 
