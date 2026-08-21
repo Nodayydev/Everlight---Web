@@ -20088,3 +20088,186 @@ html body .daily-thought.own {
 html body .message-contacts-head {
   display: none !important;
 }
+
+
+/* =========================================================
+   DAILY BUBBLE OVER AVATAR + FORCE HIDE HEAD
+   ========================================================= */
+html body .message-contacts-head,
+html body .message-contacts-head *,
+html body .message-contacts-title,
+html body #newMessageButton,
+html body .new-message-button {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+html body .daily-thoughts-track {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-end !important;
+  gap: 16px !important;
+  overflow-x: auto !important;
+  padding: 28px 8px 8px !important;
+}
+
+html body .daily-thought,
+html body .daily-thought.own {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  position: relative !important;
+  min-width: 70px !important;
+  width: 70px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 4px !important;
+}
+
+html body .daily-thought .daily-thought-avatar {
+  order: 1 !important;
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  border-radius: 50% !important;
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}
+
+html body .daily-thought .daily-thought-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+html body .daily-thought .daily-thought-bubble {
+  order: 0 !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 52px !important;
+  transform: translateX(-50%) !important;
+  z-index: 5 !important;
+  max-width: 96px !important;
+  padding: 6px 8px !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  border-radius: 12px !important;
+  background: #1a2226 !important;
+  color: #f3f2ea !important;
+  white-space: normal !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.35) !important;
+}
+
+html body .daily-thought small {
+  order: 2 !important;
+  font-size: 11px !important;
+  text-align: center !important;
+}
+
+html body .daily-thought .daily-thought-streak {
+  order: 3 !important;
+}
+
+
+/* =========================================================
+   DAILY THOUGHT BUBBLE — Instagram-style over avatar
+   ========================================================= */
+html body .daily-thoughts-track {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-end !important;
+  gap: 18px !important;
+  padding: 8px 10px 6px !important;
+  overflow-x: auto !important;
+}
+
+html body .daily-thought,
+html body .daily-thought.own {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  width: 76px !important;
+  min-width: 76px !important;
+  padding-top: 44px !important;
+  margin: 0 !important;
+  gap: 6px !important;
+}
+
+html body .daily-thought .daily-thought-avatar {
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px !important;
+  border-radius: 50% !important;
+  border: 2px solid rgba(139,173,204,.45) !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  order: 1 !important;
+}
+
+html body .daily-thought .daily-thought-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+html body .daily-thought .daily-thought-bubble {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 6 !important;
+  max-width: 118px !important;
+  min-width: 72px !important;
+  padding: 8px 11px !important;
+  border-radius: 16px !important;
+  background: #2a2f33 !important;
+  color: #f5f4ef !important;
+  font: 600 12px/1.25 Manrope, system-ui, sans-serif !important;
+  text-align: center !important;
+  white-space: normal !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,.35) !important;
+  order: 0 !important;
+}
+
+/* tail pointing down onto the avatar */
+html body .daily-thought .daily-thought-bubble::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -6px !important;
+  transform: translateX(-50%) !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: #2a2f33 !important;
+  border-radius: 3px !important;
+  clip-path: polygon(0 0, 100% 0, 50% 100%) !important;
+}
+
+html body .daily-thought small {
+  order: 2 !important;
+  font-size: 11px !important;
+  color: #c5ced1 !important;
+  text-align: center !important;
+  max-width: 76px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body .daily-thought .daily-thought-streak {
+  order: 3 !important;
+}
