@@ -18964,3 +18964,71 @@ html body .chat-bubble {
     max-width: 85% !important;
   }
 }
+
+
+/* =========================================================
+   CHAT RAIL ALWAYS VISIBLE + TIGHT TOP
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view.open .messages-view-inner,
+  html body .messages-view[aria-hidden="false"] .messages-view-inner {
+    padding-top: 0 !important;
+    gap: 0 !important;
+  }
+  html body .messages-view.chat-open .daily-thoughts,
+  html body .messages-view.chat-open .messages-view-header {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  html body .messages-view.chat-open .messages-layout {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  html body .messages-view.chat-open .message-contacts {
+    display: flex !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    position: relative !important;
+    inset: auto !important;
+    left: 0 !important;
+    height: auto !important;
+  }
+  html body .messages-view.chat-open .message-chat {
+    display: grid !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding-top: 0 !important;
+  }
+  html body .messages-view.chat-open .message-chat-header {
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    min-height: 56px !important;
+  }
+  html body .chat-message,
+  html body .chat-message-own,
+  html body .chat-message-other {
+    position: static !important;
+    top: auto !important;
+    transform: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+@media (min-width: 661px) {
+  html body .messages-view.chat-open .message-contacts {
+    display: flex !important;
+    transform: none !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+  }
+}
