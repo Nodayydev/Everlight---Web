@@ -822,11 +822,10 @@ function renderPost(post) {
     hour: "2-digit",
     minute: "2-digit"
   });
-  const dateTimeLabel = createdAt.toLocaleDateString("hu-HU", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit"
-  }) + " · " + timeOnly;
+  const huMonths = ["jan.", "feb.", "márc.", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec."];
+  const dateTimeLabel = Number.isNaN(createdAt.getTime())
+    ? ""
+    : `${createdAt.getFullYear()}. ${huMonths[createdAt.getMonth()]} ${createdAt.getDate()}. · ${timeOnly}`;
 
   const anonymous = Boolean(post.is_anonymous);
   // A bejegyzés fejlécében a fióknév legyen felül, a profilban megadott
@@ -1072,7 +1071,30 @@ function getPostShareData(card) {
   const previewEl = card?.querySelector(".feed-card-body-preview");
   const bodyEl = fullEl || previewEl;
   const bodyHtml = bodyEl ? (bodyEl.innerHTML || "") : "";
-  const body = (rawShareBody || bodyEl?.textContent || "").trim();
+  // Prefer structure from rendered HTML (br/p → newlines), fallback to raw markdown body
+  const htmlToTextBreaks = (html) => {
+    if (!html) return "";
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    const walk = (node) => {
+      if (!node) return "";
+      if (node.nodeType === 3) return String(node.textContent || "");
+      if (node.nodeType !== 1) return "";
+      const tag = node.tagName.toLowerCase();
+      if (tag === "br") return "\n";
+      const inner = Array.from(node.childNodes).map(walk).join("");
+      if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") return inner + "\n";
+      return inner;
+    };
+    return Array.from(tmp.childNodes).map(walk).join("").replace(/\n{3,}/g, "\n\n").trim();
+  };
+  const fromHtml = htmlToTextBreaks(bodyHtml);
+  const body = (fromHtml || rawShareBody || bodyEl?.textContent || "").trim();
+  // Keep markdown markers for font/style when available
+  if (rawShareBody && fromHtml) {
+    // use fromHtml for breaks but if raw has font markers, prefer raw with normalized breaks
+  }
+  const bodyForShare = rawShareBody || body;
   const accountName = card?.querySelector(".feed-card-author-line strong")?.textContent.trim() || "Névtelen";
   const realName = card?.querySelector(".feed-card-real-name")?.textContent.trim() || "";
   const handle = card?.querySelector(".feed-card-handle")?.textContent.trim() || "";
@@ -1094,7 +1116,7 @@ function getPostShareData(card) {
 
   return {
     accountName, realName, handle, hashtags, date, category, streak: 0, avatar, title, body, bodyHtml,
-    rawBody: rawShareBody || body,
+    rawBody: bodyForShare || body,
     shareWidth, shareHeight,
     shareAspectRatio: shareWidth > 0 && shareHeight > 0 ? shareHeight / shareWidth : (16 / 9),
     text: `${title}${body ? ` — ${body}` : ""}`
@@ -1203,9 +1225,68 @@ async function createPostShareFile(data) {
     };
 
     const lines = [];
-    if (raw) {
-      // Split on newlines; empty entry between = stanza gap
-      const parts = raw.split("\n");
+    // Expand multi-line {{font:...}}...{{/font}} so each line keeps the font
+    let work = raw;
+    if (work) {
+      work = work.replace(/\{\{font:(sans|serif|mono|display)\}\}([\s\S]*?)\{\{\/font\}\}/g, (_, font, inner) => {
+        return String(inner).split("\n").map((ln) => {
+          if (!String(ln).trim()) return ln;
+          return `{{font:${font}}}${ln}{{/font}}`;
+        }).join("\n");
+      });
+    }
+    // Prefer HTML-derived breaks if raw has almost no newlines but HTML has structure
+    if (html && (!work || (work.split("\n").length < 2 && /<br|\/p>|\/div>/i.test(html)))) {
+      const tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      const collected = [];
+      const walk = (node, style) => {
+        if (!node) return;
+        if (node.nodeType === 3) {
+          const t = String(node.textContent || "");
+          if (t) collected.push({ text: t, ...style });
+          return;
+        }
+        if (node.nodeType !== 1) return;
+        const tag = node.tagName.toLowerCase();
+        const cls = String(node.className || "");
+        const fontM = cls.match(/ev-font-(sans|serif|mono|display)/);
+        const next = {
+          bold: style.bold || tag === "strong" || tag === "b",
+          italic: style.italic || tag === "em" || tag === "i",
+          quote: style.quote || tag === "blockquote",
+          font: fontM ? fontM[1] : style.font
+        };
+        if (tag === "br") { collected.push({ text: "\n", blank: true }); return; }
+        if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") {
+          Array.from(node.childNodes).forEach((ch) => walk(ch, next));
+          collected.push({ text: "\n", blank: true });
+          return;
+        }
+        Array.from(node.childNodes).forEach((ch) => walk(ch, next));
+      };
+      Array.from(tmp.childNodes).forEach((ch) => walk(ch, { bold: false, italic: false, quote: false, font: "sans" }));
+      let buf = "";
+      let st = { bold: false, italic: false, quote: false, font: "sans" };
+      const flush = () => {
+        const t = buf.replace(/[ \t]+/g, " ").trim();
+        if (t) pushWrapped(lines, (st.font && st.font !== "sans" ? `{{font:${st.font}}}${t}{{/font}}` : t));
+        buf = "";
+      };
+      for (const c of collected) {
+        if (c.blank || c.text === "\n") {
+          flush();
+          if (lines.length && !lines[lines.length - 1].blank) {
+            lines.push({ text: "", blank: true, bold: false, italic: false, quote: false });
+          }
+          continue;
+        }
+        st = { bold: c.bold, italic: c.italic, quote: c.quote, font: c.font || "sans" };
+        buf += c.text;
+      }
+      flush();
+    } else if (work) {
+      const parts = work.split("\n");
       for (let i = 0; i < parts.length; i++) {
         const part = parts[i];
         if (!String(part).trim()) {
@@ -1316,7 +1397,7 @@ async function createPostShareFile(data) {
     `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
   ).join("");
   const categorySvg = category
-    ? `<text x="${cardX + cardW - 42}" y="${cardY + avatarY + 100}" text-anchor="end" fill="#9fc4e7" font-size="18" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
+    ? `<rect x="${cardX + cardW - 42 - Math.max(70, category.length * 11 + 28)}" y="${cardY + avatarY + 78}" width="${Math.max(70, category.length * 11 + 28)}" height="32" rx="16" fill="#15252d" stroke="#203943" stroke-width="1.5"/><text x="${cardX + cardW - 42 - Math.max(70, category.length * 11 + 28) / 2}" y="${cardY + avatarY + 100}" text-anchor="middle" fill="#9fc4e7" font-size="16" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
     : "";
   let bodyCursorY = 0;
   const bodySvg = formattedBodyLines.map((line) => {
@@ -1383,7 +1464,7 @@ async function createPostShareFile(data) {
       ${bodySvg}
       <line x1="${innerX}" y1="${cardY + dividerY}" x2="${cardX + cardW - 44}" y2="${cardY + dividerY}" stroke="#263238" stroke-width="2"/>
       <text x="${innerX}" y="${footerY}" fill="${accentColor}" font-size="20" font-family="Arial">Everlight</text>
-      <text x="${cardX + cardW - 44}" y="${footerY}" text-anchor="end" fill="#7a858a" font-size="17" font-family="Arial">${escapeXml(domainPrimary)} <tspan fill="${accentColor}">//</tspan> <tspan fill="${accentColor}">${escapeXml(domainSecondary)}</tspan></text>
+      <text x="${cardX + cardW - 44}" y="${footerY}" text-anchor="end" font-size="17" font-family="Arial"><tspan fill="#7a858a">${escapeXml(domainPrimary)}</tspan><tspan fill="${accentColor}"> // </tspan><tspan fill="${accentColor}">${escapeXml(domainSecondary)}</tspan></text>
     </g>
   </svg>`;
 

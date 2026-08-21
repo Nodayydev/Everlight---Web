@@ -20852,3 +20852,24 @@ html, body { touch-action: manipulation !important; }
     padding: 14px 15px !important;
   }
 }
+
+
+/* Force category under date, never under title */
+.feed-card-meta { display: none !important; }
+.feed-card-author-aside {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-left: auto !important;
+}
+.feed-card-author-aside .feed-card-category {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.feed-card-content > .feed-card-category,
+.feed-card-title + .feed-card-category {
+  display: none !important;
+}
