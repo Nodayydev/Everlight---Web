@@ -19689,3 +19689,15 @@ html body .feed-card.is-expanded .feed-card-body-preview em {
 html body .feed-card .feed-card-body-preview blockquote {
   color: #d7e0e3 !important;
 }
+
+
+/* Never show the old full-text duplicate */
+html body .feed-card-full-text,
+html body [data-full-body] {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

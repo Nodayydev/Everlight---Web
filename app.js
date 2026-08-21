@@ -934,7 +934,6 @@ function renderPost(post) {
         </div>
 
         <div class="feed-card-body-preview" data-post-preview>${markdownToSafeHtml(fullBody)}</div>
-        <div class="feed-card-full-text" hidden data-full-body>${markdownToSafeHtml(fullBody)}</div>
         ${imageMarkup}
       </div>
 
@@ -1062,13 +1061,10 @@ function togglePostExpanded(card, force) {
   card.classList.toggle("is-expanded", expanded);
 
   const preview = card.querySelector("[data-post-preview]");
-  const full = card.querySelector("[data-full-body]");
-  /* Both already contain formatted HTML; expanded only reveals full height. */
   if (preview) {
     preview.hidden = false;
     preview.classList.toggle("is-clamped", !expanded);
   }
-  if (full) full.hidden = true;
   card.setAttribute("aria-expanded", expanded ? "true" : "false");
 }
 
