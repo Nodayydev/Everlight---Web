@@ -18878,3 +18878,22 @@ html body .chat-empty p {
     display: none !important;
   }
 }
+
+
+/* =========================================================
+   MESSAGES — hide Privát tér title, free vertical space
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view.open .messages-view-header,
+  html body .messages-view[aria-hidden="false"] .messages-view-header {
+    display: none !important;
+  }
+  html body .messages-view.open .daily-thoughts,
+  html body .messages-view[aria-hidden="false"] .daily-thoughts {
+    padding-top: 8px !important;
+  }
+}
+/* Desktop: compact header too */
+html body .messages-view .messages-view-header {
+  display: none !important;
+}
