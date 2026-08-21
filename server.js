@@ -315,6 +315,8 @@ function safeUser(user) {
     hasPasswordHint:
       Boolean(user.password_hint),
 
+    lastSeen: user.last_seen || null,
+
     messageStreak:
       Number(user.message_streak || 0)
   };
@@ -580,6 +582,14 @@ async function createSchema() {
       CONSTRAINT fk_daily_thoughts_user FOREIGN KEY (user_id) REFERENCES everlight_users(id) ON DELETE CASCADE
     )
   `);
+
+  
+  try {
+    await dbRun(`ALTER TABLE everlight_messages ADD COLUMN reply_to_id BIGINT UNSIGNED NULL`);
+  } catch (_) {}
+  try {
+    await dbRun(`ALTER TABLE everlight_messages ADD COLUMN edited_at DATETIME NULL`);
+  } catch (_) {}
 
   await db.query(`
     CREATE TABLE IF NOT EXISTS everlight_notifications (
@@ -2157,6 +2167,7 @@ app.get(
             u.display_name,
             u.avatar,
             u.name_color,
+            u.last_seen,
             MAX(m.created_at) AS last_message_at,
             (
               SELECT m2.body
@@ -2226,17 +2237,12 @@ app.get(
         await dbGet(
           `
             SELECT
-
               id,
-
               username,
-
               display_name,
-
-              avatar
-
+              avatar,
+              last_seen
             FROM everlight_users
-
             WHERE LOWER(username) = ?
           `,
           [username.toLowerCase()]
@@ -2255,48 +2261,22 @@ app.get(
         await dbAll(
           `
             SELECT
-
               m.*,
-
-              s.username
-                AS sender_username,
-
-              s.display_name
-                AS sender_name
-
+              s.username AS sender_username,
+              s.display_name AS sender_name,
+              r.body AS reply_body,
+              rs.username AS reply_sender_username
             FROM everlight_messages m
-
-            JOIN everlight_users s
-              ON s.id = m.sender_id
-
+            JOIN everlight_users s ON s.id = m.sender_id
+            LEFT JOIN everlight_messages r ON r.id = m.reply_to_id
+            LEFT JOIN everlight_users rs ON rs.id = r.sender_id
             WHERE
-
-              (
-                m.sender_id = ?
-                AND
-                m.recipient_id = ?
-              )
-
-              OR
-
-              (
-                m.sender_id = ?
-                AND
-                m.recipient_id = ?
-              )
-
-            ORDER BY
-              m.created_at ASC
-
-            LIMIT 100
+              (m.sender_id = ? AND m.recipient_id = ?)
+              OR (m.sender_id = ? AND m.recipient_id = ?)
+            ORDER BY m.created_at ASC
+            LIMIT 200
           `,
-          [
-            req.userId,
-            other.id,
-
-            other.id,
-            req.userId
-          ]
+          [req.userId, other.id, other.id, req.userId]
         );
 
       const streak = await getMessageStreak(
@@ -2393,20 +2373,23 @@ app.post(
           });
       }
 
+      const replyToId = Number(req.body.reply_to_id || 0) || null;
       const result =
         await dbRun(
           `
             INSERT INTO everlight_messages (
               sender_id,
               recipient_id,
-              body
+              body,
+              reply_to_id
             )
-            VALUES (?, ?, ?)
+            VALUES (?, ?, ?, ?)
           `,
           [
             req.userId,
             other.id,
-            body
+            body,
+            replyToId
           ]
         );
 
@@ -2449,6 +2432,42 @@ app.post(
 /* =========================================================
    PROFILE — PASSWORD CHANGE (logged in, no old password)
    ========================================================= */
+
+
+app.patch('/api/messages/id/:id', auth, async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const body = clean(req.body.body || '', 1000);
+    if (!id || !body) return res.status(400).json({ error: 'Érvénytelen üzenet.' });
+    const row = await dbGet(`SELECT * FROM everlight_messages WHERE id = ?`, [id]);
+    if (!row || row.sender_id !== req.userId) {
+      return res.status(403).json({ error: 'Csak a saját üzenetedet módosíthatod.' });
+    }
+    await dbRun(
+      `UPDATE everlight_messages SET body = ?, edited_at = UTC_TIMESTAMP() WHERE id = ?`,
+      [body, id]
+    );
+    return res.json({ ok: true, id, body });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/api/messages/id/:id', auth, async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    if (!id) return res.status(400).json({ error: 'Érvénytelen üzenet.' });
+    const row = await dbGet(`SELECT * FROM everlight_messages WHERE id = ?`, [id]);
+    if (!row || row.sender_id !== req.userId) {
+      return res.status(403).json({ error: 'Csak a saját üzenetedet törölheted.' });
+    }
+    await dbRun(`DELETE FROM everlight_messages WHERE id = ?`, [id]);
+    return res.json({ ok: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 app.post('/api/profile/password', auth, async (req, res, next) => {
   try {

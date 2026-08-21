@@ -887,10 +887,6 @@ function renderPost(post) {
   const category = post.category || "Gondolat";
   const rawBody = String(post.body || "").trim();
   const postTitle = markdownToPlain(String(post.post_title || "").trim());
-  const plainBody = markdownToPlain(rawBody);
-  const visibleExcerpt = plainBody.length > 320
-    ? plainBody.slice(0, 320).trimEnd() + "…"
-    : plainBody;
   const fullBody = rawBody || "A bejegyzéshez nem tartozik szöveg.";
 
   const postStreak = anonymous ? 0 : Number(post.message_streak || 0);
@@ -940,7 +936,7 @@ function renderPost(post) {
           <span class="feed-card-category">${escapeHtml(category)}</span>
         </div>
 
-        <div class="feed-card-body-preview" data-post-preview>${markdownToSafeHtml(visibleExcerpt)}</div>
+        <div class="feed-card-body-preview" data-post-preview>${markdownToSafeHtml(fullBody)}</div>
         <div class="feed-card-full-text" hidden data-full-body>${markdownToSafeHtml(fullBody)}</div>
         ${imageMarkup}
       </div>
@@ -3687,6 +3683,7 @@ async function loadMessageContacts() {
     contactsList.innerHTML = contacts.map((user) => {
       const preview = String(user.last_body || user.lastBody || "").replace(/\s+/g, " ").trim();
       const when = formatChatTime(user.last_message_at || user.lastMessageAt);
+      const active = formatRelativeActive(user.last_seen || user.lastSeen);
       return `
       <button
         type="button"
@@ -3701,6 +3698,7 @@ async function loadMessageContacts() {
         <span class="message-contact-copy">
           <strong>${escapeHtml(getDisplayName(user))}</strong>
           <small>${escapeHtml(preview || "@" + user.username)}</small>
+          <small class="message-contact-active">${escapeHtml(active)}</small>
         </span>
         <span class="message-contact-meta">${escapeHtml(when)}</span>
         ${Number(user.message_streak || 0) > 0
@@ -3889,15 +3887,16 @@ function openDailyThoughtWriter() {
 
 function openDailyThoughtPreview(author) {
   if (!author) return;
+  if (!currentUser) {
+    notify("Üzenethez jelentkezz be a Profilban.");
+    openProfileView();
+    return;
+  }
+  openMessages();
   const recipient = document.getElementById("dmRecipient");
   if (recipient) recipient.value = author;
-  const messagesView = document.getElementById("messagesView");
-  if (currentUser) {
-    messagesView?.classList.add("chat-open");
-    loadMessages?.();
-  } else {
-    notify("Üzenethez jelentkezz be a Profilban.");
-  }
+  document.getElementById("messagesView")?.classList.add("chat-open");
+  loadMessages();
 }
 
 function openMessages() {
@@ -4221,7 +4220,10 @@ async function loadMessages() {
     const dmHandle = $("#dmHandle");
     if (dmHandle) {
       const username = getUsername(user) || recipient;
-      dmHandle.textContent = username ? `@${username}` : "Privát beszélgetés";
+      const active = formatRelativeActive(user?.last_seen || user?.lastSeen);
+      dmHandle.textContent = username
+        ? `@${username} · ${active}`
+        : active;
     }
     const dmAvatar = $("#dmAvatar");
     if (dmAvatar) {
@@ -4279,92 +4281,43 @@ async function loadMessages() {
 
     dmList.innerHTML =
       data.messages
-        .map(
-          (message) => {
-
-            const ownMessage =
-              message.sender_username ===
-              currentUser?.username;
-
-
-            const sender =
-              message.sender_name ||
-              message.sender_username ||
-              "";
-
-
-            const messageTime =
-              message.created_at
-                ? new Date(
-                    message.created_at
-                  ).toLocaleTimeString(
-                    "hu-HU",
-                    {
-                      hour:
-                        "2-digit",
-
-                      minute:
-                        "2-digit"
-                    }
-                  )
-                : "";
-
-
-            return `
-              <article
-                class="
-                  chat-message
-                  ${
-                    ownMessage
-                      ? "chat-message-own"
-                      : "chat-message-other"
-                  }
-                "
-              >
-
-                <div class="chat-message-meta">
-
-                  <strong>
-                    ${escapeHtml(
-                      sender
-                    )}
-                  </strong>
-
-                  <time>
-                    ${escapeHtml(
-                      messageTime
-                    )}
-                  </time>
-
-                </div>
-
-
-                <div class="chat-bubble">
-
-                  ${escapeHtml(
-                    message.body
-                  )}
-
-                </div>
-
-              </article>
-            `;
-          }
-        )
+        .map((message) => {
+          const ownMessage = message.sender_username === currentUser?.username;
+          const sender = message.sender_name || message.sender_username || "";
+          const messageTime = message.created_at
+            ? new Date(message.created_at).toLocaleTimeString("hu-HU", {
+                hour: "2-digit",
+                minute: "2-digit"
+              })
+            : "";
+          const edited = message.edited_at
+            ? ` <span class="chat-edited">(szerkesztve)</span>`
+            : "";
+          const replyBlock = message.reply_to_id
+            ? `<div class="chat-reply-ref">↩ ${escapeHtml(String(message.reply_sender_username || "").split("#")[0] || "üzenet")}: ${escapeHtml(String(message.reply_body || "").slice(0, 80))}</div>`
+            : "";
+          const actions = `
+            <div class="chat-message-actions">
+              <button type="button" data-msg-action="reply" data-msg-id="${escapeHtml(String(message.id))}" data-msg-body="${escapeHtml(String(message.body || "").slice(0, 120))}">Válasz</button>
+              ${ownMessage ? `<button type="button" data-msg-action="edit" data-msg-id="${escapeHtml(String(message.id))}" data-msg-body="${escapeHtml(String(message.body || ""))}">Szerkesztés</button>` : ""}
+              ${ownMessage ? `<button type="button" data-msg-action="delete" data-msg-id="${escapeHtml(String(message.id))}">Törlés</button>` : ""}
+            </div>`;
+          return `
+            <article class="chat-message ${ownMessage ? "chat-message-own" : "chat-message-other"}" data-message-id="${escapeHtml(String(message.id))}">
+              <div class="chat-message-meta">
+                <strong>${escapeHtml(sender)}</strong>
+                <time>${escapeHtml(messageTime)}${edited}</time>
+              </div>
+              ${replyBlock}
+              <div class="chat-bubble">${escapeHtml(message.body)}</div>
+              ${actions}
+            </article>`;
+        })
         .join("");
 
-
-    /*
-     * A legújabb üzenetre görgetünk.
-     */
-
-    requestAnimationFrame(
-      () => {
-
-        dmList.scrollTop =
-          dmList.scrollHeight;
-      }
-    );
+    requestAnimationFrame(() => {
+      dmList.scrollTop = dmList.scrollHeight;
+    });
 
 
   } catch (error) {
@@ -4727,21 +4680,17 @@ if (messageForm) {
           )}`,
           {
             method: "POST",
-
-            body:
-              JSON.stringify({
-                body
-              })
+            body: JSON.stringify({
+              body,
+              reply_to_id: pendingReplyTo?.id || null
+            })
           }
         );
 
-
-        if (bodyInput) {
-
-          bodyInput.value =
-            "";
-        }
-
+        if (bodyInput) bodyInput.value = "";
+        pendingReplyTo = null;
+        const bar = document.getElementById("replyPreviewBar");
+        if (bar) bar.hidden = true;
 
         await loadMessages();
         await loadMessageContacts();
