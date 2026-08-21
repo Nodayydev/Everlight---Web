@@ -4262,9 +4262,11 @@ async function loadMessages() {
        CONTACT LIST
        ----------------------------------------------------- */
 
-    renderMessageContact(
-      user
-    );
+    const listEl = $("#messageContactsList");
+    if (listEl && listEl.querySelectorAll(".message-contact").length < 2) {
+      await loadMessageContacts();
+    }
+    renderMessageContact(user);
 
 
     /* -----------------------------------------------------
@@ -4373,82 +4375,45 @@ async function loadMessages() {
    MESSAGE CONTACT
    ========================================================= */
 
-function renderMessageContact(
-  user
-) {
+function renderMessageContact(user) {
+  const contactsList = $("#messageContactsList");
+  if (!contactsList || !user) return;
 
-  const contactsList =
-    $("#messageContactsList");
+  const username = getUsername(user);
+  if (!username) return;
 
-  if (
-    !contactsList ||
-    !user
-  ) {
-    return;
+  let contact = contactsList.querySelector(
+    `.message-contact[data-recipient="${CSS.escape(username)}"]`
+  );
+
+  if (!contact) {
+    const streak = Number(user.message_streak || 0);
+    const displayName = getDisplayName(user);
+    contact = document.createElement("button");
+    contact.type = "button";
+    contact.className = "message-contact";
+    contact.dataset.recipient = username;
+    contact.innerHTML = `
+      <span class="message-contact-avatar">${
+        user.avatar
+          ? `<img src="${escapeHtml(user.avatar)}" alt="">`
+          : escapeHtml(getInitial(user))
+      }</span>
+      <span class="message-contact-copy">
+        <strong>${escapeHtml(displayName)}</strong>
+        <small>@${escapeHtml(username)}</small>
+      </span>
+      ${streak > 0 ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(streak))}</span>` : ""}
+    `;
+    contactsList.appendChild(contact);
   }
 
-
-  const username =
-    getUsername(user);
-
-  const displayName =
-    getDisplayName(user);
-
-
-  contactsList.innerHTML = `
-    <button
-      type="button"
-      class="message-contact active"
-      data-recipient="${escapeHtml(
-        username
-      )}"
-    >
-
-      <span class="message-contact-avatar">
-
-        ${
-          user.avatar
-
-            ? `
-              <img
-                src="${escapeHtml(
-                  user.avatar
-                )}"
-                alt=""
-              >
-            `
-
-            : escapeHtml(
-                getInitial(user)
-              )
-        }
-
-      </span>
-
-
-      <span class="message-contact-copy">
-
-        <strong>
-          ${escapeHtml(
-            displayName
-          )}
-        </strong>
-
-        <small>
-          @${escapeHtml(
-            username
-          )}
-        </small>
-
-      </span>
-
-      ${Number(user.message_streak || 0) > 0
-        ? `<span class="message-streak" title="Üzenet streak">🔥${escapeHtml(String(user.message_streak))}</span>`
-        : ""}
-
-    </button>
-  `;
+  contactsList.querySelectorAll(".message-contact").forEach((item) => {
+    item.classList.toggle("active", item.dataset.recipient === username);
+  });
 }
+
+
 
 
 /* =========================================================
