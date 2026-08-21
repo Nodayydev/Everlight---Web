@@ -187,20 +187,10 @@ function getUsername(user) {
 
 
 function getDisplayName(user) {
-  if (
-    user?.displayName &&
-    String(user.displayName).trim()
-  ) {
-    return String(user.displayName).trim();
-  }
-
-  const username =
-    getUsername(user);
-
-  if (username.includes("#")) {
-    return username.split("#")[0];
-  }
-
+  const dn = user?.display_name || user?.displayName || "";
+  if (String(dn).trim()) return String(dn).trim();
+  const username = getUsername(user);
+  if (username.includes("#")) return username.split("#")[0];
   return username || "?";
 }
 
@@ -3608,29 +3598,42 @@ async function loadMessageContacts() {
     if (results[1].status === "fulfilled") everyone = results[1].value.users || [];
     if (results[2].status === "fulfilled") online = results[2].value.users || [];
 
-    const byName = new Map();
+    const byKey = new Map();
     const upsert = (u) => {
-      if (!u || !u.username) return;
-      if (currentUser && u.username === currentUser.username) return;
-      const prev = byName.get(u.username) || {};
+      if (!u || (!u.username && !u.id)) return;
+      if (currentUser && (u.username === currentUser.username || u.id === currentUser.id)) return;
+      const key = u.id != null ? "id:" + String(u.id) : "u:" + String(u.username || "").toLowerCase();
+      const prev = byKey.get(key) || {};
+      // also try match previous by username
+      let alt = prev;
+      if (!prev.username && u.username) {
+        for (const [k, v] of byKey) {
+          if (v.username && v.username.toLowerCase() === String(u.username).toLowerCase()) {
+            alt = v;
+            byKey.delete(k);
+            break;
+          }
+        }
+      }
       const streak = Math.max(
         Number(u.message_streak || u.streak || 0),
-        Number(prev.message_streak || 0)
+        Number(alt.message_streak || 0)
       );
-      byName.set(u.username, {
-        ...prev,
+      byKey.set(key, {
+        ...alt,
         ...u,
+        display_name: u.display_name || u.displayName || alt.display_name || alt.displayName || "",
         message_streak: streak,
-        last_body: u.last_body || u.lastBody || prev.last_body || "",
-        last_message_at: u.last_message_at || u.lastMessageAt || prev.last_message_at || null,
-        last_seen: u.last_seen || u.lastSeen || prev.last_seen || null
+        last_body: u.last_body || u.lastBody || alt.last_body || "",
+        last_message_at: u.last_message_at || u.lastMessageAt || alt.last_message_at || null,
+        last_seen: u.last_seen || u.lastSeen || alt.last_seen || null
       });
     };
     everyone.forEach(upsert);
     online.forEach(upsert);
     contacts.forEach(upsert);
 
-    const merged = [...byName.values()].sort((a, b) => {
+    const merged = [...byKey.values()].sort((a, b) => {
       const at = a.last_message_at || "";
       const bt = b.last_message_at || "";
       if (at && bt) return String(bt).localeCompare(String(at));
