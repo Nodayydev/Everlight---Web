@@ -19624,3 +19624,49 @@ html body .chat-bubble {
 }
 
 html body .message-chat-title-wrap > span { display: none !important; }
+
+
+/* Formatted post body always visible (collapsed + expanded) */
+.feed-card-body-preview,
+.feed-card-body-preview * {
+  font-style: inherit;
+}
+.feed-card-body-preview em,
+.feed-card-body-preview i {
+  font-style: italic !important;
+}
+.feed-card-body-preview strong,
+.feed-card-body-preview b {
+  font-weight: 800 !important;
+}
+.feed-card-body-preview u {
+  text-decoration: underline !important;
+}
+.feed-card-body-preview s,
+.feed-card-body-preview del {
+  text-decoration: line-through !important;
+}
+.feed-card-body-preview blockquote {
+  margin: 8px 0 !important;
+  padding-left: 12px !important;
+  border-left: 3px solid rgba(139,173,204,.45) !important;
+  font-style: italic !important;
+  color: #c5ced1 !important;
+}
+.feed-card-body-preview .ev-font-serif { font-family: Georgia, "Times New Roman", serif !important; }
+.feed-card-body-preview .ev-font-mono { font-family: ui-monospace, Menlo, monospace !important; }
+.feed-card-body-preview .ev-font-display { font-family: "Iowan Old Style", Palatino, serif !important; }
+.feed-card-body-preview.is-clamped,
+.feed-card:not(.is-expanded) .feed-card-body-preview {
+  max-height: 7.8em !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 5 !important;
+}
+.feed-card.is-expanded .feed-card-body-preview {
+  max-height: none !important;
+  overflow: visible !important;
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+}

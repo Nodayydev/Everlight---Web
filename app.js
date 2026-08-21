@@ -814,22 +814,25 @@ function updateCategoryLimit() {
 
 function markdownToSafeHtml(value = "") {
   let html = escapeHtml(String(value));
-  html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
-  html = html.replace(/\*(?!\s)(.+?)(?<!\s)\*/g, '<em>$1</em>');
-  html = html.replace(/_(?!\s)(.+?)(?<!\s)_/g, '<em>$1</em>');
-  html = html.replace(/~~(.+?)~~/g, '<s>$1</s>');
-  html = html.replace(/\+\+(.+?)\+\+/g, '<u>$1</u>');
-  html = html.replace(/\{\{font:(sans|serif|mono|display)\}\}([\s\S]*?)\{\{\/font\}\}/g, (_, font, text) => `<span class="ev-font-${font}">${text}</span>`);
-  html = html.replace(/^###\s+(.+)$/gm, '<h4>$1</h4>');
-  html = html.replace(/^##\s+(.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^#\s+(.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^>\s?(.*)$/gm, '<blockquote>$1</blockquote>');
-  html = html.replace(/^•\s+(.*)$/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)(?:\n|$)/g, '<ul>$1</ul>');
+  html = html.replace(/`([^`\n]+)`/g, "<code>$1</code>");
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+  html = html.replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
+  html = html.replace(/(^|[^a-zA-Z0-9])_([^_\n]+)_(?![a-zA-Z0-9])/g, "$1<em>$2</em>");
+  html = html.replace(/~~([^~]+)~~/g, "<s>$1</s>");
+  html = html.replace(/\+\+([^+]+)\+\+/g, "<u>$1</u>");
+  html = html.replace(/\{\{font:(sans|serif|mono|display)\}\}([\s\S]*?)\{\{\/font\}\}/g, function (_, font, text) {
+    return '<span class="ev-font-' + font + '">' + text + "</span>";
+  });
+  html = html.replace(/^###\s+(.+)$/gm, "<h4>$1</h4>");
+  html = html.replace(/^##\s+(.+)$/gm, "<h3>$1</h3>");
+  html = html.replace(/^#\s+(.+)$/gm, "<h3>$1</h3>");
+  html = html.replace(/^&gt;\s?(.*)$/gm, "<blockquote>$1</blockquote>");
+  html = html.replace(/^>\s?(.*)$/gm, "<blockquote>$1</blockquote>");
+  html = html.replace(/^•\s+(.*)$/gm, "<li>$1</li>");
+  html = html.replace(/(<li>[\s\S]*?<\/li>)/g, "<ul>$1</ul>");
   html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-  html = html.replace(/\n/g, '<br>');
+  html = html.replace(/\n/g, "<br>");
   return html;
 }
 
@@ -1060,9 +1063,12 @@ function togglePostExpanded(card, force) {
 
   const preview = card.querySelector("[data-post-preview]");
   const full = card.querySelector("[data-full-body]");
-
-  if (preview) preview.hidden = expanded;
-  if (full) full.hidden = !expanded;
+  /* Both already contain formatted HTML; expanded only reveals full height. */
+  if (preview) {
+    preview.hidden = false;
+    preview.classList.toggle("is-clamped", !expanded);
+  }
+  if (full) full.hidden = true;
   card.setAttribute("aria-expanded", expanded ? "true" : "false");
 }
 
