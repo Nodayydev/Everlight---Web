@@ -2089,10 +2089,22 @@ app.post('/api/notifications/read', auth, async (req, res, next) => {
 app.get('/api/message-users', auth, async (req, res, next) => {
   try {
     const users = await dbAll(`
-      SELECT id, username, display_name, avatar, name_color
-      FROM everlight_users
-      WHERE id <> ?
-      ORDER BY display_name ASC, username ASC
+      SELECT
+        u.id,
+        u.username,
+        u.display_name,
+        u.avatar,
+        u.name_color,
+        u.last_seen,
+        COALESCE((
+          SELECT MAX(ms.current_streak)
+          FROM everlight_message_streaks ms
+          WHERE (ms.user_a_id = u.id OR ms.user_b_id = u.id)
+            AND ms.last_message_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+        ), 0) AS message_streak
+      FROM everlight_users u
+      WHERE u.id <> ?
+      ORDER BY u.display_name ASC, u.username ASC
       LIMIT 200
     `, [req.userId]);
     return res.json({ users: users || [] });

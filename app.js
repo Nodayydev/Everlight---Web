@@ -4101,7 +4101,7 @@ async function loadMessages() {
     !currentUser
   ) {
 
-    dmList.innerHTML = `<div class="chat-empty"><strong>Válassz beszélgetést</strong></div>`;
+    dmList.innerHTML = "";
 
     return;
   }

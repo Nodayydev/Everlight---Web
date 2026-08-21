@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260821-desk-v6">
+  <link rel="stylesheet" href="enhancements.css?v=20260821-desk-list">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -351,14 +351,12 @@
             <button id="messageChatBack" class="message-chat-back" type="button" aria-label="Vissza a beszélgetésekhez">‹</button>
             <span class="message-chat-avatar" id="dmAvatar" aria-hidden="true">✉</span>
             <div class="message-chat-title-wrap">
-              <h2 id="dmTitle">Beszélgetés</h2>
+              <h2 id="dmTitle"></h2>
               <small id="dmHandle"></small>
             </div>
           </header>
           <div id="dmList" class="dm-list">
-            <div class="chat-welcome">
-              <strong>Nincs kiválasztott beszélgetés</strong>
-            </div>
+            <div class="chat-welcome" hidden></div>
           </div>
           <form class="message-compose" id="messageForm">
             <div class="new-message-recipient" id="newMessageRecipientWrap" hidden>
@@ -571,7 +569,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260821-anon-latest"></script>
+  <script src="app.js?v=20260821-desk-list"></script>
   <script src="theme.js?v=20260820-final"></script>
 
 <style id="everlight-daily-fix">

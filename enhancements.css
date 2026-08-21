@@ -20690,3 +20690,62 @@ html body .messages-view:not(.chat-open) .messages-layout {
     display: none !important;
   }
 }
+
+
+/* Hide empty conversation placeholder everywhere */
+html body .message-chat .chat-welcome,
+html body .message-chat .chat-empty,
+html body #dmList .chat-empty,
+html body .message-chat-header .message-chat-title-wrap:has(#dmTitle:empty),
+html body .message-chat:not(.has-thread) .message-chat-header {
+  /* keep header if has content */
+}
+html body .chat-welcome,
+html body .message-chat > .chat-welcome,
+html body #dmList:empty::before {
+  display: none !important;
+}
+html body .chat-welcome,
+html body .chat-empty {
+  display: none !important;
+}
+
+@media (min-width: 661px) {
+  html body .messages-view:not(.chat-open) .message-contact {
+    min-height: 72px !important;
+    padding: 14px 16px !important;
+    border-radius: 16px !important;
+    gap: 12px !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contact-avatar,
+  html body .messages-view:not(.chat-open) .message-contact-avatar img {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    border-radius: 50% !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contact-copy strong {
+    font-size: 15px !important;
+  }
+  html body .messages-view:not(.chat-open) .message-contact-copy small {
+    font-size: 12px !important;
+  }
+  html body .messages-view:not(.chat-open) .message-streak {
+    display: inline-block !important;
+    font-size: 12px !important;
+  }
+  /* hide empty chat pane chrome when no chat selected */
+  html body .messages-view:not(.chat-open) .message-chat-header,
+  html body .messages-view:not(.chat-open) .chat-welcome,
+  html body .messages-view:not(.chat-open) #dmList .chat-empty {
+    display: none !important;
+  }
+  html body .messages-view:not(.chat-open) .message-chat {
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+  }
+  html body .messages-view:not(.chat-open) #messageForm {
+    margin-top: auto !important;
+  }
+}
