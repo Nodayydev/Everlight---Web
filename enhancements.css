@@ -20082,3 +20082,9 @@ html body .daily-thought .daily-thought-streak {
 html body .daily-thought.own {
   margin-top: 0 !important;
 }
+
+
+/* Hide contacts section title + New button */
+html body .message-contacts-head {
+  display: none !important;
+}
