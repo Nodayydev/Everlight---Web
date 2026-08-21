@@ -19701,3 +19701,22 @@ html body [data-full-body] {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+
+/* Remove all vertical separators inside mobile island */
+html body #mobileDock .mobile-dock-item + .mobile-dock-item::before,
+html body #mobileDock .mobile-dock-item + .mobile-island-alert::before,
+html body #mobileDock .mobile-dock-item::before,
+html body #mobileDock .mobile-dock-item::after,
+html body #mobileDock::before,
+html body #mobileDock::after,
+html body .mobile-dock .mobile-dock-item + .mobile-dock-item::before {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  box-shadow: none !important;
+}
