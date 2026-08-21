@@ -1140,52 +1140,21 @@ async function createPostShareFile(data) {
   const innerX = cardX + 44;
   const innerW = cardW - 88;
 
-  const titleFont = 52;
-  const bodyFont = 31;
-  const titleLineHeight = 62;
-  const bodyLineHeight = 49;
-  const titleLines = wrapShareText(data.title, 31, 3);
-  const bodyLines = wrapShareText(data.body, 55, 12);
-  const category = String(data.category || '').trim();
-  const streak = Number(data.streak || 0);
+  const titleFont = 48;
+  const bodyFont = 34;
+  const titleLineHeight = 58;
+  const bodyLineHeight = 52;
+  const titleLines = wrapShareText(data.title, 28, 3);
+  const category = String(data.category || "").trim();
 
-  const avatarSize = 88;
-  const avatarX = innerX;
-  const headerY = 0;
-  const headerH = 176;
-  const avatarY = 42;
-  const textX = avatarX + avatarSize + 28;
-
-  const titleY = headerH + 82;
-  const categoryY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 8;
-  const categoryH = category ? 48 : 0;
-  const bodyY = categoryY + categoryH + 34;
-  const bodyEnd = bodyY + Math.max(1, bodyLines.length) * bodyLineHeight;
-  const dividerY = bodyEnd + 34;
-  const footerH = 86;
-  const cardH = Math.max(500, Math.min(1320, dividerY + footerH));
-  const cardY = Math.round((targetHeight - cardH) / 2);
-  const footerY = cardY + cardH - 34;
-
-  const avatarMarkup = avatarData
-    ? `<defs><clipPath id="storyAvatarClip"><circle cx="${avatarX + avatarSize/2}" cy="${cardY + avatarY + avatarSize/2}" r="${avatarSize/2}"/></clipPath></defs><image href="${escapeXml(avatarData)}" x="${avatarX}" y="${cardY + avatarY}" width="${avatarSize}" height="${avatarSize}" preserveAspectRatio="xMidYMid slice" clip-path="url(#storyAvatarClip)"/>`
-    : `<circle cx="${avatarX + avatarSize/2}" cy="${cardY + avatarY + avatarSize/2}" r="${avatarSize/2}" fill="#18272b"/><text x="${avatarX + avatarSize/2}" y="${cardY + avatarY + 56}" text-anchor="middle" fill="#9fc4e7" font-size="38" font-family="Arial">✦</text>`;
-
-  const meta = [data.realName, data.handle].filter(Boolean).join('  ');
-  const titleSvg = titleLines.map((line, i) =>
-    `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
-  ).join('');
-  const categorySvg = category
-    ? `<rect x="${innerX}" y="${cardY + categoryY}" width="${Math.max(150, category.length * 18 + 52)}" height="${categoryH}" rx="24" fill="#15252d" stroke="#203943" stroke-width="2"/><text x="${innerX + 26}" y="${cardY + categoryY + 32}" fill="#9fc4e7" font-size="24" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
-    : '';
-  // Prefer formatted HTML runs (bold/italic/quote); fall back to plain lines.
-  const bodySvg = (function () {
+  // Build formatted body lines first so card height matches the drawn text.
+  const formattedBodyLines = (function () {
     const html = String(data.bodyHtml || "").trim();
-    if (!html) {
-      return bodyLines.map((line, i) =>
-        `<text x="${innerX}" y="${cardY + bodyY + i * bodyLineHeight}" fill="#cbd3d6" font-size="${bodyFont}" font-family="Arial">${escapeXml(line)}</text>`
-      ).join("");
-    }
+    const plainFallback = wrapShareText(data.body, 42, 14).map((t) => ({
+      text: t, bold: false, italic: false, quote: false
+    }));
+    if (!html) return plainFallback;
+
     const tmp = document.createElement("div");
     tmp.innerHTML = html;
     const blocks = [];
@@ -1193,7 +1162,7 @@ async function createPostShareFile(data) {
       if (!node) return;
       if (node.nodeType === 3) {
         const t = String(node.textContent || "").replace(/\s+/g, " ");
-        if (t) blocks.push({ text: t, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
+        if (t.trim()) blocks.push({ text: t, bold: !!style.bold, italic: !!style.italic, quote: !!style.quote });
         return;
       }
       if (node.nodeType !== 1) return;
@@ -1203,9 +1172,14 @@ async function createPostShareFile(data) {
         italic: style.italic || tag === "em" || tag === "i",
         quote: style.quote || tag === "blockquote"
       };
-      if (tag === "br") { blocks.push({ text: "\n", bold: false, italic: false, quote: false }); return; }
+      if (tag === "br") {
+        blocks.push({ text: "\n", bold: false, italic: false, quote: false });
+        return;
+      }
       if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") {
-        if (blocks.length && blocks[blocks.length - 1].text !== "\n") blocks.push({ text: "\n", bold: false, italic: false, quote: false });
+        if (blocks.length && blocks[blocks.length - 1].text !== "\n") {
+          blocks.push({ text: "\n", bold: false, italic: false, quote: false });
+        }
       }
       Array.from(node.childNodes).forEach((ch) => walk(ch, next));
       if (tag === "p" || tag === "div" || tag === "li" || tag === "blockquote") {
@@ -1213,38 +1187,69 @@ async function createPostShareFile(data) {
       }
     };
     Array.from(tmp.childNodes).forEach((ch) => walk(ch, { bold: false, italic: false, quote: false }));
-    // flatten to visual lines (~55 chars)
+
     const lines = [];
     let cur = "";
     let curStyle = { bold: false, italic: false, quote: false };
     const flush = () => {
-      if (!cur) return;
-      lines.push({ text: cur, ...curStyle });
+      const t = cur.replace(/\s+/g, " ").trim();
+      if (!t) { cur = ""; return; }
+      lines.push({ text: t, ...curStyle });
       cur = "";
     };
     for (const b of blocks) {
       if (b.text === "\n") { flush(); continue; }
-      const words = b.text.split(/(\s+)/);
-      for (const w of words) {
+      const parts = b.text.split(/(\s+)/);
+      for (const w of parts) {
         if (!w) continue;
-        if ((cur + w).length > 55 && cur) flush();
-        if (!cur) curStyle = { bold: b.bold, italic: b.italic, quote: b.quote };
+        if ((cur + w).trim().length > 42 && cur.trim()) flush();
+        if (!cur.trim()) curStyle = { bold: b.bold, italic: b.italic, quote: b.quote };
         cur += w;
       }
     }
     flush();
-    const limited = lines.slice(0, 12);
-    if (lines.length > 12 && limited.length) limited[limited.length - 1].text += "…";
-    return limited.map((line, i) => {
-      const weight = line.bold ? "800" : "500";
-      const style = line.italic ? ' font-style="italic"' : "";
-      const fill = line.quote ? "#9fc4e7" : "#cbd3d6";
-      const x = line.quote ? innerX + 18 : innerX;
-      return `<text x="${x}" y="${cardY + bodyY + i * bodyLineHeight}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="Arial"${style}>${escapeXml(line.text)}</text>`;
-    }).join("");
+    const limited = lines.slice(0, 14);
+    if (lines.length > 14 && limited.length) limited[limited.length - 1].text += "…";
+    return limited.length ? limited : plainFallback;
   })();
+
+  const avatarSize = 88;
+  const avatarX = innerX;
+  const headerH = 168;
+  const avatarY = 40;
+  const textX = avatarX + avatarSize + 28;
+
+  const titleY = headerH + 70;
+  const categoryY = titleY + Math.max(1, titleLines.length) * titleLineHeight + 12;
+  const categoryH = category ? 44 : 0;
+  const bodyY = categoryY + categoryH + 40;
+  const bodyEnd = bodyY + Math.max(1, formattedBodyLines.length) * bodyLineHeight;
+  const dividerY = bodyEnd + 40;
+  const footerH = 90;
+  const cardH = Math.max(520, Math.min(1500, dividerY + footerH));
+  const cardY = Math.round((targetHeight - cardH) / 2);
+  const footerY = cardY + cardH - 36;
+
+  const avatarMarkup = avatarData
+    ? `<defs><clipPath id="storyAvatarClip"><circle cx="${avatarX + avatarSize/2}" cy="${cardY + avatarY + avatarSize/2}" r="${avatarSize/2}"/></clipPath></defs><image href="${escapeXml(avatarData)}" x="${avatarX}" y="${cardY + avatarY}" width="${avatarSize}" height="${avatarSize}" preserveAspectRatio="xMidYMid slice" clip-path="url(#storyAvatarClip)"/>`
+    : `<circle cx="${avatarX + avatarSize/2}" cy="${cardY + avatarY + avatarSize/2}" r="${avatarSize/2}" fill="#18272b"/><text x="${avatarX + avatarSize/2}" y="${cardY + avatarY + 56}" text-anchor="middle" fill="#9fc4e7" font-size="38" font-family="Arial">✦</text>`;
+
+  const meta = [data.realName, data.handle].filter(Boolean).join("  ");
+  const titleSvg = titleLines.map((line, i) =>
+    `<text x="${innerX}" y="${cardY + titleY + i * titleLineHeight}" fill="#f4f6f6" font-size="${titleFont}" font-weight="800" font-family="Arial">${escapeXml(line)}</text>`
+  ).join("");
+  const categorySvg = category
+    ? `<rect x="${innerX}" y="${cardY + categoryY}" width="${Math.max(150, category.length * 18 + 52)}" height="${categoryH}" rx="22" fill="#15252d" stroke="#203943" stroke-width="2"/><text x="${innerX + 26}" y="${cardY + categoryY + 30}" fill="#9fc4e7" font-size="22" font-weight="700" font-family="Arial">${escapeXml(category)}</text>`
+    : "";
+  const bodySvg = formattedBodyLines.map((line, i) => {
+    const weight = line.bold ? "700" : "500";
+    const style = line.italic ? ' font-style="italic"' : "";
+    const fill = line.quote ? "#9fc4e7" : "#e8e7df";
+    const x = line.quote ? innerX + 16 : innerX;
+    return `<text x="${x}" y="${cardY + bodyY + i * bodyLineHeight}" fill="${fill}" font-size="${bodyFont}" font-weight="${weight}" font-family="Arial"${style}>${escapeXml(line.text)}</text>`;
+  }).join("");
   const streakSvg = "";
-  const dateText = data.date || '';
+  const dateText = data.date || "";
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${targetWidth}" height="${targetHeight}" viewBox="0 0 ${targetWidth} ${targetHeight}">
     <defs>
