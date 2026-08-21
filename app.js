@@ -19,13 +19,9 @@ function formatRelativeActive(value) {
 }
 window.formatRelativeActive = formatRelativeActive;
 
-/* =========================================================
-   EVERLIGHT — APP.JS
-   ========================================================= */
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
+
+
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -47,9 +43,7 @@ let editingPostId = null;
 const postCache = new Map();
 
 
-/* =========================================================
-   CATEGORY LIMITS
-   ========================================================= */
+
 
 const CATEGORY_LIMITS = Object.freeze({
   Gondolat: 280,
@@ -60,9 +54,7 @@ const CATEGORY_LIMITS = Object.freeze({
 });
 
 
-/* =========================================================
-   TOAST
-   ========================================================= */
+
 
 function notify(_message) {
   // A láthatatlan állapotértesítő helyett a releváns nézetek saját UI-ja jelzi az állapotot.
@@ -71,9 +63,7 @@ function notify(_message) {
 
 
 
-/* =========================================================
-   HTML ESCAPE
-   ========================================================= */
+
 
 function formatChatTime(value) {
   if (!value) return "";
@@ -143,9 +133,7 @@ function formatImageFile(file, { maxWidth = 1080, maxHeight = 1080, crop = false
 }
 
 
-/* =========================================================
-   API
-   ========================================================= */
+
 
 async function api(url, options = {}) {
   const headers = {
@@ -189,9 +177,7 @@ async function api(url, options = {}) {
 }
 
 
-/* =========================================================
-   USER HELPERS
-   ========================================================= */
+
 
 function getUsername(user) {
   return user?.username || "";
@@ -228,9 +214,7 @@ function getInitial(user) {
 }
 
 
-/* =========================================================
-   AVATAR
-   ========================================================= */
+
 
 function avatar(
   user,
@@ -265,9 +249,7 @@ function avatar(
 }
 
 
-/* =========================================================
-   SET ACCOUNT
-   ========================================================= */
+
 
 function setAccount(user) {
   if (!user) return;
@@ -555,9 +537,7 @@ function setAccount(user) {
 }
 
 
-/* =========================================================
-   LOGIN REQUIRED
-   ========================================================= */
+
 
 function showProfileLoginState() {
   const loginState = $("#profileLoginState");
@@ -723,9 +703,7 @@ function requireLogin(target = "profile") {
 }
 
 
-/* =========================================================
-   CATEGORY LIMIT
-   ========================================================= */
+
 
 function getCurrentCategoryLimit() {
 
@@ -744,9 +722,7 @@ function getCurrentCategoryLimit() {
 }
 
 
-/* =========================================================
-   CHARACTER COUNTER
-   ========================================================= */
+
 
 function updateCharacterCounter() {
 
@@ -796,9 +772,7 @@ function updateCharacterCounter() {
 }
 
 
-/* =========================================================
-   CATEGORY LIMIT UPDATE
-   ========================================================= */
+
 
 function updateCategoryLimit() {
 
@@ -837,9 +811,7 @@ function updateCategoryLimit() {
 }
 
 
-/* =========================================================
-   SAFE MARKDOWN / FEED EDITOR RENDERING
-   ========================================================= */
+
 function markdownToSafeHtml(value = "") {
   let html = escapeHtml(String(value));
   html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
@@ -878,9 +850,7 @@ function markdownToPlain(value = "") {
     .trim();
 }
 
-/* =========================================================
-   RENDER POST
-   ========================================================= */
+
 
 function renderPost(post) {
   const createdAt = new Date(post.created_at);
@@ -1077,9 +1047,7 @@ function refreshCommentSections() {
 }
 
 
-/* =========================================================
-   FEED CARD — INLINE EXPANSION (NO MODAL)
-   ========================================================= */
+
 
 function togglePostExpanded(card, force) {
   if (!card) return;
@@ -1131,13 +1099,9 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-/* =========================================================
-   FEED REACTIONS
-   ========================================================= */
 
-/* =========================================================
-   POST SHARING
-   ========================================================= */
+
+
 function getPostShareData(card) {
   const title = card?.querySelector(".feed-card-title")?.textContent.trim() ||
     card?.querySelector(".feed-card-category")?.textContent.trim() || "Everlight bejegyzés";
@@ -1390,9 +1354,7 @@ async function sharePostToNetwork(network, data) {
 }
 
 
-/* =========================================================
-   MOBILE POST SHARE SHEET — REAL DOM PREVIEW
-   ========================================================= */
+
 function closeMobilePostShareSheet() {
   const sheet = document.getElementById("mobilePostShareSheet");
   if (!sheet) return;
@@ -1623,9 +1585,7 @@ document.addEventListener("click", async (event) => {
   }
 });
 
-/* =========================================================
-   POST COMMENTS — COLLAPSIBLE UI
-   ========================================================= */
+
 document.addEventListener('click', (event) => {
   const button = event.target.closest('[data-comments-open-toggle]');
   if (!button) return;
@@ -1645,9 +1605,7 @@ document.addEventListener('click', (event) => {
   if (!open) loadPostComments(section);
 });
 
-/* =========================================================
-   POST COMMENTS — TOGGLE UI
-   ========================================================= */
+
 document.addEventListener('click', async (event) => {
   const button = event.target.closest('[data-comments-toggle]');
   if (!button) return;
@@ -1687,9 +1645,7 @@ document.addEventListener('click', async (event) => {
   }
 });
 
-/* =========================================================
-   POST COMMENTS — UI
-   ========================================================= */
+
 document.addEventListener('submit', async (event) => {
   const form = event.target.closest('[data-comment-form]');
   if (!form) return;
@@ -1731,9 +1687,7 @@ document.addEventListener('submit', async (event) => {
   }
 });
 
-/* =========================================================
-   LOAD POSTS
-   ========================================================= */
+
 
 async function loadPosts() {
 
@@ -1792,9 +1746,7 @@ async function loadPosts() {
 }
 
 
-/* =========================================================
-   EVERLIGHT COMMUNITY — LATEST LOCAL POST
-   ========================================================= */
+
 
 async function loadCommunityLatest() {
   const community = $("#communityLatest");
@@ -1880,9 +1832,7 @@ document.addEventListener("keydown", (event) => {
   item.click();
 });
 
-/* =========================================================
-   LOAD PUBLIC STATS
-   ========================================================= */
+
 
 async function loadStats() {
   try {
@@ -1903,9 +1853,7 @@ async function loadStats() {
   }
 }
 
-/* =========================================================
-   LOAD ONLINE
-   ========================================================= */
+
 
 async function loadOnline() {
 
@@ -1981,9 +1929,7 @@ async function loadOnline() {
     }
   }
 }
-/* =========================================================
-   CATEGORY CHANGE
-   ========================================================= */
+
 
 const category =
   $("#category");
@@ -1997,9 +1943,7 @@ if (category) {
 }
 
 
-/* =========================================================
-   POST TEXT INPUT
-   ========================================================= */
+
 
 const postText =
   $("#postText");
@@ -2033,9 +1977,7 @@ if (postText) {
 }
 
 
-/* =========================================================
-   IMAGE UPLOAD
-   ========================================================= */
+
 
 const imageInput =
   $("#imageInput");
@@ -2088,13 +2030,9 @@ if (imageInput) {
 }
 
 
-/* =========================================================
-   IMAGE PREVIEW REMOVE
-   ========================================================= */
 
-/* =========================================================
-   IMAGE PREVIEW REMOVE
-   ========================================================= */
+
+
 
 const imagePreview =
   $("#imagePreview");
@@ -2145,11 +2083,7 @@ if (imagePreview) {
 
 
 
-/* =========================================================
-   FEED RICH EDITOR TOOLBAR
-   Uses a real contenteditable editor so formatting is visible
-   immediately instead of showing Discord/Markdown markers.
-   ========================================================= */
+
 (() => {
   const toolbar = document.getElementById("feedEditorToolbar");
   const editor = document.getElementById("postTextEditor");
@@ -2493,9 +2427,7 @@ if (imagePreview) {
   }
 })();
 
-/* =========================================================
-   CREATE POST
-   ========================================================= */
+
 
 const postButton =
   $("#postButton");
@@ -2636,9 +2568,7 @@ if (postButton) {
 
 
 
-/* =========================================================
-   READ IMAGE
-   ========================================================= */
+
 
 async function compressImageFile(
   file,
@@ -2771,9 +2701,7 @@ function readImage(input, callback, options = {}) {
 }
 
 
-/* =========================================================
-   PROFILE IMAGE
-   ========================================================= */
+
 
 const profileImageInput =
   $("#profileImageInput");
@@ -2833,9 +2761,7 @@ if (profileImageInput) {
 }
 
 
-/* =========================================================
-   COVER IMAGE
-   ========================================================= */
+
 
 const coverImageInput =
   $("#coverImageInput");
@@ -2889,9 +2815,7 @@ if (coverImageInput) {
     }
   );
 }
-/* =========================================================
-   SAVE PROFILE
-   ========================================================= */
+
 
 const saveProfile =
   $("#saveProfile");
@@ -3071,9 +2995,7 @@ function modalNameFormatState(key, fallback = false) {
 }
 
 
-/* =========================================================
-   PROFILE VIEW — UPDATE
-   ========================================================= */
+
 
 function updateProfileView(
   user = currentUser
@@ -3345,9 +3267,7 @@ function applyPendingAuthTarget() {
   activateProfileSection(target === "profile" ? "main" : target);
 }
 
-/* =========================================================
-   AUTH UI — STORED SESSION SHOULD NEVER SHOW LOGIN FIRST
-   ========================================================= */
+
 function syncAuthenticatedShell() {
   if (!token) return;
 
@@ -3367,9 +3287,7 @@ function syncAuthenticatedShell() {
 syncAuthenticatedShell();
 
 
-/* =========================================================
-   OPEN PROFILE VIEW
-   ========================================================= */
+
 
 function openProfileView() {
   const profileView = $("#profileView");
@@ -3411,9 +3329,7 @@ function openProfileView() {
 }
 
 
-/* =========================================================
-   CLOSE PROFILE VIEW
-   ========================================================= */
+
 
 function closeProfileView(options = {}) {
 
@@ -3455,9 +3371,7 @@ function closeProfileView(options = {}) {
 }
 
 
-/* =========================================================
-   PROFILE SETTINGS FROM FULLSCREEN PROFILE
-   ========================================================= */
+
 
 const openProfileSettings =
   $("#openProfileSettings");
@@ -3471,9 +3385,7 @@ if (openProfileSettings) {
 }
 
 
-/* =========================================================
-   CLOSE PROFILE VIEW BUTTON
-   ========================================================= */
+
 const closeProfileViewButton =
   $("#closeProfileView");
 
@@ -3486,9 +3398,7 @@ if (closeProfileViewButton) {
 }
 
 
-/* =========================================================
-   CLICK PROFILE VIEW BACKDROP
-   ========================================================= */
+
 
 const profileView =
   $("#profileView");
@@ -3511,9 +3421,7 @@ if (profileView) {
 }
 
 
-/* =========================================================
-   DESKTOP LEFT PROFILE NAV
-   ========================================================= */
+
 
 function openProfileReactionSection(section) {
   pendingAuthTarget = section;
@@ -3530,9 +3438,7 @@ if (leftProfileNav) {
   });
 }
 
-/* =========================================================
-   HEADER ACCOUNT → PROFILE VIEW
-   ========================================================= */
+
 
 function handleAccountNavigation() {
 
@@ -3562,9 +3468,7 @@ function handleAccountNavigation() {
 
 
 
-/* =========================================================
-   MOBILE DOCK ACTIVE STATE
-   ========================================================= */
+
 
 function setMobileDockActive(view) {
   const items = document.querySelectorAll("#mobileDock .mobile-dock-item");
@@ -3587,9 +3491,7 @@ function setMobileDockActive(view) {
 }
 
 
-/* =========================================================
-   HUB VIEW
-   ========================================================= */
+
 
 function openHubView() {
   window.__closeMobileCommunity?.();
@@ -3610,9 +3512,7 @@ function openHubView() {
 }
 
 
-/* =========================================================
-   MOBILE HUB
-   ========================================================= */
+
 
 const mobileHubNav =
   $("#mobileHubNav");
@@ -3630,10 +3530,7 @@ if (mobileHubNav) {
   );
 }
 
-/* =========================================================
-   MOBILE CHAT / PROFILE TOGGLE
-   Keep these controls independent from the desktop rail.
-   ========================================================= */
+
 
 const mobileMessageNav = $("#mobileMessageNav");
 if (mobileMessageNav) {
@@ -3672,14 +3569,10 @@ if (mobileProfileNav) {
 }
 
 
-/* =========================================================
-   MESSAGES / CHAT
-   ========================================================= */
 
 
-/* =========================================================
-   OPEN MESSAGES VIEW
-   ========================================================= */
+
+
 
 async function loadMessageContacts() {
   const contactsList = $("#messageContactsList");
@@ -3994,9 +3887,7 @@ function openMessages() {
 }
 
 
-/* =========================================================
-   CLOSE MESSAGES VIEW
-   ========================================================= */
+
 
 function closeMessages(options = {}) {
 
@@ -4040,9 +3931,7 @@ if (closeMessagesViewButton) {
   });
 }
 
-/* =========================================================
-   TOGGLE MESSAGES
-   ========================================================= */
+
 
 function toggleMessages() {
 
@@ -4071,9 +3960,7 @@ function toggleMessages() {
 }
 
 
-/* =========================================================
-   LEFT RAIL MESSAGE BUTTON
-   ========================================================= */
+
 
 const leftMessageNav =
   $("#leftMessageNav");
@@ -4091,9 +3978,7 @@ if (leftMessageNav) {
   );
 }
 
-/* =========================================================
-   CLOSE CHAT
-   ========================================================= */
+
 
 const closeMessagesView =
   $("#closeMessagesView");
@@ -4110,9 +3995,7 @@ if (closeMessagesView) {
 }
 
 
-/* =========================================================
-   BACKDROP CLOSE
-   ========================================================= */
+
 
 const messagesView =
   $("#messagesView");
@@ -4140,9 +4023,7 @@ if (messagesView) {
 }
 
 
-/* =========================================================
-   LOAD MESSAGES
-   ========================================================= */
+
 
 async function loadMessages() {
 
@@ -4170,24 +4051,7 @@ async function loadMessages() {
     !currentUser
   ) {
 
-    dmList.innerHTML = `
-      <div class="chat-empty">
-
-        <div class="chat-empty-icon">
-          ✉
-        </div>
-
-        <strong>
-          Válassz egy beszélgetést
-        </strong>
-
-        <p>
-          Add meg annak a felhasználónak
-          az azonosítóját, akivel beszélgetni szeretnél.
-        </p>
-
-      </div>
-    `;
+    dmList.innerHTML = `<div class="chat-empty"><strong>Válassz beszélgetést</strong></div>`;
 
     return;
   }
@@ -4278,24 +4142,7 @@ async function loadMessages() {
       !data.messages.length
     ) {
 
-      dmList.innerHTML = `
-        <div class="chat-empty">
-
-          <div class="chat-empty-icon">
-            ✦
-          </div>
-
-          <strong>
-            Még nincs üzenet
-          </strong>
-
-          <p>
-            Írd meg az első üzenetet
-            ebben a beszélgetésben.
-          </p>
-
-        </div>
-      `;
+      dmList.innerHTML = `<div class="chat-empty"><strong>Még nincs üzenet</strong></div>`;
 
       return;
     }
@@ -4371,9 +4218,7 @@ async function loadMessages() {
 }
 
 
-/* =========================================================
-   MESSAGE CONTACT
-   ========================================================= */
+
 
 function renderMessageContact(user) {
   const contactsList = $("#messageContactsList");
@@ -4416,9 +4261,7 @@ function renderMessageContact(user) {
 
 
 
-/* =========================================================
-   MESSAGE CONTACT CLICK
-   ========================================================= */
+
 
 const messageContactsList =
   $("#messageContactsList");
@@ -4467,9 +4310,7 @@ if (messageContactsList) {
 }
 
 
-/* =========================================================
-   MOBILE / FRIENDLY CHAT CONTROLS
-   ========================================================= */
+
 const messagesViewElement = $("#messagesView");
 const messageChatBack = $("#messageChatBack");
 const newMessageButton = $("#newMessageButton");
@@ -4544,9 +4385,7 @@ function filterMessageContacts() {
 
 messageSearch?.addEventListener("input", filterMessageContacts);
 
-/* =========================================================
-   RECIPIENT CHANGE
-   ========================================================= */
+
 
 const dmRecipient =
   $("#dmRecipient");
@@ -4579,9 +4418,7 @@ if (dmRecipient) {
 }
 
 
-/* =========================================================
-   MESSAGE FORM
-   ========================================================= */
+
 
 const messageForm =
   $("#messageForm");
@@ -4683,9 +4520,7 @@ if (messageForm) {
 }
 
 
-/* =========================================================
-   ESCAPE KEY
-   ========================================================= */
+
 
 document.addEventListener(
   "keydown",
@@ -4733,9 +4568,7 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   PREVENT BACKGROUND SCROLL
-   ========================================================= */
+
 
 function updateViewScrollLock() {
 
@@ -4758,9 +4591,7 @@ function updateViewScrollLock() {
     )
   );
 }
-/* =========================================================
-   PWA INSTALL
-   ========================================================= */
+
 
 window.addEventListener(
   "beforeinstallprompt",
@@ -4818,9 +4649,7 @@ if (installButton) {
 }
 
 
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
+
 
 const notificationButton =
   $("#notificationButton");
@@ -4875,9 +4704,7 @@ if (notificationButton) {
 }
 
 
-/* =========================================================
-   IN-APP NOTIFICATIONS
-   ========================================================= */
+
 
 let notificationPollTimer = null;
 let lastNotificationIds = new Set();
@@ -4984,9 +4811,7 @@ window.addEventListener("everlight:auth", () => startNotificationPolling());
 /* A jelenlegi app auth eseménytől függetlenül is elindítjuk, ha már be van jelentkezve. */
 if (currentUser) startNotificationPolling();
 
-/* =========================================================
-   SERVICE WORKER
-   ========================================================= */
+
 
 if (
   "serviceWorker" in navigator
@@ -5012,9 +4837,7 @@ if (
 }
 
 
-/* =========================================================
-   CLOCK + DATE
-   ========================================================= */
+
 
 function updateClock() {
 
@@ -5067,9 +4890,7 @@ setInterval(
 );
 
 
-/* =========================================================
-   VIEW SCROLL LOCK
-   ========================================================= */
+
 
 function syncViewScrollLock() {
 
@@ -5095,9 +4916,7 @@ function syncViewScrollLock() {
 }
 
 
-/* =========================================================
-   OBSERVE FULLSCREEN VIEWS
-   ========================================================= */
+
 
 const messagesViewObserver =
   $("#messagesView");
@@ -5150,25 +4969,19 @@ if (
 }
 
 
-/* =========================================================
-   INITIAL CATEGORY LIMIT
-   ========================================================= */
+
 
 updateCategoryLimit();
 
 
-/* =========================================================
-   INITIAL MOBILE DOCK STATE
-   ========================================================= */
+
 
 setMobileDockActive(
   "hub"
 );
 
 
-/* =========================================================
-   INITIAL PROFILE VIEW
-   ========================================================= */
+
 
 if (currentUser) {
 
@@ -5178,9 +4991,7 @@ if (currentUser) {
 }
 
 
-/* =========================================================
-   SESSION RESTORE
-   ========================================================= */
+
 
 async function restoreSession() {
   if (!token) {
@@ -5218,9 +5029,7 @@ async function restoreSession() {
   }
 }
 
-/* =========================================================
-   INITIAL LOAD
-   ========================================================= */
+
 
 (async () => {
 
@@ -5301,9 +5110,7 @@ async function restoreSession() {
 
 
 
-/* =========================================================
-   DISCORD-STYLE PROFILE CUSTOMIZER
-   ========================================================= */
+
 
 async function readCustomizerImage(
   file,
@@ -6617,9 +6424,7 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   V6 — MOBILE / FULLSCREEN ESCAPE + BACK BEHAVIOUR
-   ========================================================= */
+
 
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
@@ -6665,11 +6470,7 @@ window.addEventListener("popstate", () => {
 
 /* Legacy desktop navigation controller removed. See desktop-nav-controller.js. */
 
-/* =========================================================
-   DESKTOP RAIL — SINGLE DIRECT BUTTON CONTROLLER
-   Uses the original buttons directly; no cloning, capture,
-   stopImmediatePropagation or external controller is needed.
-   ========================================================= */
+
 (() => {
   const ids = [
     "desktopHubNav",
@@ -6833,11 +6634,7 @@ window.addEventListener("popstate", () => {
   setActive("desktopHubNav");
 })();
 
-/* =========================================================
-   FINAL MOBILE COMMUNITY / NOTIFICATION SHEET
-   The right-side community content is presented in the same
-   floating sheet pattern as Csevegés and Profil.
-   ========================================================= */
+
 (function initMobileCommunitySheet(){
   const alertButton = document.getElementById("mobileCommunityAlert");
   const panel = document.getElementById("mobileCommunityPanel");
@@ -6920,9 +6717,7 @@ window.addEventListener("popstate", () => {
    Do not add secondary click handlers here; they can reset the active
    state immediately after a view is opened. */
 
-/* =========================================================
-   PASSWORD RESET
-   ========================================================= */
+
 
 const passwordResetModal = $("#passwordResetModal");
 const forgotPasswordButton = $("#forgotPasswordButton");
@@ -7054,9 +6849,7 @@ if (initialResetToken) {
 }
 
 
-/* =========================================================
-   DESKTOP HAMBURGER — toggle right rail instead of styles
-   ========================================================= */
+
 (function initDesktopRailToggle(){
   const toggle = document.getElementById("settingsToggle");
   const menu = document.getElementById("settingsMenu");

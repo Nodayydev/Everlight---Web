@@ -19553,3 +19553,74 @@ html body .chat-bubble {
     display: block !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE CHAT — rail + flush dock (v3)
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view.open,
+  html body .messages-view[aria-hidden="false"] {
+    top: 64px !important;
+    bottom: calc(56px + 22px + var(--dock-lift, 12px) + env(safe-area-inset-bottom, 0px)) !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #000 !important;
+  }
+
+  html body .messages-view.chat-open .message-contacts {
+    flex: 0 0 72px !important;
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    padding: 0 !important;
+    background: #0a0d0f !important;
+  }
+
+  html body .messages-view.chat-open .message-contacts-list {
+    padding: 10px 8px !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  html body .messages-view.chat-open .message-contact {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    border-radius: 16px !important;
+  }
+
+  html body .messages-view.chat-open .message-contact-avatar,
+  html body .messages-view.chat-open .message-contact-avatar img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  html body .messages-view.chat-open .message-chat {
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  html body .messages-view.chat-open .message-compose {
+    margin: 0 !important;
+    padding: 8px 10px 10px !important;
+    border-bottom: 0 !important;
+    background: #07090b !important;
+  }
+
+  /* dock chrome sits flush under the sheet */
+  html body.messages-view-open .mobile-bottom-chrome {
+    bottom: var(--dock-lift, 12px) !important;
+    margin: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+}
+
+html body .message-chat-title-wrap > span { display: none !important; }
