@@ -18818,3 +18818,63 @@ html body .message-chat {
     bottom: calc(80px + var(--dock-lift, 12px) + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+html body .chat-bubble {
+  font: 600 16px/1.55 Manrope, sans-serif !important;
+  color: #f3f2ea !important;
+  padding: 12px 16px !important;
+}
+html body .chat-message-meta,
+html body .chat-message-meta strong,
+html body #dmHandle,
+html body .message-contact-copy,
+html body .message-contact-copy small,
+html body .message-contact-active {
+  color: #c5ced1 !important;
+  font-size: 13px !important;
+}
+html body .message-contact-copy strong,
+html body #dmTitle {
+  color: #f3f2ea !important;
+  font-size: 17px !important;
+}
+html body .chat-empty,
+html body .chat-empty strong,
+html body .chat-empty p {
+  color: #d7e0e3 !important;
+}
+
+
+/* =========================================================
+   MESSAGES — compact header on mobile
+   ========================================================= */
+@media (max-width: 660px) {
+  html body .messages-view.open .messages-view-header,
+  html body .messages-view[aria-hidden="false"] .messages-view-header {
+    padding: 6px 14px 4px !important;
+    min-height: 0 !important;
+  }
+  html body .messages-view.open .messages-view-header h1,
+  html body .messages-view[aria-hidden="false"] .messages-view-header h1 {
+    font-size: 22px !important;
+    margin: 0 !important;
+  }
+  html body .messages-view.open .messages-view-header .eyebrow,
+  html body .messages-view[aria-hidden="false"] .messages-view-header .eyebrow {
+    font-size: 10px !important;
+    margin: 0 !important;
+  }
+  html body .messages-view.open .daily-thoughts,
+  html body .messages-view[aria-hidden="false"] .daily-thoughts {
+    padding: 4px 10px 8px !important;
+  }
+  html body .messages-view.open .daily-thoughts-head,
+  html body .messages-view[aria-hidden="false"] .daily-thoughts-head {
+    margin-bottom: 4px !important;
+  }
+  html body .messages-view.chat-open .messages-view-header,
+  html body .messages-view.chat-open .daily-thoughts {
+    display: none !important;
+  }
+}

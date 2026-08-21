@@ -1,3 +1,24 @@
+
+function formatRelativeActive(value) {
+  try {
+    if (!value) return "Ismeretlen aktivitás";
+    const then = new Date(value).getTime();
+    if (!Number.isFinite(then)) return "Ismeretlen aktivitás";
+    const diff = Math.max(0, Date.now() - then);
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "Most aktív";
+    if (mins < 60) return mins + " perce volt aktív";
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return hours + " órája volt aktív";
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " napja volt aktív";
+    return new Date(value).toLocaleDateString("hu-HU");
+  } catch (e) {
+    return "";
+  }
+}
+window.formatRelativeActive = formatRelativeActive;
+
 /* =========================================================
    EVERLIGHT — APP.JS
    ========================================================= */
@@ -9,6 +30,9 @@
 const $ = (selector) => document.querySelector(selector);
 
 let token = localStorage.getItem("everlight-token") || "";
+
+
+
 
 let currentUser = null;
 
@@ -3683,7 +3707,7 @@ async function loadMessageContacts() {
     contactsList.innerHTML = contacts.map((user) => {
       const preview = String(user.last_body || user.lastBody || "").replace(/\s+/g, " ").trim();
       const when = formatChatTime(user.last_message_at || user.lastMessageAt);
-      const active = formatRelativeActive(user.last_seen || user.lastSeen);
+      const active = (function(v){try{if(!v)return"Ismeretlen aktivitás";var t=new Date(v).getTime();if(!isFinite(t))return"Ismeretlen aktivitás";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user.last_seen || user.lastSeen);
       return `
       <button
         type="button"
@@ -4220,7 +4244,7 @@ async function loadMessages() {
     const dmHandle = $("#dmHandle");
     if (dmHandle) {
       const username = getUsername(user) || recipient;
-      const active = formatRelativeActive(user?.last_seen || user?.lastSeen);
+      const active = (function(v){try{if(!v)return"Ismeretlen aktivitás";var t=new Date(v).getTime();if(!isFinite(t))return"Ismeretlen aktivitás";var d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return"Most aktív";if(m<60)return m+" perce volt aktív";var h=Math.floor(m/60);if(h<24)return h+" órája volt aktív";var dy=Math.floor(h/24);if(dy<30)return dy+" napja volt aktív";return new Date(v).toLocaleDateString("hu-HU");}catch(e){return"";}})(user && (user.last_seen || user.lastSeen));
       dmHandle.textContent = username
         ? `@${username} · ${active}`
         : active;
