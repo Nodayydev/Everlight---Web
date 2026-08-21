@@ -18,6 +18,8 @@ function formatRelativeActive(value) {
   }
 }
 window.formatRelativeActive = formatRelativeActive;
+let pendingReplyTo = null;
+
 
 
 
@@ -4476,32 +4478,18 @@ if (messageForm) {
       }
 
 
-      const recipient =
-        dmRecipient
-          ? dmRecipient.value.trim()
-          : "";
+      const activeContact = document.querySelector(".message-contact.active");
+      const recipient = (
+        (dmRecipient && dmRecipient.value.trim()) ||
+        (activeContact && activeContact.dataset.recipient) ||
+        ""
+      ).trim();
 
-
-      const bodyInput =
-        $("#dmBody");
-
-
-      const body =
-        bodyInput
-          ? bodyInput.value.trim()
-          : "";
-
+      const bodyInput = $("#dmBody");
+      const body = bodyInput ? bodyInput.value.trim() : "";
 
       if (!recipient) {
-
-        notify(
-          "Add meg a címzettet."
-        );
-
-        if (dmRecipient) {
-          dmRecipient.focus();
-        }
-
+        notify("Válassz címzettet a listából.");
         return;
       }
 
@@ -7006,4 +6994,51 @@ document.addEventListener("DOMContentLoaded", () => {
   bindPasswordReveal(document);
   bindPasswordPair("profileLoginPassword", "profileLoginPasswordConfirm", "profileLoginPasswordMatch");
   bindPasswordPair("messageLoginPassword", "messageLoginPasswordConfirm", "messageLoginPasswordMatch");
+});
+
+
+document.addEventListener("click", async (event) => {
+  const btn = event.target.closest("[data-msg-action]");
+  if (!btn) return;
+  event.preventDefault();
+  event.stopPropagation();
+  const action = btn.getAttribute("data-msg-action");
+  const id = btn.getAttribute("data-msg-id");
+  const body = btn.getAttribute("data-msg-body") || "";
+
+  if (action === "reply") {
+    pendingReplyTo = { id, body };
+    const input = document.getElementById("dmBody");
+    if (input) {
+      input.placeholder = "Válasz: " + body.slice(0, 40) + (body.length > 40 ? "…" : "");
+      input.focus();
+    }
+    notify("Válasz mód bekapcsolva");
+    return;
+  }
+
+  if (action === "edit") {
+    const next = window.prompt("Üzenet szerkesztése", body);
+    if (next == null || !next.trim()) return;
+    try {
+      await api("/api/messages/id/" + encodeURIComponent(id), {
+        method: "PATCH",
+        body: JSON.stringify({ body: next.trim() })
+      });
+      await loadMessages();
+    } catch (error) {
+      notify(error.message || "Szerkesztés sikertelen");
+    }
+    return;
+  }
+
+  if (action === "delete") {
+    if (!window.confirm("Törlöd az üzenetet?")) return;
+    try {
+      await api("/api/messages/id/" + encodeURIComponent(id), { method: "DELETE" });
+      await loadMessages();
+    } catch (error) {
+      notify(error.message || "Törlés sikertelen");
+    }
+  }
 });
