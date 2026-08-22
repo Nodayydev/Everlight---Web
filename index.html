@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260821-share-fix">
+  <link rel="stylesheet" href="enhancements.css?v=20260822-tabs-text">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -105,14 +105,15 @@
         <span class="rail-action-icon rail-icon-profile" aria-hidden="true"></span><span>Profil</span>
       </button>
       <button type="button" data-rail-view="profile-liked" class="desktop-rail-action" id="desktopLikedNav">
-        <span class="rail-action-icon rail-icon-like" aria-hidden="true"></span><span>Kedvelések</span>
+        <span>Kedvelések</span>
       </button>
       <button type="button" data-rail-view="profile-saved" class="desktop-rail-action" id="desktopSavedNav">
-        <span class="rail-action-icon rail-icon-save" aria-hidden="true"></span><span>Mentések</span>
+        <span>Mentések</span>
       </button>
       <button type="button" data-rail-view="profile-history" class="desktop-rail-action" id="desktopHistoryNav" aria-label="Előzmények">
-        <span class="rail-action-icon rail-icon-history" aria-hidden="true"></span><span>Előzmények</span>
+        <span>Előzmények</span>
       </button>
+
       <section class="desktop-category-panel" aria-label="Kategóriák">
         <button type="button" class="desktop-category-toggle desktop-rail-action" id="desktopCategoryToggle" aria-expanded="false">
           <span class="category-toggle-left"><span class="rail-action-icon rail-icon-category" aria-hidden="true"></span><span>Kategória</span></span>
@@ -432,12 +433,9 @@
                 <h2 id="profileViewName">Még ismeretlen vagy</h2>
                 <p id="profileViewUsername">Lépj be az Everlightba.</p>
                 <span id="profileViewStreak" class="profile-view-streak" hidden></span>
-                <div class="profile-badges" aria-label="Profil jelvények">
-                  <span>✦</span><span>EV</span>
-                </div>
               </div>
               <div class="profile-actions">
-                <span class="profile-view-status-pill" id="profileViewStatus">✦ Elérhető</span>
+                <span class="profile-view-status-pill" id="profileViewStatus">Elérhető</span>
                 <button id="openProfileSettings" class="secondary profile-customize-button" type="button" aria-label="Profil szerkesztése">
                   Profil szerkesztése <span>→</span>
                 </button>
@@ -446,11 +444,9 @@
 
             <nav class="profile-tabs" aria-label="Profil szekciók">
               <button type="button" class="active" data-profile-reaction-tab="main">Fő</button>
-              <button type="button" data-profile-reaction-tab="liked">
-                <span class="profile-tab-like-icon" aria-hidden="true"></span><span>Kedvelések</span>
-              </button>
-              <button type="button" data-profile-reaction-tab="saved">▱ Mentettek</button>
-              <button type="button" data-profile-reaction-tab="history">◫ Előzmények</button>
+              <button type="button" data-profile-reaction-tab="liked">Kedvelések</button>
+              <button type="button" data-profile-reaction-tab="saved">Mentések</button>
+              <button type="button" data-profile-reaction-tab="history">Előzmények</button>
             </nav>
 
             <div id="profileReactionList" class="profile-reaction-list" hidden></div>
@@ -569,7 +565,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260821-post-streak"></script>
+  <script src="app.js?v=20260822-tabs-text"></script>
   <script src="theme.js?v=20260820-final"></script>
 
 

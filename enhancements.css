@@ -20873,3 +20873,28 @@ html, body { touch-action: manipulation !important; }
 .feed-card-title + .feed-card-category {
   display: none !important;
 }
+
+
+/* Hide streak outline when empty; no profile badge icons */
+.profile-view-streak[hidden],
+.profile-view-streak:empty {
+  display: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+.profile-badges {
+  display: none !important;
+}
+
+
+/* Profile / rail tabs: text only, no leading icons */
+.profile-tabs .profile-tab-like-icon { display: none !important; }
+#desktopLikedNav .rail-action-icon,
+#desktopSavedNav .rail-action-icon,
+#desktopHistoryNav .rail-action-icon {
+  display: none !important;
+}

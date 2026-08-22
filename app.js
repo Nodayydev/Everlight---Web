@@ -418,7 +418,7 @@ function setAccount(user) {
 
     profileStatus:
       user.status ||
-      "✦ Elérhető",
+      "Elérhető",
 
     nameColor:
       user.nameColor ||
@@ -3097,7 +3097,7 @@ if (saveProfile) {
                     statusInput
                       ? statusInput.value
                       : currentUser?.status ||
-                        "✦ Elérhető",
+                        "Elérhető",
 
                   pronouns:
                     pronounsInput
@@ -3239,9 +3239,19 @@ function updateProfileView(
   const profileViewStreak = $("#profileViewStreak");
   if (profileViewStreak) {
     const streak = Number(user.messageStreak || user.message_streak || 0);
-    profileViewStreak.hidden = streak <= 0;
-    profileViewStreak.textContent = streak > 0 ? `🔥${streak}` : "";
-    profileViewStreak.title = streak > 0 ? `${streak} napos streak` : "";
+    if (streak > 0) {
+      profileViewStreak.hidden = false;
+      profileViewStreak.removeAttribute("hidden");
+      profileViewStreak.textContent = `🔥${streak}`;
+      profileViewStreak.title = `${streak} napos streak`;
+      profileViewStreak.style.display = "";
+    } else {
+      profileViewStreak.hidden = true;
+      profileViewStreak.setAttribute("hidden", "");
+      profileViewStreak.textContent = "";
+      profileViewStreak.title = "";
+      profileViewStreak.style.display = "none";
+    }
   }
 
 
@@ -3262,10 +3272,8 @@ function updateProfileView(
      ------------------------------------------------------- */
 
   if (profileViewStatus) {
-
-    profileViewStatus.textContent =
-      user.status ||
-      "✦ Elérhető";
+    const rawStatus = String(user.status || "Elérhető").trim();
+    profileViewStatus.textContent = rawStatus.replace(/^[✦★☆✨🌟⭐]\s*/u, "").trim() || "Elérhető";
   }
 
 
@@ -5677,7 +5685,7 @@ function updateCustomizerPreview() {
   const status =
     customizerValue(
       "customizerStatus",
-      currentUser?.status || "✦ Elérhető"
+      currentUser?.status || "Elérhető"
     );
 
   const location =
@@ -5858,7 +5866,7 @@ function fillProfileCustomizer() {
     customizerStatus:
       customizerValue(
         "profileStatus",
-        currentUser?.status || "✦ Elérhető"
+        currentUser?.status || "Elérhető"
       ),
 
     customizerPronouns:
@@ -6062,7 +6070,7 @@ async function saveProfileCustomizer() {
       nameUnderline: modalNameFormatState("underline", currentUser?.nameUnderline),
       nameStrike: modalNameFormatState("strike", currentUser?.nameStrike),
       profileColor: customizerValue("customizerProfileColor", currentUser?.profileColor || "#273638"),
-      status: customizerValue("customizerStatus", currentUser?.status || "✦ Elérhető"),
+      status: customizerValue("customizerStatus", currentUser?.status || "Elérhető"),
       pronouns: customizerValue("customizerPronouns", currentUser?.pronouns || "").trim(),
       location: customizerValue("customizerLocation", currentUser?.location || "").trim(),
       website: customizerValue("customizerWebsite", currentUser?.website || "").trim()
