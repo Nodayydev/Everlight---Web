@@ -1,5 +1,5 @@
 /* Everlight service worker – minimal offline support for static assets */
-const CACHE_NAME = "everlight-static-v1";
+const CACHE_NAME = "everlight-static-v4-mode";
 
 // Only cache same-origin static files. API calls stay network-only.
 const STATIC_EXT = /\.(?:js|css|png|jpe?g|gif|svg|webp|ico|woff2?|ttf|eot|map)$/i;

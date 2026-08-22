@@ -20901,59 +20901,74 @@ html, body { touch-action: manipulation !important; }
 
 
 /* =========================================================
-   FORCE COMPACT SEARCH (v2) — overrides every previous rule
+   MOBILE MODE SWITCHER FIX
+   Topbar overflow/contain was clipping the look dropdown.
    ========================================================= */
-html body .messages-view label.message-search,
-html body .messages-view .message-search,
-html body label.message-search,
-html body .message-search {
-  min-height: 32px !important;
-  height: 32px !important;
-  max-height: 32px !important;
-  padding: 0 10px !important;
-  margin: 4px 12px 6px !important;
-  border-radius: 9px !important;
-  gap: 6px !important;
-  line-height: 1 !important;
-  box-sizing: border-box !important;
-}
-
-html body .messages-view .message-search > span,
-html body .message-search > span {
-  font-size: 13px !important;
-  line-height: 1 !important;
-  opacity: 0.65 !important;
-  flex: 0 0 auto !important;
-}
-
-html body .messages-view .message-search input,
-html body .message-search input#messageSearch,
-html body #messageSearch {
-  font: 500 12px/1 Manrope, system-ui, sans-serif !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  height: 30px !important;
-  min-height: 30px !important;
-  max-height: 30px !important;
-  line-height: 30px !important;
-}
-
 @media (max-width: 660px) {
-  html body .messages-view label.message-search,
-  html body .messages-view .message-search,
-  html body label.message-search {
-    min-height: 34px !important;
-    height: 34px !important;
-    max-height: 34px !important;
-    margin: 6px 12px 8px !important;
-    border-radius: 10px !important;
+  /* Allow the dropdown to escape the header */
+  header.topbar,
+  .topbar {
+    overflow: visible !important;
+    contain: none !important;
   }
-  html body .messages-view .message-search input,
-  html body #messageSearch {
-    font-size: 13px !important;
-    height: 32px !important;
-    min-height: 32px !important;
-    max-height: 32px !important;
-    line-height: 32px !important;
+
+  .header-look-controls,
+  .header-look-menu-wrap {
+    position: relative !important;
+    z-index: 100050 !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+  }
+
+  .header-look-toggle {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    z-index: 100051 !important;
+  }
+
+  .header-look-menu,
+  .header-look-menu.is-open {
+    position: fixed !important;
+    top: calc(64px + env(safe-area-inset-top, 0px) + 6px) !important;
+    right: 10px !important;
+    left: auto !important;
+    z-index: 100060 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    min-width: 180px !important;
+    padding: 10px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(139,173,204,.28) !important;
+    background: #0a0e11 !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,.55) !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .header-look-menu[hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .header-look-menu .footer-mode-switch {
+    display: flex !important;
+    width: 100% !important;
+    pointer-events: auto !important;
+  }
+
+  .header-look-menu .footer-mode-btn {
+    flex: 1 1 50% !important;
+    min-height: 36px !important;
+    font-size: 12px !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+
+  /* Domain text can still clip itself, not the whole topbar */
+  .topbar .domain {
+    overflow: hidden !important;
   }
 }

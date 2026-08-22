@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260820-final">
-  <link rel="stylesheet" href="enhancements.css?v=20260822-tabs-text">
+  <link rel="stylesheet" href="styles.css?v=20260822-mode-fix">
+  <link rel="stylesheet" href="enhancements.css?v=20260822-mode-fix">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -565,8 +565,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=20260822-tabs-text"></script>
-  <script src="theme.js?v=20260820-final"></script>
+  <script src="app.js?v=20260822-mode-fix"></script>
+  <script src="theme.js?v=20260822-mode-fix"></script>
 
 
 <style id="everlight-critical">
@@ -706,49 +706,6 @@ input, textarea, select, [contenteditable="true"] { font-size: 16px !important; 
     display: none !important;
   }
 }
-
-/* FORCE COMPACT CONVERSATION SEARCH */
-html body .messages-view .message-search,
-html body .message-search,
-html body label.message-search {
-  min-height: 32px !important;
-  height: 32px !important;
-  max-height: 32px !important;
-  padding: 0 10px !important;
-  margin: 4px 12px 6px !important;
-  border-radius: 9px !important;
-  gap: 6px !important;
-  box-sizing: border-box !important;
-}
-html body .messages-view .message-search > span,
-html body .message-search > span {
-  font-size: 13px !important;
-  opacity: 0.65 !important;
-}
-html body .messages-view .message-search input,
-html body #messageSearch {
-  font: 500 12px/1 Manrope, system-ui, sans-serif !important;
-  padding: 0 !important;
-  height: 30px !important;
-  min-height: 30px !important;
-  line-height: 30px !important;
-}
-@media (max-width: 660px) {
-  html body .messages-view .message-search,
-  html body label.message-search {
-    min-height: 34px !important;
-    height: 34px !important;
-    max-height: 34px !important;
-    margin: 6px 12px 8px !important;
-  }
-  html body #messageSearch {
-    font-size: 13px !important;
-    height: 32px !important;
-    min-height: 32px !important;
-    line-height: 32px !important;
-  }
-}
-
 </style>
 <script id="everlight-no-zoom-js">
 (function () {
