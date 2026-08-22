@@ -20901,84 +20901,187 @@ html, body { touch-action: manipulation !important; }
 
 
 /* =========================================================
-   DESKTOP: equal left/right rails + restore nav symbols
+   DESKTOP RAIL ICONS — stroke style (match home/chat/profile)
+   ========================================================= */
+.desktop-rail-action .rail-icon-liked,
+.desktop-rail-action .rail-icon-saved,
+.desktop-rail-action .rail-icon-history {
+  display: inline-grid !important;
+  place-items: center !important;
+  position: relative !important;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  color: currentColor !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  overflow: visible !important;
+}
+
+/* Heart outline (liked) — two lobes + point via borders */
+.rail-icon-liked::before,
+.rail-icon-liked::after {
+  content: "" !important;
+  position: absolute !important;
+  box-sizing: border-box !important;
+}
+.rail-icon-liked::before {
+  width: 11px !important;
+  height: 17px !important;
+  border: 2px solid currentColor !important;
+  border-radius: 11px 11px 2px 2px !important;
+  transform: rotate(-45deg) !important;
+  left: 2px !important;
+  top: 2px !important;
+  background: transparent !important;
+}
+.rail-icon-liked::after {
+  width: 11px !important;
+  height: 17px !important;
+  border: 2px solid currentColor !important;
+  border-radius: 11px 11px 2px 2px !important;
+  transform: rotate(45deg) !important;
+  right: 2px !important;
+  top: 2px !important;
+  left: auto !important;
+  background: transparent !important;
+}
+
+/* Star outline (saved) — simple 5-point via rotated squares */
+.rail-icon-saved::before {
+  content: "" !important;
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  border: 2px solid currentColor !important;
+  transform: rotate(45deg) !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  top: 3px !important;
+  left: 3px !important;
+}
+.rail-icon-saved::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  border: 2px solid currentColor !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  top: 3px !important;
+  left: 3px !important;
+}
+
+/* Clock outline (history) — circle + hands */
+.rail-icon-history::before {
+  content: "" !important;
+  position: absolute !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid currentColor !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  top: 2px !important;
+  left: 2px !important;
+  font-size: 0 !important;
+}
+.rail-icon-history::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 2px !important;
+  height: 6px !important;
+  background: currentColor !important;
+  border: 0 !important;
+  border-radius: 1px !important;
+  top: 5px !important;
+  left: 10px !important;
+  transform-origin: bottom center !important;
+  box-shadow: 3px 4px 0 -0.5px currentColor !important;
+  font-size: 0 !important;
+}
+
+/* Override older unicode history/category conflicts */
+#desktopHistoryNav .rail-icon-history::before {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+/* Profile tabs: no icons */
+.profile-tabs .rail-action-icon {
+  display: none !important;
+}
+
+
+/* =========================================================
+   EQUAL LEFT / RIGHT RAILS (hard lock)
    ========================================================= */
 @media (min-width: 961px) {
   html body .layout,
   body .layout,
   .layout {
-    grid-template-columns: 260px minmax(0, 1fr) 260px !important;
+    display: grid !important;
+    grid-template-columns: 240px minmax(0, 1fr) 240px !important;
     column-gap: 0 !important;
     max-width: 1480px !important;
-    margin-inline: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   html body .left-rail,
+  body .left-rail,
   .left-rail {
-    width: 260px !important;
-    min-width: 260px !important;
-    max-width: 260px !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
+    flex: 0 0 240px !important;
     box-sizing: border-box !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   html body .right-rail,
+  body .right-rail,
   .right-rail {
-    width: 260px !important;
-    min-width: 260px !important;
-    max-width: 260px !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
+    flex: 0 0 240px !important;
     box-sizing: border-box !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
-  /* When right rail is collapsed, keep left size stable */
   body.right-rail-collapsed .layout {
-    grid-template-columns: 260px minmax(0, 1fr) 0 !important;
+    grid-template-columns: 240px minmax(0, 1fr) 0 !important;
   }
   body.right-rail-collapsed .right-rail {
     width: 0 !important;
     min-width: 0 !important;
     max-width: 0 !important;
-    overflow: hidden !important;
     padding: 0 !important;
+    overflow: hidden !important;
     border: 0 !important;
   }
 }
 
-@media (min-width: 961px) and (max-width: 1200px) {
+@media (min-width: 961px) and (max-width: 1180px) {
   html body .layout,
   .layout {
-    grid-template-columns: 220px minmax(0, 1fr) 220px !important;
+    grid-template-columns: 200px minmax(0, 1fr) 200px !important;
   }
   html body .left-rail,
   html body .right-rail,
   .left-rail,
   .right-rail {
-    width: 220px !important;
-    min-width: 220px !important;
-    max-width: 220px !important;
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    flex-basis: 200px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
   }
   body.right-rail-collapsed .layout {
-    grid-template-columns: 220px minmax(0, 1fr) 0 !important;
+    grid-template-columns: 200px minmax(0, 1fr) 0 !important;
   }
-}
-
-/* Show symbols on desktop rail for liked / saved / history */
-#desktopLikedNav .rail-action-icon,
-#desktopSavedNav .rail-action-icon,
-#desktopHistoryNav .rail-action-icon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 22px !important;
-  min-width: 22px !important;
-  height: 22px !important;
-  font-size: 15px !important;
-  line-height: 1 !important;
-  opacity: 0.95 !important;
-  visibility: visible !important;
-}
-
-/* Profile view tabs stay text-only */
-.profile-tabs .rail-action-icon,
-.profile-tabs .profile-tab-like-icon {
-  display: none !important;
 }
