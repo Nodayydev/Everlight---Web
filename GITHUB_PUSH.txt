@@ -1,72 +1,68 @@
 =============================================================
-🚀 GITHUB PUSH - LÉPÉSRŐL LÉPÉSRE
+🚀 GITHUB PUSH – LÉPÉSRŐL LÉPÉSRE
 =============================================================
 
-1️⃣ GITHUB REPOSITORY LÉTREHOZÁSA
+1️⃣  GITHUB REPOSITORY LÉTREHOZÁSA
 ────────────────────────────────────
 📱 Menj ide: https://github.com/new
 - Repository name: everlight
-- Description: Everlight - secure anonymous posting platform
-- Public vagy Private: Válaszd ki
+- Description: Everlight – secure anonymous posting platform
+- Public vagy Private: válaszd ki
 - Kattints: Create repository
 
-⚠️  NE inicializálj README.md, .gitignore, license-t! (már vannak)
+⚠️  NE inicializálj README.md, .gitignore vagy license fájlt!
+   (ezek már benne vannak a projektben)
 
 
-2️⃣ PUSH A GITHUBRA (HTTPS módszer - könnyebb)
+2️⃣  PUSH A GITHUBRA (HTTPS – egyszerűbb)
 ────────────────────────────────────────────────────
-Futtasd le ezeket a parancsokat:
+Futtasd le ezeket a parancsokat a projekt gyökerében:
 
-cd /home/nodayy/IdeaProjects/Everlight
+  git remote add origin https://github.com/YOURUSERNAME/everlight.git
+  git branch -M main
+  git push -u origin main
 
-git remote add origin https://github.com/YOURUSERNAME/everlight.git
-
-git branch -M main
-
-git push -u origin main
-
-
-📝 YOURUSERNAME helyére a GitHub felhasználóneved!
+📝 YOURUSERNAME helyére írd a saját GitHub felhasználónevedet!
 🔑 Ha jelszót kér, használj GitHub Personal Access Token-t:
    https://github.com/settings/tokens/new
+   (repo jogosultsággal)
 
 
-3️⃣ PUSH A GITHUBRA (SSH módszer - biztonságosabb)
+3️⃣  PUSH A GITHUBRA (SSH – biztonságosabb)
 ────────────────────────────────────────────────────
-Ha van SSH kulcsod:
+Ha van SSH kulcsod beállítva:
 
-cd /home/nodayy/IdeaProjects/Everlight
-
-git remote add origin git@github.com:YOURUSERNAME/everlight.git
-
-git branch -M main
-
-git push -u origin main
+  git remote add origin git@github.com:YOURUSERNAME/everlight.git
+  git branch -M main
+  git push -u origin main
 
 
-4️⃣ JÖVŐBENI MÓDOSÍTÁSOK PUSH-OLÁSA
+4️⃣  JÖVŐBENI MÓDOSÍTÁSOK PUSH-OLÁSA
 ────────────────────────────────────
 Minden módosítás után:
 
-git add .
-git commit -m "Leírás a módosításokról"
-git push origin main
+  git add .
+  git commit -m "Rövid leírás a módosításról"
+  git push origin main
 
-(Render automatikusan deploy-ol!)
+(Render automatikusan újra deploy-ol, ha be van kötve a repo.)
 
 
-5️⃣ RENDER DEPLOYMENT
+5️⃣  RENDER DEPLOYMENT
 ────────────────────────────────────
 📍 https://render.com
-1. Sign up GitHub-bal
-2. New Web Service → Válaszd az "everlight" repo-t
-3. Build: npm install
-4. Start: npm start
-5. Environment: JWT_SECRET = long_random_string
+1. Sign up GitHub fiókkal
+2. New → Web Service → válaszd az „everlight” repo-t
+3. Build Command: npm install
+4. Start Command: npm start
+5. Environment Variables (legalább):
+   - JWT_SECRET = hosszú, véletlenszerű titok
+   - DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+     (lásd MYSQL-SETUP.md)
 
 ✅ KÉSZ! Az app fut: https://everlight-xxxxx.onrender.com
 
 
 =============================================================
-Segítség? Nézd meg: DEPLOYMENT.md
+Segítség? Nézd meg: MYSQL-SETUP.md és a render.yaml fájlt.
 =============================================================
