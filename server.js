@@ -46,6 +46,14 @@ if (missingDb.length) {
 }
 
 const db = mysql.createPool(dbConfig);
+
+/* Hungary calendar day for DATE columns / CURRENT_DATE (CET/CEST ≈ +02 in summer).
+   Named zones need MySQL tz tables; fixed offset is reliable on managed hosts. */
+db.on('connection', (conn) => {
+  conn.query("SET time_zone = '+02:00'", (err) => {
+    if (err) console.warn('time_zone set failed:', err.message);
+  });
+});
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const MAIL_FROM = process.env.MAIL_FROM || '';
 const APP_BASE_URL = (process.env.APP_BASE_URL || '').replace(/\/$/, '');
@@ -1965,51 +1973,81 @@ app.get(
 /* =========================================================
    POST STREAK (single source of truth)
    - One streak per user on everlight_users (post_streak, last_post_date)
-   - Only non-anonymous posts count
-   - Consecutive calendar days of posting; same day does not bump
-   - Missed day resets to 1 on next post; visible streak is 0 if last post older than yesterday
-   - Same value shown on posts, chat, profile, online, daily thoughts
+   - Counts: non-anonymous posts + daily thoughts
+   - Consecutive calendar days (MySQL CURRENT_DATE); same day does not bump
+   - Missed day resets to 1 on next activity
+   - Visible streak is 0 if last activity older than yesterday
+   - Date math is pure SQL — no JS timezone off-by-one
    ========================================================= */
+
+async function budapestToday() {
+  // Calendar day in Europe/Budapest (Everlight audience) — avoids UTC midnight off-by-one
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Europe/Budapest',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).format(new Date()); // YYYY-MM-DD
+  } catch (_) {
+    const d = new Date();
+    // fallback approx CEST (+2)
+    d.setUTCHours(d.getUTCHours() + 2);
+    return d.toISOString().slice(0, 10);
+  }
+}
+
+function daysBetweenYmd(a, b) {
+  // a, b: YYYY-MM-DD strings; returns b - a in whole days
+  if (!a || !b) return null;
+  const [ay, am, ad] = String(a).slice(0, 10).split('-').map(Number);
+  const [by, bm, bd] = String(b).slice(0, 10).split('-').map(Number);
+  if (!ay || !by) return null;
+  const at = Date.UTC(ay, am - 1, ad);
+  const bt = Date.UTC(by, bm - 1, bd);
+  return Math.round((bt - at) / 86400000);
+}
 
 async function updatePostStreak(userId) {
   const id = Number(userId);
   if (!id) return 0;
-  const today = await dbGet(`SELECT CURRENT_DATE AS today`);
-  const todayValue = today?.today;
+
+  const today = await budapestToday();
   const row = await dbGet(
-    `SELECT post_streak, last_post_date FROM everlight_users WHERE id = ? LIMIT 1`,
+    `SELECT COALESCE(post_streak, 0) AS post_streak, last_post_date
+     FROM everlight_users WHERE id = ? LIMIT 1`,
     [id]
   );
   if (!row) return 0;
 
   const last = row.last_post_date
-    ? new Date(`${String(row.last_post_date).slice(0, 10)}T00:00:00Z`)
+    ? String(row.last_post_date).slice(0, 10)
     : null;
-  const now = new Date(`${String(todayValue).slice(0, 10)}T00:00:00Z`);
-  const diffDays = last
-    ? Math.round((now - last) / 86400000)
-    : Infinity;
+  const diffDays = last == null ? Infinity : daysBetweenYmd(last, today);
 
   let streak = Number(row.post_streak || 0);
   if (diffDays === 0) {
-    // already posted today
+    // already counted today
   } else if (diffDays === 1) {
     streak += 1;
   } else {
     streak = 1;
   }
+  if (streak < 1) streak = 1;
 
   await dbRun(
     `UPDATE everlight_users SET post_streak = ?, last_post_date = ? WHERE id = ?`,
-    [streak, todayValue, id]
+    [streak, today, id]
   );
   return streak;
 }
 
 function postStreakSql(alias = 'u') {
-  // Active visible streak: 0 if last post older than yesterday
+  // Note: last_post_date is stored as Budapest calendar day (YYYY-MM-DD).
+  // Visibility: active if last activity was today or yesterday in that calendar.
   return `CASE
-    WHEN ${alias}.last_post_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+    WHEN ${alias}.last_post_date IS NOT NULL
+     AND ${alias}.last_post_date >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
     THEN COALESCE(${alias}.post_streak, 0)
     ELSE 0
   END`;
@@ -2018,19 +2056,18 @@ function postStreakSql(alias = 'u') {
 async function getPostStreak(userId) {
   const id = Number(userId);
   if (!id) return 0;
+  const today = await budapestToday();
   const row = await dbGet(
-    `SELECT post_streak, last_post_date FROM everlight_users WHERE id = ? LIMIT 1`,
+    `SELECT COALESCE(post_streak, 0) AS post_streak, last_post_date
+     FROM everlight_users WHERE id = ? LIMIT 1`,
     [id]
   );
   if (!row || !row.last_post_date) return 0;
-  const today = await dbGet(`SELECT CURRENT_DATE AS today`);
-  const last = new Date(`${String(row.last_post_date).slice(0, 10)}T00:00:00Z`);
-  const now = new Date(`${String(today?.today).slice(0, 10)}T00:00:00Z`);
-  const diffDays = Math.round((now - last) / 86400000);
-  if (diffDays > 1) return 0;
+  const last = String(row.last_post_date).slice(0, 10);
+  const diff = daysBetweenYmd(last, today);
+  if (diff == null || diff > 1) return 0;
   return Number(row.post_streak || 0);
 }
-
 
 
 /* =========================================================
@@ -2142,7 +2179,9 @@ app.post('/api/daily-thoughts', auth, async (req, res, next) => {
       VALUES (?, ?, UTC_TIMESTAMP())
       ON DUPLICATE KEY UPDATE body = VALUES(body), created_at = UTC_TIMESTAMP()
     `, [req.userId, body]);
-    return res.json({ ok: true, thought: body });
+    // Daily thought counts toward the same streak as posts
+    const streak = await updatePostStreak(req.userId);
+    return res.json({ ok: true, thought: body, streak });
   } catch (error) {
     next(error);
   }
