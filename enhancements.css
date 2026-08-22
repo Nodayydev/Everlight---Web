@@ -20901,62 +20901,84 @@ html, body { touch-action: manipulation !important; }
 
 
 /* =========================================================
-   COMPACT MESSAGE SEARCH — mobile + desktop (final)
+   DESKTOP: equal left/right rails + restore nav symbols
    ========================================================= */
-html body .messages-view label.message-search,
-html body .messages-view .message-search,
-html body label.message-search,
-html body .message-search {
-  min-height: 34px !important;
-  height: 34px !important;
-  max-height: 34px !important;
-  padding: 0 10px !important;
-  margin: 6px 12px 8px !important;
-  border-radius: 10px !important;
-  gap: 6px !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-}
-
-html body .messages-view .message-search > span,
-html body .message-search > span {
-  font-size: 13px !important;
-  line-height: 1 !important;
-  opacity: 0.65 !important;
-  flex: 0 0 auto !important;
-}
-
-html body .messages-view .message-search input,
-html body .message-search input#messageSearch,
-html body #messageSearch {
-  font: 500 12px/1 Manrope, system-ui, sans-serif !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  height: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
-  line-height: 32px !important;
-  border: 0 !important;
-  background: transparent !important;
-}
-
-@media (max-width: 660px) {
-  html body .messages-view label.message-search,
-  html body .messages-view .message-search,
-  html body label.message-search {
-    min-height: 36px !important;
-    height: 36px !important;
-    max-height: 36px !important;
-    margin: 8px 12px 10px !important;
-    border-radius: 11px !important;
-    width: calc(100% - 24px) !important;
+@media (min-width: 961px) {
+  html body .layout,
+  body .layout,
+  .layout {
+    grid-template-columns: 260px minmax(0, 1fr) 260px !important;
+    column-gap: 0 !important;
+    max-width: 1480px !important;
+    margin-inline: auto !important;
   }
-  html body .messages-view .message-search input,
-  html body #messageSearch {
-    font-size: 13px !important;
-    height: 34px !important;
-    min-height: 34px !important;
-    max-height: 34px !important;
-    line-height: 34px !important;
+
+  html body .left-rail,
+  .left-rail {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    box-sizing: border-box !important;
   }
+
+  html body .right-rail,
+  .right-rail {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* When right rail is collapsed, keep left size stable */
+  body.right-rail-collapsed .layout {
+    grid-template-columns: 260px minmax(0, 1fr) 0 !important;
+  }
+  body.right-rail-collapsed .right-rail {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  html body .layout,
+  .layout {
+    grid-template-columns: 220px minmax(0, 1fr) 220px !important;
+  }
+  html body .left-rail,
+  html body .right-rail,
+  .left-rail,
+  .right-rail {
+    width: 220px !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
+  }
+  body.right-rail-collapsed .layout {
+    grid-template-columns: 220px minmax(0, 1fr) 0 !important;
+  }
+}
+
+/* Show symbols on desktop rail for liked / saved / history */
+#desktopLikedNav .rail-action-icon,
+#desktopSavedNav .rail-action-icon,
+#desktopHistoryNav .rail-action-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  font-size: 15px !important;
+  line-height: 1 !important;
+  opacity: 0.95 !important;
+  visibility: visible !important;
+}
+
+/* Profile view tabs stay text-only */
+.profile-tabs .rail-action-icon,
+.profile-tabs .profile-tab-like-icon {
+  display: none !important;
 }
