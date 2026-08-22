@@ -20901,137 +20901,45 @@ html, body { touch-action: manipulation !important; }
 
 
 /* =========================================================
-   WIDER EQUAL RAILS + DESKTOP DOMAIN/LOGO VISIBLE
+   Everlight text only (no fx / ✦ / logo image beside text)
+   Keep header under-stars (⋆⋅☆⋅⋆)
    ========================================================= */
-@media (min-width: 961px) {
-  html body .layout,
-  body .layout,
-  .layout {
-    display: grid !important;
-    width: min(1520px, calc(100vw - 32px)) !important;
-    max-width: 1520px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    grid-template-columns: 300px minmax(0, 1fr) 300px !important;
-    column-gap: 20px !important;
-  }
-
-  html body .left-rail,
-  html body .right-rail,
-  body .left-rail,
-  body .right-rail,
-  .left-rail,
-  .right-rail {
-    width: 300px !important;
-    min-width: 300px !important;
-    max-width: 300px !important;
-    flex: 0 0 300px !important;
-    box-sizing: border-box !important;
-    padding-left: 22px !important;
-    padding-right: 22px !important;
-  }
-
-  html body.right-rail-collapsed .layout,
-  body.right-rail-collapsed .layout {
-    grid-template-columns: 300px minmax(0, 1fr) 0 !important;
-  }
-  html body.right-rail-collapsed .right-rail,
-  body.right-rail-collapsed .right-rail {
-    width: 0 !important;
-    min-width: 0 !important;
-    max-width: 0 !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-  }
-
-  /* Topbar: left domain fully readable */
-  header.topbar,
-  .topbar {
-    grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr) !important;
-    overflow: visible !important;
-  }
-
-  .topbar .domain {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    overflow: visible !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    width: auto !important;
-  }
-
-  .topbar .domain-lines {
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: visible !important;
-  }
-
-  .topbar .domain a,
-  .topbar .domain-lines > a,
-  .topbar .domain-second a {
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-    max-width: none !important;
-    font-size: 11px !important;
-  }
-
-  .topbar .domain-second span {
-    font-size: 11px !important;
-  }
-
-  .topbar .domain .domain-mode-light {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  /* Center logo (image + word) always visible */
-  .topbar .header-logo {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .topbar .header-logo-image {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 30px !important;
-    height: 30px !important;
-  }
-
-  .topbar .logo-word {
-    display: inline !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    font-size: 24px !important;
-  }
-
-  .topbar .logo-mark.fallback-logo-mark {
-    /* only show if img failed; default keep as HTML onerror sets */
-  }
+.topbar .header-logo-image,
+.topbar .header-logo .logo-mark,
+.topbar .logo-mark,
+.fallback-logo-mark {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  font-size: 0 !important;
 }
 
-@media (min-width: 961px) and (max-width: 1280px) {
-  html body .layout,
-  .layout {
-    grid-template-columns: 260px minmax(0, 1fr) 260px !important;
-    width: min(100vw - 24px, 1280px) !important;
-  }
-  html body .left-rail,
-  html body .right-rail,
-  .left-rail,
-  .right-rail {
-    width: 260px !important;
-    min-width: 260px !important;
-    max-width: 260px !important;
-    flex-basis: 260px !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-  body.right-rail-collapsed .layout {
-    grid-template-columns: 260px minmax(0, 1fr) 0 !important;
-  }
+.topbar .header-logo .logo-word {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure under-header symbol divider stays visible */
+.header-symbol-divider,
+.topbar .header-symbol-divider {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 18px !important;
+  width: 100% !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+.header-symbol-divider .header-symbols,
+.topbar .header-symbol-divider .header-symbols {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  color: #82b9e8 !important;
 }

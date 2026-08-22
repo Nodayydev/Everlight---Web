@@ -347,58 +347,21 @@
   if (!toggle || !menu) return;
 
   function setOpen(open) {
-    if (open) {
-      menu.hidden = false;
-      menu.removeAttribute("hidden");
-      menu.classList.add("is-open");
-      toggle.setAttribute("aria-expanded", "true");
-      document.body.classList.add("look-menu-open");
-    } else {
-      menu.hidden = true;
-      menu.setAttribute("hidden", "");
-      menu.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("look-menu-open");
-    }
+    menu.hidden = !open;
+    menu.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.classList.toggle("look-menu-open", open);
   }
 
-  function isOpen() {
-    return !menu.hidden && menu.classList.contains("is-open");
-  }
-
-  // Use pointerup so touch + mouse both work reliably on mobile.
-  function onToggle(event) {
+  toggle.addEventListener("click", function(event){
     event.preventDefault();
     event.stopPropagation();
-    setOpen(!isOpen());
-  }
-
-  toggle.addEventListener("click", onToggle, true);
-  toggle.addEventListener("touchend", function(event) {
-    // Prevent the following synthetic click from double-toggling.
-    event.preventDefault();
-    onToggle(event);
-  }, { passive: false, capture: true });
-
-  // Close when tapping outside — but never when tapping inside the menu or toggle.
-  document.addEventListener("click", function(event) {
-    if (!isOpen()) return;
-    if (event.target.closest(".header-look-menu-wrap") ||
-        event.target.closest(".header-look-menu") ||
-        event.target.closest("#headerLookToggle")) {
-      return;
-    }
-    setOpen(false);
+    setOpen(menu.hidden || !menu.classList.contains("is-open"));
   }, true);
 
-  // Mode buttons inside the menu: apply look, then close.
-  menu.addEventListener("click", function(event) {
-    var btn = event.target.closest("[data-contrast], [data-accent]");
-    if (!btn) return;
-    // Let the existing document-level contrast/accent handler run,
-    // then close the menu shortly after.
-    setTimeout(function() { setOpen(false); }, 80);
-  }, false);
+  document.addEventListener("click", function(event){
+    if (!event.target.closest(".header-look-menu-wrap")) setOpen(false);
+  }, true);
 })();
 
 
