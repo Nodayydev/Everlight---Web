@@ -252,7 +252,7 @@
     var divider=document.createElement("div");
     divider.className="header-symbol-divider";
     divider.setAttribute("aria-hidden","true");
-    divider.innerHTML='<span class="header-symbols">⋆⋅☆⋅⋆</span>';
+    divider.innerHTML='<span class="header-symbols">· · ✦ · ·</span>';
     header.appendChild(divider);
   }
   if(document.readyState==="loading"){
