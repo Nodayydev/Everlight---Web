@@ -706,6 +706,49 @@ input, textarea, select, [contenteditable="true"] { font-size: 16px !important; 
     display: none !important;
   }
 }
+
+/* FORCE COMPACT CONVERSATION SEARCH */
+html body .messages-view .message-search,
+html body .message-search,
+html body label.message-search {
+  min-height: 32px !important;
+  height: 32px !important;
+  max-height: 32px !important;
+  padding: 0 10px !important;
+  margin: 4px 12px 6px !important;
+  border-radius: 9px !important;
+  gap: 6px !important;
+  box-sizing: border-box !important;
+}
+html body .messages-view .message-search > span,
+html body .message-search > span {
+  font-size: 13px !important;
+  opacity: 0.65 !important;
+}
+html body .messages-view .message-search input,
+html body #messageSearch {
+  font: 500 12px/1 Manrope, system-ui, sans-serif !important;
+  padding: 0 !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  line-height: 30px !important;
+}
+@media (max-width: 660px) {
+  html body .messages-view .message-search,
+  html body label.message-search {
+    min-height: 34px !important;
+    height: 34px !important;
+    max-height: 34px !important;
+    margin: 6px 12px 8px !important;
+  }
+  html body #messageSearch {
+    font-size: 13px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    line-height: 32px !important;
+  }
+}
+
 </style>
 <script id="everlight-no-zoom-js">
 (function () {
